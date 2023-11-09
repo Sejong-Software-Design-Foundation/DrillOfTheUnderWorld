@@ -134,6 +134,7 @@
     <ClInclude Include="ImageLayer.h" />
     <ClInclude Include="ImageLayerImpl.h" />
     <ClInclude Include="ImageLayerInterface.h" />
+    <ClInclude Include="Player.hpp" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="common.hpp" />
   </ItemGroup>
@@ -142,6 +143,9 @@
     <Media Include="start_bgm.wav" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="basicStoneBlocks.bmp" />
+    <Image Include="brick_dark2.bmp" />
+    <Image Include="empty.bmp" />
     <Image Include="PlayerCharacter.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
