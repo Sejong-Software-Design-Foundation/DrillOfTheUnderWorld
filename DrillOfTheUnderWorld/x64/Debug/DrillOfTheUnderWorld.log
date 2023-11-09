@@ -1,2 +1,4 @@
-﻿  main.cpp
+﻿  PC.cpp
+C:\Users\emfor\OneDrive\바탕 화면\2023-2\DrillOfTheUnderWorld\DrillOfTheUnderWorld\DrillOfTheUnderWorld\PC.cpp(17,39): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\emfor\OneDrive\바탕 화면\2023-2\DrillOfTheUnderWorld\DrillOfTheUnderWorld\DrillOfTheUnderWorld\PC.cpp(17,63): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
   DrillOfTheUnderWorld.vcxproj -> C:\Users\emfor\OneDrive\바탕 화면\2023-2\DrillOfTheUnderWorld\DrillOfTheUnderWorld\x64\Debug\DrillOfTheUnderWorld.exe

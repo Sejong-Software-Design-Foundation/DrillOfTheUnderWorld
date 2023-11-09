@@ -127,14 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="common.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PC.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageFading.h" />
     <ClInclude Include="ImageLayer.h" />
     <ClInclude Include="ImageLayerImpl.h" />
     <ClInclude Include="ImageLayerInterface.h" />
-    <ClInclude Include="Player.hpp" />
+    <ClInclude Include="PC.hpp" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="common.hpp" />
   </ItemGroup>
@@ -144,8 +146,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="basicStoneBlocks.bmp" />
-    <Image Include="brick_dark2.bmp" />
+    <Image Include="brokenStoneBlock.bmp" />
+    <Image Include="stoneBlock.bmp" />
     <Image Include="empty.bmp" />
+    <Image Include="emptyTile.bmp" />
     <Image Include="PlayerCharacter.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,7 @@
 #ifdef __cplusplus
+
 extern "C" {
+
 #endif
 
 #pragma once
@@ -10,7 +12,7 @@ extern "C" {
 
 #ifndef SOUND_PLAYER_H
 #define SOUND_PLAYER_H
-
+LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
 //PlaySound 함수로 음악을 재생시켜줌
 inline void playBGM(char* fileName) {
@@ -25,14 +27,14 @@ inline void stopBGM() {
 //mci를 사용하여 소리를 재생하기 위한 함수
 inline void playSound(char* fileName) {
 	char command[100];
-	sprintf(command, "play %s", fileName);
+	sprintf_s(command, "play %s", fileName);
 	mciSendString(ConvertToLPCWSTR(command), NULL, 0, NULL);
 }
 
 //재생중이던 소리를 멈추기 위한 함수
 inline void stopSound(char* fileName) {
 	char command[100];
-	sprintf(command, "stop %s", fileName);
+	sprintf_s(command, "stop %s", fileName);
 	mciSendString(ConvertToLPCWSTR(command), NULL, 0, NULL);
 }
 

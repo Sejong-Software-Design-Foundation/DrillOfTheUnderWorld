@@ -18,13 +18,7 @@ static double RESOLUTION_MULTIPLIER = 1;
 static int WINDOW_WIDTH = 0;
 static int WINDOW_HEIGHT = 0;
 
-
-LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
-	int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
-	wchar_t* wideStr = new wchar_t[requiredSize];
-	MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, wideStr, requiredSize);
-	return wideStr;
-}
+LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
 typedef struct {
 	int width, height;
@@ -98,7 +92,7 @@ inline void _initialize(ImageLayer* self) {
 inline HDC getRenderedBackDC(ImageLayer* self) {
 	const HDC backDC = createNewBackDC(self->_consoleDC);
 
-	for (int i = self->imageCount-1; i >= 0; i--) {
+	for (int i = self->imageCount; i >= 0; i--) {
 		if (!self->images[i].isHide)
 			putBitmapToBackDC(backDC, self->images[i], self->transparentColor);
 	}
