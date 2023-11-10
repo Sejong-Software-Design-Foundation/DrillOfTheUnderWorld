@@ -20,6 +20,7 @@ extern "C" {
 #define M 77
 #define SPEED 16
 #define ESC 27
+#define SPACE 32
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 96

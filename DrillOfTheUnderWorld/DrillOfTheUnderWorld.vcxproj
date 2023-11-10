@@ -147,6 +147,10 @@
   <ItemGroup>
     <Image Include="basicStoneBlocks.bmp" />
     <Image Include="brokenStoneBlock.bmp" />
+    <Image Include="PC_down.bmp" />
+    <Image Include="PC_left.bmp" />
+    <Image Include="PC_right.bmp" />
+    <Image Include="PC_up.bmp" />
     <Image Include="stoneBlock.bmp" />
     <Image Include="empty.bmp" />
     <Image Include="emptyTile.bmp" />

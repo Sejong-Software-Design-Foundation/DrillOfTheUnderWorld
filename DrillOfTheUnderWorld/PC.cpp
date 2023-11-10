@@ -36,3 +36,35 @@ void PC::dig(int x, int y) {
 		imageLayer.images[infoY * 25 + infoX + 1].fileName = bmpBrokenStoneBlockName;
 	}
 }
+
+void PC::move() {
+	imageLayer.images[0].x += dir[curDirection][0]*BLOCKSIZE;
+	imageLayer.images[0].y += dir[curDirection][1]*BLOCKSIZE;
+}
+int PC::getDir() {
+	return curDirection;
+}
+
+COORD PC::getPosAfterMove(int x, int y) {
+	COORD result;
+	result.X = x + dir[curDirection][0]*BLOCKSIZE;
+	result.Y = y + dir[curDirection][1]*BLOCKSIZE;
+	return result;
+}
+
+void PC::setDirRight() {
+	curDirection = 0;
+	imageLayer.images[0].fileName = bmpPCRightName;
+}
+void PC::setDirLeft() {
+	curDirection = 2;
+	imageLayer.images[0].fileName = bmpPCLeftName;
+}
+void PC::setDirDown() {
+	curDirection = 1;
+	imageLayer.images[0].fileName = bmpPCDownName;
+}
+void PC::setDirUp() {
+	curDirection = 3;
+	imageLayer.images[0].fileName = bmpPCUpName;
+}

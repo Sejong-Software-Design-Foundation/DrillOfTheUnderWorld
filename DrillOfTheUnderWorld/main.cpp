@@ -44,24 +44,27 @@ int main() {
 				targetLayer->fadeIn(targetLayer, NULL);
 				break;
 			case LEFT:
-				if (collisionCheck(curPosX - BLOCKSIZE, curPosY)) pc.dig(curPosX-BLOCKSIZE, curPosY);
-				else imageLayer.images[0].x-= BLOCKSIZE;
+				pc.setDirLeft();
+				if (!collisionCheck(curPosX - BLOCKSIZE, curPosY)) pc.move();
 				break;
 			case RIGHT:
-				if (collisionCheck(curPosX + BLOCKSIZE, curPosY)) pc.dig(curPosX+ BLOCKSIZE, curPosY);
-				else imageLayer.images[0].x+= BLOCKSIZE;
+				pc.setDirRight();
+				if (!collisionCheck(curPosX + BLOCKSIZE, curPosY)) pc.move();
 				break;
 			case UP:
-				if (collisionCheck(curPosX, curPosY - BLOCKSIZE)) pc.dig(curPosX, curPosY- BLOCKSIZE);
-				else imageLayer.images[0].y -= BLOCKSIZE;
+				pc.setDirUp();
+				if (!collisionCheck(curPosX, curPosY - BLOCKSIZE)) pc.move();
 				break;
 ;			case DOWN:
-				if (collisionCheck(curPosX, curPosY + BLOCKSIZE)) pc.dig(curPosX, curPosY+BLOCKSIZE);
-				else imageLayer.images[0].y += BLOCKSIZE;
+				pc.setDirDown();
+				if (!collisionCheck(curPosX, curPosY + BLOCKSIZE)) pc.move();
 				break;
 			case ESC:
 				return 0;
 				break;
+			case SPACE:
+				COORD posAfterMoved = pc.getPosAfterMove(curPosX, curPosY);
+				pc.dig(posAfterMoved.X, posAfterMoved.Y);
 			}
 			if (key) targetLayer->renderAll(targetLayer);
 		}

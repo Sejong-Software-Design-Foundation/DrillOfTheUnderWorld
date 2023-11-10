@@ -75,5 +75,17 @@
     <Image Include="brokenStoneBlock.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="PC_down.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="PC_left.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="PC_right.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="PC_up.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>
