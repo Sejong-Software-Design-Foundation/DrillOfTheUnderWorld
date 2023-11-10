@@ -64,6 +64,7 @@ int convertPosToInfoY(int y) {
 bool collisionCheck(int x, int y) {
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
+
 	if (infoY < 0) return 0;
 	return blockInfo[infoY][infoX];
 }

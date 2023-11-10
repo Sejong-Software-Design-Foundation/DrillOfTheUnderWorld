@@ -45,19 +45,19 @@ int main() {
 				break;
 			case LEFT:
 				pc.setDirLeft();
-				if (!collisionCheck(curPosX - BLOCKSIZE, curPosY)) pc.move();
+				if (!collisionCheck(curPosX - SPEED, curPosY)) pc.move();
 				break;
 			case RIGHT:
 				pc.setDirRight();
-				if (!collisionCheck(curPosX + BLOCKSIZE, curPosY)) pc.move();
+				if (!collisionCheck(curPosX + SPEED, curPosY)) pc.move();
 				break;
 			case UP:
 				pc.setDirUp();
-				if (!collisionCheck(curPosX, curPosY - BLOCKSIZE)) pc.move();
+				if (!collisionCheck(curPosX, curPosY - SPEED)) pc.move();
 				break;
 ;			case DOWN:
 				pc.setDirDown();
-				if (!collisionCheck(curPosX, curPosY + BLOCKSIZE)) pc.move();
+				if (!collisionCheck(curPosX, curPosY + SPEED)) pc.move();
 				break;
 			case ESC:
 				return 0;

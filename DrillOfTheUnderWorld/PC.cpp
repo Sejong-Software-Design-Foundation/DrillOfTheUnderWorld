@@ -27,19 +27,21 @@ void PC::dig(int x, int y) {
 	pc.vibe();
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
+	if (((x - AREA_ORIGIN_X) % BLOCKSIZE) > (BLOCKSIZE / 2)) infoX++;
+	if (((y - AREA_ORIGIN_Y) % BLOCKSIZE) > (BLOCKSIZE / 2)) infoY++;
 	if (infoY < 0 || infoY >= 25 || infoX < 0 || infoX >= 25) return;
 	blockInfo[infoY][infoX]--;
 	if (!blockInfo[infoY][infoX]) {
 		imageLayer.images[infoY * 25 + infoX + 1].fileName = 0;
 	}
-	else {
+	else if (blockInfo[infoY][infoX]==1) {
 		imageLayer.images[infoY * 25 + infoX + 1].fileName = bmpBrokenStoneBlockName;
 	}
 }
 
 void PC::move() {
-	imageLayer.images[0].x += dir[curDirection][0]*BLOCKSIZE;
-	imageLayer.images[0].y += dir[curDirection][1]*BLOCKSIZE;
+	imageLayer.images[0].x += dir[curDirection][0]*SPEED;
+	imageLayer.images[0].y += dir[curDirection][1]*SPEED;
 }
 int PC::getDir() {
 	return curDirection;

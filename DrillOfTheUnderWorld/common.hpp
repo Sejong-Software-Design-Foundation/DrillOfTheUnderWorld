@@ -18,9 +18,9 @@ extern "C" {
 #define DOWN 80
 #define S 115
 #define M 77
-#define SPEED 16
 #define ESC 27
 #define SPACE 32
+#define SPEED 48
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 96
