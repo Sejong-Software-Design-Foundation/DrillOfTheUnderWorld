@@ -5,6 +5,7 @@ PC& PC::getPC() {
 	static PC pc;
 	return pc;
 }
+
 void PC::vibe() {
 	imageLayer.images[0].x += 8;
 	imageLayer.renderAll(&imageLayer);
@@ -23,17 +24,22 @@ int PC::getATK() { return ATK; }
 void PC::setHP(int hp) { this->HP = hp; }
 void PC::setOxygen(int o2) { this->O_2 = o2; }
 void PC::setATK(int atk) { this->ATK = atk; }
+
 void PC::dig(int x, int y) {
 	pc.vibe();
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
 	if (infoY < 0 || infoY >= 25 || infoX < 0 || infoX >= 25) return;
 	blockInfo[infoY][infoX]--;
+
+	// 바로 팔 수 있으면
+	// 내가 좀비/보스/미네랄/shop을 넣었으니 +5인거임. PC만 있으면 +1임
 	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = 0;
+		imageLayer.images[infoY * 25 + infoX + 4].fileName = 0;
 	}
+	// 아니면 깨진 블럭으로 교체
 	else {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = bmpBrokenStoneBlockName;
+		imageLayer.images[infoY * 25 + infoX + 4].fileName = bmpBrokenStoneBlockName;
 	}
 }
 
@@ -41,6 +47,7 @@ void PC::move() {
 	imageLayer.images[0].x += dir[curDirection][0]*BLOCKSIZE;
 	imageLayer.images[0].y += dir[curDirection][1]*BLOCKSIZE;
 }
+
 int PC::getDir() {
 	return curDirection;
 }

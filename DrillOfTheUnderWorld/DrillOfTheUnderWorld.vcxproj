@@ -132,13 +132,19 @@
     <ClCompile Include="PC.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.hpp" />
     <ClInclude Include="ImageFading.h" />
     <ClInclude Include="ImageLayer.h" />
     <ClInclude Include="ImageLayerImpl.h" />
     <ClInclude Include="ImageLayerInterface.h" />
+    <ClInclude Include="Mineral.hpp" />
+    <ClInclude Include="NPC.hpp" />
     <ClInclude Include="PC.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Shop.hpp" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="common.hpp" />
+    <ClInclude Include="Zombie.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav" />
@@ -146,7 +152,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="basicStoneBlocks.bmp" />
+    <Image Include="Shop.bmp" />
+    <Image Include="Mineral.bmp" />
+    <Image Include="Boss.bmp" />
     <Image Include="brokenStoneBlock.bmp" />
+    <Image Include="NPC.bmp" />
     <Image Include="PC_down.bmp" />
     <Image Include="PC_left.bmp" />
     <Image Include="PC_right.bmp" />
@@ -155,6 +165,9 @@
     <Image Include="empty.bmp" />
     <Image Include="emptyTile.bmp" />
     <Image Include="PlayerCharacter.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DrillOfTheUnderWorld.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

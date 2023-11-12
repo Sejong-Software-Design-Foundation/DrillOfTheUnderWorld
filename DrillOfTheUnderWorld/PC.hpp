@@ -12,6 +12,7 @@ private:
 	char* bmpPCRightName;
 	char* bmpPCDownName;
 	char* bmpPCUpName;
+
 	PC() {
 		bmpPCName = _strdup("PlayerCharacter.bmp");
 		bmpPCLeftName = _strdup("PC_left.bmp");

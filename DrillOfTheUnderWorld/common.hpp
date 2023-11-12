@@ -9,6 +9,7 @@ extern "C" {
 #include <conio.h>
 #include "ImageLayer.h"
 #include "SoundPlayer.h"
+#include "math.h"
 }
 #include "PC.hpp"
 
@@ -34,6 +35,8 @@ extern ImageLayer* targetLayer;
 extern ImageLayer imageLayer;
 extern ImageLayer testLayer;
 extern Image imageArray[1000];
+// block 배열
+// 2=일반, 1=깨진표현, 0=NULL
 extern int blockInfo[26][26];
 extern bool isOnStage;
 extern char bmpStoneBlockName[];
@@ -42,9 +45,14 @@ extern char bmpBrokenStoneBlockName[];
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
 void getHandle();
+
 void removeCursor();
+COORD GetCurrentCurPos(void);
+void SetCurrentCurPos(int x, int y);
+
 void resizeConsole(int w, int h);
 void initialize();
+
 void dig(int x, int y);
 bool collisionCheck(int x, int y);
 int convertPosToInfoX(int x);
