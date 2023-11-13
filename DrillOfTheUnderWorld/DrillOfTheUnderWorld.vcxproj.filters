@@ -14,4 +14,78 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PC.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImageFading.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageLayer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageLayerImpl.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageLayerInterface.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundPlayer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="common.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PC.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="null_sound.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="start_bgm.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="PlayerCharacter.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="stoneBlock.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="basicStoneBlocks.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="empty.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="emptyTile.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="brokenStoneBlock.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="PC_down.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="PC_left.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="PC_right.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="PC_up.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
