@@ -8,7 +8,7 @@
  ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
  ImageLayer testLayer = DEFAULT_IMAGE_LAYER;
  Image imageArray[1000];
- int blockInfo[26][26];
+ int blockInfo[1200][1200];
  bool isOnStage = true;
  char bmpStoneBlockName[] = "stoneBlock.bmp";
  char bmpBrokenStoneBlockName[] = "brokenStoneBlock.bmp";
@@ -48,25 +48,40 @@ void initialize() {
 void initBlockImages() {
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			//if (y == AREA_ORIGIN_Y && x == AREA_ORIGIN_X + 576) continue;
 			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
-			blockInfo[convertPosToInfoX(y)][convertPosToInfoY(x)] = 2;
 		}
 	}
+	for (int i = 0;i < 1200;i++) {
+		for (int j = 0;j < 1200;j++) {
+			blockInfo[i][j] = 2;
+		}
+	}
+	/*for (int i = 0;i < BLOCKSIZE;i++) {
+		for (int j = 576;j < 576 + BLOCKSIZE;j++) {
+			blockInfo[i][j] = 0;
+		}
+	}*/
 }
 
 int convertPosToInfoX(int x) {
-	return (x - AREA_ORIGIN_X) / BLOCKSIZE;
+	return (x - AREA_ORIGIN_X);
 }
 int convertPosToInfoY(int y) {
-	return (y - AREA_ORIGIN_Y) / BLOCKSIZE;
+	return (y - AREA_ORIGIN_Y);
 }
 
 bool collisionCheck(int x, int y) {
-	int infoX = convertPosToInfoX(x);
-	int infoY = convertPosToInfoY(y);
+	int startX = convertPosToInfoX(x);
+	int startY = convertPosToInfoY(y);
 
-	if (infoY < 0) return 0;
-	return blockInfo[infoY][infoX];
+	for (int curY = startY; curY < startY + BLOCKSIZE; curY++) {
+		for (int curX = startX; curX < startX + BLOCKSIZE; curX++) {
+			if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+			if (blockInfo[curY][curX]) return true;
+		}
+	}
+	return false;
 }
 
 /*

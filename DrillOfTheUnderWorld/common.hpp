@@ -17,10 +17,11 @@ extern "C" {
 #define UP 72
 #define DOWN 80
 #define S 115
+#define C 99
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 48
+#define SPEED 24
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 96
@@ -34,7 +35,7 @@ extern ImageLayer* targetLayer;
 extern ImageLayer imageLayer;
 extern ImageLayer testLayer;
 extern Image imageArray[1000];
-extern int blockInfo[26][26];
+extern int blockInfo[1200][1200];
 extern bool isOnStage;
 extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
