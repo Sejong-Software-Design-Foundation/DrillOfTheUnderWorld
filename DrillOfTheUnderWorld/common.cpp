@@ -1,24 +1,35 @@
 #include "common.hpp"
 
- PC& pc = PC::getPC();
+PC& pc = PC::getPC();
 
- HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
- HWND WINDOW_HANDLE;
- ImageLayer* targetLayer = NULL;
- ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
- ImageLayer testLayer = DEFAULT_IMAGE_LAYER;
- Image imageArray[1000];
- int blockInfo[26][26];
- bool isOnStage = true;
- char bmpStoneBlockName[] = "stoneBlock.bmp";
- char bmpBrokenStoneBlockName[] = "brokenStoneBlock.bmp";
+HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
+HWND WINDOW_HANDLE;
+ImageLayer* targetLayer = NULL;
+ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
+ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
+Image imageArray[1000];
+Image stageImages[30];
+int currentAreaRowIndex;
+int currentAreaColIndex;
+int blockInfo[26][26];
+int stageInfo[5][5];
+bool isOnStage = true;
+char bmpStoneBlockName[] = "stoneBlock.bmp";
+char bmpBrokenStoneBlockName[] = "brokenStoneBlock.bmp";
 
- LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
-	 int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
-	 wchar_t* wideStr = new wchar_t[requiredSize];
-	 MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, wideStr, requiredSize);
-	 return wideStr;
- }
+char bmpClearedAreaName[] = "clearedArea.bmp";
+char bmpNomalAreaName[] = "nomalArea.bmp";
+char bmpHiddenAreaName[] = "hiddenArea.bmp";
+char bmpMovableAreaName[] = "movableArea.bmp";
+char bmpCharacterStatueName[] = "characterStatus.bmp";
+
+
+LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
+	int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
+	wchar_t* wideStr = new wchar_t[requiredSize];
+	MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, wideStr, requiredSize);
+	return wideStr;
+}
 
 
 void getHandle() {
@@ -54,6 +65,33 @@ void initBlockImages() {
 	}
 }
 
+void initStageImages() {
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 5; x++) {
+			if (y == 2 && x == 2) {
+				stageInfo[y][x] = 0;
+			}
+			else {
+				stageInfo[y][x] = 1;
+			}
+		}
+	}
+	int count = 0;
+	for (int y = STAGE_ORIGIN_Y; y < STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 5; y += AREA_BLOCK_SIZE) {
+		for (int x = STAGE_ORIGIN_X; x < STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 5; x += AREA_BLOCK_SIZE) {
+			/*
+			if (count == 5 || count == 16) {
+				stageImages[stageLayer.imageCount++] = { bmpHiddenAreaName, x,y,1 };
+				count++;
+				continue;
+			}
+			*/
+			stageImages[stageLayer.imageCount++] = { bmpNomalAreaName, x,y,1 };
+			count++;
+		}
+	}
+}
+
 int convertPosToInfoX(int x) {
 	return (x - AREA_ORIGIN_X) / BLOCKSIZE;
 }
@@ -68,6 +106,51 @@ bool collisionCheck(int x, int y) {
 	return blockInfo[infoY][infoX];
 }
 
+
+int convertPosToInfoXInStage(int x) {
+	if (x - STAGE_ORIGIN_X <= 0) return -1;
+	return (x - STAGE_ORIGIN_X) / AREA_BLOCK_SIZE;
+}
+int convertPosToInfoYInStage(int y) {
+	if (y - STAGE_ORIGIN_Y <= 0) return -1;
+	return (y - STAGE_ORIGIN_Y) / AREA_BLOCK_SIZE;
+}
+bool collisionCheckInStage(int x, int y) {
+	int infoX = convertPosToInfoXInStage(x);
+	int infoY = convertPosToInfoYInStage(y);
+	if (infoY < 0 || infoY >= 5 || infoX < 0 || infoX >= 5) 
+		return 1;
+	//return 0;
+	return stageInfo[infoY][infoX];
+}
+
+void setMovableStageInfo(int row, int col) {
+	if (row - 1 >= 0) { 
+		if (stageInfo[row - 1][col] == 1) {
+			stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			stageInfo[row - 1][col] = 0;
+		}
+	}
+	if (row + 1 < 5) {
+		if (stageInfo[row + 1][col]) {
+			stageLayer.images[(row + 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			stageInfo[row + 1][col] = 0;
+		}
+	}
+	if (col - 1 >= 0) {
+		if (stageInfo[row][col - 1]) {
+			stageLayer.images[(row) * 5 + col - 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			stageInfo[row][col - 1] = 0;
+		}
+	}
+
+	if (col + 1 < 5) {
+		if (stageInfo[row][col + 1]) {
+			stageLayer.images[(row) * 5 + col + 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			stageInfo[row][col + 1] = 0;
+		}
+	}
+}
 /*
 
 void dig(int x, int y) {

@@ -24,6 +24,12 @@
     <ClCompile Include="common.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Area.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageFading.h">
@@ -45,6 +51,18 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="PC.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Area.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="resource2.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -85,6 +103,36 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="PC_up.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="clearedStage.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="nomalStage.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="hiddenStage.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\Stage1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\Stage2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\Stage3.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\clearedArea.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\movableArea.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\hiddenArea.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\characterStatus.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
