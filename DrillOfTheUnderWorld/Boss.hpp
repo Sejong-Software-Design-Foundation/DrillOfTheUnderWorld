@@ -12,7 +12,6 @@ public:
 };
 
 Boss::Boss(int x, int y) : NPC(x, y, 100, 50, 1) {
-    char bmpNameBoss[] = "Boss.bmp";
     this->imageidx = imageLayer.imageCount;
     imageArray[imageLayer.imageCount++] = { bmpNameBoss, x, y, 1 };
 }

@@ -22,7 +22,6 @@ int main() {
 	//drawUI();
 
 	initBlockImages();
-
 	drawUI();
 
 	Zombie* zombie = new Zombie(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
@@ -60,7 +59,7 @@ int main() {
 	targetLayer = &stageLayer;
 
 	targetLayer->renderAll(targetLayer);
-
+	
 	while (1) {
 		if (isOnStage) {
 			while (_kbhit() != 0) {

@@ -61,7 +61,6 @@ void PC::dig(int x, int y) { // 수정한 항목
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
-
 	if (!blockInfo[infoY][infoX]) {
 		imageLayer.images[imageIndex].fileName = bmpNullName;
 	}
@@ -79,6 +78,11 @@ void PC::dig(int x, int y) { // 수정한 항목
 
 /*void PC::dig(int x, int y) {
 	pc.vibe();
+	x = x - (x + 1) % BLOCKSIZE;
+	y = y - (y + 1) % BLOCKSIZE;
+	//if (x % BLOCKSIZE || y % BLOCKSIZE) return;
+	if (x % BLOCKSIZE > BLOCKSIZE / 2 - 1) x++;
+	if (y % BLOCKSIZE > BLOCKSIZE / 2 - 1) y++;
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
 	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
@@ -128,9 +132,8 @@ void PC::setDirRight() {
 	targetLayer->images[0].fileName = bmpPCRightName;
 }
 void PC::setDirLeft() {
-	char bmpZombieName[] = "NPC.bmp";
 	curDirection = 2;
-	targetLayer->images[0].fileName = bmpZombieName;
+	targetLayer->images[0].fileName = bmpPCLeftName;
 }
 void PC::setDirDown() {
 	curDirection = 1;

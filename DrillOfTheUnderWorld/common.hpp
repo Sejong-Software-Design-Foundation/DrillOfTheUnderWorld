@@ -56,6 +56,11 @@ extern int blockInfo[1200][1200];
 extern bool isOnStage;
 extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
+extern char bmpNameNull[];
+
+extern char bmpZombieName[];
+extern char bmpNameBoss[];
+extern char bmpNameShop[];
 
 extern ImageLayer rewardLayer;
 extern int mapInfo[6][6];
@@ -85,7 +90,6 @@ void getHandle();
 void removeCursor();
 void resizeConsole(int w, int h);
 void initialize();
-void dig(int x, int y);
 bool collisionCheck(int x, int y);
 int convertPosToInfoX(int x);
 int convertPosToInfoY(int y);
@@ -98,5 +102,6 @@ void setMovableStageInfo(int row, int col);
 void drawUI();
 void drawMapUI();
 void rewardUI();
+void initArea();
 
 #endif COMMON_HPP
