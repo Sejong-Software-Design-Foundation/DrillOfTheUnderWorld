@@ -285,5 +285,11 @@
     <Image Include="..\..\..\ui\UI_rewardSpdSelected.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="..\..\..\Boss.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\..\Zombie.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

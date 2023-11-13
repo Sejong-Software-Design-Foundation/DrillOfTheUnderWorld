@@ -3,6 +3,7 @@
 
 #include "common.hpp"
 
+// abstract class
 class NPC {
 public:
     virtual void move(ImageLayer* imageLayer) = 0;
@@ -12,6 +13,9 @@ public:
     int dir[4][2] = { {1,0},{0,1},{-1,0}, {0,-1} };
     // 실제 Console x, y좌표가 들어감
     int x, y;
+    // image array 내 해당 객체 bmp의 idx 번호
+    int imageidx;
+
     int hp;
     int attack_damage;
     int curDirection;

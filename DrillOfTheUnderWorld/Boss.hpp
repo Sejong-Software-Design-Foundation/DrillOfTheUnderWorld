@@ -11,7 +11,11 @@ public:
     void attack();
 };
 
-Boss::Boss(int x, int y) : NPC(x, y, 100, 50, 1) {}
+Boss::Boss(int x, int y) : NPC(x, y, 100, 50, 1) {
+    char bmpNameBoss[] = "Boss.bmp";
+    this->imageidx = imageLayer.imageCount;
+    imageArray[imageLayer.imageCount++] = { bmpNameBoss, x, y, 1 };
+}
 
 void Boss::move(ImageLayer* il) {
     if (PCNear(imageLayer)) {
@@ -29,16 +33,14 @@ void Boss::move(ImageLayer* il) {
     double dx = SPEED * cos(angle);
     double dy = SPEED * sin(angle);
 
-    if (collisionCheck(x + dx, y + dy)) {
-        return;
-    }
+    if (collisionCheck(x + dx, y + dy)) { return; }
 
     // BOSS 좌표를 업데이트
-    imageLayer.images[2].x += dx;
-    imageLayer.images[2].y += dy;
+    imageLayer.images[imageidx].x += dx;
+    imageLayer.images[imageidx].y += dy;
 
-    x = imageLayer.images[2].x;
-    y = imageLayer.images[2].y;
+    x = imageLayer.images[imageidx].x;
+    y = imageLayer.images[imageidx].y;
 }
 
 void Boss::attack() {

@@ -158,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Boos.bmp" />
+    <Image Include="..\..\..\Boss.bmp" />
     <Image Include="..\..\..\Mineral.bmp" />
     <Image Include="..\..\..\NPC.bmp" />
     <Image Include="..\..\..\Shop.bmp" />
@@ -201,6 +202,7 @@
     <Image Include="..\..\..\ui\UI_rewardAtkSpdSelected.bmp" />
     <Image Include="..\..\..\ui\UI_rewardSpd.bmp" />
     <Image Include="..\..\..\ui\UI_rewardSpdSelected.bmp" />
+    <Image Include="..\..\..\Zombie.bmp" />
     <Image Include="..\..\characterStatus.bmp" />
     <Image Include="..\..\clearedArea.bmp" />
     <Image Include="..\..\hiddenArea.bmp" />

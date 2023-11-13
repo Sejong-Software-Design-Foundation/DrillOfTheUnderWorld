@@ -32,10 +32,10 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 24
+#define SPEED 48
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
-#define AREA_ORIGIN_Y 48 * 7
+#define AREA_ORIGIN_Y 48 *  7
 
 #define STAGE_ORIGIN_X 600
 #define STAGE_ORIGIN_Y 240
@@ -64,6 +64,7 @@ extern int index_UI_O2_Start;
 extern int index_UI_blockInfo_Start;
 extern int index_UI_mapTile_Start;
 
+extern char bmpNullName[];
 // stage Image
 extern char bmpClearedAreaName[];
 extern char bmpNomalAreaName[];

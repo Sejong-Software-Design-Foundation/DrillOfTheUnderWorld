@@ -22,7 +22,12 @@ int main() {
 	//drawUI();
 
 	initBlockImages();
+
 	drawUI();
+
+	Zombie* zombie = new Zombie(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
+	Boss* boss = new Boss(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
+	Shop* shop = new Shop(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
 
 
 	char bmpNameTmp[] = "emptyTile.bmp";
@@ -31,18 +36,15 @@ int main() {
 	Stage stage;
 	std::vector<std::vector<Area>> areaList = stage.getAreaList();
 
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 5; j++) {
+	for (int i = 0; i < 5; i++) { 
+		for (int j = 0; j < 5; j++ ) {
 			printf("%d\n", areaList[i][j].getPosX());
 		}
 	}
 	*/
-	Zombie* zombie = new Zombie(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
-	Boss* boss = new Boss(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
-	Shop* shop = new Shop(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
-	Mineral* mineral = new Mineral();
+	//Mineral* mineral = new Mineral();
 
-	char bmpStageLevel[] = "Stage1.bmp";
+	char bmpStageLevel[] = "Stage1.bmp"; 
 
 	stageLayer.imageCount = STAGE_EXTRA_IMAGE_COUNT;
 	initStageImages();
