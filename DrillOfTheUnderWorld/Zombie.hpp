@@ -18,11 +18,10 @@ Zombie::Zombie(int x, int y) : NPC(x, y, 100, 50, 1) {
     int infoY = convertPosToInfoY(y);
 
     int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-    char bmpNameZombie[] = "NPC.bmp";
     // render 출력을 위한 image 번호 저장
     // image에 객체 이미지 추가
     this->imageidx = imageIndex;
-    imageLayer.images[imageIndex].fileName = bmpNameZombie;
+    imageLayer.images[imageIndex].fileName = bmpZombieName;
 
 }
 

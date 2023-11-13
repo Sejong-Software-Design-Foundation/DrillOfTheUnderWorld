@@ -58,6 +58,10 @@ extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
 extern char bmpNameNull[];
 
+extern char bmpZombieName[];
+extern char bmpNameBoss[];
+extern char bmpNameShop[];
+
 extern ImageLayer rewardLayer;
 extern int mapInfo[6][6];
 extern int index_UI_HP_Start;

@@ -24,6 +24,10 @@ char bmpMovableAreaName[] = "movableArea.bmp";
 char bmpCharacterStatueName[] = "characterStatus.bmp";
 char bmpNameNull[] = "";
 
+char bmpZombieName[] = "NPC.bmp";
+char bmpNullName[] = "";
+char bmpNameBoss[] = "Boss.bmp";
+char bmpNameShop[] = "Shop.bmp";
 //
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
 Image imagesReward[1000];
@@ -78,7 +82,6 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
-char bmpNullName[] = "empty.bmp";
 //
 
 
@@ -301,9 +304,9 @@ void drawUI() { // 새로운 함수
 }
 
 void drawMapUI() { // 새로운 함수
-	imageArray[imageLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1 }; // 2
-	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1 }; // 3
-	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1 }; // 4
+	imageArray[imageLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1, 1 }; // 2
+	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 }; // 3
+	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 }; // 4
 	index_UI_mapTile_Start = imageLayer.imageCount;
 	for (int y = 100; y < 100 + (BLOCKSIZE * 5) + 10; y += (BLOCKSIZE + 2)) {
 		for (int x = 1590; x < 1590 + (BLOCKSIZE * 5) + 10; x += (BLOCKSIZE + 2)) {
@@ -315,7 +318,7 @@ void drawMapUI() { // 새로운 함수
 	// 5 ~ 29
 	imageArray[imageLayer.imageCount++] = { bmpNameMapBox, 1508, 0, 1 }; // 30
 
-	imageArray[index_UI_mapTile_Start + 12].fileName = bmpNameMapTileCleared;
+	/*imageArray[index_UI_mapTile_Start + 12].fileName = bmpNameMapTileCleared;
 	imageArray[index_UI_mapTile_Start + 16].fileName = bmpNameMapTileCleared;
 	imageArray[index_UI_mapTile_Start + 17].fileName = bmpNameMapTileCleared;
 
@@ -324,7 +327,7 @@ void drawMapUI() { // 새로운 함수
 	imageArray[3].x = imageArray[index_UI_mapTile_Start + 4].x;
 	imageArray[3].y = imageArray[index_UI_mapTile_Start + 4].y;
 	imageArray[4].x = imageArray[index_UI_mapTile_Start + 15].x;
-	imageArray[4].y = imageArray[index_UI_mapTile_Start + 15].y;
+	imageArray[4].y = imageArray[index_UI_mapTile_Start + 15].y;*/
 }
 
 void rewardUI() { // 새로운 함수
