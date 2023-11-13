@@ -22,6 +22,7 @@ int main() {
 	//drawUI();
 
 	initBlockImages();
+	initArea();
 	drawUI();
 
 

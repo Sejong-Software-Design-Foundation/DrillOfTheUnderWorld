@@ -61,9 +61,8 @@ void PC::dig(int x, int y) { // 수정한 항목
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
-
 	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[imageIndex].fileName = 0;
+		imageLayer.images[imageIndex].fileName = bmpNameNull;
 	}
 	else if (blockInfo[infoY][infoX] == 1) {
 		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;

@@ -32,7 +32,7 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 24
+#define SPEED 48
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 48 * 7
@@ -56,6 +56,7 @@ extern int blockInfo[1200][1200];
 extern bool isOnStage;
 extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
+extern char bmpNameNull[];
 
 extern ImageLayer rewardLayer;
 extern int mapInfo[6][6];
@@ -84,7 +85,6 @@ void getHandle();
 void removeCursor();
 void resizeConsole(int w, int h);
 void initialize();
-void dig(int x, int y);
 bool collisionCheck(int x, int y);
 int convertPosToInfoX(int x);
 int convertPosToInfoY(int y);
@@ -97,5 +97,6 @@ void setMovableStageInfo(int row, int col);
 void drawUI();
 void drawMapUI();
 void rewardUI();
+void initArea();
 
 #endif COMMON_HPP

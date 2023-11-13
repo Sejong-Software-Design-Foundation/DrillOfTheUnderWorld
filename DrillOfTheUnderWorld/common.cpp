@@ -22,6 +22,7 @@ char bmpNomalAreaName[] = "nomalArea.bmp";
 char bmpHiddenAreaName[] = "hiddenArea.bmp";
 char bmpMovableAreaName[] = "movableArea.bmp";
 char bmpCharacterStatueName[] = "characterStatus.bmp";
+char bmpNameNull[] = "";
 
 //
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
@@ -448,3 +449,16 @@ void dig(int x, int y) {
 	}
 }
 */
+
+void initArea() {
+	for (int i = 0;i < 25;i++) {
+		for (int j = 0;j < 25;j++) {
+			if (i > 4 && i < 20 && j> 5 && j < 20) imageLayer.images[i * 25 + j + 1].fileName = bmpNameNull;
+		}
+	}
+	for (int y = 240;y < 960;y++) {
+		for (int x = 192;x < 960;x++) {
+			blockInfo[y][x] = 0;
+		}
+	}
+}
