@@ -127,25 +127,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Area.cpp" />
     <ClCompile Include="common.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PC.cpp" />
+    <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Area.hpp" />
     <ClInclude Include="ImageFading.h" />
     <ClInclude Include="ImageLayer.h" />
     <ClInclude Include="ImageLayerImpl.h" />
     <ClInclude Include="ImageLayerInterface.h" />
     <ClInclude Include="PC.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource2.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="common.hpp" />
+    <ClInclude Include="Stage.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav" />
     <Media Include="start_bgm.wav" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\characterStatus.bmp" />
+    <Image Include="..\..\clearedArea.bmp" />
+    <Image Include="..\..\hiddenArea.bmp" />
+    <Image Include="..\..\movableArea.bmp" />
+    <Image Include="..\..\Stage1.bmp" />
+    <Image Include="..\..\Stage2.bmp" />
+    <Image Include="..\..\Stage3.bmp" />
     <Image Include="basicStoneBlocks.bmp" />
+    <Image Include="hiddenStage.bmp" />
+    <Image Include="nomalStage.bmp" />
+    <Image Include="clearedStage.bmp" />
     <Image Include="brokenStoneBlock.bmp" />
     <Image Include="PC_down.bmp" />
     <Image Include="PC_left.bmp" />
