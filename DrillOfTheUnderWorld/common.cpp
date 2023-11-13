@@ -77,6 +77,8 @@ char bmpNameNormalAtkSpdSelected[] = "UI_rewardAtkSpdSelected.bmp";
 char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
+
+char bmpNullName[] = "empty.bmp";
 //
 
 
@@ -112,7 +114,27 @@ void initialize() {
 	srand((unsigned)time(NULL)); // 추가한 항목
 }
 
+// NPC 공간 만들기
+
+
 void initBlockImages() {
+
+   for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+      for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+         if (y >= AREA_ORIGIN_Y + BLOCKSIZE * 5 && y<= AREA_ORIGIN_Y + BLOCKSIZE * 20 && x >= AREA_ORIGIN_X + BLOCKSIZE * 4 && x <= AREA_ORIGIN_X + BLOCKSIZE * 20) {
+            imageArray[imageLayer.imageCount++] = { bmpNullName, x,y,1};
+            blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 0;
+         }
+         else {
+            imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
+            blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
+         }
+      }
+   }
+}
+
+/*void initBlockImages() {
+	int rowCount -9
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			//if (y == AREA_ORIGIN_Y && x == AREA_ORIGIN_X + 576) continue;
@@ -124,12 +146,15 @@ void initBlockImages() {
 			blockInfo[i][j] = 2;
 		}
 	}
-	/*for (int i = 0;i < BLOCKSIZE;i++) {
+	for (int i = 0;i < BLOCKSIZE;i++) {
 		for (int j = 576;j < 576 + BLOCKSIZE;j++) {
 			blockInfo[i][j] = 0;
 		}
-	}*/
+	}
 }
+*/
+
+
 
 void initStageImages() {
 	for (int y = 0; y < 5; y++) {

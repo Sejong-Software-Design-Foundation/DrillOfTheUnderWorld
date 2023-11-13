@@ -62,7 +62,11 @@ void PC::dig(int x, int y) { // 수정한 항목
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 	if (!blockInfo[infoY][infoX]) {
+<<<<<<< HEAD
 		imageLayer.images[imageIndex].fileName = bmpNameNull;
+=======
+		imageLayer.images[imageIndex].fileName = bmpNullName;
+>>>>>>> 1d193d3c35ae242e53c46ec774b11d8a4a7b62d0
 	}
 	else if (blockInfo[infoY][infoX] == 1) {
 		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
@@ -132,8 +136,9 @@ void PC::setDirRight() {
 	targetLayer->images[0].fileName = bmpPCRightName;
 }
 void PC::setDirLeft() {
+	char bmpZombieName[] = "NPC.bmp";
 	curDirection = 2;
-	targetLayer->images[0].fileName = bmpPCLeftName;
+	targetLayer->images[0].fileName = bmpZombieName;
 }
 void PC::setDirDown() {
 	curDirection = 1;
