@@ -14,6 +14,15 @@ extern "C" {
 #include "PC.hpp"
 #include "Stage.hpp"
 
+#define NUM1 49  
+#define NUM2 50  
+#define NUM3 51
+#define O 111
+#define P 112
+#define UI_HP_ORIGIN_X 400
+#define UI_HP_ORIGIN_Y 60
+#define UI_O2_ORIGIN_Y 120
+
 #define LEFT 75
 #define RIGHT 77
 #define UP 72
@@ -26,7 +35,7 @@ extern "C" {
 #define SPEED 24
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
-#define AREA_ORIGIN_Y 96
+#define AREA_ORIGIN_Y 48 * 7
 
 #define STAGE_ORIGIN_X 600
 #define STAGE_ORIGIN_Y 240
@@ -48,6 +57,12 @@ extern bool isOnStage;
 extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
 
+extern ImageLayer rewardLayer;
+extern int mapInfo[6][6];
+extern int index_UI_HP_Start;
+extern int index_UI_O2_Start;
+extern int index_UI_blockInfo_Start;
+extern int index_UI_mapTile_Start;
 
 // stage Image
 extern char bmpClearedAreaName[];
@@ -61,6 +76,9 @@ extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
+
+COORD getCurrentCurPos(void);
+void setCurrentCurPos(int x, int y);
 
 void getHandle();
 void removeCursor();
@@ -76,5 +94,8 @@ int convertPosToInfoYInStage(int y);
 void initBlockImages();
 void initStageImages();
 void setMovableStageInfo(int row, int col);
+void drawUI();
+void drawMapUI();
+void rewardUI();
 
 #endif COMMON_HPP
