@@ -23,7 +23,7 @@ int main() {
 
 	targetLayer = &testLayer;
 	targetLayer->renderAll(targetLayer);
-
+	
 	while (1) {
 		while (_kbhit() != 0) {
 			int key = _getch();

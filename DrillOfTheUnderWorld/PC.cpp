@@ -25,6 +25,11 @@ void PC::setOxygen(int o2) { this->O_2 = o2; }
 void PC::setATK(int atk) { this->ATK = atk; }
 void PC::dig(int x, int y) {
 	pc.vibe();
+	x = x - (x + 1) % BLOCKSIZE;
+	y = y - (y + 1) % BLOCKSIZE;
+	//if (x % BLOCKSIZE || y % BLOCKSIZE) return;
+	if (x % BLOCKSIZE > BLOCKSIZE / 2 - 1) x++;
+	if (y % BLOCKSIZE > BLOCKSIZE / 2 - 1) y++;
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
 	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
