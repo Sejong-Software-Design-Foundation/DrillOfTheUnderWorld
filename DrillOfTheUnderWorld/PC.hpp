@@ -5,7 +5,11 @@ extern "C" {
 
 class PC {
 private:
-	int HP = 100, O_2 = 100, ATK = 1, curDirection = 0;
+	int MAX_HP = 100, MAX_O2 = 100;
+	int AtkLev = 0, AtkSpdLev = 0, SpdLev = 0;
+
+	int HP = 100, O2 = 100, ATK = 1, curDirection = 0;
+	int stone = 0;
 	int dx[4] = { 1,0,-1,0 };
 	int dy[4] = { 0,1,0,-1 };
 	char* bmpPCName;
@@ -30,11 +34,13 @@ public:
 	static PC& getPC();
 	void vibe();
 	COORD getCurPos();
+	int getStone();
 	int getHP();
 	int getOxygen();
 	int getATK();
 	int getDir();
 	COORD getPosAfterMove(int x, int y);
+	void setStone(int stone);
 	COORD getTargetPos(int x, int y);
 	void setHP(int hp);
 	void setOxygen(int o2);
@@ -45,4 +51,13 @@ public:
 	void setDirUp();
 	void move();
 	void dig(int x, int y);
+	void moveInStage();
+
+	int getAtkLev();
+	int getAtkSpdLev();
+	int getSpdLev();
+	void setAtkLev(int lev);
+	void setAtkSpdLev(int lev);
+	void setSpdLev(int lev);
+
 };

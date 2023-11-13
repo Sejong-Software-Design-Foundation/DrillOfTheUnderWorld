@@ -17,13 +17,67 @@ COORD PC::getCurPos() {
 	COORD CurPos = { imageLayer.images[0].x, imageLayer.images[0].y };
 	return CurPos;
 }
+int PC::getStone() { return stone; }
 int PC::getHP() { return HP; }
-int PC::getOxygen() { return O_2; }
+int PC::getOxygen() { return O2; }
 int PC::getATK() { return ATK; }
-void PC::setHP(int hp) { this->HP = hp; }
-void PC::setOxygen(int o2) { this->O_2 = o2; }
+void PC::setStone(int stone) { this->stone = stone; }
+void PC::setHP(int hp) { // 수정한 항목
+	int prev_HP = this->HP / 10;
+	if (hp <= 0) {
+		this->HP = 0;
+		exit(0);
+	}
+	else if (hp > MAX_HP) this->HP = MAX_HP;
+	else this->HP = hp;
+	int cur_HP = this->HP / 10;
+	imageArray[index_UI_HP_Start + prev_HP].isHide = 1;
+	imageArray[index_UI_HP_Start + cur_HP].isHide = 0;
+}
+void PC::setOxygen(int o2) { // 수정한 항목
+	int prev_O2 = this->O2 / 10;
+	if (o2 <= 0) {
+		this->O2 = 0;
+		pc.setHP(pc.getHP() - 1);
+	}
+	else if (o2 > MAX_O2) this->O2 = MAX_O2;
+	else this->O2 = o2;
+	int cur_O2 = this->O2 / 10;
+	imageArray[index_UI_O2_Start + prev_O2].isHide = 1;
+	imageArray[index_UI_O2_Start + cur_O2].isHide = 0;
+}
 void PC::setATK(int atk) { this->ATK = atk; }
-void PC::dig(int x, int y) {
+
+void PC::dig(int x, int y) { // 수정한 항목
+	pc.vibe();
+	int infoX = convertPosToInfoX(x);
+	int infoY = convertPosToInfoY(y);
+	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
+	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+			if (blockInfo[curY][curX]) blockInfo[curY][curX]--;
+		}
+	}
+
+	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+
+	if (!blockInfo[infoY][infoX]) {
+		imageLayer.images[imageIndex].fileName = 0;
+	}
+	else if (blockInfo[infoY][infoX] == 1) {
+		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
+	}
+	/*
+	if (!blockInfo[infoY][infoX]) {
+		imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = 0;
+	}
+	else {
+		imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = bmpBrokenStoneBlockName;
+	}*/
+}
+
+/*void PC::dig(int x, int y) {
 	pc.vibe();
 	x = x - (x + 1) % BLOCKSIZE;
 	y = y - (y + 1) % BLOCKSIZE;
@@ -39,12 +93,18 @@ void PC::dig(int x, int y) {
 		}
 	}
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
 	if (!blockInfo[infoY][infoX]) {
 		imageLayer.images[imageIndex].fileName = 0;
 	}
 	else if (blockInfo[infoY][infoX]==1) {
 		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
 	}
+}*/
+
+void PC::moveInStage() {
+	stageLayer.images[0].x += dx[curDirection] * AREA_BLOCK_SIZE;
+	stageLayer.images[0].y += dy[curDirection] * AREA_BLOCK_SIZE;
 }
 
 void PC::move() {
@@ -70,17 +130,24 @@ COORD PC::getTargetPos(int x, int y) {
 
 void PC::setDirRight() {
 	curDirection = 0;
-	imageLayer.images[0].fileName = bmpPCRightName;
+	targetLayer->images[0].fileName = bmpPCRightName;
 }
 void PC::setDirLeft() {
 	curDirection = 2;
-	imageLayer.images[0].fileName = bmpPCLeftName;
+	targetLayer->images[0].fileName = bmpPCLeftName;
 }
 void PC::setDirDown() {
 	curDirection = 1;
-	imageLayer.images[0].fileName = bmpPCDownName;
+	targetLayer->images[0].fileName = bmpPCDownName;
 }
 void PC::setDirUp() {
 	curDirection = 3;
-	imageLayer.images[0].fileName = bmpPCUpName;
+	targetLayer->images[0].fileName = bmpPCUpName;
 }
+
+int PC::getAtkLev() { return AtkLev; }
+int PC::getAtkSpdLev() { return AtkSpdLev; }
+int PC::getSpdLev() { return SpdLev; }
+void PC::setAtkLev(int lev) { this->AtkLev = lev; }
+void PC::setAtkSpdLev(int lev) { this->AtkSpdLev = lev; }
+void PC::setSpdLev(int lev) { this->SpdLev = lev; }
