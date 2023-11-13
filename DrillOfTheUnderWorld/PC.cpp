@@ -29,14 +29,19 @@ void PC::dig(int x, int y) {
 	pc.vibe();
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
-	if (infoY < 0 || infoY >= 25 || infoX < 0 || infoX >= 25) return;
-	if (blockInfo[infoY][infoX])
-		blockInfo[infoY][infoX]--;
-	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = 0;
+	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
+	for (int curY = infoY;curY < infoY + BLOCKSIZE;curY++) {
+		for (int curX = infoX;curX < infoX + BLOCKSIZE;curX++) {
+			if (blockInfo[curY][curX]) blockInfo[curY][curX]--;
+		}
 	}
-	else {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = bmpBrokenStoneBlockName;
+	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+	if (!blockInfo[infoY][infoX]) {
+		imageLayer.images[imageIndex].fileName = 0;
+	}
+	else if (blockInfo[infoY][infoX]==1) {
+		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
 	}
 }
 void PC::moveInStage() {
@@ -45,8 +50,8 @@ void PC::moveInStage() {
 }
 
 void PC::move() {
-	imageLayer.images[0].x += dir[curDirection][0]*BLOCKSIZE;
-	imageLayer.images[0].y += dir[curDirection][1]*BLOCKSIZE;
+	imageLayer.images[0].x += dx[curDirection]*SPEED;
+	imageLayer.images[0].y += dy[curDirection]*SPEED;
 }
 int PC::getDir() {
 	return curDirection;
@@ -54,8 +59,14 @@ int PC::getDir() {
 
 COORD PC::getPosAfterMove(int x, int y) {
 	COORD result;
-	result.X = x + dir[curDirection][0]*BLOCKSIZE;
-	result.Y = y + dir[curDirection][1]*BLOCKSIZE;
+	result.X = x + dx[curDirection]*SPEED;
+	result.Y = y + dy[curDirection]*SPEED;
+	return result;
+}
+COORD PC::getTargetPos(int x, int y) {
+	COORD result;
+	result.X = x + dx[curDirection] * BLOCKSIZE;
+	result.Y = y + dy[curDirection] * BLOCKSIZE;
 	return result;
 }
 

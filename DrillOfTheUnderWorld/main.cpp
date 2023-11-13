@@ -9,7 +9,7 @@ int main() {
 	stageLayer.initialize(&stageLayer);
 
 	char bmpNamePC[] = "PlayerCharacter.bmp";
-	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 
@@ -100,61 +100,69 @@ int main() {
 		}
 		else {
 			while (_kbhit() != 0) {
-				int key = _getch();
-				int curPosX = imageLayer.images[0].x;
-				int curPosY = imageLayer.images[0].y;
+          int key = _getch();
+          int curPosX = imageLayer.images[0].x;
+          int curPosY = imageLayer.images[0].y;
+          COORD afterMovedPos;
 
-				switch (key) {
-				case S:
-					if (isOnStage) {
-						targetLayer->fadeOut(targetLayer, NULL);
-						targetLayer = &imageLayer;
-						isOnStage = false;
-						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
-						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
+          switch (key) {
+          case S:
+            targetLayer->fadeOut(targetLayer, NULL);
+            if (isOnStage) {
+              targetLayer = &imageLayer;
+              isOnStage = false;
+              currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
+              currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 
-						imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
-						imageLayer.images = imageArray;
-						imageLayer.imageCount = 1;
+              imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
+              imageLayer.images = imageArray;
+              imageLayer.imageCount = 1;
 
-						initBlockImages();
+              initBlockImages();
 
-						targetLayer->fadeIn(targetLayer, NULL);
-					}
-					else {
-						targetLayer->fadeOut(targetLayer, NULL);
-						targetLayer = &stageLayer;
-						isOnStage = true;
-						targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-						stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-						setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-						targetLayer->fadeIn(targetLayer, NULL);
-					}
-					break;
-				case LEFT:
-					pc.setDirLeft();
-					if (!collisionCheck(curPosX - BLOCKSIZE, curPosY)) pc.move();
-					break;
-				case RIGHT:
-					pc.setDirRight();
-					if (!collisionCheck(curPosX + BLOCKSIZE, curPosY)) pc.move();
-					break;
-				case UP:
-					pc.setDirUp();
-					if (!collisionCheck(curPosX, curPosY - BLOCKSIZE)) pc.move();
-					break;
-				case DOWN:
-					pc.setDirDown();
-					if (!collisionCheck(curPosX, curPosY + BLOCKSIZE)) pc.move();
-					break;
-				case ESC:
-					return 0;
-					break;
-				case SPACE:
-					COORD posAfterMoved = pc.getPosAfterMove(curPosX, curPosY);
-					pc.dig(posAfterMoved.X, posAfterMoved.Y);
-				}
-				if (key) targetLayer->renderAll(targetLayer);
+              targetLayer->fadeIn(targetLayer, NULL);
+            }
+            else {
+              targetLayer->fadeOut(targetLayer, NULL);
+              targetLayer = &stageLayer;
+              isOnStage = true;
+              targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+              stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+              setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+              targetLayer->fadeIn(targetLayer, NULL);
+            }
+					  break;
+              
+              
+          case LEFT:
+            pc.setDirLeft();
+            afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+            if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+            break;
+          case RIGHT:
+            pc.setDirRight();
+            afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+            if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+            break;
+          case UP:
+            pc.setDirUp();
+            afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+            if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+            break;
+          case DOWN:
+            pc.setDirDown();
+            afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+            if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+            break;
+          case ESC:
+            return 0;
+            break;
+          case SPACE:
+            COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+            pc.dig(targetPos.X, targetPos.Y);
+            break;
+
+				  if (key) targetLayer->renderAll(targetLayer);
 			}
 		}
 	}
