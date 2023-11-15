@@ -14,17 +14,23 @@ public:
 
 Mineral::Mineral() : NPC(0, 0, 0, 0, 1) {
 
-    char bmpNameMineral[] = "Mineral.bmp";
-
     srand(static_cast<unsigned int>(time(nullptr)));
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 10; i++) {
         while (1) {
-            x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 20);
-            y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 20);
+            x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
+            y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
 
-            if (blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] == 2) {
-                imageArray[4 + convertPosToInfoY(y) * 25 + convertPosToInfoX(x)] = { bmpNameMineral, x,y,1 };
+            int infoX = convertPosToInfoX(x);
+            int infoY = convertPosToInfoY(y);
+
+            int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+            if (blockInfo[infoY][infoX] == 2) {
+                // 4번 해야 깰 수 있도록
+                blockInfo[infoY][infoX] = 6;
+                // filename만 바꿔주기
+                imageLayer.images[imageIndex].fileName = bmpNameMineral;
                 break;
             }
 

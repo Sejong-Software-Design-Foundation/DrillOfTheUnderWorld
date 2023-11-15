@@ -67,38 +67,45 @@ void PC::dig(int x, int y) { // 수정한 항목
 	else if (blockInfo[infoY][infoX] == 1) {
 		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
 	}
+	// Mineral Block 일때
+	// 만약 N번 쳐서 3이 되었으면 jewel로 바꿔주기
+	else if (blockInfo[infoY][infoX] == 3) {
+		imageLayer.images[imageIndex].fileName = bmpNamejewel;
+		blockInfo[infoY][infoX] = 1;
+	}
+
 	/*
 	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = 0;
+	imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = 0;
 	}
 	else {
-		imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = bmpBrokenStoneBlockName;
+	imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = bmpBrokenStoneBlockName;
 	}*/
 }
 
 /*void PC::dig(int x, int y) {
-	pc.vibe();
-	x = x - (x + 1) % BLOCKSIZE;
-	y = y - (y + 1) % BLOCKSIZE;
-	//if (x % BLOCKSIZE || y % BLOCKSIZE) return;
-	if (x % BLOCKSIZE > BLOCKSIZE / 2 - 1) x++;
-	if (y % BLOCKSIZE > BLOCKSIZE / 2 - 1) y++;
-	int infoX = convertPosToInfoX(x);
-	int infoY = convertPosToInfoY(y);
-	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
-	for (int curY = infoY;curY < infoY + BLOCKSIZE;curY++) {
-		for (int curX = infoX;curX < infoX + BLOCKSIZE;curX++) {
-			if (blockInfo[curY][curX]) blockInfo[curY][curX]--;
-		}
-	}
-	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+pc.vibe();
+x = x - (x + 1) % BLOCKSIZE;
+y = y - (y + 1) % BLOCKSIZE;
+//if (x % BLOCKSIZE || y % BLOCKSIZE) return;
+if (x % BLOCKSIZE > BLOCKSIZE / 2 - 1) x++;
+if (y % BLOCKSIZE > BLOCKSIZE / 2 - 1) y++;
+int infoX = convertPosToInfoX(x);
+int infoY = convertPosToInfoY(y);
+if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
+for (int curY = infoY;curY < infoY + BLOCKSIZE;curY++) {
+for (int curX = infoX;curX < infoX + BLOCKSIZE;curX++) {
+if (blockInfo[curY][curX]) blockInfo[curY][curX]--;
+}
+}
+int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
-	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[imageIndex].fileName = 0;
-	}
-	else if (blockInfo[infoY][infoX]==1) {
-		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
-	}
+if (!blockInfo[infoY][infoX]) {
+imageLayer.images[imageIndex].fileName = 0;
+}
+else if (blockInfo[infoY][infoX]==1) {
+imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
+}
 }*/
 
 void PC::moveInStage() {
@@ -107,8 +114,8 @@ void PC::moveInStage() {
 }
 
 void PC::move() {
-	imageLayer.images[0].x += dx[curDirection]*SPEED;
-	imageLayer.images[0].y += dy[curDirection]*SPEED;
+	imageLayer.images[0].x += dx[curDirection] * SPEED;
+	imageLayer.images[0].y += dy[curDirection] * SPEED;
 }
 int PC::getDir() {
 	return curDirection;
@@ -116,8 +123,8 @@ int PC::getDir() {
 
 COORD PC::getPosAfterMove(int x, int y) {
 	COORD result;
-	result.X = x + dx[curDirection]*SPEED;
-	result.Y = y + dy[curDirection]*SPEED;
+	result.X = x + dx[curDirection] * SPEED;
+	result.Y = y + dy[curDirection] * SPEED;
 	return result;
 }
 COORD PC::getTargetPos(int x, int y) {

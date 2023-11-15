@@ -61,6 +61,9 @@ extern char bmpNameNull[];
 extern char bmpZombieName[];
 extern char bmpNameBoss[];
 extern char bmpNameShop[];
+extern char bmpNameMineral[];
+// temp jewel bmp
+extern char bmpNamejewel[];
 
 extern ImageLayer rewardLayer;
 extern int mapInfo[6][6];

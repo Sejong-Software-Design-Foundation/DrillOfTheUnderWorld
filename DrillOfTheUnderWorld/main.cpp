@@ -35,21 +35,22 @@ int main() {
 	Stage stage;
 	std::vector<std::vector<Area>> areaList = stage.getAreaList();
 
-	for (int i = 0; i < 5; i++) { 
-		for (int j = 0; j < 5; j++ ) {
-			printf("%d\n", areaList[i][j].getPosX());
-		}
+	for (int i = 0; i < 5; i++) {
+	for (int j = 0; j < 5; j++ ) {
+	printf("%d\n", areaList[i][j].getPosX());
+	}
 	}
 	*/
-	//Mineral* mineral = new Mineral();
+	Mineral* mineral = new Mineral();
 
-	char bmpStageLevel[] = "Stage1.bmp"; 
+	char bmpStageLevel[] = "Stage1.bmp";
 
 	stageLayer.imageCount = STAGE_EXTRA_IMAGE_COUNT;
 	initStageImages();
+
 	stageLayer.images = stageImages;
 	stageLayer.images[0] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48
-										, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
+	, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
 	stageLayer.images[1] = { bmpCharacterStatueName, 60 , STAGE_ORIGIN_Y, 1 };
 	stageLayer.images[2] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 
@@ -59,7 +60,7 @@ int main() {
 	targetLayer = &stageLayer;
 
 	targetLayer->renderAll(targetLayer);
-	
+
 	while (1) {
 		if (isOnStage) {
 			while (_kbhit() != 0) {
@@ -74,7 +75,7 @@ int main() {
 						isOnStage = false;
 						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
-						
+
 						/*
 						imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
 						imageLayer.images = imageArray;
@@ -197,7 +198,7 @@ int main() {
 					}
 					pc.setOxygen(pc.getOxygen() - 1);
 				}
-			
+
 				Sleep(5);
 			}
 		}
