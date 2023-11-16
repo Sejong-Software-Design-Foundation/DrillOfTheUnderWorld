@@ -24,9 +24,9 @@ int main() {
 	initBlockImages();
 	drawUI();
 
-	Zombie* zombie = new Zombie(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
-	Boss* boss = new Boss(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
-	Shop* shop = new Shop(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
+	Zombie* zombie = new Zombie(NPCSpacePosX, NPCSpacePosY);
+	Boss* boss = new Boss(NPCSpacePosX+1, NPCSpacePosY+1);
+	Shop* shop = new Shop(NPCSpacePosX + (NPCSpaceWidth / 2) * BLOCKSIZE, NPCSpacePosY + (NPCSpaceHeight / 2)*BLOCKSIZE);
 
 
 	char bmpNameTmp[] = "emptyTile.bmp";
@@ -59,6 +59,7 @@ int main() {
 	targetLayer = &stageLayer;
 
 	targetLayer->renderAll(targetLayer);
+
 	
 	while (1) {
 		if (isOnStage) {
@@ -118,8 +119,8 @@ int main() {
 		else {
 			targetLayer->renderAll(targetLayer);
 			zombie->move(&imageLayer);
-			boss->move(&imageLayer);
-			shop->move(&imageLayer);
+			//boss->move(&imageLayer);
+			//shop->move(&imageLayer);
 
 			for (int i = 0; i < 10; i++) {
 				if (_kbhit() != 0) {

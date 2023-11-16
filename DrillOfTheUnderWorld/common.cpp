@@ -82,6 +82,11 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
+int NPCSpacePosX;
+int NPCSpacePosY;
+int NPCSpaceHeight;
+int NPCSpaceWidth;
+
 //
 
 
@@ -121,10 +126,16 @@ void initialize() {
 
 
 void initBlockImages() {
+	NPCSpaceHeight = getNPCSpaceHeight();
+	NPCSpaceWidth = getNPCSpaceWidth();
 
+	NPCSpacePosX = getNPCSpacePosX();
+	NPCSpacePosY = getNPCSpacePosY();
    for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
       for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-         if (y >= AREA_ORIGIN_Y + BLOCKSIZE * 5 && y<= AREA_ORIGIN_Y + BLOCKSIZE * 20 && x >= AREA_ORIGIN_X + BLOCKSIZE * 4 && x <= AREA_ORIGIN_X + BLOCKSIZE * 20) {
+         if (y != AREA_ORIGIN_Y + BLOCKSIZE*24 && x != AREA_ORIGIN_X + BLOCKSIZE*24 &&
+			 y >= NPCSpacePosY && y<= NPCSpacePosY + BLOCKSIZE* NPCSpaceHeight &&
+			 x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
             imageArray[imageLayer.imageCount++] = { bmpNullName, x,y,1};
             blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 0;
          }
@@ -134,6 +145,15 @@ void initBlockImages() {
          }
       }
    }
+}
+
+void fillBlockImages() {
+	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
+			blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
+		}
+	}
 }
 
 /*void initBlockImages() {
@@ -490,3 +510,26 @@ void initArea() {
 		}
 	}
 }
+
+int getNPCSpaceHeight() { return (rand() % 10 + 5); }
+int getNPCSpaceWidth() { return (rand() % 10 + 5); }
+int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth) + 1) * BLOCKSIZE + AREA_ORIGIN_X); }
+int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight) + 1) * BLOCKSIZE + AREA_ORIGIN_Y); }
+
+//void getNewArea(int zombieIndex) {
+//	
+//	
+//	fillBlockImages();
+//	for (int y = 0;y < NPC_SPACE_HEIGHT;y++) {
+//		for (int x = 0;x < NPC_SPACE_WIDTH;x++) {
+//			int curY = NPCSpacePosY + y * BLOCKSIZE;
+//			int curX = NPCSpacePosX + x * BLOCKSIZE;
+//			int curImage = (curY / BLOCKSIZE) * 25 + (curX / BLOCKSIZE) + 1;
+//			printf("%d ", curImage);
+//			imageArray[curImage] = { bmpNullName, curX, curY,1 };
+//			blockInfo[convertPosToInfoY(curY)][convertPosToInfoX(curX)] = 0;
+//		}
+//	}
+//	imageArray[zombieIndex].x = NPCSpacePosX;
+//	imageArray[zombieIndex].y = NPCSpacePosY;
+//}

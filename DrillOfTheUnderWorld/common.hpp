@@ -81,6 +81,11 @@ extern char bmpCharacterStatueName[];
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
 
+extern int NPCSpacePosX;
+extern int NPCSpacePosY;
+extern int NPCSpaceHeight;
+extern int NPCSpaceWidth;
+
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
 COORD getCurrentCurPos(void);
@@ -103,5 +108,12 @@ void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
+
+void fillBlockImages();
+//void getNewArea(int zombieIndex);
+int getNPCSpaceHeight();
+int getNPCSpaceWidth();
+int getNPCSpacePosX();
+int getNPCSpacePosY();
 
 #endif COMMON_HPP

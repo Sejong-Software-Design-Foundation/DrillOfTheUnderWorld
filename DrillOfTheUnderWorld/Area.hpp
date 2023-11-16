@@ -32,5 +32,6 @@ public:
 	void setThumnailImage();
 	void provideReward();
 	void enterArea();
-	void exitArea();;
+	void exitArea();
+	
 };
