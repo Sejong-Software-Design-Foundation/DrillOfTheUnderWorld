@@ -117,5 +117,6 @@ int getNPCSpaceWidth();
 int getNPCSpacePosX();
 int getNPCSpacePosY();
 void setMinerals(int max);
+void getNewArea();
 
 #endif COMMON_HPP

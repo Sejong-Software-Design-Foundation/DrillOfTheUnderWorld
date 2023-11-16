@@ -150,6 +150,32 @@ void initBlockImages() {
    setMinerals(10);
 }
 
+void getNewArea() {
+	NPCSpaceHeight = getNPCSpaceHeight();
+	NPCSpaceWidth = getNPCSpaceWidth();
+
+	NPCSpacePosX = getNPCSpacePosX();
+	NPCSpacePosY = getNPCSpacePosY();
+	int cnt = 1;
+	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
+				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
+				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
+				imageArray[cnt++] = { bmpNullName, x,y,1 };
+				blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 0;
+			}
+			else {
+				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
+				blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
+			}
+		}
+	}
+	setMinerals(10);
+	imageArray[0].x = AREA_ORIGIN_X + 576;
+	imageArray[0].y = AREA_ORIGIN_Y - BLOCKSIZE;
+}
+
 void fillBlockImages() {
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
@@ -324,6 +350,7 @@ void drawUI() { // 새로운 함수
 	imageArray[imageLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 0 };
 	imageArray[imageLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1 };
 	index_UI_blockInfo_Start = imageLayer.imageCount;
+
 }
 
 void drawMapUI() { // 새로운 함수
@@ -482,24 +509,15 @@ void rewardUI() { // 새로운 함수
 	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
 
 	// printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
-}
 
-/*
-
-void dig(int x, int y) {
-	pc.vibe();
-	int infoX = convertPosToInfoX(x);
-	int infoY = convertPosToInfoY(y);
-	if (infoY < 0 || infoY >= 25 || infoX < 0 || infoX >= 25) return;
-	blockInfo[infoY][infoX]--;
-	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = 0;
-	}
-	else {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = bmpBrokenStoneBlockName;
-	}
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &stageLayer;
+	isOnStage = true;
+	targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+	stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+	setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+	targetLayer->fadeIn(targetLayer, NULL);
 }
-*/
 
 void initArea() {
 	for (int i = 0;i < 25;i++) {
@@ -530,21 +548,3 @@ void setMinerals(int max) {
 		}
 	}
 }
-
-//void getNewArea(int zombieIndex) {
-//	
-//	
-//	fillBlockImages();
-//	for (int y = 0;y < NPC_SPACE_HEIGHT;y++) {
-//		for (int x = 0;x < NPC_SPACE_WIDTH;x++) {
-//			int curY = NPCSpacePosY + y * BLOCKSIZE;
-//			int curX = NPCSpacePosX + x * BLOCKSIZE;
-//			int curImage = (curY / BLOCKSIZE) * 25 + (curX / BLOCKSIZE) + 1;
-//			printf("%d ", curImage);
-//			imageArray[curImage] = { bmpNullName, curX, curY,1 };
-//			blockInfo[convertPosToInfoY(curY)][convertPosToInfoX(curX)] = 0;
-//		}
-//	}
-//	imageArray[zombieIndex].x = NPCSpacePosX;
-//	imageArray[zombieIndex].y = NPCSpacePosY;
-//}
