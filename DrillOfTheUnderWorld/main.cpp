@@ -59,7 +59,6 @@ int main() {
 	targetLayer = &stageLayer;
 
 	targetLayer->renderAll(targetLayer);
-
 	
 	while (1) {
 		if (isOnStage) {

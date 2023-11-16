@@ -77,6 +77,7 @@ extern char bmpHiddenAreaName[];
 extern char bmpMovableAreaName[];
 extern char bmpCharacterStatueName[];
 
+extern char bmpMineralName[];
 
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
@@ -115,5 +116,6 @@ int getNPCSpaceHeight();
 int getNPCSpaceWidth();
 int getNPCSpacePosX();
 int getNPCSpacePosY();
+void setMinerals(int max);
 
 #endif COMMON_HPP

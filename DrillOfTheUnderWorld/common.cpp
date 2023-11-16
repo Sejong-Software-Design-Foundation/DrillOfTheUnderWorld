@@ -82,6 +82,8 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
+char bmpMineralName[] = "Mineral.bmp";
+
 int NPCSpacePosX;
 int NPCSpacePosY;
 int NPCSpaceHeight;
@@ -145,6 +147,7 @@ void initBlockImages() {
          }
       }
    }
+   setMinerals(10);
 }
 
 void fillBlockImages() {
@@ -515,6 +518,18 @@ int getNPCSpaceHeight() { return (rand() % 10 + 5); }
 int getNPCSpaceWidth() { return (rand() % 10 + 5); }
 int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth) + 1) * BLOCKSIZE + AREA_ORIGIN_X); }
 int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight) + 1) * BLOCKSIZE + AREA_ORIGIN_Y); }
+void setMinerals(int max) {
+	while (max) {
+		int x = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_X;
+		int y = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_Y;
+		if (blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] == 2) {
+			int imageIndex = convertPosToInfoY(y) / BLOCKSIZE * 25 + convertPosToInfoX(x) / BLOCKSIZE + 1;
+			imageArray[imageIndex].fileName = bmpMineralName;
+			blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 3;
+			max--;
+		}
+	}
+}
 
 //void getNewArea(int zombieIndex) {
 //	
