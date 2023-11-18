@@ -139,11 +139,19 @@ void initBlockImages() {
 			 y >= NPCSpacePosY && y<= NPCSpacePosY + BLOCKSIZE* NPCSpaceHeight &&
 			 x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
             imageArray[imageLayer.imageCount++] = { bmpNullName, x,y,1};
-            blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 0;
+			for (int dy = 0;dy < BLOCKSIZE;dy++) {
+				for (int dx = 0;dx < BLOCKSIZE;dx++) {
+					blockInfo[convertPosToInfoY(y+dy)][convertPosToInfoX(x+dx)] = 0;
+				}
+			}
          }
          else {
             imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
-            blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
+			for (int dy = 0;dy < BLOCKSIZE;dy++) {
+				for (int dx = 0;dx < BLOCKSIZE;dx++) {
+					blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+				}
+			}
          }
       }
    }
@@ -163,17 +171,31 @@ void getNewArea() {
 				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
 				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
 				imageArray[cnt++] = { bmpNullName, x,y,1 };
-				blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 0;
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 0;
+					}
+				}
 			}
 			else {
 				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
-				blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+					}
+				}
 			}
 		}
 	}
 	setMinerals(10);
 	imageArray[0].x = AREA_ORIGIN_X + 576;
-	imageArray[0].y = AREA_ORIGIN_Y - BLOCKSIZE;
+	imageArray[0].y = AREA_ORIGIN_Y;
+	for (int y = 0;y < BLOCKSIZE;y++) {
+		for (int x = 0;x < BLOCKSIZE;x++) {
+			blockInfo[y][576+x] = 0;
+		}
+	}
+	imageArray[13].fileName = bmpNullName;
 }
 
 void fillBlockImages() {

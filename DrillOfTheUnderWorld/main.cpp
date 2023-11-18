@@ -15,7 +15,7 @@ int main() {
 	rewardLayer.initialize(&rewardLayer);
 
 	char bmpNamePC[] = "PlayerCharacter.bmp";
-	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y, 1 };
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 

@@ -49,7 +49,12 @@ void PC::setOxygen(int o2) { // 수정한 항목
 void PC::setATK(int atk) { this->ATK = atk; }
 
 void PC::dig(int x, int y) { // 수정한 항목
+	if (!isDigable(x, y)) return;
 	pc.vibe();
+	if (x % BLOCKSIZE > BLOCKSIZE / 2) x = x - x % BLOCKSIZE + BLOCKSIZE;
+	else x = x - x % BLOCKSIZE;
+	if (y % BLOCKSIZE > BLOCKSIZE / 2) y = y - y % BLOCKSIZE + BLOCKSIZE;
+	else y = y - y % BLOCKSIZE;
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
 	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
@@ -150,3 +155,9 @@ int PC::getSpdLev() { return SpdLev; }
 void PC::setAtkLev(int lev) { this->AtkLev = lev; }
 void PC::setAtkSpdLev(int lev) { this->AtkSpdLev = lev; }
 void PC::setSpdLev(int lev) { this->SpdLev = lev; }
+
+bool PC::isDigable(int x, int y) {
+	if (curDirection == 0 || curDirection == 2) return x % BLOCKSIZE == 0;
+	else return y % BLOCKSIZE == 0;
+	//return (x % BLOCKSIZE == 0 && y % BLOCKSIZE == 0);
+}
