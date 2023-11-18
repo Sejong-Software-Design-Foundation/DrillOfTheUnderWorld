@@ -58,12 +58,24 @@ extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
 extern char bmpNameNull[];
 
+// NPC BMP
 extern char bmpZombieName[];
 extern char bmpNameBoss[];
 extern char bmpNameShop[];
 extern char bmpNameMineral[];
-// temp jewel bmp
-extern char bmpNamejewel[];
+
+// ORE BMP
+extern char bmpNameBronzeOre[];
+extern char bmpNameSilverOre[];
+extern char bmpNameGoldOre[];
+extern char bmpNameDiamondOre[];
+
+// MINERAL BMP
+extern char bmpNameBronzeMineral[];
+extern char bmpNameSilverMineral[];
+extern char bmpNameGoldMineral[];
+extern char bmpNameDiamondMineral[];
+
 
 extern ImageLayer rewardLayer;
 extern int mapInfo[6][6];

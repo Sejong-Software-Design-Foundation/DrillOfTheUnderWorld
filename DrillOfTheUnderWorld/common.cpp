@@ -24,12 +24,32 @@ char bmpMovableAreaName[] = "movableArea.bmp";
 char bmpCharacterStatueName[] = "characterStatus.bmp";
 char bmpNameNull[] = "";
 
-char bmpZombieName[] = "NPC.bmp";
+// NPC BMP
+char bmpZombieName[] = "mole.bmp";
 char bmpNullName[] = "";
 char bmpNameBoss[] = "Boss.bmp";
 char bmpNameShop[] = "Shop.bmp";
-char bmpNameMineral[] = "Mineral.bmp";
-char bmpNamejewel[] = "hiddenStage.bmp";
+
+// have to add all these bmp files as bitmap resources
+// ORE BMP
+char bmpNameBronzeOre[] = "BronzeOre.bmp";
+char bmpNameSilverOre[] = "SilverOre.bmp";
+char bmpNameGoldOre[] = "GoldOre.bmp";
+char bmpNameDiamondOre[] = "DiamondOre.bmp";
+
+/*
+char bmpNameBronzeOre[] = "BronzeMineral.bmp";
+char bmpNameSilverOre[] = "SilverMineral.bmp";
+char bmpNameGoldOre[] = "GoldMineral.bmp";
+char bmpNameEmeraldOre[] = "EmeraldMineral.bmp";
+*/
+
+// MINERAL BMP
+char bmpNameBronzeMineral[] = "BronzeMineral.bmp";
+char bmpNameSilverMineral[] = "SilverMineral.bmp";
+char bmpNameGoldMineral[] = "GoldMineral.bmp";
+char bmpNameDiamondMineral[] = "DiamondMineral.bmp";
+
 
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
 Image imagesReward[1000];

@@ -1,5 +1,8 @@
 #include "PC.hpp"
 #include "common.hpp"
+#include <string>
+
+using namespace std;
 
 PC& PC::getPC() {
 	static PC pc;
@@ -48,7 +51,7 @@ void PC::setOxygen(int o2) { // 수정한 항목
 }
 void PC::setATK(int atk) { this->ATK = atk; }
 
-void PC::dig(int x, int y) { // 수정한 항목
+void PC::dig(int x, int y) {
 	pc.vibe();
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
@@ -68,45 +71,26 @@ void PC::dig(int x, int y) { // 수정한 항목
 		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
 	}
 	// Mineral Block 일때
-	// 만약 N번 쳐서 3이 되었으면 jewel로 바꿔주기
+	// 만약 N번 쳐서 3이 되었으면 해당 MINERAL로 바꿔주기
+	// 그리고 다시 한번 더 누르면 깰 수 있도록 해주기
 	else if (blockInfo[infoY][infoX] == 3) {
-		imageLayer.images[imageIndex].fileName = bmpNamejewel;
+
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameBronzeMineral;
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameSilverMineral;
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameGoldMineral;
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameDiamondMineral;
+		}
+
 		blockInfo[infoY][infoX] = 1;
 	}
-
-	/*
-	if (!blockInfo[infoY][infoX]) {
-	imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = 0;
-	}
-	else {
-	imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = bmpBrokenStoneBlockName;
-	}*/
 }
-
-/*void PC::dig(int x, int y) {
-pc.vibe();
-x = x - (x + 1) % BLOCKSIZE;
-y = y - (y + 1) % BLOCKSIZE;
-//if (x % BLOCKSIZE || y % BLOCKSIZE) return;
-if (x % BLOCKSIZE > BLOCKSIZE / 2 - 1) x++;
-if (y % BLOCKSIZE > BLOCKSIZE / 2 - 1) y++;
-int infoX = convertPosToInfoX(x);
-int infoY = convertPosToInfoY(y);
-if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
-for (int curY = infoY;curY < infoY + BLOCKSIZE;curY++) {
-for (int curX = infoX;curX < infoX + BLOCKSIZE;curX++) {
-if (blockInfo[curY][curX]) blockInfo[curY][curX]--;
-}
-}
-int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-
-if (!blockInfo[infoY][infoX]) {
-imageLayer.images[imageIndex].fileName = 0;
-}
-else if (blockInfo[infoY][infoX]==1) {
-imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
-}
-}*/
 
 void PC::moveInStage() {
 	stageLayer.images[0].x += dx[curDirection] * AREA_BLOCK_SIZE;
@@ -117,6 +101,7 @@ void PC::move() {
 	imageLayer.images[0].x += dx[curDirection] * SPEED;
 	imageLayer.images[0].y += dy[curDirection] * SPEED;
 }
+
 int PC::getDir() {
 	return curDirection;
 }
