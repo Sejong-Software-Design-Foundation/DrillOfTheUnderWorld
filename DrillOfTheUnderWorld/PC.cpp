@@ -6,12 +6,38 @@ PC& PC::getPC() {
 	return pc;
 }
 void PC::vibe() {
-	imageLayer.images[0].x += 8;
-	imageLayer.renderAll(&imageLayer);
-	imageLayer.images[0].x -= 16;
-	imageLayer.renderAll(&imageLayer);
-	imageLayer.images[0].x += 8;
-	imageLayer.renderAll(&imageLayer);
+	if (curDirection == 0) {
+		imageLayer.images[0].x -= 8;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].x += 16;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].x -= 8;
+		imageLayer.renderAll(&imageLayer);
+	}
+	else if (curDirection == 2) {
+		imageLayer.images[0].x += 8;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].x -= 16;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].x += 8;
+		imageLayer.renderAll(&imageLayer);
+	}
+	else if (curDirection == 3) {
+		imageLayer.images[0].y += 8;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].y -= 16;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].y += 8;
+		imageLayer.renderAll(&imageLayer);
+	}
+	else {
+		imageLayer.images[0].y -= 8;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].y += 16;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].y -= 8;
+		imageLayer.renderAll(&imageLayer);
+	}
 }
 COORD PC::getCurPos() {
 	COORD CurPos = { imageLayer.images[0].x, imageLayer.images[0].y };
