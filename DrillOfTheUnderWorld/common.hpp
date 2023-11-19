@@ -59,9 +59,13 @@ extern char bmpBrokenStoneBlockName[];
 extern char bmpNameNull[];
 
 // NPC BMP
-extern char bmpZombieName[];
-extern char bmpNameBoss[];
-extern char bmpNameShop[];
+// 1. NORMAL NPC
+extern char bmpNameBat[];
+
+// 2. BOSS NPC
+extern char bmpNameMole[];
+
+extern char bmpNameLadder[];
 extern char bmpNameMineral[];
 
 // ORE BMP

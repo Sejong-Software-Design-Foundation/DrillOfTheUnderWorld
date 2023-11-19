@@ -1,8 +1,8 @@
 #include "common.hpp"
-#include "Zombie.hpp"
+#include "Mole.hpp"
 #include "Mineral.hpp"
-#include "Shop.hpp"
-#include "Boss.hpp"
+#include "Ladder.hpp"
+#include "Bat.hpp"
 
 int main() {
 	initialize();
@@ -24,9 +24,9 @@ int main() {
 	initBlockImages();
 	drawUI();
 
-	Zombie* zombie = new Zombie(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
-	Boss* boss = new Boss(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
-	Shop* shop = new Shop(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
+	Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
+	Bat* bat = new Bat(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
+	Ladder* ladder = new Ladder(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
 
 
 	char bmpNameTmp[] = "emptyTile.bmp";
@@ -118,9 +118,9 @@ int main() {
 		}
 		else {
 			targetLayer->renderAll(targetLayer);
-			zombie->move(&imageLayer);
-			boss->move(&imageLayer);
-			shop->move(&imageLayer);
+			mole->move();
+			bat->move();
+			ladder->move();
 
 			for (int i = 0; i < 10; i++) {
 				if (_kbhit() != 0) {

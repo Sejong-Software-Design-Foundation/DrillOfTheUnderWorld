@@ -25,10 +25,15 @@ char bmpCharacterStatueName[] = "characterStatus.bmp";
 char bmpNameNull[] = "";
 
 // NPC BMP
-char bmpZombieName[] = "mole.bmp";
 char bmpNullName[] = "";
-char bmpNameBoss[] = "Boss.bmp";
-char bmpNameShop[] = "Shop.bmp";
+
+// 1. NORMAL NPC
+char bmpNameBat[] = "Bat.bmp";
+
+// 2. BOSS NPC
+char bmpNameMole[] = "Mole.bmp";
+
+char bmpNameLadder[] = "Ladder.bmp";
 
 // have to add all these bmp files as bitmap resources
 // ORE BMP
@@ -36,13 +41,6 @@ char bmpNameBronzeOre[] = "BronzeOre.bmp";
 char bmpNameSilverOre[] = "SilverOre.bmp";
 char bmpNameGoldOre[] = "GoldOre.bmp";
 char bmpNameDiamondOre[] = "DiamondOre.bmp";
-
-/*
-char bmpNameBronzeOre[] = "BronzeMineral.bmp";
-char bmpNameSilverOre[] = "SilverMineral.bmp";
-char bmpNameGoldOre[] = "GoldMineral.bmp";
-char bmpNameEmeraldOre[] = "EmeraldMineral.bmp";
-*/
 
 // MINERAL BMP
 char bmpNameBronzeMineral[] = "BronzeMineral.bmp";
@@ -479,26 +477,7 @@ void rewardUI() { // 새로운 함수
     if (index2 == 1) pc.setAtkLev(pc.getAtkLev() + num);
     else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
     else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
-
-    // printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
 }
-
-/*
-
-void dig(int x, int y) {
-pc.vibe();
-int infoX = convertPosToInfoX(x);
-int infoY = convertPosToInfoY(y);
-if (infoY < 0 || infoY >= 25 || infoX < 0 || infoX >= 25) return;
-blockInfo[infoY][infoX]--;
-if (!blockInfo[infoY][infoX]) {
-imageLayer.images[infoY * 25 + infoX + 1].fileName = 0;
-}
-else {
-imageLayer.images[infoY * 25 + infoX + 1].fileName = bmpBrokenStoneBlockName;
-}
-}
-*/
 
 void initArea() {
     for (int i = 0; i < 25; i++) {
