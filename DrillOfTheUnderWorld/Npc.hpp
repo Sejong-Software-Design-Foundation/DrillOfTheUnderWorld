@@ -25,7 +25,7 @@ public:
     //~NPC();
 
     bool NPCDead();
-    bool PCNear(ImageLayer& imageLayer);
+    bool PCNear();
 
     void NPCPatternMovement();
     void NPCTrackingMovement();
@@ -43,7 +43,7 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
 
 bool NPC::NPCDead() { return hp < 0 ? true : false; }
 
-bool NPC::PCNear(ImageLayer& imageLayer) {
+bool NPC::PCNear() {
     // PC ÁÂÇ¥ ¹Þ±â
     int PC_X = imageLayer.images[0].x;
     int PC_Y = imageLayer.images[0].y;
@@ -63,7 +63,7 @@ bool NPC::PCNear(ImageLayer& imageLayer) {
 }
 
 void NPC::NPCPatternMovement() {
-    if (PCNear(imageLayer)) {
+    if (PCNear()) {
         attack();
         return;
     }
@@ -91,7 +91,7 @@ void NPC::NPCPatternMovement() {
 }
 
 void NPC::NPCTrackingMovement() {
-    if (PCNear(imageLayer)) {
+    if (PCNear()) {
         attack();
         return;
     }

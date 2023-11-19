@@ -32,6 +32,8 @@ char bmpNameBat[] = "Bat.bmp";
 
 // 2. BOSS NPC
 char bmpNameMole[] = "Mole.bmp";
+char bmpNameFireball[] = "Fireball.bmp";
+char bmpNameEmceeTheShyGuy[] = "EmceeTheShyGuy.bmp";
 
 char bmpNameLadder[] = "Ladder.bmp";
 

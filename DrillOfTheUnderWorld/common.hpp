@@ -64,6 +64,9 @@ extern char bmpNameBat[];
 
 // 2. BOSS NPC
 extern char bmpNameMole[];
+extern char bmpNameFireball[];
+extern char bmpNameEmceeTheShyGuy[];
+
 
 extern char bmpNameLadder[];
 extern char bmpNameMineral[];

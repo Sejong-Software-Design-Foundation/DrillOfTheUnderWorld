@@ -1,5 +1,6 @@
 #include "common.hpp"
 #include "Mole.hpp"
+#include "EmceeTheShyGuy.hpp"
 #include "Mineral.hpp"
 #include "Ladder.hpp"
 #include "Bat.hpp"
@@ -24,10 +25,10 @@ int main() {
 	initBlockImages();
 	drawUI();
 
-	Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
-	Bat* bat = new Bat(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
-	Ladder* ladder = new Ladder(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
-
+	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
+	//Bat* bat = new Bat(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
+	//Ladder* ladder = new Ladder(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
+	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
 
 	char bmpNameTmp[] = "emptyTile.bmp";
 
@@ -118,9 +119,10 @@ int main() {
 		}
 		else {
 			targetLayer->renderAll(targetLayer);
-			mole->move();
-			bat->move();
-			ladder->move();
+			//mole->move();
+			//bat->move();
+			//ladder->move();
+			Emcee->move();
 
 			for (int i = 0; i < 10; i++) {
 				if (_kbhit() != 0) {
