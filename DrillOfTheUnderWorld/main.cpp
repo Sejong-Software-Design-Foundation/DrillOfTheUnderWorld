@@ -1,8 +1,9 @@
 #include "common.hpp"
-#include "Zombie.hpp"
+#include "Mole.hpp"
+#include "EmceeTheShyGuy.hpp"
 #include "Mineral.hpp"
-#include "Shop.hpp"
-#include "Boss.hpp"
+#include "Ladder.hpp"
+#include "Bat.hpp"
 
 int main() {
 	initialize();
@@ -27,9 +28,12 @@ int main() {
 	clock_t end_time;
 	double duration;
 
-	Zombie* zombie = new Zombie(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
-	Boss* boss = new Boss(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
-	Shop* shop = new Shop(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
+	fillBlockImages();
+
+	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
+	//Bat* bat = new Bat(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
+	//Ladder* ladder = new Ladder(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
+	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(AREA_ORIGIN_X + BLOCKSIZE * 26, AREA_ORIGIN_Y + BLOCKSIZE * 16);
 
 	char bmpNameTmp[] = "emptyTile.bmp";
 
@@ -37,15 +41,14 @@ int main() {
 	Stage stage;
 	std::vector<std::vector<Area>> areaList = stage.getAreaList();
 
-	for (int i = 0; i < 5; i++) { 
-		for (int j = 0; j < 5; j++ ) {
-			printf("%d\n", areaList[i][j].getPosX());
-		}
+	for (int i = 0; i < 5; i++) {
+	for (int j = 0; j < 5; j++ ) {
+	printf("%d\n", areaList[i][j].getPosX());
+	}
 	}
 	*/
-	//Mineral* mineral = new Mineral();
 
-	char bmpStageLevel[] = "Stage1.bmp"; 
+	char bmpStageLevel[] = "Stage1.bmp";
 
 	stageLayer.imageCount = STAGE_EXTRA_IMAGE_COUNT;
 	//initStageImages();
@@ -53,6 +56,7 @@ int main() {
 	stageLayer.images[0] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48
 										, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
 	stageLayer.images[1] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
+
 	stageLayer.images[2] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 
 	stageLayer.images[(2) * 5 + 2 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
@@ -83,6 +87,11 @@ int main() {
 				switch (key) {
 				case S:
 					if (isOnStage) {
+
+						getNewArea();
+						Mineral* mineral = new Mineral();
+						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth*BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight*BLOCKSIZE / 2);
+
 						targetLayer->fadeOut(targetLayer, NULL);
 						targetLayer = &imageLayer;
 						isOnStage = false;
@@ -134,10 +143,11 @@ int main() {
 		}
 		else {
 			targetLayer->renderAll(targetLayer);
-			zombie->move(&imageLayer);
-			boss->move(&imageLayer);
-			shop->move(&imageLayer);
 			drawUI();
+			//mole->move();
+			//bat->move();
+			//ladder->move();
+			Emcee->move();
 			for (int i = 0; i < 10; i++) {
 				if (_kbhit() != 0) {
 					int key = _getch();

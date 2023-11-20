@@ -27,11 +27,33 @@ char bmpCharacterStatusName[] = "UI_character_status.bmp";
 
 char bmpNameNull[] = "";
 
-char bmpZombieName[] = "NPC.bmp";
+// NPC BMP
 char bmpNullName[] = "";
-char bmpNameBoss[] = "Boss.bmp";
-char bmpNameShop[] = "Shop.bmp";
-//
+
+// 1. NORMAL NPC
+char bmpNameBat[] = "Bat.bmp";
+
+// 2. BOSS NPC
+char bmpNameMole[] = "Mole.bmp";
+char bmpNameFireball[] = "Fireball.bmp";
+char bmpNameEmceeTheShyGuy[] = "EmceeTheShyGuy.bmp";
+
+char bmpNameLadder[] = "Ladder.bmp";
+
+// have to add all these bmp files as bitmap resources
+// ORE BMP
+char bmpNameBronzeOre[] = "BronzeOre.bmp";
+char bmpNameSilverOre[] = "SilverOre.bmp";
+char bmpNameGoldOre[] = "GoldOre.bmp";
+char bmpNameDiamondOre[] = "DiamondOre.bmp";
+
+// MINERAL BMP
+char bmpNameBronzeMineral[] = "BronzeMineral.bmp";
+char bmpNameSilverMineral[] = "SilverMineral.bmp";
+char bmpNameGoldMineral[] = "GoldMineral.bmp";
+char bmpNameDiamondMineral[] = "DiamondMineral.bmp";
+
+
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
 Image imagesReward[1000];
 int mapInfo[5][5];
@@ -97,40 +119,70 @@ char bmpItem3Name[] = "item3.bmp";
 
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
-	int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
-	wchar_t* wideStr = new wchar_t[requiredSize];
-	MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, wideStr, requiredSize);
-	return wideStr;
+    int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
+    wchar_t* wideStr = new wchar_t[requiredSize];
+    MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, wideStr, requiredSize);
+    return wideStr;
 }
 
 void getHandle() {
-	CONSOLE_INPUT = GetStdHandle(STD_INPUT_HANDLE);
-	CONSOLE_OUTPUT = GetStdHandle(STD_OUTPUT_HANDLE);
-	WINDOW_HANDLE = GetConsoleWindow();
+    CONSOLE_INPUT = GetStdHandle(STD_INPUT_HANDLE);
+    CONSOLE_OUTPUT = GetStdHandle(STD_OUTPUT_HANDLE);
+    WINDOW_HANDLE = GetConsoleWindow();
 }
 
 void removeCursor() {
-	CONSOLE_CURSOR_INFO c;
-	c.bVisible = FALSE;
-	c.dwSize = 1;
-	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &c);
+    CONSOLE_CURSOR_INFO c;
+    c.bVisible = FALSE;
+    c.dwSize = 1;
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &c);
 }
 void resizeConsole(int w, int h) {
-	char temp[100];
-	sprintf(temp, "mode con cols=%d lines=%d", w, h);
-	system(temp);
+    char temp[100];
+    sprintf(temp, "mode con cols=%d lines=%d", w, h);
+    system(temp);
 }
 
 void initialize() {
-	getHandle();
-	resizeConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
-	removeCursor();
-	srand((unsigned)time(NULL));
+
+    getHandle();
+    resizeConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
+    removeCursor();
+    srand((unsigned)time(NULL)); // �߰��� �׸�
 }
 
-// NPC 공간 만들기
+// NPC ���� �����?
 
 
+void initBlockImages() {
+	NPCSpaceHeight = getNPCSpaceHeight();
+	NPCSpaceWidth = getNPCSpaceWidth();
+
+	NPCSpacePosX = getNPCSpacePosX();
+	NPCSpacePosY = getNPCSpacePosY();
+   for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+      for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+         if (y != AREA_ORIGIN_Y + BLOCKSIZE*24 && x != AREA_ORIGIN_X + BLOCKSIZE*24 &&
+			 y >= NPCSpacePosY && y<= NPCSpacePosY + BLOCKSIZE* NPCSpaceHeight &&
+			 x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
+            imageArray[imageLayer.imageCount++] = { bmpNullName, x,y,1};
+			for (int dy = 0;dy < BLOCKSIZE;dy++) {
+				for (int dx = 0;dx < BLOCKSIZE;dx++) {
+					blockInfo[convertPosToInfoY(y+dy)][convertPosToInfoX(x+dx)] = 0;
+				}
+			}
+         }
+         else {
+            imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
+			for (int dy = 0;dy < BLOCKSIZE;dy++) {
+				for (int dx = 0;dx < BLOCKSIZE;dx++) {
+					blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+				}
+			}
+         }
+      }
+   }
+}
 
 void initBlockImages() {
 
@@ -146,6 +198,17 @@ void initBlockImages() {
 			}
 		}
 	}
+
+	//setMinerals(10);
+	imageArray[0].x = AREA_ORIGIN_X + 576;
+	imageArray[0].y = AREA_ORIGIN_Y;
+	for (int y = 0;y < BLOCKSIZE;y++) {
+		for (int x = 0;x < BLOCKSIZE;x++) {
+			blockInfo[y][576+x] = 0;
+		}
+	}
+	imageArray[13].fileName = bmpNullName;
+
 }
 
 
@@ -224,57 +287,84 @@ void initArea() {
 }
 
 int convertPosToInfoX(int x) {
-	return (x - AREA_ORIGIN_X);
+    return (x - AREA_ORIGIN_X);
 }
 int convertPosToInfoY(int y) {
-	return (y - AREA_ORIGIN_Y);
+    return (y - AREA_ORIGIN_Y);
 }
 
 bool collisionCheck(int x, int y) {
-	int startX = convertPosToInfoX(x);
-	int startY = convertPosToInfoY(y);
+    int startX = convertPosToInfoX(x);
+    int startY = convertPosToInfoY(y);
 
-	for (int curY = startY; curY < startY + BLOCKSIZE; curY++) {
-		for (int curX = startX; curX < startX + BLOCKSIZE; curX++) {
-			if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
-			if (blockInfo[curY][curX]) return true;
-		}
-	}
-	return false;
+    for (int curY = startY; curY < startY + BLOCKSIZE; curY++) {
+        for (int curX = startX; curX < startX + BLOCKSIZE; curX++) {
+            if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+            if (blockInfo[curY][curX]) return true;
+        }
+    }
+    return false;
 }
 
 int convertPosToInfoXInStage(int x) {
-	if (x - STAGE_ORIGIN_X <= 0) return -1;
-	return (x - STAGE_ORIGIN_X) / AREA_BLOCK_SIZE;
+    if (x - STAGE_ORIGIN_X <= 0) return -1;
+    return (x - STAGE_ORIGIN_X) / AREA_BLOCK_SIZE;
 }
 int convertPosToInfoYInStage(int y) {
-	if (y - STAGE_ORIGIN_Y <= 0) return -1;
-	return (y - STAGE_ORIGIN_Y) / AREA_BLOCK_SIZE;
+    if (y - STAGE_ORIGIN_Y <= 0) return -1;
+    return (y - STAGE_ORIGIN_Y) / AREA_BLOCK_SIZE;
 }
 bool collisionCheckInStage(int x, int y) {
-	int infoX = convertPosToInfoXInStage(x);
-	int infoY = convertPosToInfoYInStage(y);
-	if (infoY < 0 || infoY >= 5 || infoX < 0 || infoX >= 5)
-		return 1;
-	//return 0;
-	return stageInfo[infoY][infoX];
+    int infoX = convertPosToInfoXInStage(x);
+    int infoY = convertPosToInfoYInStage(y);
+    if (infoY < 0 || infoY >= 5 || infoX < 0 || infoX >= 5)
+        return 1;
+    //return 0;
+    return stageInfo[infoY][infoX];
 }
 
+void setMovableStageInfo(int row, int col) {
+    if (row - 1 >= 0) {
+        if (stageInfo[row - 1][col] == 1) {
+            stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+            stageInfo[row - 1][col] = 0;
+        }
+    }
+    if (row + 1 < 5) {
+        if (stageInfo[row + 1][col]) {
+            stageLayer.images[(row + 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+            stageInfo[row + 1][col] = 0;
+        }
+    }
+    if (col - 1 >= 0) {
+        if (stageInfo[row][col - 1]) {
+            stageLayer.images[(row) * 5 + col - 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+            stageInfo[row][col - 1] = 0;
+        }
+    }
+
+    if (col + 1 < 5) {
+        if (stageInfo[row][col + 1]) {
+            stageLayer.images[(row) * 5 + col + 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+            stageInfo[row][col + 1] = 0;
+        }
+    }
+}
 
 COORD getCurrentCurPos(void) {
-	COORD curPoint;
-	CONSOLE_SCREEN_BUFFER_INFO curInfo;
+    COORD curPoint;
+    CONSOLE_SCREEN_BUFFER_INFO curInfo;
 
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
-	curPoint.X = curInfo.dwCursorPosition.X;
-	curPoint.Y = curInfo.dwCursorPosition.Y;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
+    curPoint.X = curInfo.dwCursorPosition.X;
+    curPoint.Y = curInfo.dwCursorPosition.Y;
 
-	return curPoint;
+    return curPoint;
 }
 
 void setCurrentCurPos(int x, int y) {
-	COORD pos = { x,y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+    COORD pos = { x,y };
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
 
@@ -282,7 +372,6 @@ void initAreaUI() // 최초 에어리어 UI 관련 이미지를 생성
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
-
 	index_Area_UI_HP_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameHP_0pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
 	imageArray[imageLayer.imageCount++] = { bmpNameHP_10pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
@@ -503,24 +592,6 @@ void rewardUI() { // reward 레이어 출력
 	//printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
 }
 
-/*
-
-void dig(int x, int y) {
-	pc.vibe();
-	int infoX = convertPosToInfoX(x);
-	int infoY = convertPosToInfoY(y);
-	if (infoY < 0 || infoY >= 25 || infoX < 0 || infoX >= 25) return;
-	blockInfo[infoY][infoX]--;
-	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = 0;
-	}
-	else {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = bmpBrokenStoneBlockName;
-	}
-}
-*/
-
-
 void updateCharacterStatus() {
 
 	wchar_t playerStone[20];
@@ -563,4 +634,21 @@ void initItemImages() {
 	}
 
 
+}
+
+int getNPCSpaceHeight() { return (rand() % 10 + 5); }
+int getNPCSpaceWidth() { return (rand() % 10 + 5); }
+int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth) + 1) * BLOCKSIZE + AREA_ORIGIN_X); }
+int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight) + 1) * BLOCKSIZE + AREA_ORIGIN_Y); }
+void setMinerals(int max) {
+   while (max) {
+      int x = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_X;
+      int y = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_Y;
+      if (blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] == 2) {
+         int imageIndex = convertPosToInfoY(y) / BLOCKSIZE * 25 + convertPosToInfoX(x) / BLOCKSIZE + 1;
+         imageArray[imageIndex].fileName = bmpMineralName;
+         blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 3;
+         max--;
+      }
+   }
 }

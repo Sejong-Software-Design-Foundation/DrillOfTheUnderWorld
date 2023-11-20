@@ -1,5 +1,8 @@
 #include "PC.hpp"
 #include "common.hpp"
+#include <string>
+
+using namespace std;
 
 PC& PC::getPC() {
 	static PC pc;
@@ -25,7 +28,8 @@ int PC::getMaxHP() { return MAX_HP; }
 int PC::getMaxOxygen() { return MAX_O2; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
-void PC::setHP(int hp) {
+void PC::setHP(int hp) { 
+
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
 		this->HP = 0;
@@ -37,7 +41,9 @@ void PC::setHP(int hp) {
 	imageArray[index_Area_UI_HP_Start + prev_HP].isHide = 1;
 	imageArray[index_Area_UI_HP_Start + cur_HP].isHide = 0;
 }
+
 void PC::setOxygen(int o2) {
+
 	int prev_O2 = this->O2 / 10;
 	if (o2 <= 0) {
 		this->O2 = 0;
@@ -51,7 +57,9 @@ void PC::setOxygen(int o2) {
 }
 void PC::setATK(int atk) { this->ATK = atk; }
 
-void PC::dig(int x, int y) {
+void PC::dig(int x, int y) { // ������ �׸�
+	if (!isDigable(x, y)) return;
+
 	pc.vibe();
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
@@ -71,8 +79,24 @@ void PC::dig(int x, int y) {
 	else if (blockInfo[infoY][infoX] == 1) {
 		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
 	}
-}
+	else if (blockInfo[infoY][infoX] == 3) {
 
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameBronzeMineral;
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameSilverMineral;
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameGoldMineral;
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameDiamondMineral;
+		}
+
+		blockInfo[infoY][infoX] = 1;
+	}
+}
 void PC::moveInStage() {
 	stageLayer.images[0].x += dx[curDirection] * AREA_BLOCK_SIZE;
 	stageLayer.images[0].y += dy[curDirection] * AREA_BLOCK_SIZE;
@@ -82,6 +106,7 @@ void PC::move() {
 	imageLayer.images[0].x += dx[curDirection] * SPEED;
 	imageLayer.images[0].y += dy[curDirection] * SPEED;
 }
+
 int PC::getDir() {
 	return curDirection;
 }
