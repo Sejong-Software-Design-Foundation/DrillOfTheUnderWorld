@@ -1,8 +1,9 @@
 #include "common.hpp"
-#include "Zombie.hpp"
+#include "Mole.hpp"
+#include "EmceeTheShyGuy.hpp"
 #include "Mineral.hpp"
-#include "Shop.hpp"
-#include "Boss.hpp"
+#include "Ladder.hpp"
+#include "Bat.hpp"
 
 int main() {
 	initialize();
@@ -25,8 +26,10 @@ int main() {
 	fillBlockImages();
 	drawUI();
 
-	
-
+	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
+	//Bat* bat = new Bat(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
+	//Ladder* ladder = new Ladder(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
+	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
 
 	char bmpNameTmp[] = "emptyTile.bmp";
 
@@ -34,21 +37,22 @@ int main() {
 	Stage stage;
 	std::vector<std::vector<Area>> areaList = stage.getAreaList();
 
-	for (int i = 0; i < 5; i++) { 
-		for (int j = 0; j < 5; j++ ) {
-			printf("%d\n", areaList[i][j].getPosX());
-		}
+	for (int i = 0; i < 5; i++) {
+	for (int j = 0; j < 5; j++ ) {
+	printf("%d\n", areaList[i][j].getPosX());
+	}
 	}
 	*/
-	//Mineral* mineral = new Mineral();
+	Mineral* mineral = new Mineral();
 
-	char bmpStageLevel[] = "Stage1.bmp"; 
+	char bmpStageLevel[] = "Stage1.bmp";
 
 	stageLayer.imageCount = STAGE_EXTRA_IMAGE_COUNT;
 	initStageImages();
+
 	stageLayer.images = stageImages;
 	stageLayer.images[0] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48
-										, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
+	, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
 	stageLayer.images[1] = { bmpCharacterStatueName, 60 , STAGE_ORIGIN_Y, 1 };
 	stageLayer.images[2] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 
@@ -59,10 +63,6 @@ int main() {
 
 	targetLayer->renderAll(targetLayer);
 
-	Zombie* zombie = 0;
-	Boss* boss = 0;
-	Shop* shop = 0;
-	
 	while (1) {
 		if (isOnStage) {
 			while (_kbhit() != 0) {
@@ -74,16 +74,12 @@ int main() {
 					if (isOnStage) {
 						getNewArea();
 
-						zombie = new Zombie(NPCSpacePosX, NPCSpacePosY);
-						boss = new Boss(NPCSpacePosX + 1, NPCSpacePosY + 1);
-						shop = new Shop(NPCSpacePosX + (NPCSpaceWidth / 2) * BLOCKSIZE, NPCSpacePosY + (NPCSpaceHeight / 2) * BLOCKSIZE);
-
 						targetLayer->fadeOut(targetLayer, NULL);
 						targetLayer = &imageLayer;
 						isOnStage = false;
 						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
-						
+
 						/*
 						imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
 						imageLayer.images = imageArray;
@@ -126,9 +122,10 @@ int main() {
 		}
 		else {
 			targetLayer->renderAll(targetLayer);
-			zombie->move(&imageLayer);
-			//boss->move(&imageLayer);
-			shop->move(&imageLayer);
+			//mole->move();
+			//bat->move();
+			//ladder->move();
+			Emcee->move();
 
 			for (int i = 0; i < 10; i++) {
 				if (_kbhit() != 0) {
@@ -206,7 +203,7 @@ int main() {
 					}
 					pc.setOxygen(pc.getOxygen() - 1);
 				}
-			
+
 				Sleep(5);
 			}
 		}

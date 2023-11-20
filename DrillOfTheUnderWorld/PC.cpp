@@ -1,5 +1,8 @@
 #include "PC.hpp"
 #include "common.hpp"
+#include <string>
+
+using namespace std;
 
 PC& PC::getPC() {
 	static PC pc;
@@ -48,7 +51,7 @@ int PC::getHP() { return HP; }
 int PC::getOxygen() { return O2; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
-void PC::setHP(int hp) { // ¼öÁ¤ÇÑ Ç×¸ñ
+void PC::setHP(int hp) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
 		this->HP = 0;
@@ -60,7 +63,7 @@ void PC::setHP(int hp) { // ¼öÁ¤ÇÑ Ç×¸ñ
 	imageArray[index_UI_HP_Start + prev_HP].isHide = 1;
 	imageArray[index_UI_HP_Start + cur_HP].isHide = 0;
 }
-void PC::setOxygen(int o2) { // ¼öÁ¤ÇÑ Ç×¸ñ
+void PC::setOxygen(int o2) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½
 	int prev_O2 = this->O2 / 10;
 	if (o2 <= 0) {
 		this->O2 = 0;
@@ -74,7 +77,7 @@ void PC::setOxygen(int o2) { // ¼öÁ¤ÇÑ Ç×¸ñ
 }
 void PC::setATK(int atk) { this->ATK = atk; }
 
-void PC::dig(int x, int y) { // ¼öÁ¤ÇÑ Ç×¸ñ
+void PC::dig(int x, int y) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½
 	if (!isDigable(x, y)) return;
 	pc.vibe();
 	if (x % BLOCKSIZE > BLOCKSIZE / 2) x = x - x % BLOCKSIZE + BLOCKSIZE;
@@ -98,39 +101,27 @@ void PC::dig(int x, int y) { // ¼öÁ¤ÇÑ Ç×¸ñ
 	else if (blockInfo[infoY][infoX] == 1) {
 		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
 	}
-	/*
-	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = 0;
-	}
-	else {
-		imageLayer.images[infoY * 25 + infoX + index_UI_blockInfo_Start].fileName = bmpBrokenStoneBlockName;
-	}*/
-}
+	// Mineral Block ï¿½Ï¶ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ Nï¿½ï¿½ ï¿½Ä¼ï¿½ 3ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ MINERALï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ö±ï¿½
+	// ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½Ñ¹ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö±ï¿½
+	else if (blockInfo[infoY][infoX] == 3) {
 
-/*void PC::dig(int x, int y) {
-	pc.vibe();
-	x = x - (x + 1) % BLOCKSIZE;
-	y = y - (y + 1) % BLOCKSIZE;
-	//if (x % BLOCKSIZE || y % BLOCKSIZE) return;
-	if (x % BLOCKSIZE > BLOCKSIZE / 2 - 1) x++;
-	if (y % BLOCKSIZE > BLOCKSIZE / 2 - 1) y++;
-	int infoX = convertPosToInfoX(x);
-	int infoY = convertPosToInfoY(y);
-	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
-	for (int curY = infoY;curY < infoY + BLOCKSIZE;curY++) {
-		for (int curX = infoX;curX < infoX + BLOCKSIZE;curX++) {
-			if (blockInfo[curY][curX]) blockInfo[curY][curX]--;
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameBronzeMineral;
 		}
-	}
-	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameSilverMineral;
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameGoldMineral;
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameDiamondMineral;
+		}
 
-	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[imageIndex].fileName = 0;
+		blockInfo[infoY][infoX] = 1;
 	}
-	else if (blockInfo[infoY][infoX]==1) {
-		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
-	}
-}*/
+}
 
 void PC::moveInStage() {
 	stageLayer.images[0].x += dx[curDirection] * AREA_BLOCK_SIZE;
@@ -138,17 +129,18 @@ void PC::moveInStage() {
 }
 
 void PC::move() {
-	imageLayer.images[0].x += dx[curDirection]*SPEED;
-	imageLayer.images[0].y += dy[curDirection]*SPEED;
+	imageLayer.images[0].x += dx[curDirection] * SPEED;
+	imageLayer.images[0].y += dy[curDirection] * SPEED;
 }
+
 int PC::getDir() {
 	return curDirection;
 }
 
 COORD PC::getPosAfterMove(int x, int y) {
 	COORD result;
-	result.X = x + dx[curDirection]*SPEED;
-	result.Y = y + dy[curDirection]*SPEED;
+	result.X = x + dx[curDirection] * SPEED;
+	result.Y = y + dy[curDirection] * SPEED;
 	return result;
 }
 COORD PC::getTargetPos(int x, int y) {
