@@ -146,7 +146,7 @@ void initialize() {
     srand((unsigned)time(NULL)); // �߰��� �׸�
 }
 
-// NPC ���� �����
+// NPC ���� �����?
 
 
 void initBlockImages() {
@@ -177,7 +177,6 @@ void initBlockImages() {
          }
       }
    }
-   setMinerals(10);
 }
 
 void getNewArea() {
@@ -209,7 +208,7 @@ void getNewArea() {
 			}
 		}
 	}
-	setMinerals(10);
+	//setMinerals(10);
 	imageArray[0].x = AREA_ORIGIN_X + 576;
 	imageArray[0].y = AREA_ORIGIN_Y;
 	for (int y = 0;y < BLOCKSIZE;y++) {

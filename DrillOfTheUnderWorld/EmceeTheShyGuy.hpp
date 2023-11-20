@@ -25,6 +25,7 @@ public:
 	void checkBullets();
 	void move();
 	void attack();
+	void setNewPosition(int x, int y);
 };
 
 EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 0, 10, 1) {
@@ -58,8 +59,8 @@ void EmceeTheShyGuy::move() {
 		movecnt = 0;
 	}
 	else {
-		//NPCTrackingMovement();
-		NPCPatternMovement();
+		NPCTrackingMovement();
+		//NPCPatternMovement();
 	}
 }
 
@@ -67,6 +68,11 @@ void EmceeTheShyGuy::move() {
 void EmceeTheShyGuy::attack() {
 	list<NPCBullet>::iterator it;
 	for (it = bullets.begin(); it != bullets.end(); it++) { (*it).move(); }
+}
+
+void EmceeTheShyGuy::setNewPosition(int x, int y) {
+	imageLayer.images[imageidx].x = x;
+	imageLayer.images[imageidx].y = y;
 }
 
 #endif

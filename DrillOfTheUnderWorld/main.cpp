@@ -29,7 +29,7 @@ int main() {
 	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
 	//Bat* bat = new Bat(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
 	//Ladder* ladder = new Ladder(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
-	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
+	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(AREA_ORIGIN_X + BLOCKSIZE * 26, AREA_ORIGIN_Y + BLOCKSIZE * 16);
 
 	char bmpNameTmp[] = "emptyTile.bmp";
 
@@ -43,7 +43,6 @@ int main() {
 	}
 	}
 	*/
-	Mineral* mineral = new Mineral();
 
 	char bmpStageLevel[] = "Stage1.bmp";
 
@@ -73,6 +72,8 @@ int main() {
 				case S:
 					if (isOnStage) {
 						getNewArea();
+						Mineral* mineral = new Mineral();
+						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth*BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight*BLOCKSIZE / 2);
 
 						targetLayer->fadeOut(targetLayer, NULL);
 						targetLayer = &imageLayer;
