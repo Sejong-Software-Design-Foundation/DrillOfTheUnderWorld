@@ -48,8 +48,8 @@ int main() {
 	char bmpStageLevel[] = "Stage1.bmp"; 
 
 	stageLayer.imageCount = STAGE_EXTRA_IMAGE_COUNT;
-	initStageImages();
-	stageLayer.images = stageImages;
+	//initStageImages();
+	stageLayer.images = stageImageArray;
 	stageLayer.images[0] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48
 										, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
 	stageLayer.images[1] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };

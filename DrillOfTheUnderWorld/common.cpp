@@ -519,18 +519,6 @@ void dig(int x, int y) {
 }
 */
 
-void initArea() {
-	for (int i = 0;i < 25;i++) {
-		for (int j = 0;j < 25;j++) {
-			if (i > 4 && i < 20 && j> 5 && j < 20) imageLayer.images[i * 25 + j + 1].fileName = bmpNameNull;
-		}
-	}
-	for (int y = 240;y < 960;y++) {
-		for (int x = 192;x < 960;x++) {
-			blockInfo[y][x] = 0;
-		}
-	}
-}
 
 void updateCharacterStatus() {
 
@@ -563,13 +551,13 @@ void initItemImages() {
 
 	for (int i = 0; i < itemList.size(); i++) {
 		if (itemList[i] == 1) {
-			stageImages[stageLayer.imageCount++] = { bmpItem1Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1}; 
+			stageImageArray[stageLayer.imageCount++] = { bmpItem1Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1}; 
 		}
 		if (itemList[i] == 2) {
-			stageImages[stageLayer.imageCount++] = { bmpItem2Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
+			stageImageArray[stageLayer.imageCount++] = { bmpItem2Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
 		}
 		if (itemList[i] == 3) {
-			stageImages[stageLayer.imageCount++] = { bmpItem3Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
+			stageImageArray[stageLayer.imageCount++] = { bmpItem3Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
 		}
 	}
 
