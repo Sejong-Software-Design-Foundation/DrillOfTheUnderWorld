@@ -119,9 +119,21 @@ void PC::setDirUp() {
 int PC::getAtkLev() { return AtkLev; }
 int PC::getAtkSpdLev() { return AtkSpdLev; }
 int PC::getSpdLev() { return SpdLev; }
-void PC::setAtkLev(int lev) { this->AtkLev = lev; }
-void PC::setAtkSpdLev(int lev) { this->AtkSpdLev = lev; }
-void PC::setSpdLev(int lev) { this->SpdLev = lev; }
+void PC::setAtkLev(int lev) {
+	if (lev < 1) this->AtkLev = 1;
+	else if (lev > 11) this->AtkLev = 11;
+	else this->AtkLev = lev;
+}
+void PC::setAtkSpdLev(int lev) {
+	if (lev < 1) this->AtkSpdLev = 1;
+	else if (lev > 11) this->AtkSpdLev = 11;
+	else this->AtkSpdLev = lev;
+}
+void PC::setSpdLev(int lev) {
+	if (lev < 1) this->SpdLev = 1;
+	else if (lev > 11) this->SpdLev = 11;
+	else this->SpdLev = lev;
+}
 
 void PC::addItem(int itemIndex) {
 	itemList.push_back(itemIndex);

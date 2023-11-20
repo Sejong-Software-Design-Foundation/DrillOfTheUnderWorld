@@ -75,6 +75,7 @@ int main() {
 		//num += 0.00007;
 		//printf("%f\n", num);
 		if (isOnStage) {
+			updateCharacterStatus();
 			while (_kbhit() != 0) {
 				int key = _getch();
 				int curPosX = stageLayer.images[0].x;
@@ -128,7 +129,6 @@ int main() {
 				if (key) {
 					//targetLayer->renderCertain(targetLayer, immutableImagesInStage, 1);
 					targetLayer->renderAll(targetLayer);
-					updateCharacterStatus();
 				}
 			}
 		}

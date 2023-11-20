@@ -487,18 +487,19 @@ void rewardUI() { // reward 레이어 출력
 	stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
 	setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
 
-	//targetLayer->fadeIn(targetLayer, NULL);
-
+	targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);
 
 	int num = 0;
 	if (index1 == 1) num = rand() % 3;
+	//if (index1 == 1) num = -5;
+	//else if (index1 == 2) num = 6;
 	else if (index1 == 2) num = rand() % 11 + (-5);
-
 	if (index2 == 1) pc.setAtkLev(pc.getAtkLev() + num);
 	else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
 	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
 
+	//targetLayer->fadeIn(targetLayer, NULL);
 	//printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
 }
 
