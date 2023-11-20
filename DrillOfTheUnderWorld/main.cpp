@@ -14,56 +14,30 @@ int main() {
 	stageLayer.initialize(&stageLayer);
 	rewardLayer.initialize(&rewardLayer);
 
-	char bmpNamePC[] = "PlayerCharacter.bmp";
-	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y, 1 };
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 
-	//drawUI();
+	initStageImage();
+	initBlockImages();
+	initAreaUI();
+	initRewardImage();
 
-	//initBlockImages();
-	fillBlockImages();
-	drawUI();
+	clock_t start_time = clock();
+	clock_t end_time;
+	double duration;
 
-	
+	Zombie* zombie = new Zombie(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
+	Boss* boss = new Boss(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
+	Shop* shop = new Shop(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
 
-
-	char bmpNameTmp[] = "emptyTile.bmp";
-
-	/*
-	Stage stage;
-	std::vector<std::vector<Area>> areaList = stage.getAreaList();
-
-	for (int i = 0; i < 5; i++) { 
-		for (int j = 0; j < 5; j++ ) {
-			printf("%d\n", areaList[i][j].getPosX());
-		}
-	}
-	*/
-	//Mineral* mineral = new Mineral();
-
-	char bmpStageLevel[] = "Stage1.bmp"; 
-
-	stageLayer.imageCount = STAGE_EXTRA_IMAGE_COUNT;
-	initStageImages();
-	stageLayer.images = stageImages;
-	stageLayer.images[0] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48
-										, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
-	stageLayer.images[1] = { bmpCharacterStatueName, 60 , STAGE_ORIGIN_Y, 1 };
-	stageLayer.images[2] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
-
-	stageLayer.images[(2) * 5 + 2 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
-
-	stageLayer.imageCount = 30;
+	//initStageImages();
 	targetLayer = &stageLayer;
-
 	targetLayer->renderAll(targetLayer);
-
-	Zombie* zombie = 0;
-	Boss* boss = 0;
-	Shop* shop = 0;
-	
+	//float num = 0.0f;
 	while (1) {
+		//num += 0.00007;
+		//printf("%f\n", num);
 		if (isOnStage) {
 			while (_kbhit() != 0) {
 				int key = _getch();
@@ -72,18 +46,12 @@ int main() {
 				switch (key) {
 				case S:
 					if (isOnStage) {
-						getNewArea();
-
-						zombie = new Zombie(NPCSpacePosX, NPCSpacePosY);
-						boss = new Boss(NPCSpacePosX + 1, NPCSpacePosY + 1);
-						shop = new Shop(NPCSpacePosX + (NPCSpaceWidth / 2) * BLOCKSIZE, NPCSpacePosY + (NPCSpaceHeight / 2) * BLOCKSIZE);
-
 						targetLayer->fadeOut(targetLayer, NULL);
 						targetLayer = &imageLayer;
 						isOnStage = false;
 						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
-						
+						mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
 						/*
 						imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
 						imageLayer.images = imageArray;
@@ -127,9 +95,9 @@ int main() {
 		else {
 			targetLayer->renderAll(targetLayer);
 			zombie->move(&imageLayer);
-			//boss->move(&imageLayer);
+			boss->move(&imageLayer);
 			shop->move(&imageLayer);
-
+			drawUI();
 			for (int i = 0; i < 10; i++) {
 				if (_kbhit() != 0) {
 					int key = _getch();
@@ -194,6 +162,7 @@ int main() {
 					case SPACE:
 						COORD targetPos = pc.getTargetPos(curPosX, curPosY);
 						pc.dig(targetPos.X, targetPos.Y);
+						//pc.setOxygen(pc.getOxygen() - 1);
 						break;
 
 					case O:
@@ -204,10 +173,16 @@ int main() {
 						break;
 
 					}
-					pc.setOxygen(pc.getOxygen() - 1);
 				}
-			
+
 				Sleep(5);
+			}
+			end_time = clock();
+			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+			//printf("%d", pc.getOxygen());
+			if (duration > 3.0) {
+				pc.setOxygen(pc.getOxygen() - 1);
+				start_time = end_time;
 			}
 		}
 	}
