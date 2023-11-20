@@ -150,6 +150,7 @@
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="common.hpp" />
     <ClInclude Include="Stage.hpp" />
+    <ClInclude Include="Text.hpp" />
     <ClInclude Include="Zombie.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +213,9 @@
     <Image Include="..\..\Stage3.bmp" />
     <Image Include="basicStoneBlocks.bmp" />
     <Image Include="hiddenStage.bmp" />
+    <Image Include="item1.bmp" />
+    <Image Include="item2.bmp" />
+    <Image Include="item3.bmp" />
     <Image Include="nomalStage.bmp" />
     <Image Include="clearedStage.bmp" />
     <Image Include="brokenStoneBlock.bmp" />
@@ -223,6 +227,7 @@
     <Image Include="empty.bmp" />
     <Image Include="emptyTile.bmp" />
     <Image Include="PlayerCharacter.bmp" />
+    <Image Include="UI_character_status.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

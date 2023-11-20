@@ -13,6 +13,7 @@ extern "C" {
 }
 #include "PC.hpp"
 #include "Stage.hpp"
+#include "Text.hpp"
 
 #define NUM1 49  
 #define NUM2 50  
@@ -32,15 +33,23 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 16
+#define SPEED 48
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
-#define AREA_ORIGIN_Y 48 *  7
+#define AREA_ORIGIN_Y 336
+#define AREA_WIDTH 25
+#define AREA_HEIGHT 25
+
 
 #define STAGE_ORIGIN_X 600
 #define STAGE_ORIGIN_Y 240
 #define AREA_BLOCK_SIZE 144
 #define STAGE_EXTRA_IMAGE_COUNT 3
+
+#define UI_ITEM_START_POS_X 1450
+#define UI_ITEM_START_POS_Y 220
+#define UI_ITEM_SIZE 170
+
 
 extern PC& pc;
 
@@ -50,10 +59,11 @@ extern ImageLayer* targetLayer;
 extern ImageLayer imageLayer;
 extern ImageLayer stageLayer;
 extern Image imageArray[1000];
-extern Image stageImages[30];
+extern Image stageImageArray[40];
 extern int stageInfo[5][5];
 extern int blockInfo[1200][1200];
 extern bool isOnStage;
+extern char bmpNamePC[];
 extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
 extern char bmpNameNull[];
@@ -85,29 +95,32 @@ extern char bmpNameDiamondMineral[];
 
 
 extern ImageLayer rewardLayer;
-extern int mapInfo[6][6];
-extern int index_UI_HP_Start;
-extern int index_UI_O2_Start;
-extern int index_UI_blockInfo_Start;
-extern int index_UI_mapTile_Start;
+extern int mapInfo[5][5];
+extern int index_StageImages_Start;
+extern int index_Area_UI_Start;
+extern int index_Area_UI_HP_Start;
+extern int index_Area_UI_O2_Start;
+extern int index_Area_UI_Map_Start;
+extern int index_Area_UI_blockInfo_Start;
+extern int index_Area_UI_mapTile_Start;
+extern int index_RewardImages_Start;
 
 extern char bmpNullName[];
 // stage Image
+extern char bmpStageLevel[];
 extern char bmpClearedAreaName[];
 extern char bmpNomalAreaName[];
 extern char bmpHiddenAreaName[];
 extern char bmpMovableAreaName[];
-extern char bmpCharacterStatueName[];
+extern char bmpCharacterStatusName[];
 
-extern char bmpMineralName[];
+// item Image
+extern char bmpItem1Name[];
+extern char bmpItem2Name[];
+extern char bmpItem3Name[];
 
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
-
-extern int NPCSpacePosX;
-extern int NPCSpacePosY;
-extern int NPCSpaceHeight;
-extern int NPCSpaceWidth;
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
@@ -125,20 +138,17 @@ bool collisionCheckInStage(int x, int y);
 int convertPosToInfoXInStage(int x);
 int convertPosToInfoYInStage(int y);
 void initBlockImages();
+void initAreaUI();
+void initStageImage();
 void initStageImages();
+void initRewardImage();
 void setMovableStageInfo(int row, int col);
 void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
 
-void fillBlockImages();
-//void getNewArea(int zombieIndex);
-int getNPCSpaceHeight();
-int getNPCSpaceWidth();
-int getNPCSpacePosX();
-int getNPCSpacePosY();
-void setMinerals(int max);
-void getNewArea();
-
+void updateCharacterStatus();
+void initItemImages();
+int calculateItemPosY(int i);
 #endif COMMON_HPP

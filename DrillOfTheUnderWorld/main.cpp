@@ -15,16 +15,20 @@ int main() {
 	stageLayer.initialize(&stageLayer);
 	rewardLayer.initialize(&rewardLayer);
 
-	char bmpNamePC[] = "PlayerCharacter.bmp";
-	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y, 1 };
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 
-	//drawUI();
+	initStageImage();
+	initBlockImages();
+	initAreaUI();
+	initRewardImage();
 
-	//initBlockImages();
+	clock_t start_time = clock();
+	clock_t end_time;
+	double duration;
+
 	fillBlockImages();
-	drawUI();
 
 	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
 	//Bat* bat = new Bat(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
@@ -47,23 +51,35 @@ int main() {
 	char bmpStageLevel[] = "Stage1.bmp";
 
 	stageLayer.imageCount = STAGE_EXTRA_IMAGE_COUNT;
-	initStageImages();
-
-	stageLayer.images = stageImages;
+	//initStageImages();
+	stageLayer.images = stageImageArray;
 	stageLayer.images[0] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48
-	, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
-	stageLayer.images[1] = { bmpCharacterStatueName, 60 , STAGE_ORIGIN_Y, 1 };
+										, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
+	stageLayer.images[1] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
+
 	stageLayer.images[2] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 
 	stageLayer.images[(2) * 5 + 2 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
 
-	stageLayer.imageCount = 30;
-	targetLayer = &stageLayer;
+	int immutableImagesInStage[1] = { 1 };
 
+	stageLayer.imageCount = 30;
+
+	pc.addItem(1);
+	pc.addItem(2);
+	pc.addItem(3);
+
+	initItemImages();
+
+	targetLayer = &stageLayer;
 	targetLayer->renderAll(targetLayer);
+	updateCharacterStatus();
 
 	while (1) {
+		//num += 0.00007;
+		//printf("%f\n", num);
 		if (isOnStage) {
+			updateCharacterStatus();
 			while (_kbhit() != 0) {
 				int key = _getch();
 				int curPosX = stageLayer.images[0].x;
@@ -71,6 +87,7 @@ int main() {
 				switch (key) {
 				case S:
 					if (isOnStage) {
+
 						getNewArea();
 						Mineral* mineral = new Mineral();
 						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth*BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight*BLOCKSIZE / 2);
@@ -80,7 +97,7 @@ int main() {
 						isOnStage = false;
 						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
-
+						mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
 						/*
 						imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
 						imageLayer.images = imageArray;
@@ -118,16 +135,19 @@ int main() {
 					if (!collisionCheckInStage(curPosX, curPosY + AREA_BLOCK_SIZE)) pc.moveInStage();
 					break;
 				}
-				if (key) targetLayer->renderAll(targetLayer);
+				if (key) {
+					//targetLayer->renderCertain(targetLayer, immutableImagesInStage, 1);
+					targetLayer->renderAll(targetLayer);
+				}
 			}
 		}
 		else {
 			targetLayer->renderAll(targetLayer);
+			drawUI();
 			//mole->move();
 			//bat->move();
 			//ladder->move();
 			Emcee->move();
-
 			for (int i = 0; i < 10; i++) {
 				if (_kbhit() != 0) {
 					int key = _getch();
@@ -192,6 +212,7 @@ int main() {
 					case SPACE:
 						COORD targetPos = pc.getTargetPos(curPosX, curPosY);
 						pc.dig(targetPos.X, targetPos.Y);
+						//pc.setOxygen(pc.getOxygen() - 1);
 						break;
 
 					case O:
@@ -202,10 +223,16 @@ int main() {
 						break;
 
 					}
-					pc.setOxygen(pc.getOxygen() - 1);
 				}
 
 				Sleep(5);
+			}
+			end_time = clock();
+			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+			//printf("%d", pc.getOxygen());
+			if (duration > 3.0) {
+				pc.setOxygen(pc.getOxygen() - 1);
+				start_time = end_time;
 			}
 		}
 	}
