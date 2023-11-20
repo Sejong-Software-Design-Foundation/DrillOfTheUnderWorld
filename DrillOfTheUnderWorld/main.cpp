@@ -50,15 +50,25 @@ int main() {
 	stageLayer.images = stageImages;
 	stageLayer.images[0] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48
 										, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
-	stageLayer.images[1] = { bmpCharacterStatueName, 60 , STAGE_ORIGIN_Y, 1 };
+	stageLayer.images[1] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
 	stageLayer.images[2] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 
 	stageLayer.images[(2) * 5 + 2 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
 
+	int immutableImagesInStage[1] = { 1 };
+
 	stageLayer.imageCount = 30;
+
+	pc.addItem(1);
+	pc.addItem(2);
+	pc.addItem(3);
+
+	initItemImages();
+
 	targetLayer = &stageLayer;
 
 	targetLayer->renderAll(targetLayer);
+	updateCharacterStatus();
 	
 	while (1) {
 		if (isOnStage) {
@@ -112,7 +122,11 @@ int main() {
 					if (!collisionCheckInStage(curPosX, curPosY + AREA_BLOCK_SIZE)) pc.moveInStage();
 					break;
 				}
-				if (key) targetLayer->renderAll(targetLayer);
+				if (key) {
+					//targetLayer->renderCertain(targetLayer, immutableImagesInStage, 1);
+					targetLayer->renderAll(targetLayer);
+					updateCharacterStatus();
+				}
 			}
 		}
 		else {

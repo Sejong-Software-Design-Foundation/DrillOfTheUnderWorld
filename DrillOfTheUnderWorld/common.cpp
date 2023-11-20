@@ -8,7 +8,7 @@ ImageLayer* targetLayer = NULL;
 ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
 ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image imageArray[1000];
-Image stageImages[30];
+Image stageImages[40];
 int currentAreaRowIndex;
 int currentAreaColIndex;
 int blockInfo[1200][1200];
@@ -21,7 +21,7 @@ char bmpClearedAreaName[] = "clearedArea.bmp";
 char bmpNomalAreaName[] = "nomalArea.bmp";
 char bmpHiddenAreaName[] = "hiddenArea.bmp";
 char bmpMovableAreaName[] = "movableArea.bmp";
-char bmpCharacterStatueName[] = "characterStatus.bmp";
+char bmpCharacterStatusName[] = "UI_character_status.bmp";
 char bmpNameNull[] = "";
 
 char bmpZombieName[] = "NPC.bmp";
@@ -81,6 +81,11 @@ char bmpNameNormalAtkSpdSelected[] = "UI_rewardAtkSpdSelected.bmp";
 char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
+
+
+char bmpItem1Name[] = "item1.bmp";
+char bmpItem2Name[] = "item2.bmp";
+char bmpItem3Name[] = "item3.bmp";
 
 //
 
@@ -448,6 +453,15 @@ void rewardUI() { // 새로운 함수
 	imagesReward[7].isHide = 1;
 	imagesReward[8].isHide = 1;
 	imagesReward[9].isHide = 1;
+
+	targetLayer = &stageLayer;
+	isOnStage = true;
+	targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+	stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+	setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+
+	//targetLayer->fadeIn(targetLayer, NULL);
+
 	targetLayer->renderAll(targetLayer);
 
 	int num = 0;
@@ -458,7 +472,8 @@ void rewardUI() { // 새로운 함수
 	else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
 	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
 
-	// printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
+
+	//printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
 }
 
 /*
@@ -489,4 +504,48 @@ void initArea() {
 			blockInfo[y][x] = 0;
 		}
 	}
+}
+
+void updateCharacterStatus() {
+
+	wchar_t playerStone[20];
+	wchar_t playerHp[20];
+	wchar_t playerOz[20];
+	wchar_t playerAttackPower[20];
+	wchar_t playerAttackSpeed[20];
+	wchar_t playerMoveSpeed[20];
+
+	swprintf(playerStone, sizeof(playerStone) / sizeof(playerStone[0]), L"%d", pc.getStone());
+	swprintf(playerHp, sizeof(playerHp) / sizeof(playerHp[0]), L"%d / %d", pc.getHP(), pc.getMaxHP());
+	swprintf(playerOz, sizeof(playerOz) / sizeof(playerOz[0]), L"%d / %d", pc.getOxygen(), pc.getMaxOxygen());
+	swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.%d", pc.getAtkLev());
+	swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.%d", pc.getAtkSpdLev());
+	swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
+
+
+	printText(targetLayer->_consoleDC, 390, 332, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+	printText(targetLayer->_consoleDC, 250, 432, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
+	printText(targetLayer->_consoleDC, 250, 498, 40, 0, RGB(255, 255, 255), TA_LEFT, playerOz);
+	printText(targetLayer->_consoleDC, 250, 564, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
+	printText(targetLayer->_consoleDC, 250, 634, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
+	printText(targetLayer->_consoleDC, 250, 700, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
+}
+
+
+void initItemImages() {
+	std::vector<int> itemList = pc.getitemList();
+
+	for (int i = 0; i < itemList.size(); i++) {
+		if (itemList[i] == 1) {
+			stageImages[stageLayer.imageCount++] = { bmpItem1Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1}; 
+		}
+		if (itemList[i] == 2) {
+			stageImages[stageLayer.imageCount++] = { bmpItem2Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
+		}
+		if (itemList[i] == 3) {
+			stageImages[stageLayer.imageCount++] = { bmpItem3Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
+		}
+	}
+
+
 }
