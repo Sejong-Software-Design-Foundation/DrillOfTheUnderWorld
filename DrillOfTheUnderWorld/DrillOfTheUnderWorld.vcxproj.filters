@@ -30,9 +30,6 @@
     <ClCompile Include="Area.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Npc.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageFading.h">
@@ -80,10 +77,10 @@
     <ClInclude Include="Mineral.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Shop.hpp">
+    <ClInclude Include="Text.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Text.hpp">
+    <ClInclude Include="Shop.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

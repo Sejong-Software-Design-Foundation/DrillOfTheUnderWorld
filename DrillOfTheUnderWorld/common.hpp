@@ -33,7 +33,7 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 48
+#define SPEED 16
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 336
@@ -114,10 +114,18 @@ extern char bmpHiddenAreaName[];
 extern char bmpMovableAreaName[];
 extern char bmpCharacterStatusName[];
 
+extern char bmpMineralName[];
+
 // item Image
 extern char bmpItem1Name[];
 extern char bmpItem2Name[];
 extern char bmpItem3Name[];
+
+extern int NPCSpacePosX;
+extern int NPCSpacePosY;
+extern int NPCSpaceHeight;
+extern int NPCSpaceWidth;
+
 
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
@@ -150,5 +158,13 @@ void initArea();
 
 void updateCharacterStatus();
 void initItemImages();
-int calculateItemPosY(int i);
+void fillBlockImages();
+//void getNewArea(int zombieIndex);
+int getNPCSpaceHeight();
+int getNPCSpaceWidth();
+int getNPCSpacePosX();
+int getNPCSpacePosY();
+void setMinerals(int max);
+void getNewArea();
+
 #endif COMMON_HPP

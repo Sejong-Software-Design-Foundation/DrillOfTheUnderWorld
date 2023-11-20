@@ -20,7 +20,8 @@ int main() {
 	imageLayer.imageCount = 1;
 
 	initStageImage();
-	initBlockImages();
+	//initBlockImages();
+	fillBlockImages();
 	initAreaUI();
 	initRewardImage();
 
@@ -28,11 +29,10 @@ int main() {
 	clock_t end_time;
 	double duration;
 
-	fillBlockImages();
 
 	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
 	//Bat* bat = new Bat(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
-	//Ladder* ladder = new Ladder(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
+	Ladder* ladder = new Ladder(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
 	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(AREA_ORIGIN_X + BLOCKSIZE * 26, AREA_ORIGIN_Y + BLOCKSIZE * 16);
 
 	char bmpNameTmp[] = "emptyTile.bmp";
@@ -91,7 +91,7 @@ int main() {
 						getNewArea();
 						Mineral* mineral = new Mineral();
 						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth*BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight*BLOCKSIZE / 2);
-
+						ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						targetLayer->fadeOut(targetLayer, NULL);
 						targetLayer = &imageLayer;
 						isOnStage = false;
@@ -146,7 +146,7 @@ int main() {
 			drawUI();
 			//mole->move();
 			//bat->move();
-			//ladder->move();
+			ladder->move();
 			Emcee->move();
 			for (int i = 0; i < 10; i++) {
 				if (_kbhit() != 0) {

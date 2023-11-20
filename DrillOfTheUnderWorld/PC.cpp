@@ -8,14 +8,42 @@ PC& PC::getPC() {
 	static PC pc;
 	return pc;
 }
+
 void PC::vibe() {
-	imageLayer.images[0].x += 8;
-	imageLayer.renderAll(&imageLayer);
-	imageLayer.images[0].x -= 16;
-	imageLayer.renderAll(&imageLayer);
-	imageLayer.images[0].x += 8;
-	imageLayer.renderAll(&imageLayer);
+	if (curDirection == 0) {
+		imageLayer.images[0].x -= 8;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].x += 16;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].x -= 8;
+		imageLayer.renderAll(&imageLayer);
+	}
+	else if (curDirection == 2) {
+		imageLayer.images[0].x += 8;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].x -= 16;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].x += 8;
+		imageLayer.renderAll(&imageLayer);
+	}
+	else if (curDirection == 3) {
+		imageLayer.images[0].y += 8;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].y -= 16;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].y += 8;
+		imageLayer.renderAll(&imageLayer);
+	}
+	else {
+		imageLayer.images[0].y -= 8;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].y += 16;
+		imageLayer.renderAll(&imageLayer);
+		imageLayer.images[0].y -= 8;
+		imageLayer.renderAll(&imageLayer);
+	}
 }
+
 COORD PC::getCurPos() {
 	COORD CurPos = { imageLayer.images[0].x, imageLayer.images[0].y };
 	return CurPos;
@@ -59,8 +87,11 @@ void PC::setATK(int atk) { this->ATK = atk; }
 
 void PC::dig(int x, int y) { // ������ �׸�
 	if (!isDigable(x, y)) return;
-
 	pc.vibe();
+	if (x % BLOCKSIZE > BLOCKSIZE / 2) x = x - x % BLOCKSIZE + BLOCKSIZE;
+	else x = x - x % BLOCKSIZE;
+	if (y % BLOCKSIZE > BLOCKSIZE / 2) y = y - y % BLOCKSIZE + BLOCKSIZE;
+	else y = y - y % BLOCKSIZE;
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
 	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
@@ -162,4 +193,10 @@ void PC::setSpdLev(int lev) {
 
 void PC::addItem(int itemIndex) {
 	itemList.push_back(itemIndex);
+}
+
+bool PC::isDigable(int x, int y) {
+	if (curDirection == 0 || curDirection == 2) return x % BLOCKSIZE == 0;
+	else return y % BLOCKSIZE == 0;
+	//return (x % BLOCKSIZE == 0 && y % BLOCKSIZE == 0);
 }

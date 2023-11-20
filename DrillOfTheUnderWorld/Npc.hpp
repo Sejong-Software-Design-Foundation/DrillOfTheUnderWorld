@@ -45,21 +45,41 @@ bool NPC::NPCDead() { return hp < 0 ? true : false; }
 
 bool NPC::PCNear() {
     // PC ÁÂÇ¥ ¹Þ±â
-    int PC_X = imageLayer.images[0].x;
-    int PC_Y = imageLayer.images[0].y;
+    int PC_X = convertPosToInfoX(imageLayer.images[0].x);
+    int PC_Y = convertPosToInfoY(imageLayer.images[0].y);
 
     int NPC_Y = y;
     int NPC_X = x;
 
-    return (NPC_X == PC_X && NPC_Y >= PC_Y - BLOCKSIZE && NPC_Y <= PC_Y + BLOCKSIZE) ||
-        (NPC_Y == PC_Y && NPC_X >= PC_X - BLOCKSIZE && NPC_X <= PC_X + BLOCKSIZE);
+   // printf("(%d %d) (%d %d)", PC_X, PC_Y, NPC_X, NPC_Y);
 
-    /*
-    return ((NPC_Y - BLOCKSIZE == PC_Y && NPC_X == PC_X) ||
+    int startX = convertPosToInfoX(NPC_X);
+    int startY = convertPosToInfoY(NPC_Y);
+
+    for (int curY = startY; curY < startY + BLOCKSIZE; curY++) {
+        for (int curX = startX; curX < startX + BLOCKSIZE; curX++) {
+            for (int dy = 0; dy < BLOCKSIZE; dy++) {
+                for (int dx = 0;dx < BLOCKSIZE;dx++) {
+                    if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+                    if (curX == PC_X+dx && curY == PC_Y+dy) return true;
+                }
+            }
+        }
+    }
+    return false;/*
+    if (NPC_X - BLOCKSIZE <= PC_X && PC_X <= NPC_X + BLOCKSIZE
+        && NPC_Y - BLOCKSIZE <= PC_Y && PC_Y <= NPC_Y + BLOCKSIZE) return true;
+    return false;*/
+
+    /*return (NPC_X == PC_X && NPC_Y >= PC_Y - BLOCKSIZE && NPC_Y <= PC_Y + BLOCKSIZE) ||
+        (NPC_Y == PC_Y && NPC_X >= PC_X - BLOCKSIZE && NPC_X <= PC_X + BLOCKSIZE);*/
+
+    
+    /*return ((NPC_Y - BLOCKSIZE == PC_Y && NPC_X == PC_X) ||
         (NPC_Y + BLOCKSIZE == PC_Y && NPC_X == PC_X) ||
         (NPC_Y == PC_Y && NPC_X - BLOCKSIZE == PC_X) ||
-        (NPC_Y == PC_Y && NPC_X + BLOCKSIZE == PC_X));
-    */
+        (NPC_Y == PC_Y && NPC_X + BLOCKSIZE == PC_X));*/
+    
 }
 
 void NPC::NPCPatternMovement() {

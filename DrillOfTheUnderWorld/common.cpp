@@ -112,6 +112,14 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
+char bmpMineralName[] = "Mineral.bmp";
+
+int NPCSpacePosX;
+int NPCSpacePosY;
+int NPCSpaceHeight;
+int NPCSpaceWidth;
+
+
 
 char bmpItem1Name[] = "item1.bmp";
 char bmpItem2Name[] = "item2.bmp";
@@ -184,45 +192,56 @@ void initBlockImages() {
    }
 }
 
-void initBlockImages() {
 
+void getNewArea() {
+	NPCSpaceHeight = getNPCSpaceHeight();
+	NPCSpaceWidth = getNPCSpaceWidth();
+
+	NPCSpacePosX = getNPCSpacePosX();
+	NPCSpacePosY = getNPCSpacePosY();
+	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			if (y >= AREA_ORIGIN_Y + BLOCKSIZE * 5 && y <= AREA_ORIGIN_Y + BLOCKSIZE * 20 && x >= AREA_ORIGIN_X + BLOCKSIZE * 4 && x <= AREA_ORIGIN_X + BLOCKSIZE * 20) {
-				imageArray[imageLayer.imageCount++] = { bmpNullName, x,y,1 };
-				blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 0;
+			if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
+				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
+				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
+				imageArray[cnt++] = { bmpNullName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 0;
+					}
+				}
 			}
 			else {
-				imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
-				blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
+				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+					}
+				}
 			}
 		}
 	}
-
 	//setMinerals(10);
 	imageArray[0].x = AREA_ORIGIN_X + 576;
 	imageArray[0].y = AREA_ORIGIN_Y;
 	for (int y = 0;y < BLOCKSIZE;y++) {
 		for (int x = 0;x < BLOCKSIZE;x++) {
-			blockInfo[y][576+x] = 0;
+			blockInfo[y][576 + x] = 0;
 		}
 	}
 	imageArray[13].fileName = bmpNullName;
-
 }
 
-
-/*
-void initBlockImages() {
-
-	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * AREA_HEIGHT;y += BLOCKSIZE) {
-		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * AREA_WIDTH;x += BLOCKSIZE) {
+void fillBlockImages() {
+	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
 			blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
 		}
 	}
 }
-*/
+
 
 void initStageImage() { // 최초 스테이지 관련 이미지를 생성
 	stageLayer.images = stageImageArray;
@@ -321,34 +340,6 @@ bool collisionCheckInStage(int x, int y) {
         return 1;
     //return 0;
     return stageInfo[infoY][infoX];
-}
-
-void setMovableStageInfo(int row, int col) {
-    if (row - 1 >= 0) {
-        if (stageInfo[row - 1][col] == 1) {
-            stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
-            stageInfo[row - 1][col] = 0;
-        }
-    }
-    if (row + 1 < 5) {
-        if (stageInfo[row + 1][col]) {
-            stageLayer.images[(row + 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
-            stageInfo[row + 1][col] = 0;
-        }
-    }
-    if (col - 1 >= 0) {
-        if (stageInfo[row][col - 1]) {
-            stageLayer.images[(row) * 5 + col - 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
-            stageInfo[row][col - 1] = 0;
-        }
-    }
-
-    if (col + 1 < 5) {
-        if (stageInfo[row][col + 1]) {
-            stageLayer.images[(row) * 5 + col + 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
-            stageInfo[row][col + 1] = 0;
-        }
-    }
 }
 
 COORD getCurrentCurPos(void) {
@@ -587,6 +578,8 @@ void rewardUI() { // reward 레이어 출력
 	if (index2 == 1) pc.setAtkLev(pc.getAtkLev() + num);
 	else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
 	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
+
+	pc.setStone(pc.getStone() + 100);
 
 	//targetLayer->fadeIn(targetLayer, NULL);
 	//printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
