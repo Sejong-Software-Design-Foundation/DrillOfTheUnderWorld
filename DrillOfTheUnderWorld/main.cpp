@@ -14,20 +14,22 @@ int main() {
 	stageLayer.initialize(&stageLayer);
 	rewardLayer.initialize(&rewardLayer);
 
-	char bmpNamePC[] = "PlayerCharacter.bmp";
 	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 
-	//drawUI();
-
+	initStageImage();
 	initBlockImages();
-	drawUI();
+	initAreaUI();
+	initRewardImage();
+
+	clock_t start_time = clock();
+	clock_t end_time;
+	double duration;
 
 	Zombie* zombie = new Zombie(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
 	Boss* boss = new Boss(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
 	Shop* shop = new Shop(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
-
 
 	char bmpNameTmp[] = "emptyTile.bmp";
 
@@ -66,11 +68,12 @@ int main() {
 	initItemImages();
 
 	targetLayer = &stageLayer;
-
 	targetLayer->renderAll(targetLayer);
 	updateCharacterStatus();
-	
+
 	while (1) {
+		//num += 0.00007;
+		//printf("%f\n", num);
 		if (isOnStage) {
 			while (_kbhit() != 0) {
 				int key = _getch();
@@ -84,7 +87,7 @@ int main() {
 						isOnStage = false;
 						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
-						
+						mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
 						/*
 						imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
 						imageLayer.images = imageArray;
@@ -134,7 +137,7 @@ int main() {
 			zombie->move(&imageLayer);
 			boss->move(&imageLayer);
 			shop->move(&imageLayer);
-
+			drawUI();
 			for (int i = 0; i < 10; i++) {
 				if (_kbhit() != 0) {
 					int key = _getch();
@@ -199,6 +202,7 @@ int main() {
 					case SPACE:
 						COORD targetPos = pc.getTargetPos(curPosX, curPosY);
 						pc.dig(targetPos.X, targetPos.Y);
+						//pc.setOxygen(pc.getOxygen() - 1);
 						break;
 
 					case O:
@@ -209,10 +213,16 @@ int main() {
 						break;
 
 					}
-					pc.setOxygen(pc.getOxygen() - 1);
 				}
-			
+
 				Sleep(5);
+			}
+			end_time = clock();
+			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+			//printf("%d", pc.getOxygen());
+			if (duration > 3.0) {
+				pc.setOxygen(pc.getOxygen() - 1);
+				start_time = end_time;
 			}
 		}
 	}

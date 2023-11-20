@@ -41,14 +41,14 @@ void Zombie::move(ImageLayer* il) {
         cnt = 0;
     }
 
-    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * BLOCKSIZE, imageLayer.images[imageidx].y + dir[curDirection][1] * BLOCKSIZE)) {
+    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * SPEED, imageLayer.images[imageidx].y + dir[curDirection][1] * SPEED)) {
         curDirection = rand() % 4;
         cnt = 0;
         return;
     }
 
-    imageLayer.images[imageidx].x += dir[curDirection][0] * BLOCKSIZE;
-    imageLayer.images[imageidx].y += dir[curDirection][1] * BLOCKSIZE;
+    imageLayer.images[imageidx].x += dir[curDirection][0] * SPEED;
+    imageLayer.images[imageidx].y += dir[curDirection][1] * SPEED;
 
     x = imageLayer.images[imageidx].x;
     y = imageLayer.images[imageidx].y;

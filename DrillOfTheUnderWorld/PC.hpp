@@ -67,5 +67,5 @@ public:
 	void setAtkLev(int lev);
 	void setAtkSpdLev(int lev);
 	void setSpdLev(int lev);
-
+	bool isDigable(int x, int y);
 };

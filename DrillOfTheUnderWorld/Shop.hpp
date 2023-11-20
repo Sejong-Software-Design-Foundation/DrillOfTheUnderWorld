@@ -34,8 +34,8 @@ Shop::Shop(int x, int y) : NPC(x, y, 0, 0, 1) {
 
     int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
-    // render Ãâ·ÂÀ» À§ÇÑ image ¹øÈ£ ÀúÀå
-    // image¿¡ °´Ã¼ ÀÌ¹ÌÁö Ãß°¡
+    // render ì¶œë ¥ì„ ìœ„í•œ image ë²ˆí˜¸ ì €ìž¥
+    // imageì— ê°ì²´ ì´ë¯¸ì§€ ì¶”ê°€
     this->imageidx = imageIndex;
     imageLayer.images[imageIndex].fileName = bmpNameShop;
 }
@@ -73,12 +73,8 @@ void Shop::attack() {
 
     setCurrentCurPos(0, 0);
 
-  
     rewardUI();
     targetLayer->renderAll(targetLayer);
-
-
-
 
 
 
