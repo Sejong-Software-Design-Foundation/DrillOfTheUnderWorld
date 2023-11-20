@@ -82,6 +82,13 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
+char bmpMineralName[] = "Mineral.bmp";
+
+int NPCSpacePosX;
+int NPCSpacePosY;
+int NPCSpaceHeight;
+int NPCSpaceWidth;
+
 //
 
 
@@ -121,19 +128,83 @@ void initialize() {
 
 
 void initBlockImages() {
+	NPCSpaceHeight = getNPCSpaceHeight();
+	NPCSpaceWidth = getNPCSpaceWidth();
 
+	NPCSpacePosX = getNPCSpacePosX();
+	NPCSpacePosY = getNPCSpacePosY();
    for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
       for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-         if (y >= AREA_ORIGIN_Y + BLOCKSIZE * 5 && y<= AREA_ORIGIN_Y + BLOCKSIZE * 20 && x >= AREA_ORIGIN_X + BLOCKSIZE * 4 && x <= AREA_ORIGIN_X + BLOCKSIZE * 20) {
+         if (y != AREA_ORIGIN_Y + BLOCKSIZE*24 && x != AREA_ORIGIN_X + BLOCKSIZE*24 &&
+			 y >= NPCSpacePosY && y<= NPCSpacePosY + BLOCKSIZE* NPCSpaceHeight &&
+			 x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
             imageArray[imageLayer.imageCount++] = { bmpNullName, x,y,1};
-            blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 0;
+			for (int dy = 0;dy < BLOCKSIZE;dy++) {
+				for (int dx = 0;dx < BLOCKSIZE;dx++) {
+					blockInfo[convertPosToInfoY(y+dy)][convertPosToInfoX(x+dx)] = 0;
+				}
+			}
          }
          else {
             imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
-            blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
+			for (int dy = 0;dy < BLOCKSIZE;dy++) {
+				for (int dx = 0;dx < BLOCKSIZE;dx++) {
+					blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+				}
+			}
          }
       }
    }
+   setMinerals(10);
+}
+
+void getNewArea() {
+	NPCSpaceHeight = getNPCSpaceHeight();
+	NPCSpaceWidth = getNPCSpaceWidth();
+
+	NPCSpacePosX = getNPCSpacePosX();
+	NPCSpacePosY = getNPCSpacePosY();
+	int cnt = 1;
+	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
+				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
+				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
+				imageArray[cnt++] = { bmpNullName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 0;
+					}
+				}
+			}
+			else {
+				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+					}
+				}
+			}
+		}
+	}
+	setMinerals(10);
+	imageArray[0].x = AREA_ORIGIN_X + 576;
+	imageArray[0].y = AREA_ORIGIN_Y;
+	for (int y = 0;y < BLOCKSIZE;y++) {
+		for (int x = 0;x < BLOCKSIZE;x++) {
+			blockInfo[y][576+x] = 0;
+		}
+	}
+	imageArray[13].fileName = bmpNullName;
+}
+
+void fillBlockImages() {
+	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
+			blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
+		}
+	}
 }
 
 /*void initBlockImages() {
@@ -301,6 +372,7 @@ void drawUI() { // 새로운 함수
 	imageArray[imageLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 0 };
 	imageArray[imageLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1 };
 	index_UI_blockInfo_Start = imageLayer.imageCount;
+
 }
 
 void drawMapUI() { // 새로운 함수
@@ -459,24 +531,15 @@ void rewardUI() { // 새로운 함수
 	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
 
 	// printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
-}
 
-/*
-
-void dig(int x, int y) {
-	pc.vibe();
-	int infoX = convertPosToInfoX(x);
-	int infoY = convertPosToInfoY(y);
-	if (infoY < 0 || infoY >= 25 || infoX < 0 || infoX >= 25) return;
-	blockInfo[infoY][infoX]--;
-	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = 0;
-	}
-	else {
-		imageLayer.images[infoY * 25 + infoX + 1].fileName = bmpBrokenStoneBlockName;
-	}
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &stageLayer;
+	isOnStage = true;
+	targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+	stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+	setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+	targetLayer->fadeIn(targetLayer, NULL);
 }
-*/
 
 void initArea() {
 	for (int i = 0;i < 25;i++) {
@@ -487,6 +550,23 @@ void initArea() {
 	for (int y = 240;y < 960;y++) {
 		for (int x = 192;x < 960;x++) {
 			blockInfo[y][x] = 0;
+		}
+	}
+}
+
+int getNPCSpaceHeight() { return (rand() % 10 + 5); }
+int getNPCSpaceWidth() { return (rand() % 10 + 5); }
+int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth) + 1) * BLOCKSIZE + AREA_ORIGIN_X); }
+int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight) + 1) * BLOCKSIZE + AREA_ORIGIN_Y); }
+void setMinerals(int max) {
+	while (max) {
+		int x = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_X;
+		int y = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_Y;
+		if (blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] == 2) {
+			int imageIndex = convertPosToInfoY(y) / BLOCKSIZE * 25 + convertPosToInfoX(x) / BLOCKSIZE + 1;
+			imageArray[imageIndex].fileName = bmpMineralName;
+			blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 3;
+			max--;
 		}
 	}
 }

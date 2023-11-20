@@ -73,7 +73,7 @@ void Shop::attack() {
 
     setCurrentCurPos(0, 0);
 
-    printf("PC wants to shop!\n");
+    rewardUI();
 
 
 

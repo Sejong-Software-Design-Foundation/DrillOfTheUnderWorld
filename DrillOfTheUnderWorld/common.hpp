@@ -32,7 +32,7 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 48
+#define SPEED 16
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 48 *  7
@@ -77,9 +77,15 @@ extern char bmpHiddenAreaName[];
 extern char bmpMovableAreaName[];
 extern char bmpCharacterStatueName[];
 
+extern char bmpMineralName[];
 
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
+
+extern int NPCSpacePosX;
+extern int NPCSpacePosY;
+extern int NPCSpaceHeight;
+extern int NPCSpaceWidth;
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
@@ -103,5 +109,14 @@ void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
+
+void fillBlockImages();
+//void getNewArea(int zombieIndex);
+int getNPCSpaceHeight();
+int getNPCSpaceWidth();
+int getNPCSpacePosX();
+int getNPCSpacePosY();
+void setMinerals(int max);
+void getNewArea();
 
 #endif COMMON_HPP

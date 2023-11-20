@@ -15,18 +15,17 @@ int main() {
 	rewardLayer.initialize(&rewardLayer);
 
 	char bmpNamePC[] = "PlayerCharacter.bmp";
-	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y, 1 };
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 
 	//drawUI();
 
-	initBlockImages();
+	//initBlockImages();
+	fillBlockImages();
 	drawUI();
 
-	Zombie* zombie = new Zombie(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
-	Boss* boss = new Boss(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
-	Shop* shop = new Shop(AREA_ORIGIN_X + BLOCKSIZE * 6, AREA_ORIGIN_Y + BLOCKSIZE * 14);
+	
 
 
 	char bmpNameTmp[] = "emptyTile.bmp";
@@ -59,6 +58,10 @@ int main() {
 	targetLayer = &stageLayer;
 
 	targetLayer->renderAll(targetLayer);
+
+	Zombie* zombie = 0;
+	Boss* boss = 0;
+	Shop* shop = 0;
 	
 	while (1) {
 		if (isOnStage) {
@@ -69,6 +72,12 @@ int main() {
 				switch (key) {
 				case S:
 					if (isOnStage) {
+						getNewArea();
+
+						zombie = new Zombie(NPCSpacePosX, NPCSpacePosY);
+						boss = new Boss(NPCSpacePosX + 1, NPCSpacePosY + 1);
+						shop = new Shop(NPCSpacePosX + (NPCSpaceWidth / 2) * BLOCKSIZE, NPCSpacePosY + (NPCSpaceHeight / 2) * BLOCKSIZE);
+
 						targetLayer->fadeOut(targetLayer, NULL);
 						targetLayer = &imageLayer;
 						isOnStage = false;
@@ -118,7 +127,7 @@ int main() {
 		else {
 			targetLayer->renderAll(targetLayer);
 			zombie->move(&imageLayer);
-			boss->move(&imageLayer);
+			//boss->move(&imageLayer);
 			shop->move(&imageLayer);
 
 			for (int i = 0; i < 10; i++) {
