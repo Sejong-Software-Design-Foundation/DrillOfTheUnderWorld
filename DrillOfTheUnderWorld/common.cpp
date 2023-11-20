@@ -8,7 +8,7 @@ ImageLayer* targetLayer = NULL;
 ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
 ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image imageArray[1000];
-Image stageImageArray[30];
+Image stageImageArray[40];
 int currentAreaRowIndex;
 int currentAreaColIndex;
 int blockInfo[1200][1200];
@@ -23,7 +23,8 @@ char bmpClearedAreaName[] = "clearedArea.bmp";
 char bmpNomalAreaName[] = "nomalArea.bmp";
 char bmpHiddenAreaName[] = "hiddenArea.bmp";
 char bmpMovableAreaName[] = "movableArea.bmp";
-char bmpCharacterStatusName[] = "characterStatus.bmp";
+char bmpCharacterStatusName[] = "UI_character_status.bmp";
+
 char bmpNameNull[] = "";
 
 char bmpZombieName[] = "NPC.bmp";
@@ -90,6 +91,11 @@ char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
 
+char bmpItem1Name[] = "item1.bmp";
+char bmpItem2Name[] = "item2.bmp";
+char bmpItem3Name[] = "item3.bmp";
+
+
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
 	int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
 	wchar_t* wideStr = new wchar_t[requiredSize];
@@ -122,7 +128,7 @@ void initialize() {
 	srand((unsigned)time(NULL));
 }
 
-// NPC °ø°£ ¸¸µé±â
+// NPC ê³µê°„ ë§Œë“¤ê¸°
 
 
 
@@ -155,7 +161,7 @@ void initBlockImages() {
 }
 */
 
-void initStageImage() { // ÃÖÃÊ ½ºÅ×ÀÌÁö °ü·Ã ÀÌ¹ÌÁö¸¦ »ı¼º
+void initStageImage() { // ìµœì´ˆ ìŠ¤í…Œì´ì§€ ê´€ë ¨ ì´ë¯¸ì§€ë¥¼ ìƒì„±
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -272,7 +278,7 @@ void setCurrentCurPos(int x, int y) {
 }
 
 
-void initAreaUI() // ÃÖÃÊ ¿¡¾î¸®¾î UI °ü·Ã ÀÌ¹ÌÁö¸¦ »ı¼º
+void initAreaUI() // ìµœì´ˆ ì—ì–´ë¦¬ì–´ UI ê´€ë ¨ ì´ë¯¸ì§€ë¥¼ ìƒì„±
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
@@ -317,22 +323,22 @@ void initAreaUI() // ÃÖÃÊ ¿¡¾î¸®¾î UI °ü·Ã ÀÌ¹ÌÁö¸¦ »ı¼º
 			mapInfo[(y - 100) / BLOCKSIZE][(x - 1590) / BLOCKSIZE] = 0;
 		}
 	}
-	// 1 ~ 25, 25°³
+	// 1 ~ 25, 25ê°œ
 	// 5 ~ 29
 	imageArray[imageLayer.imageCount++] = { bmpNameMapBox, 1508, 0, 1, 1 }; // 30
 }
 
-void drawUI() { // ¿¡¾î¸®¾î UI È°¼ºÈ­
-	imageArray[index_Area_UI_Start].isHide = 0; // ¾ÆÀÌÅÛ Ã¢ÀÌ º¸ÀÌµµ·Ï
+void drawUI() { // ì—ì–´ë¦¬ì–´ UI í™œì„±í™”
+	imageArray[index_Area_UI_Start].isHide = 0; // ì•„ì´í…œ ì°½ì´ ë³´ì´ë„ë¡
 
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP¹Ù°¡ º¸ÀÌµµ·Ï
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPë°”ê°€ ë³´ì´ë„ë¡
 	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2¹Ù°¡ º¸ÀÌµµ·Ï
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2ë°”ê°€ ë³´ì´ë„ë¡
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // ¸ÊÀÌ º¸ÀÌµµ·Ï
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // ë§µì´ ë³´ì´ë„ë¡
 		imageArray[i].isHide = 0;
 
-	// ¿¡¾î¸®¾î X°¡ ¹Ì±¸ÇöÀÌ±â ¶§¹®¿¡ ÀÓ½Ã·Î ¿¡¾î¸®¾î Áöµµ¿¡¼­ X°¡ Ç¥½ÃµÇÁö ¾Êµµ·Ï
+	// ì—ì–´ë¦¬ì–´ Xê°€ ë¯¸êµ¬í˜„ì´ê¸° ë•Œë¬¸ì— ì„ì‹œë¡œ ì—ì–´ë¦¬ì–´ ì§€ë„ì—ì„œ Xê°€ í‘œì‹œë˜ì§€ ì•Šë„ë¡
 	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
 	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
@@ -364,7 +370,7 @@ void initRewardImage() {
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void rewardUI() { // reward ·¹ÀÌ¾î Ãâ·Â
+void rewardUI() { // reward ë ˆì´ì–´ ì¶œë ¥
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
 
@@ -474,6 +480,15 @@ void rewardUI() { // reward ·¹ÀÌ¾î Ãâ·Â
 	imagesReward[7].isHide = 1;
 	imagesReward[8].isHide = 1;
 	imagesReward[9].isHide = 1;
+
+	targetLayer = &stageLayer;
+	isOnStage = true;
+	targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+	stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+	setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+
+	//targetLayer->fadeIn(targetLayer, NULL);
+
 	targetLayer->renderAll(targetLayer);
 
 	int num = 0;
@@ -483,4 +498,80 @@ void rewardUI() { // reward ·¹ÀÌ¾î Ãâ·Â
 	if (index2 == 1) pc.setAtkLev(pc.getAtkLev() + num);
 	else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
 	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
+
+	//printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
+}
+
+/*
+
+void dig(int x, int y) {
+	pc.vibe();
+	int infoX = convertPosToInfoX(x);
+	int infoY = convertPosToInfoY(y);
+	if (infoY < 0 || infoY >= 25 || infoX < 0 || infoX >= 25) return;
+	blockInfo[infoY][infoX]--;
+	if (!blockInfo[infoY][infoX]) {
+		imageLayer.images[infoY * 25 + infoX + 1].fileName = 0;
+	}
+	else {
+		imageLayer.images[infoY * 25 + infoX + 1].fileName = bmpBrokenStoneBlockName;
+	}
+}
+*/
+
+void initArea() {
+	for (int i = 0;i < 25;i++) {
+		for (int j = 0;j < 25;j++) {
+			if (i > 4 && i < 20 && j> 5 && j < 20) imageLayer.images[i * 25 + j + 1].fileName = bmpNameNull;
+		}
+	}
+	for (int y = 240;y < 960;y++) {
+		for (int x = 192;x < 960;x++) {
+			blockInfo[y][x] = 0;
+		}
+	}
+}
+
+void updateCharacterStatus() {
+
+	wchar_t playerStone[20];
+	wchar_t playerHp[20];
+	wchar_t playerOz[20];
+	wchar_t playerAttackPower[20];
+	wchar_t playerAttackSpeed[20];
+	wchar_t playerMoveSpeed[20];
+
+	swprintf(playerStone, sizeof(playerStone) / sizeof(playerStone[0]), L"%d", pc.getStone());
+	swprintf(playerHp, sizeof(playerHp) / sizeof(playerHp[0]), L"%d / %d", pc.getHP(), pc.getMaxHP());
+	swprintf(playerOz, sizeof(playerOz) / sizeof(playerOz[0]), L"%d / %d", pc.getOxygen(), pc.getMaxOxygen());
+	swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.%d", pc.getAtkLev());
+	swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.%d", pc.getAtkSpdLev());
+	swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
+
+
+	printText(targetLayer->_consoleDC, 390, 332, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+	printText(targetLayer->_consoleDC, 250, 432, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
+	printText(targetLayer->_consoleDC, 250, 498, 40, 0, RGB(255, 255, 255), TA_LEFT, playerOz);
+	printText(targetLayer->_consoleDC, 250, 564, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
+	printText(targetLayer->_consoleDC, 250, 634, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
+	printText(targetLayer->_consoleDC, 250, 700, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
+}
+
+
+void initItemImages() {
+	std::vector<int> itemList = pc.getitemList();
+
+	for (int i = 0; i < itemList.size(); i++) {
+		if (itemList[i] == 1) {
+			stageImages[stageLayer.imageCount++] = { bmpItem1Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1}; 
+		}
+		if (itemList[i] == 2) {
+			stageImages[stageLayer.imageCount++] = { bmpItem2Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
+		}
+		if (itemList[i] == 3) {
+			stageImages[stageLayer.imageCount++] = { bmpItem3Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
+		}
+	}
+
+
 }

@@ -17,9 +17,12 @@ COORD PC::getCurPos() {
 	COORD CurPos = { imageLayer.images[0].x, imageLayer.images[0].y };
 	return CurPos;
 }
+std::vector<int> PC::getitemList() { return itemList; }
 int PC::getStone() { return stone; }
 int PC::getHP() { return HP; }
 int PC::getOxygen() { return O2; }
+int PC::getMaxHP() { return MAX_HP; }
+int PC::getMaxOxygen() { return MAX_O2; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
 void PC::setHP(int hp) {
@@ -55,7 +58,8 @@ void PC::dig(int x, int y) {
 	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
 	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
 		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
-			if (blockInfo[curY][curX]) blockInfo[curY][curX]--;
+			if (blockInfo[curY][curX]) 
+				blockInfo[curY][curX] = blockInfo[curY][curX] - pc.getATK();
 		}
 	}
 
@@ -118,3 +122,7 @@ int PC::getSpdLev() { return SpdLev; }
 void PC::setAtkLev(int lev) { this->AtkLev = lev; }
 void PC::setAtkSpdLev(int lev) { this->AtkSpdLev = lev; }
 void PC::setSpdLev(int lev) { this->SpdLev = lev; }
+
+void PC::addItem(int itemIndex) {
+	itemList.push_back(itemIndex);
+}

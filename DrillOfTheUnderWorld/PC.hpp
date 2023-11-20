@@ -2,16 +2,20 @@
 extern "C" {
 #include <Windows.h>
 }
+#include <vector>
 
 class PC {
 private:
 	int MAX_HP = 100, MAX_O2 = 100;
-	int AtkLev = 0, AtkSpdLev = 0, SpdLev = 0;
+	int AtkLev = 1, AtkSpdLev = 1, SpdLev = 1;
 
 	int HP = 100, O2 = 100, ATK = 1, curDirection = 0;
 	int stone = 0;
 	int dx[4] = { 1,0,-1,0 };
 	int dy[4] = { 0,1,0,-1 };
+
+	std::vector<int> itemList;
+
 	char* bmpPCName;
 	char* bmpPCLeftName;
 	char* bmpPCRightName;
@@ -34,9 +38,13 @@ public:
 	static PC& getPC();
 	void vibe();
 	COORD getCurPos();
+	std::vector<int> getitemList();
+	void addItem(int itemIndex);
 	int getStone();
 	int getHP();
 	int getOxygen();
+	int getMaxHP();
+	int getMaxOxygen();
 	int getATK();
 	int getDir();
 	COORD getPosAfterMove(int x, int y);

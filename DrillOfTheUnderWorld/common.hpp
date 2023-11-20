@@ -13,6 +13,7 @@ extern "C" {
 }
 #include "PC.hpp"
 #include "Stage.hpp"
+#include "Text.hpp"
 
 #define NUM1 49  
 #define NUM2 50  
@@ -35,15 +36,20 @@ extern "C" {
 #define SPEED 48
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
-#define AREA_ORIGIN_Y 48 * 7
-
+#define AREA_ORIGIN_Y 336
 #define AREA_WIDTH 25
 #define AREA_HEIGHT 25
+
 
 #define STAGE_ORIGIN_X 600
 #define STAGE_ORIGIN_Y 240
 #define AREA_BLOCK_SIZE 144
 #define STAGE_EXTRA_IMAGE_COUNT 3
+
+#define UI_ITEM_START_POS_X 1450
+#define UI_ITEM_START_POS_Y 220
+#define UI_ITEM_SIZE 170
+
 
 extern PC& pc;
 
@@ -53,7 +59,7 @@ extern ImageLayer* targetLayer;
 extern ImageLayer imageLayer;
 extern ImageLayer stageLayer;
 extern Image imageArray[1000];
-extern Image stageImageArray[30];
+extern Image stageImageArray[40];
 extern int stageInfo[5][5];
 extern int blockInfo[1200][1200];
 extern bool isOnStage;
@@ -86,6 +92,10 @@ extern char bmpHiddenAreaName[];
 extern char bmpMovableAreaName[];
 extern char bmpCharacterStatusName[];
 
+// item Image
+extern char bmpItem1Name[];
+extern char bmpItem2Name[];
+extern char bmpItem3Name[];
 
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
@@ -116,4 +126,7 @@ void drawMapUI();
 void rewardUI();
 void initArea();
 
+void updateCharacterStatus();
+void initItemImages();
+int calculateItemPosY(int i);
 #endif COMMON_HPP

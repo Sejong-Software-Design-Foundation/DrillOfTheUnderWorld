@@ -83,6 +83,9 @@
     <ClInclude Include="Shop.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Text.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav">
@@ -289,6 +292,18 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\..\..\Zombie.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_character_status.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="item1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="item2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="item3.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
