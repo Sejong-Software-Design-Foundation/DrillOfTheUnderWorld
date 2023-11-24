@@ -40,6 +40,15 @@ NPCBullet::NPCBullet(int x, int y) : NPC(x, y, 0, 10, 1) {
 
 void NPCBullet::move() {
 
+	if (PCNear()) {
+		attack();
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+	}
+
+	if (collisionCheck(x + dx, y + dy)) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+	}
+
 	// update bullet position
 	imageLayer.images[imageidx].x += dx;
 	imageLayer.images[imageidx].y += dy;

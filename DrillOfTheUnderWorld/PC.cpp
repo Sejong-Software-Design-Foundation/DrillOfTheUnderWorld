@@ -56,7 +56,7 @@ int PC::getMaxHP() { return MAX_HP; }
 int PC::getMaxOxygen() { return MAX_O2; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
-void PC::setHP(int hp) { 
+void PC::setHP(int hp) {
 
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
@@ -97,7 +97,7 @@ void PC::dig(int x, int y) { // ������ �׸�
 	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
 	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
 		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
-			if (blockInfo[curY][curX]) 
+			if (blockInfo[curY][curX])
 				blockInfo[curY][curX] = blockInfo[curY][curX] - pc.getATK();
 		}
 	}
@@ -105,26 +105,14 @@ void PC::dig(int x, int y) { // ������ �׸�
 	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
 
 	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[imageIndex].fileName = bmpNullName;
+		checkAreaMineral(imageIndex);
+		imageLayer.images[imageIndex].fileName = bmpNameNull;
 	}
 	else if (blockInfo[infoY][infoX] == 1) {
 		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
 	}
 	else if (blockInfo[infoY][infoX] == 3) {
-
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpNameBronzeMineral;
-		}
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpNameSilverMineral;
-		}
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpNameGoldMineral;
-		}
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpNameDiamondMineral;
-		}
-
+		checkAreaOre(imageIndex);
 		blockInfo[infoY][infoX] = 1;
 	}
 }

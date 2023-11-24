@@ -10,7 +10,6 @@ public:
 
     void move();
     void attack();
-    void setNewPosition(int x, int y);
 };
 
 Ladder::Ladder(int x, int y) : NPC(x, y, 0, 0, 1) {
@@ -28,12 +27,6 @@ void Ladder::move() {
 void Ladder::attack() {
     rewardUI();
     targetLayer->renderAll(targetLayer);
-}
-void Ladder::setNewPosition(int x, int y) {
-    imageLayer.images[imageidx].x = x;
-    imageLayer.images[imageidx].y = y;
-    this->x = x;
-    this->y = y;
 }
 
 #endif

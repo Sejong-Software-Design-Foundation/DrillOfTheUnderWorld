@@ -16,6 +16,7 @@ using namespace std;
 
 class EmceeTheShyGuy : public NPC {
 public:
+	// if movecnt is 8 shoot bullet
 	int movecnt;
 	list<NPCBullet> bullets;
 
@@ -25,7 +26,6 @@ public:
 	void checkBullets();
 	void move();
 	void attack();
-	void setNewPosition(int x, int y);
 };
 
 EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 0, 10, 1) {
@@ -39,10 +39,13 @@ void EmceeTheShyGuy::checkBullets() {
 
 	list<NPCBullet>::iterator it;
 
-	for (it = bullets.begin(); it != bullets.end(); it++) {
+	for (it = bullets.begin(); it != bullets.end(); ) {
 		int bullet_idx = (*it).imageidx;
 		if (imageArray[bullet_idx].fileName == bmpNameNull) {
-			bullets.erase(it);
+			it = bullets.erase(it);
+		}
+		else {
+			it++;
 		}
 	}
 }
@@ -59,7 +62,8 @@ void EmceeTheShyGuy::move() {
 		movecnt = 0;
 	}
 	else {
-		NPCTrackingMovement();
+		NPCBossMovement();
+		//NPCTrackingMovement();
 		//NPCPatternMovement();
 	}
 }
@@ -68,11 +72,6 @@ void EmceeTheShyGuy::move() {
 void EmceeTheShyGuy::attack() {
 	list<NPCBullet>::iterator it;
 	for (it = bullets.begin(); it != bullets.end(); it++) { (*it).move(); }
-}
-
-void EmceeTheShyGuy::setNewPosition(int x, int y) {
-	imageLayer.images[imageidx].x = x;
-	imageLayer.images[imageidx].y = y;
 }
 
 #endif

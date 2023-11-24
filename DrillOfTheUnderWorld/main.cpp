@@ -54,7 +54,7 @@ int main() {
 	//initStageImages();
 	stageLayer.images = stageImageArray;
 	stageLayer.images[0] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48
-										, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
+	, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
 	stageLayer.images[1] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
 
 	stageLayer.images[2] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
@@ -90,21 +90,18 @@ int main() {
 
 						getNewArea();
 						Mineral* mineral = new Mineral();
-						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth*BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight*BLOCKSIZE / 2);
-						ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+
 						targetLayer->fadeOut(targetLayer, NULL);
 						targetLayer = &imageLayer;
 						isOnStage = false;
+						// 4 0 일때 보스
 						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 						mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
-						/*
-						imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
-						imageLayer.images = imageArray;
-						imageLayer.imageCount = 1;
 
-						initBlockImages();
-						*/
+						// if isOnBoss = true;
 
 						targetLayer->fadeIn(targetLayer, NULL);
 					}
@@ -116,6 +113,10 @@ int main() {
 						stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
 						targetLayer->fadeIn(targetLayer, NULL);
 					}
+					// else 문 하나 추가해서 보스몹 스테이지 방로 들어가게 하기
+					// else if(isOnBoss) {
+					//
+					// }
 					break;
 
 				case LEFT:
