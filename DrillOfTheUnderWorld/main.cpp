@@ -95,19 +95,10 @@ int main() {
 						isButtonStage = false;
 						isButtonRoomClear = false;
 
-						getNewArea();
-						Mineral* mineral = new Mineral();
-						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth*BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight*BLOCKSIZE / 2);
-						ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-						setBedrock(3);
-						mineral->getCluster();
-						setFlag(3);
-						targetLayer->fadeOut(targetLayer, NULL);
-						targetLayer = &imageLayer;
-						isOnStage = false;
 						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
-						if (currentAreaRowIndex == 2 && currentAreaColIndex == 2) {
+						
+						if (currentAreaRowIndex == 2 && currentAreaColIndex == 2 && pc.getDir() == 0) {
 							isButtonRoomClear = false;
 							int randomNumber = rand() % 7; // 0 ï¿½ï¿½ï¿½ï¿½ 6 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 							buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
@@ -137,6 +128,9 @@ int main() {
 							Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 							ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 							bat->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+							setBedrock(3);
+							mineral->getCluster();
+							setFlag(3);
 
 							targetLayer->fadeOut(targetLayer, NULL);
 							targetLayer = &imageLayer;
@@ -187,6 +181,7 @@ int main() {
 				}
 			}
 		}
+		//¹öÆ°À¸·Î Å¬¸®¾îÇÏ´Â ½ºÅ×ÀÌÁö
 		else if (isButtonStage) {
 			targetLayer->renderAll(targetLayer);
 			drawUI();
