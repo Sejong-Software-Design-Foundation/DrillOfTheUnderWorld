@@ -85,7 +85,7 @@ void PC::setOxygen(int o2) {
 }
 void PC::setATK(int atk) { this->ATK = atk; }
 
-void PC::dig(int x, int y) { // ������ �׸�
+void PC::dig(int x, int y) { 
 	if (!isDigable(x, y)) return;
 	pc.vibe();
 	if (x % BLOCKSIZE > BLOCKSIZE / 2) x = x - x % BLOCKSIZE + BLOCKSIZE;
@@ -98,34 +98,60 @@ void PC::dig(int x, int y) { // ������ �׸�
 	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
 		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
 			if (blockInfo[curY][curX]) 
-				blockInfo[curY][curX] = blockInfo[curY][curX] - pc.getATK();
+				blockInfo[curY][curX] = blockInfo[curY][curX] - pc.getAtkLev();
 		}
 	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
 
-	if (!blockInfo[infoY][infoX]) {
-		imageLayer.images[imageIndex].fileName = bmpNullName;
-	}
-	else if (blockInfo[infoY][infoX] == 1) {
-		imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
-	}
-	else if (blockInfo[infoY][infoX] == 3) {
-
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre) == 0) {
+	if (blockInfo[infoY][infoX] <= 0) {
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpBrokenStoneBlockName) == 0)) {
+			imageLayer.images[imageIndex].fileName = bmpNullName;
+		}
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenBronzeOre) == 0)) {
 			imageLayer.images[imageIndex].fileName = bmpNameBronzeMineral;
+			applyDigReward(imageIndex);
 		}
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre) == 0) {
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenSilverOre) == 0)) {
 			imageLayer.images[imageIndex].fileName = bmpNameSilverMineral;
+			applyDigReward(imageIndex);
 		}
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre) == 0) {
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenGoldOre) == 0)) {
 			imageLayer.images[imageIndex].fileName = bmpNameGoldMineral;
+			applyDigReward(imageIndex);
 		}
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre) == 0) {
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenDiamondOre) == 0)) {
 			imageLayer.images[imageIndex].fileName = bmpNameDiamondMineral;
+			applyDigReward(imageIndex);
 		}
-
-		blockInfo[infoY][infoX] = 1;
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpQuestionMarkName) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpQuestionMarkName;
+			applyDigReward(imageIndex);
+		}
+	}
+	// 나중에 매직넘버 처리하기 -> 광물 HP
+	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameBrokenBronzeOre;
+		}
+	}
+	if (blockInfo[infoY][infoX] <= 3) { // silver -> 6
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameBrokenSilverOre;
+		}
+	}
+	if (blockInfo[infoY][infoX] <= 4) { // gold -> 9
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameBrokenGoldOre;
+		}
+	}
+	if (blockInfo[infoY][infoX] <= 6) { // diamond -> 12 
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameBrokenDiamondOre;
+		}
 	}
 }
 void PC::moveInStage() {
@@ -199,4 +225,42 @@ bool PC::isDigable(int x, int y) {
 	if (curDirection == 0 || curDirection == 2) return x % BLOCKSIZE == 0;
 	else return y % BLOCKSIZE == 0;
 	//return (x % BLOCKSIZE == 0 && y % BLOCKSIZE == 0);
+}
+
+void PC::showDigRewardOnPcTop(int targerImageIndex) {
+	// step1 move target reward image to PC top postion and reward value
+	targetLayer->renderAll(targetLayer);
+	Sleep(300);
+
+	int currentPcPosX = imageArray[0].x;
+	int currentPcPosY = imageArray[0].y;
+	int targetPosX = currentPcPosX - BLOCKSIZE / 2;
+	int targetPosY = currentPcPosY - BLOCKSIZE * 1.5;
+
+	imageArray[targerImageIndex].scale = 2;
+	imageArray[targerImageIndex].x = targetPosX;
+	imageArray[targerImageIndex].y = targetPosY;
+
+	targetLayer->renderAll(targetLayer);
+	Sleep(500);
+	
+	if (strcmp(imageArray[targerImageIndex].fileName, bmpNameBronzeMineral)) {
+		pc.setStone(pc.getStone() + 10);
+	}
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameSilverMineral)) {
+		pc.setStone(pc.getStone() + 30);
+	}
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameGoldMineral)) {
+		pc.setStone(pc.getStone() + 50);
+	}
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameDiamondMineral)) {
+		pc.setStone(pc.getStone() + 100);
+	}
+
+	imageArray[targerImageIndex].fileName = bmpNullName;
+}
+
+void PC::applyDigReward(int targerImageIndex) {
+	showDigRewardOnPcTop(targerImageIndex);
+	// 물약같은거 처리
 }

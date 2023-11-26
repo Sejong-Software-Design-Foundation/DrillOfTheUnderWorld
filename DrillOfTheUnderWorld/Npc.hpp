@@ -61,7 +61,10 @@ bool NPC::PCNear() {
             for (int dy = 0; dy < BLOCKSIZE; dy++) {
                 for (int dx = 0;dx < BLOCKSIZE;dx++) {
                     if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
-                    if (curX == PC_X+dx && curY == PC_Y+dy) return true;
+                    if (curX == PC_X + dx && curY == PC_Y + dy) { 
+                        pc.setHP(pc.getHP() - 1);
+                        return true; 
+                    }
                 }
             }
         }
