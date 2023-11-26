@@ -129,7 +129,7 @@ void PC::dig(int x, int y) {
 			applyDigReward(imageIndex);
 		}
 	}
-	// 나중에 매직넘버 처리하기 -> 광물 HP
+	// ?�중??매직?�버 처리?�기 -> 광물 HP
 	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
 			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
@@ -262,7 +262,8 @@ void PC::showDigRewardOnPcTop(int targerImageIndex) {
 
 void PC::applyDigReward(int targerImageIndex) {
 	showDigRewardOnPcTop(targerImageIndex);
-	// 물약같은거 처리
+	// ���� �� ó��
+}
 void PC::increaseFlagCnt() {
 	flagCnt++;
 }
