@@ -124,8 +124,6 @@ int NPCSpacePosY;
 int NPCSpaceHeight;
 int NPCSpaceWidth;
 
-
-
 char bmpItem1Name[] = "item1.bmp";
 char bmpItem2Name[] = "item2.bmp";
 char bmpItem3Name[] = "item3.bmp";
@@ -142,7 +140,12 @@ char bmpButton3Name[] = "button3.bmp";
 char bmpButton3PressedName[] = "button3Pressed.bmp";
 
 char bmpQuestionMarkName[] = "questionMark.bmp";
-int rewardItemImageIndex;
+char bmpOzPotionName[] = "ozPotion.bmp";
+char bmpHpPotionName[] = "hpPotion.bmp";
+char bmpBoomName[] = "boom.bmp";
+bool isGenerateMobByQuestionBlock = false;
+int questionBlockPosX = 0;
+int questionBlockPosY = 0;
 
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {

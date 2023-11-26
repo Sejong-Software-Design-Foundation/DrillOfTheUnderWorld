@@ -8,7 +8,7 @@
 
 int main() {
 	initialize();
-
+	std::vector<Bat*> generatedBatList;
 	char bgmName[] = "start_bgm.wav";
 	playBGM(bgmName);
 
@@ -98,7 +98,7 @@ int main() {
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 						if (currentAreaRowIndex == 2 && currentAreaColIndex == 2) {
 							isButtonRoomClear = false;
-							int randomNumber = rand() % 7; // 0 에서 6 사이의 난수
+							int randomNumber = rand() % 6; // 0 에서 6 사이의 난수
 							buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
 							getNewArea();
 							Mineral* mineral = new Mineral();
@@ -197,6 +197,16 @@ int main() {
 				imageArray[button3->imageidx].fileName = bmpButton3Name;
 			}
 
+			if (isGenerateMobByQuestionBlock) {
+				generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
+				isGenerateMobByQuestionBlock = false;
+			}
+			
+			if (!generatedBatList.empty()) {
+				for (Bat* mob : generatedBatList) {
+					mob->move();
+				}
+			}
 
 			//mole->move();
 			if (isButtonRoomClear) {

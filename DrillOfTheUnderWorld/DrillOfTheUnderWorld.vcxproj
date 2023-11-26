@@ -239,6 +239,7 @@
     <Image Include="block_Stage1_OrichalcumOre2.bmp" />
     <Image Include="block_Stage1_SilverOre1.bmp" />
     <Image Include="block_Stage1_SilverOre2.bmp" />
+    <Image Include="boom.bmp" />
     <Image Include="brick_dark2.png" />
     <Image Include="BronzeMineral.bmp" />
     <Image Include="BronzeOre.bmp" />
@@ -249,12 +250,14 @@
     <Image Include="button3.bmp" />
     <Image Include="button3Pressed.bmp" />
     <Image Include="hiddenStage.bmp" />
+    <Image Include="hpPotion.bmp" />
     <Image Include="item1.bmp" />
     <Image Include="item2.bmp" />
     <Image Include="item3.bmp" />
     <Image Include="nomalStage.bmp" />
     <Image Include="clearedStage.bmp" />
     <Image Include="brokenStoneBlock.bmp" />
+    <Image Include="ozPotion.bmp" />
     <Image Include="PC_down.bmp" />
     <Image Include="PC_left.bmp" />
     <Image Include="PC_right.bmp" />

@@ -18,140 +18,161 @@ public:
 	void GenerateQuestionMark();
 };
 
+
 void Mineral::GenerateBronze() {
-	srand(static_cast<unsigned int>(time(nullptr)));
+    srand(static_cast<unsigned int>(time(nullptr)));
 
-	int num;
+    int num;
 
-	if (stagelevel == 1) num = 4;
-	else if (stagelevel == 2) num = 3;
-	else if (stagelevel == 3) num = 0;
+    if (stagelevel == 1) num = 4;
+    else if (stagelevel == 2) num = 3;
+    else if (stagelevel == 3) num = 0;
 
-	for (int i = 0; i < num; i++) {
-		while (1) {
-			int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
-			int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
+    for (int i = 0; i < num; i++) {
+        while (1) {
+            int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
+            int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
 
-			int infoX = convertPosToInfoX(x);
-			int infoY = convertPosToInfoY(y);
+            int infoX = convertPosToInfoX(x);
+            int infoY = convertPosToInfoY(y);
 
-			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+            int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
-			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = BRONZE;
-				imageLayer.images[imageIndex].fileName = bmpNameBronzeOre;
-				break;
-			}
-		}
-	}
+            if (blockInfo[infoY][infoX] == 2) {
+                for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+                    for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+                        blockInfo[curY][curX] = BRONZE;
+                    }
+                }
+                imageLayer.images[imageIndex].fileName = bmpNameBronzeOre;
+                break;
+            }
+        }
+    }
 }
 
 void Mineral::GenerateSilver() {
-	srand(static_cast<unsigned int>(time(nullptr)));
+    srand(static_cast<unsigned int>(time(nullptr)));
 
-	int num;
+    int num;
 
-	if (stagelevel == 1) num = 5;
-	else if (stagelevel == 2) num = 3;
-	else if (stagelevel == 3) num = 3;
+    if (stagelevel == 1) num = 5;
+    else if (stagelevel == 2) num = 3;
+    else if (stagelevel == 3) num = 3;
 
-	for (int i = 0; i < num; i++) {
-		while (1) {
-			int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
-			int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
+    for (int i = 0; i < num; i++) {
+        while (1) {
+            int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
+            int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
 
-			int infoX = convertPosToInfoX(x);
-			int infoY = convertPosToInfoY(y);
+            int infoX = convertPosToInfoX(x);
+            int infoY = convertPosToInfoY(y);
 
-			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+            int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
-			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = SILVER;
-				imageLayer.images[imageIndex].fileName = bmpNameSilverOre;
-				break;
-			}
-		}
-	}
+            if (blockInfo[infoY][infoX] == 2) {
+                for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+                    for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+                        blockInfo[curY][curX] = SILVER;
+                    }
+                }
+                imageLayer.images[imageIndex].fileName = bmpNameSilverOre;
+                break;
+            }
+        }
+    }
 }
 void Mineral::GenerateGold() {
-	srand(static_cast<unsigned int>(time(nullptr)));
+    srand(static_cast<unsigned int>(time(nullptr)));
 
-	int num;
+    int num;
 
-	if (stagelevel == 1) num = 1;
-	else if (stagelevel == 2) num = 3;
-	else if (stagelevel == 3) num = 4;
+    if (stagelevel == 1) num = 1;
+    else if (stagelevel == 2) num = 3;
+    else if (stagelevel == 3) num = 4;
 
-	for (int i = 0; i < num; i++) {
-		while (1) {
-			int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
-			int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
+    for (int i = 0; i < num; i++) {
+        while (1) {
+            int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
+            int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
 
-			int infoX = convertPosToInfoX(x);
-			int infoY = convertPosToInfoY(y);
+            int infoX = convertPosToInfoX(x);
+            int infoY = convertPosToInfoY(y);
 
-			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+            int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
-			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = GOLD;
-				imageLayer.images[imageIndex].fileName = bmpNameGoldOre;
-				break;
-			}
-		}
-	}
+            if (blockInfo[infoY][infoX] == 2) {
+                for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+                    for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+                        blockInfo[curY][curX] = GOLD;
+                    }
+                }
+                imageLayer.images[imageIndex].fileName = bmpNameGoldOre;
+                break;
+            }
+        }
+    }
 }
 
 void Mineral::GenerateDiamond() {
-	srand(static_cast<unsigned int>(time(nullptr)));
+    srand(static_cast<unsigned int>(time(nullptr)));
 
-	int num;
+    int num;
 
-	if (stagelevel == 1) num = 0;
-	else if (stagelevel == 2) num = 1;
-	else if (stagelevel == 3) num = 3;
+    if (stagelevel == 1) num = 0;
+    else if (stagelevel == 2) num = 1;
+    else if (stagelevel == 3) num = 3;
 
-	for (int i = 0; i < num; i++) {
-		while (1) {
-			int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
-			int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
+    for (int i = 0; i < num; i++) {
+        while (1) {
+            int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
+            int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
 
-			int infoX = convertPosToInfoX(x);
-			int infoY = convertPosToInfoY(y);
+            int infoX = convertPosToInfoX(x);
+            int infoY = convertPosToInfoY(y);
 
-			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+            int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
-			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = DIAMOND;
-				imageLayer.images[imageIndex].fileName = bmpNameDiamondOre;
-				break;
-			}
-		}
-	}
+            if (blockInfo[infoY][infoX] == 2) {
+                for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+                    for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+                        blockInfo[curY][curX] = DIAMOND;
+                    }
+                }
+                imageLayer.images[imageIndex].fileName = bmpNameDiamondOre;
+                break;
+            }
+        }
+    }
 }
 
 void Mineral::GenerateQuestionMark() {
-	srand(static_cast<unsigned int>(time(nullptr)));
+    srand(static_cast<unsigned int>(time(nullptr)));
 
-	int num = 2;
+    int num = 10;
 
 
-	for (int i = 0; i < num; i++) {
-		while (1) {
-			int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
-			int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
+    for (int i = 0; i < num; i++) {
+        while (1) {
+            int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
+            int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
 
-			int infoX = convertPosToInfoX(x);
-			int infoY = convertPosToInfoY(y);
+            int infoX = convertPosToInfoX(x);
+            int infoY = convertPosToInfoY(y);
 
-			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+            int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
-			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = QUESTION_MARK;
-				imageLayer.images[imageIndex].fileName = bmpQuestionMarkName;
-				break;
-			}
-		}
-	}
+            if (blockInfo[infoY][infoX] == 2) {
+                for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+                    for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+                        blockInfo[curY][curX] = QUESTION_MARK;
+                    }
+                }
+                imageLayer.images[imageIndex].fileName = bmpQuestionMarkName;
+                break;
+            }
+        }
+    }
 }
 
 Mineral::Mineral() {

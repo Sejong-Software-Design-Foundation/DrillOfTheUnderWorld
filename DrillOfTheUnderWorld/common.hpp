@@ -153,7 +153,13 @@ extern char bmpButton3PressedName[];
 
 extern char bmpQuestionMarkName[];
 
-extern int rewardItemImageIndex;
+extern char bmpOzPotionName[];
+extern char bmpHpPotionName[];
+extern char bmpBoomName[];
+
+extern bool isGenerateMobByQuestionBlock;
+extern int questionBlockPosX;
+extern int questionBlockPosY;
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
