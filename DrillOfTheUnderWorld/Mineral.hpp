@@ -6,7 +6,7 @@ private:
 	// change stagelevel in constructor for tests
 	int stagelevel;
 	// value is the hit counts
-	enum MineralHP { BRONZE = 6, SILVER = 9, GOLD = 12, DIAMOND = 15 };
+	enum MineralHP { BRONZE = 3, SILVER = 6, GOLD = 9, DIAMOND = 12, QUESTION_MARK = 3 };
 
 public:
 	Mineral();
@@ -15,6 +15,7 @@ public:
 	void GenerateSilver();
 	void GenerateGold();
 	void GenerateDiamond();
+	void GenerateQuestionMark();
 	void GenerateBronze(int x, int y);
 	void GenerateSilver(int x, int y);
 	void GenerateGold(int x, int y);
@@ -133,6 +134,31 @@ void Mineral::GenerateDiamond() {
 	}
 }
 
+void Mineral::GenerateQuestionMark() {
+	srand(static_cast<unsigned int>(time(nullptr)));
+
+	int num = 2;
+
+
+	for (int i = 0; i < num; i++) {
+		while (1) {
+			int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
+			int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
+
+			int infoX = convertPosToInfoX(x);
+			int infoY = convertPosToInfoY(y);
+
+			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+			if (blockInfo[infoY][infoX] == 2) {
+				blockInfo[infoY][infoX] = QUESTION_MARK;
+				imageLayer.images[imageIndex].fileName = bmpQuestionMarkName;
+				break;
+			}
+		}
+	}
+}
+
 Mineral::Mineral() {
 
 	stagelevel = 3;
@@ -141,6 +167,7 @@ Mineral::Mineral() {
 	GenerateSilver();
 	GenerateGold();
 	GenerateDiamond();
+	GenerateQuestionMark();
 }
 
 void Mineral::GenerateBronze(int x, int y) {

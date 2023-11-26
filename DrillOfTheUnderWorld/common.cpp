@@ -1,7 +1,6 @@
 #include "common.hpp"
 
 PC& pc = PC::getPC();
-
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
 ImageLayer* targetLayer = NULL;
@@ -14,8 +13,9 @@ int currentAreaColIndex;
 int blockInfo[1200][1200];
 int stageInfo[5][5];
 bool isOnStage = true;
-char bmpStoneBlockName[] = "stoneBlock.bmp";
-char bmpBrokenStoneBlockName[] = "brokenStoneBlock.bmp";
+bool isButtonStage = false;
+char bmpStoneBlockName[] = "block_Stage1_Normal.bmp";
+char bmpBrokenStoneBlockName[] = "block_Stage1_Broken.bmp";
 
 char bmpNamePC[] = "PlayerCharacter.bmp";
 char bmpStageLevel[] = "Stage1.bmp";
@@ -43,16 +43,21 @@ char bmpNameLadder[] = "Ladder.bmp";
 
 // have to add all these bmp files as bitmap resources
 // ORE BMP
-char bmpNameBronzeOre[] = "BronzeOre.bmp";
-char bmpNameSilverOre[] = "SilverOre.bmp";
-char bmpNameGoldOre[] = "GoldOre.bmp";
-char bmpNameDiamondOre[] = "DiamondOre.bmp";
+char bmpNameBronzeOre[] = "block_Stage1_BronzeOre1.bmp";
+char bmpNameSilverOre[] = "block_Stage1_SilverOre1.bmp";
+char bmpNameGoldOre[] = "block_Stage1_GoldOre1.bmp";
+char bmpNameDiamondOre[] = "block_Stage1_DiamondOre1.bmp";
+
+char bmpNameBrokenBronzeOre[] = "block_Stage1_Broken_BronzeOre1.bmp";
+char bmpNameBrokenSilverOre[] = "block_Stage1_Broken_SilverOre1.bmp";
+char bmpNameBrokenGoldOre[] = "block_Stage1_Broken_GoldOre1.bmp";
+char bmpNameBrokenDiamondOre[] = "block_Stage1_Broken_DiamondOre1.bmp";
 
 // MINERAL BMP
-char bmpNameBronzeMineral[] = "BronzeMineral.bmp";
-char bmpNameSilverMineral[] = "SilverMineral.bmp";
-char bmpNameGoldMineral[] = "GoldMineral.bmp";
-char bmpNameDiamondMineral[] = "DiamondMineral.bmp";
+char bmpNameBronzeMineral[] = "block_MineralBronze.bmp";
+char bmpNameSilverMineral[] = "block_MineralSilver.bmp";
+char bmpNameGoldMineral[] = "block_MineralGold.bmp";
+char bmpNameDiamondMineral[] = "block_MineralDiamond.bmp";
 
 
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
@@ -126,6 +131,20 @@ char bmpItem1Name[] = "item1.bmp";
 char bmpItem2Name[] = "item2.bmp";
 char bmpItem3Name[] = "item3.bmp";
 
+bool isButtonRoomClear = false;
+std::vector<int> buttonPressedOrderList;
+std::vector<int> buttonPressedOrderAnswerList;
+std::vector<std::vector<int>> buttonOrderCaseList = { {1,2,3}, {1,3,2}, {2,1,3}, {2,3,1}, {3,1,2}, {3,2,1} };
+char bmpButton1Name[] = "button1.bmp";
+char bmpButton1PressedName[] = "button1Pressed.bmp";
+char bmpButton2Name[] = "button2.bmp";
+char bmpButton2PressedName[] = "button2Pressed.bmp";
+char bmpButton3Name[] = "button3.bmp";
+char bmpButton3PressedName[] = "button3Pressed.bmp";
+
+char bmpQuestionMarkName[] = "questionMark.bmp";
+int rewardItemImageIndex;
+
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
     int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
@@ -157,10 +176,10 @@ void initialize() {
     getHandle();
     resizeConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
     removeCursor();
-    srand((unsigned)time(NULL)); // �߰��� �׸�
+    srand((unsigned)time(NULL)); // ï¿½ß°ï¿½ï¿½ï¿½ ï¿½×¸ï¿½
 }
 
-// NPC ���� �����?
+// NPC ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿?
 
 
 void initBlockImages() {
@@ -244,7 +263,7 @@ void fillBlockImages() {
 }
 
 
-void initStageImage() { // 최초 ?�테?��? 관???��?지�??�성
+void initStageImage() { // ìµœì´ˆ ?¤í…Œ?´ì? ê´€???´ë?ì§€ë¥??ì„±
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -360,7 +379,7 @@ void setCurrentCurPos(int x, int y) {
 }
 
 
-void initAreaUI() // 최초 ?�어리어 UI 관???��?지�??�성
+void initAreaUI() // ìµœì´ˆ ?ì–´ë¦¬ì–´ UI ê´€???´ë?ì§€ë¥??ì„±
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
@@ -404,22 +423,22 @@ void initAreaUI() // 최초 ?�어리어 UI 관???��?지�??�성
 			mapInfo[(y - 100) / BLOCKSIZE][(x - 1590) / BLOCKSIZE] = 0;
 		}
 	}
-	// 1 ~ 25, 25�?
+	// 1 ~ 25, 25ê°?
 	// 5 ~ 29
 	imageArray[imageLayer.imageCount++] = { bmpNameMapBox, 1508, 0, 1, 1 }; // 30
 }
 
-void drawUI() { // ?�어리어 UI ?�성??
-	imageArray[index_Area_UI_Start].isHide = 0; // ?�이??창이 보이?�록
+void drawUI() { // ?ì–´ë¦¬ì–´ UI ?œì„±??
+	imageArray[index_Area_UI_Start].isHide = 0; // ?„ì´??ì°½ì´ ë³´ì´?„ë¡
 
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP바�? 보이?�록
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPë°”ê? ë³´ì´?„ë¡
 	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2바�? 보이?�록
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2ë°”ê? ë³´ì´?„ë¡
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 맵이 보이?�록
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // ë§µì´ ë³´ì´?„ë¡
 		imageArray[i].isHide = 0;
 
-	// ?�어리어 X가 미구?�이�??�문???�시�??�어리어 지?�에??X가 ?�시?��? ?�도�?
+	// ?ì–´ë¦¬ì–´ Xê°€ ë¯¸êµ¬?„ì´ê¸??Œë¬¸???„ì‹œë¡??ì–´ë¦¬ì–´ ì§€?„ì—??Xê°€ ?œì‹œ?˜ì? ?Šë„ë¡?
 	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
 	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
@@ -451,7 +470,7 @@ void initRewardImage() {
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void rewardUI() { // reward ?�이??출력
+void rewardUI() { // reward ?ˆì´??ì¶œë ¥
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
 
@@ -646,6 +665,57 @@ void setMinerals(int max) {
       }
    }
 }
+
+
+bool printButtonStageStatus() {
+	wchar_t playerStone[100] = L"Pessed Button List";
+	wchar_t pressed_button_info[20] = L"";
+	wchar_t pressed_button_status[20] = L"";
+	bool isClear = true;
+	bool isButtonReset = false;
+
+	if (buttonPressedOrderList.size() == 1) {
+		swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d", buttonPressedOrderList[0]);
+	}
+	else if (buttonPressedOrderList.size() == 2) {
+		swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d -> %d", buttonPressedOrderList[0], buttonPressedOrderList[1]);
+	}
+	else if (buttonPressedOrderList.size() == 3) {
+		swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d -> %d -> %d", buttonPressedOrderList[0], buttonPressedOrderList[1], buttonPressedOrderList[2]);
+
+		for (int i = 0; i < 3; i++) {
+			if (buttonPressedOrderList[i] != buttonPressedOrderAnswerList[i]) {
+				isClear = false;
+				break;
+			}
+		}
+		if (isClear) {
+			isButtonRoomClear = true;
+			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Correct Answer!");
+			printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+			printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+			printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+		}
+		else {
+			imageArray[0].y = imageArray[0].y + 96;
+			isButtonReset = true;
+			buttonPressedOrderList.clear();
+			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Not Correct Answer!");
+			printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+			printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+			printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+			Sleep(300);
+		}
+		
+		swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"");
+	}
+
+	printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+	printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+	printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+
+	return isButtonReset;
+ }
 
 void setBedrock(int max) {
 	while (max) {

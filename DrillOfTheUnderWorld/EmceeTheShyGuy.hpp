@@ -55,7 +55,7 @@ void EmceeTheShyGuy::move() {
 
 	// if moved 8 times shoot once and reset mvcnt
 	if (movecnt == 8) {
-		bullets.push_back(NPCBullet(x, y));
+		//bullets.push_back(NPCBullet(x, y));
 		movecnt = 0;
 	}
 	else {

@@ -83,6 +83,9 @@
     <ClInclude Include="Shop.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Button.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav">
@@ -303,6 +306,116 @@
     <Image Include="item3.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="button1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="button1Pressed.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="button2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="button2Pressed.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="button3.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="button3Pressed.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="questionMark.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralBronze.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralDiamond.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralGold.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralOrichalcum.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralSilver.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_BronzeOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_BronzeOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_DiamondOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_DiamondOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_GoldOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_GoldOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Normal.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_OrichalcumOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_OrichalcumOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_SilverOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_SilverOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="brick_dark2.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="BronzeMineral.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="BronzeOre.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_BronzeOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_BronzeOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_DiamondOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_DiamondOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_GoldOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_GoldOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_OrichalcumOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_OrichalcumOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_SilverOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_SilverOre2.bmp">
+
     <Image Include="flag.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
