@@ -26,6 +26,7 @@ char bmpMovableAreaName[] = "movableArea.bmp";
 char bmpCharacterStatusName[] = "UI_character_status.bmp";
 
 char bmpNameNull[] = "";
+char bmpBedrockName[] = "emptyTile.bmp";
 
 // NPC BMP
 char bmpNullName[] = "";
@@ -124,7 +125,7 @@ int NPCSpacePosY;
 int NPCSpaceHeight;
 int NPCSpaceWidth;
 
-
+char bmpFlagName[] = "flag.bmp";
 
 char bmpItem1Name[] = "item1.bmp";
 char bmpItem2Name[] = "item2.bmp";
@@ -175,10 +176,10 @@ void initialize() {
     getHandle();
     resizeConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
     removeCursor();
-    srand((unsigned)time(NULL)); // �߰��� �׸�
+    srand((unsigned)time(NULL)); // ï¿½ß°ï¿½ï¿½ï¿½ ï¿½×¸ï¿½
 }
 
-// NPC ���� �����?
+// NPC ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿?
 
 
 void initBlockImages() {
@@ -262,7 +263,7 @@ void fillBlockImages() {
 }
 
 
-void initStageImage() { // 최초 스테이지 관련 이미지를 생성
+void initStageImage() { // ìµœì´ˆ ?¤í…Œ?´ì? ê´€???´ë?ì§€ë¥??ì„±
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -378,7 +379,7 @@ void setCurrentCurPos(int x, int y) {
 }
 
 
-void initAreaUI() // 최초 에어리어 UI 관련 이미지를 생성
+void initAreaUI() // ìµœì´ˆ ?ì–´ë¦¬ì–´ UI ê´€???´ë?ì§€ë¥??ì„±
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
@@ -422,22 +423,22 @@ void initAreaUI() // 최초 에어리어 UI 관련 이미지를 생성
 			mapInfo[(y - 100) / BLOCKSIZE][(x - 1590) / BLOCKSIZE] = 0;
 		}
 	}
-	// 1 ~ 25, 25개
+	// 1 ~ 25, 25ê°?
 	// 5 ~ 29
 	imageArray[imageLayer.imageCount++] = { bmpNameMapBox, 1508, 0, 1, 1 }; // 30
 }
 
-void drawUI() { // 에어리어 UI 활성화
-	imageArray[index_Area_UI_Start].isHide = 0; // 아이템 창이 보이도록
+void drawUI() { // ?ì–´ë¦¬ì–´ UI ?œì„±??
+	imageArray[index_Area_UI_Start].isHide = 0; // ?„ì´??ì°½ì´ ë³´ì´?„ë¡
 
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP바가 보이도록
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPë°”ê? ë³´ì´?„ë¡
 	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2바가 보이도록
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2ë°”ê? ë³´ì´?„ë¡
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 맵이 보이도록
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // ë§µì´ ë³´ì´?„ë¡
 		imageArray[i].isHide = 0;
 
-	// 에어리어 X가 미구현이기 때문에 임시로 에어리어 지도에서 X가 표시되지 않도록
+	// ?ì–´ë¦¬ì–´ Xê°€ ë¯¸êµ¬?„ì´ê¸??Œë¬¸???„ì‹œë¡??ì–´ë¦¬ì–´ ì§€?„ì—??Xê°€ ?œì‹œ?˜ì? ?Šë„ë¡?
 	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
 	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
@@ -469,7 +470,7 @@ void initRewardImage() {
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void rewardUI() { // reward 레이어 출력
+void rewardUI() { // reward ?ˆì´??ì¶œë ¥
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
 
@@ -651,7 +652,7 @@ void initItemImages() {
 int getNPCSpaceHeight() { return (rand() % 10 + 5); }
 int getNPCSpaceWidth() { return (rand() % 10 + 5); }
 int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth) + 1) * BLOCKSIZE + AREA_ORIGIN_X); }
-int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight) + 1) * BLOCKSIZE + AREA_ORIGIN_Y); }
+int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight) + 1) * BLOCKSIZE + AREA_ORIGIN_Y) / 2 + 13*BLOCKSIZE; }
 void setMinerals(int max) {
    while (max) {
       int x = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_X;
@@ -714,4 +715,39 @@ bool printButtonStageStatus() {
 	printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
 
 	return isButtonReset;
+ }
+
+void setBedrock(int max) {
+	while (max) {
+		int bedrockX = (rand() % 21) * BLOCKSIZE + AREA_ORIGIN_X;
+		int bedrockY = (rand() % 12) * BLOCKSIZE + AREA_ORIGIN_Y;
+		if (blockInfo[convertPosToInfoY(bedrockY)][convertPosToInfoX(bedrockX)] != 2) continue;
+		bool ok = true;
+		for (int i = 1;i < 4;i++) {
+			if (blockInfo[convertPosToInfoY(bedrockY)][convertPosToInfoX(bedrockX+i*BLOCKSIZE)] != 2) {
+				ok = false;
+				break;
+			}
+		}
+		if (ok) {
+			for (int i = 0;i < 4;i++) {
+				int imageIndex = convertPosToInfoY(bedrockY) / BLOCKSIZE * 25 + convertPosToInfoX(bedrockX+i * BLOCKSIZE) / BLOCKSIZE + 1;
+				imageArray[imageIndex].fileName = bmpBedrockName;
+				blockInfo[convertPosToInfoY(bedrockY)][convertPosToInfoX(bedrockX+i * BLOCKSIZE)] = 999999;
+			}
+			max--;
+		}
+	}
+}
+
+void setFlag(int cnt) {
+	while (cnt) {
+		int flagX = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_X;
+		int flagY = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_Y;
+		if (blockInfo[convertPosToInfoY(flagY)][convertPosToInfoX(flagX)] != 2) continue;
+		int imageIndex = convertPosToInfoY(flagY) / BLOCKSIZE * 25 + convertPosToInfoX(flagX) / BLOCKSIZE + 1;
+		imageArray[imageIndex].fileName = bmpFlagName;
+		blockInfo[convertPosToInfoY(flagY)][convertPosToInfoX(flagX)];
+		cnt--;
+	}
 }

@@ -94,11 +94,22 @@ int main() {
 					if (isOnStage) {
 						isButtonStage = false;
 						isButtonRoomClear = false;
+
+						getNewArea();
+						Mineral* mineral = new Mineral();
+						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth*BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight*BLOCKSIZE / 2);
+						ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						setBedrock(3);
+						mineral->getCluster();
+						setFlag(3);
+						targetLayer->fadeOut(targetLayer, NULL);
+						targetLayer = &imageLayer;
+						isOnStage = false;
 						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 						if (currentAreaRowIndex == 2 && currentAreaColIndex == 2) {
 							isButtonRoomClear = false;
-							int randomNumber = rand() % 7; // 0 ¿¡¼­ 6 »çÀÌÀÇ ³­¼ö
+							int randomNumber = rand() % 7; // 0 ï¿½ï¿½ï¿½ï¿½ 6 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 							buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
 							getNewArea();
 							Mineral* mineral = new Mineral();

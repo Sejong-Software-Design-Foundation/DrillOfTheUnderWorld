@@ -263,4 +263,9 @@ void PC::showDigRewardOnPcTop(int targerImageIndex) {
 void PC::applyDigReward(int targerImageIndex) {
 	showDigRewardOnPcTop(targerImageIndex);
 	// 물약같은거 처리
+void PC::increaseFlagCnt() {
+	flagCnt++;
+}
+int PC::getFlagCnt() {
+	return flagCnt;
 }
