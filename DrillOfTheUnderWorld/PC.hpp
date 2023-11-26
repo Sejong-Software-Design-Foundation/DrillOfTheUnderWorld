@@ -68,4 +68,6 @@ public:
 	void setAtkSpdLev(int lev);
 	void setSpdLev(int lev);
 	bool isDigable(int x, int y);
+	void showDigRewardOnPcTop(int targerImageIndex);
+	void applyDigReward(int targerImageIndex);
 };

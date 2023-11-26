@@ -135,22 +135,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Area.hpp" />
+    <ClInclude Include="Bat.hpp" />
     <ClInclude Include="Boss.hpp" />
+    <ClInclude Include="EmceeTheShyGuy.hpp" />
     <ClInclude Include="ImageFading.h" />
     <ClInclude Include="ImageLayer.h" />
     <ClInclude Include="ImageLayerImpl.h" />
     <ClInclude Include="ImageLayerInterface.h" />
+    <ClInclude Include="Ladder.hpp" />
     <ClInclude Include="Mineral.hpp" />
+    <ClInclude Include="Mole.hpp" />
     <ClInclude Include="Npc.hpp" />
+    <ClInclude Include="NPCBullet.hpp" />
     <ClInclude Include="PC.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource2.h" />
-    <ClInclude Include="Shop.hpp" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="common.hpp" />
     <ClInclude Include="Stage.hpp" />
     <ClInclude Include="Text.hpp" />
-    <ClInclude Include="Zombie.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav" />
@@ -211,6 +214,23 @@
     <Image Include="..\..\Stage2.bmp" />
     <Image Include="..\..\Stage3.bmp" />
     <Image Include="basicStoneBlocks.bmp" />
+    <Image Include="block_MineralBronze.bmp" />
+    <Image Include="block_MineralDiamond.bmp" />
+    <Image Include="block_MineralGold.bmp" />
+    <Image Include="block_MineralOrichalcum.bmp" />
+    <Image Include="block_MineralSilver.bmp" />
+    <Image Include="block_Stage1_Broken.bmp" />
+    <Image Include="block_Stage1_BronzeOre1.bmp" />
+    <Image Include="block_Stage1_BronzeOre2.bmp" />
+    <Image Include="block_Stage1_DiamondOre1.bmp" />
+    <Image Include="block_Stage1_DiamondOre2.bmp" />
+    <Image Include="block_Stage1_GoldOre1.bmp" />
+    <Image Include="block_Stage1_GoldOre2.bmp" />
+    <Image Include="block_Stage1_Normal.bmp" />
+    <Image Include="block_Stage1_OrichalcumOre1.bmp" />
+    <Image Include="block_Stage1_OrichalcumOre2.bmp" />
+    <Image Include="block_Stage1_SilverOre1.bmp" />
+    <Image Include="block_Stage1_SilverOre2.bmp" />
     <Image Include="hiddenStage.bmp" />
     <Image Include="item1.bmp" />
     <Image Include="item2.bmp" />
@@ -227,6 +247,11 @@
     <Image Include="emptyTile.bmp" />
     <Image Include="PlayerCharacter.bmp" />
     <Image Include="UI_character_status.bmp" />
+    <Image Include="UI_Star0.bmp" />
+    <Image Include="UI_Star1.bmp" />
+    <Image Include="UI_Star2.bmp" />
+    <Image Include="UI_Star3.bmp" />
+    <Image Include="UI_Timer.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
