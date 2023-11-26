@@ -92,6 +92,9 @@ int main() {
 						Mineral* mineral = new Mineral();
 						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth*BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight*BLOCKSIZE / 2);
 						ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						setBedrock(3);
+						mineral->getCluster();
+						setFlag(3);
 						targetLayer->fadeOut(targetLayer, NULL);
 						targetLayer = &imageLayer;
 						isOnStage = false;

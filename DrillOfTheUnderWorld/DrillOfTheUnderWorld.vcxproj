@@ -211,6 +211,7 @@
     <Image Include="..\..\Stage2.bmp" />
     <Image Include="..\..\Stage3.bmp" />
     <Image Include="basicStoneBlocks.bmp" />
+    <Image Include="flag.bmp" />
     <Image Include="hiddenStage.bmp" />
     <Image Include="item1.bmp" />
     <Image Include="item2.bmp" />

@@ -200,3 +200,10 @@ bool PC::isDigable(int x, int y) {
 	else return y % BLOCKSIZE == 0;
 	//return (x % BLOCKSIZE == 0 && y % BLOCKSIZE == 0);
 }
+
+void PC::increaseFlagCnt() {
+	flagCnt++;
+}
+int PC::getFlagCnt() {
+	return flagCnt;
+}

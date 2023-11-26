@@ -115,7 +115,8 @@ extern char bmpMovableAreaName[];
 extern char bmpCharacterStatusName[];
 
 extern char bmpMineralName[];
-
+extern char bmpBedrockName[];
+extern char bmpFlagName[];
 // item Image
 extern char bmpItem1Name[];
 extern char bmpItem2Name[];
@@ -166,5 +167,6 @@ int getNPCSpacePosX();
 int getNPCSpacePosY();
 void setMinerals(int max);
 void getNewArea();
-
+void setBedrock(int max);
+void setFlag(int cnt);
 #endif COMMON_HPP
