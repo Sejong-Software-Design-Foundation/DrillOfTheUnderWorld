@@ -43,7 +43,11 @@ void Mineral::GenerateBronze() {
 			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = BRONZE;
+				for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+					for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+						blockInfo[curY][curX] = BRONZE;
+					}
+				}
 				imageLayer.images[imageIndex].fileName = bmpNameBronzeOre;
 				break;
 			}
@@ -71,7 +75,11 @@ void Mineral::GenerateSilver() {
 			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = SILVER;
+				for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+					for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+						blockInfo[curY][curX] = SILVER;
+					}
+				}
 				imageLayer.images[imageIndex].fileName = bmpNameSilverOre;
 				break;
 			}
@@ -98,7 +106,11 @@ void Mineral::GenerateGold() {
 			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = GOLD;
+				for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+					for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+						blockInfo[curY][curX] = GOLD;
+					}
+				}
 				imageLayer.images[imageIndex].fileName = bmpNameGoldOre;
 				break;
 			}
@@ -126,7 +138,11 @@ void Mineral::GenerateDiamond() {
 			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = DIAMOND;
+				for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+					for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+						blockInfo[curY][curX] = DIAMOND;
+					}
+				}
 				imageLayer.images[imageIndex].fileName = bmpNameDiamondOre;
 				break;
 			}
@@ -151,7 +167,11 @@ void Mineral::GenerateQuestionMark() {
 			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 			if (blockInfo[infoY][infoX] == 2) {
-				blockInfo[infoY][infoX] = QUESTION_MARK;
+				for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+					for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+						blockInfo[curY][curX] = QUESTION_MARK;
+					}
+				}
 				imageLayer.images[imageIndex].fileName = bmpQuestionMarkName;
 				break;
 			}
