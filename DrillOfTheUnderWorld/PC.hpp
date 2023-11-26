@@ -74,4 +74,5 @@ public:
 	void applyDigReward(int targerImageIndex);
 	void increaseFlagCnt();
 	int getFlagCnt();
+	void initFlagCnt();
 };

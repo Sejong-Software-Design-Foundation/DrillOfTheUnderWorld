@@ -66,6 +66,7 @@ extern Image imageArray[1000];
 extern Image stageImageArray[40];
 extern int stageInfo[5][5];
 extern int blockInfo[1200][1200];
+extern bool isFlagStage;
 extern bool isButtonStage;
 extern bool isOnStage;
 extern char bmpNamePC[];
@@ -194,6 +195,7 @@ void setMinerals(int max);
 void getNewArea();
 
 bool printButtonStageStatus();
+void printFlagStageStatus(int curFlagCnt);
 void setBedrock(int max);
 void setFlag(int cnt);
 #endif COMMON_HPP

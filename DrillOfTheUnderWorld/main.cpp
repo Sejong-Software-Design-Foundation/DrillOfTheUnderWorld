@@ -122,7 +122,9 @@ int main() {
 							isButtonStage = true;
 						}
 
-						else {
+						else if (pc.getDir() == 2) { //방향이 왼쪽일 때 flagStage로 넘어감
+							isFlagStage = true;
+							pc.initFlagCnt();
 							getNewArea();
 							Mineral* mineral = new Mineral();
 							Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
@@ -290,6 +292,103 @@ int main() {
 			if (duration > 3.0) {
 				pc.setOxygen(pc.getOxygen() - 1);
 				start_time = end_time;
+			}
+		}
+		else if (isFlagStage) { //깃발 스테이지
+			{
+				targetLayer->renderAll(targetLayer);
+				drawUI();
+				printFlagStageStatus(pc.getFlagCnt());
+				//mole->move();
+				bat->move();
+				ladder->move();
+				Emcee->move();
+				for (int i = 0; i < 10; i++) {
+					if (_kbhit() != 0) {
+						int key = _getch();
+						int curPosX = imageLayer.images[0].x;
+						int curPosY = imageLayer.images[0].y;
+						COORD afterMovedPos;
+
+						switch (key) {
+						case S:
+							targetLayer->fadeOut(targetLayer, NULL);
+							if (isOnStage) {
+								targetLayer = &imageLayer;
+								isOnStage = false;
+								currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
+								currentAreaColIndex = convertPosToInfoXInStage(curPosX);
+
+								/*
+								imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
+								imageLayer.images = imageArray;
+								imageLayer.imageCount = 1;
+
+								initBlockImages();
+								*/
+
+								targetLayer->fadeIn(targetLayer, NULL);
+							}
+							else {
+								targetLayer->fadeOut(targetLayer, NULL);
+								targetLayer = &stageLayer;
+								isOnStage = true;
+								targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+								stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+								setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+								targetLayer->fadeIn(targetLayer, NULL);
+							}
+							break;
+
+
+						case LEFT:
+							pc.setDirLeft();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case RIGHT:
+							pc.setDirRight();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case UP:
+							pc.setDirUp();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case DOWN:
+							pc.setDirDown();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case ESC:
+							rewardUI();
+							break;
+						case SPACE:
+							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+							pc.dig(targetPos.X, targetPos.Y);
+							//pc.setOxygen(pc.getOxygen() - 1);
+							break;
+
+						case O:
+							pc.setHP(pc.getHP() - 10);
+							break;
+						case P:
+							pc.setHP(pc.getHP() + 10);
+							break;
+
+						}
+					}
+
+					Sleep(5);
+				}
+				end_time = clock();
+				duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+				//printf("%d", pc.getOxygen());
+				if (duration > 3.0) {
+					pc.setOxygen(pc.getOxygen() - 1);
+					start_time = end_time;
+				}
 			}
 		}
 		else {

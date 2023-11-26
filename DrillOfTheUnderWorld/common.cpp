@@ -14,6 +14,7 @@ int blockInfo[1200][1200];
 int stageInfo[5][5];
 bool isOnStage = true;
 bool isButtonStage = false;
+bool isFlagStage = false;
 char bmpStoneBlockName[] = "block_Stage1_Normal.bmp";
 char bmpBrokenStoneBlockName[] = "block_Stage1_Broken.bmp";
 
@@ -263,7 +264,7 @@ void fillBlockImages() {
 }
 
 
-void initStageImage() { // ìµœì´ˆ ?¤í…Œ?´ì? ê´€???´ë?ì§€ë¥??ì„±
+void initStageImage() { // ìµœì´? ?¤í?��?´ì? ê´????´ë?ì§??��??ì?��?
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -379,7 +380,7 @@ void setCurrentCurPos(int x, int y) {
 }
 
 
-void initAreaUI() // ìµœì´ˆ ?ì–´ë¦¬ì–´ UI ê´€???´ë?ì§€ë¥??ì„±
+void initAreaUI() // ìµœì´? ?ì?�´ë¦�?�–�?UI ê´????´ë?ì§??��??ì?��?
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
@@ -428,17 +429,17 @@ void initAreaUI() // ìµœì´ˆ ?ì–´ë¦¬ì–´ UI ê´€???´ë?ì§
 	imageArray[imageLayer.imageCount++] = { bmpNameMapBox, 1508, 0, 1, 1 }; // 30
 }
 
-void drawUI() { // ?ì–´ë¦¬ì–´ UI ?œì„±??
-	imageArray[index_Area_UI_Start].isHide = 0; // ?„ì´??ì°½ì´ ë³´ì´?„ë¡
+void drawUI() { // ?ì?�´ë¦�?�–�?UI ?œì?��??
+	imageArray[index_Area_UI_Start].isHide = 0; // ??��?��??ì°½ì´ ë³´ì´??�ë¡�?
 
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPë°”ê? ë³´ì´?„ë¡
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPë°?��? ë³´ì´??�ë¡�?
 	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2ë°”ê? ë³´ì´?„ë¡
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2ë°?��? ë³´ì´??�ë¡�?
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // ë§µì´ ë³´ì´?„ë¡
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // ë§µì´ ë³´ì´??�ë¡�?
 		imageArray[i].isHide = 0;
 
-	// ?ì–´ë¦¬ì–´ Xê°€ ë¯¸êµ¬?„ì´ê¸??Œë¬¸???„ì‹œë¡??ì–´ë¦¬ì–´ ì§€?„ì—??Xê°€ ?œì‹œ?˜ì? ?Šë„ë¡?
+	// ?ì?�´ë¦�?�–�?Xê°??ë¯¸êµ¬??��?�´ê�??Œë¬¸????�ì‹œë�??ì?�´ë¦�?�–�?ì§???�ì—�??Xê°???œì?��??ì? ?Šë?�ë�?
 	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
 	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
@@ -470,7 +471,7 @@ void initRewardImage() {
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void rewardUI() { // reward ?ˆì´??ì¶œë ¥
+void rewardUI() { // reward ??ì´??ì¶œë ¥
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
 
@@ -717,6 +718,14 @@ bool printButtonStageStatus() {
 	return isButtonReset;
  }
 
+void printFlagStageStatus(int curFlagCnt) {
+	wchar_t playerFlagInfo[100] = L"You're Current Flag Count : ";
+	wchar_t playerFlagCount[20] = L"";
+	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curFlagCnt);
+	printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
+	printText(targetLayer->_consoleDC, 1800, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
+}
+
 void setBedrock(int max) {
 	while (max) {
 		int bedrockX = (rand() % 21) * BLOCKSIZE + AREA_ORIGIN_X;
@@ -742,12 +751,23 @@ void setBedrock(int max) {
 
 void setFlag(int cnt) {
 	while (cnt) {
-		int flagX = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_X;
-		int flagY = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_Y;
+		int flagX = (rand() % 23) * BLOCKSIZE + BLOCKSIZE + AREA_ORIGIN_X;
+		int flagY = (rand() % 20) * BLOCKSIZE + 3*BLOCKSIZE + AREA_ORIGIN_Y;
+		//flagX = cnt*BLOCKSIZE + AREA_ORIGIN_X;
+		//flagY = cnt*BLOCKSIZE + AREA_ORIGIN_Y;
 		if (blockInfo[convertPosToInfoY(flagY)][convertPosToInfoX(flagX)] != 2) continue;
 		int imageIndex = convertPosToInfoY(flagY) / BLOCKSIZE * 25 + convertPosToInfoX(flagX) / BLOCKSIZE + 1;
 		imageArray[imageIndex].fileName = bmpFlagName;
-		blockInfo[convertPosToInfoY(flagY)][convertPosToInfoX(flagX)];
+
+		int infoX = convertPosToInfoX(flagX);
+		int infoY = convertPosToInfoY(flagY);
+		if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
+		for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+			for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+				if (blockInfo[curY][curX])
+					blockInfo[curY][curX] = 1;
+			}
+		}
 		cnt--;
 	}
 }

@@ -97,8 +97,11 @@ void PC::dig(int x, int y) {
 	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
 	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
 		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
-			if (blockInfo[curY][curX]) 
+			if (blockInfo[curY][curX])
+			{
 				blockInfo[curY][curX] = blockInfo[curY][curX] - pc.getAtkLev();
+				if (blockInfo[curY][curX] < 0) blockInfo[curY][curX] = 0;
+			}
 		}
 	}
 
@@ -126,6 +129,11 @@ void PC::dig(int x, int y) {
 		}
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpQuestionMarkName) == 0) {
 			imageLayer.images[imageIndex].fileName = bmpQuestionMarkName;
+			applyDigReward(imageIndex);
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpFlagName) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameNull;
+			increaseFlagCnt();
 			applyDigReward(imageIndex);
 		}
 	}
@@ -266,6 +274,12 @@ void PC::applyDigReward(int targerImageIndex) {
 }
 void PC::increaseFlagCnt() {
 	flagCnt++;
+
+	//imageArray[imageLayer.imageCount++] = { bmpFlagName, AREA_ORIGIN_X + BLOCKSIZE * 25 + 100 + flagCnt * BLOCKSIZE * 2,BLOCKSIZE * 13,2 };
+}
+void PC::initFlagCnt() {
+	flagCnt = 0;
+	//imageArray[imageLayer.imageCount] = { bmpFlagName, AREA_ORIGIN_X + BLOCKSIZE * 25 + 100 + flagCnt * BLOCKSIZE * 2,BLOCKSIZE * 13,2 };
 }
 int PC::getFlagCnt() {
 	return flagCnt;
