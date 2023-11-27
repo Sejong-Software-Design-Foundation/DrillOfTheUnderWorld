@@ -306,14 +306,14 @@ int main() {
 					isGenerateMobByQuestionBlock = false;
 				}
 
+				
 				if (!generatedBatList.empty()) {
 					for (Bat* mob : generatedBatList) {
 						mob->move();
 					}
 				}
-
-			
-				//mole->move();
+				
+				
 				if (isButtonRoomClear) {
 					imageArray[ladder->imageidx].isHide = 0;
 					ladder->move();
@@ -333,22 +333,15 @@ int main() {
 						switch (key) {
 						case S:
 							targetLayer->fadeOut(targetLayer, NULL);
-							if (isOnStage) {
-								targetLayer = &imageLayer;
-								isOnStage = false;
-								currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
-								currentAreaColIndex = convertPosToInfoXInStage(curPosX);
-								targetLayer->fadeIn(targetLayer, NULL);
-							}
-							else {
-								targetLayer->fadeOut(targetLayer, NULL);
-								targetLayer = &stageLayer;
-								isOnStage = true;
-								targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-								stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-								setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-								targetLayer->fadeIn(targetLayer, NULL);
-							}
+							targetLayer = &stageLayer;
+							isOnStage = true;
+							isOnArea = false;
+							isButtonArea = false;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
+			
 							break;
 
 
@@ -390,8 +383,7 @@ int main() {
 
 						}
 					}
-
-					Sleep(5); 
+					Sleep(5);
 				}
 			}
 
