@@ -165,8 +165,6 @@
     <Image Include="..\..\..\Mineral.bmp" />
     <Image Include="..\..\..\NPC.bmp" />
     <Image Include="..\..\..\Shop.bmp" />
-    <Image Include="..\..\..\ui\UI_dynamicEnforce.bmp" />
-    <Image Include="..\..\..\ui\UI_dynamicEnforceSelected.bmp" />
     <Image Include="..\..\..\ui\UI_HP_0pct.bmp" />
     <Image Include="..\..\..\ui\UI_HP_100pct.bmp" />
     <Image Include="..\..\..\ui\UI_HP_10pct.bmp" />
@@ -186,8 +184,6 @@
     <Image Include="..\..\..\ui\UI_mapX.bmp" />
     <Image Include="..\..\..\ui\UI_maxHP.bmp" />
     <Image Include="..\..\..\ui\UI_maxO2.bmp" />
-    <Image Include="..\..\..\ui\UI_normalEnforce.bmp" />
-    <Image Include="..\..\..\ui\UI_normalEnforceSelected.bmp" />
     <Image Include="..\..\..\ui\UI_O2_0pct.bmp" />
     <Image Include="..\..\..\ui\UI_O2_100pct.bmp" />
     <Image Include="..\..\..\ui\UI_O2_10pct.bmp" />
@@ -247,6 +243,10 @@
     <Image Include="emptyTile.bmp" />
     <Image Include="PlayerCharacter.bmp" />
     <Image Include="UI_character_status.bmp" />
+    <Image Include="UI_dynamicEnforce.bmp" />
+    <Image Include="UI_dynamicEnforceSelected.bmp" />
+    <Image Include="UI_normalEnforce.bmp" />
+    <Image Include="UI_normalEnforceSelected.bmp" />
     <Image Include="UI_Star0.bmp" />
     <Image Include="UI_Star1.bmp" />
     <Image Include="UI_Star2.bmp" />

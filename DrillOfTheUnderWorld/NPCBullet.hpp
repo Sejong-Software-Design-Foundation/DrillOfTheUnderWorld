@@ -39,6 +39,9 @@ NPCBullet::NPCBullet(int x, int y) : NPC(x, y, 0, 10, 1) {
 }
 
 void NPCBullet::move() {
+	if (PCNear()) {
+		attack();
+	}
 
 	// update bullet position
 	imageLayer.images[imageidx].x += dx;

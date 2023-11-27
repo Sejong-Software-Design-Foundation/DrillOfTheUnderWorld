@@ -49,23 +49,32 @@ void EmceeTheShyGuy::checkBullets() {
 
 void EmceeTheShyGuy::move() {
 	movecnt++;
-
 	checkBullets();
 	attack();
 
+	//printf("%d", movecnt);
 	// if moved 8 times shoot once and reset mvcnt
-	if (movecnt == 8) {
+	if (movecnt >= 8) {
 		bullets.push_back(NPCBullet(x, y));
 		movecnt = 0;
 	}
-	else {
+
+	// 추적 움직임 필요 데이터
+	int curPosX = imageLayer.images[0].x;
+	int curPosY = imageLayer.images[0].y;
+
+	if (NPCSpacePosX <= curPosX && curPosX <= NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE &&
+		NPCSpacePosY <= curPosY && curPosY <= NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE) {
 		NPCTrackingMovement();
-		//NPCPatternMovement();
+	}
+	else {
+		NPCPatternMovement();
 	}
 }
 
 // Emcee's attack is moving NPCBullets 
 void EmceeTheShyGuy::attack() {
+	//pc.setHP(pc.getHP() - 10);
 	list<NPCBullet>::iterator it;
 	for (it = bullets.begin(); it != bullets.end(); it++) { (*it).move(); }
 }

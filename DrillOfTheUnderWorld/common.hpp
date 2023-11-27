@@ -117,6 +117,7 @@ extern char bmpNameStar3[];
 
 extern ImageLayer rewardLayer;
 extern int index_StageImages_Start;
+extern int index_Area_PC;
 extern int index_Area_UI_Start;
 extern int index_Area_UI_HP_Start;
 extern int index_Area_UI_O2_Start;

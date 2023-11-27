@@ -38,6 +38,7 @@ bool isOnMiniGameArea = false;
 // 같은 배열에 저장되는 이미지들은 내부에서 목적에 따라 묶여서 저장됨
 // 접근하기 편하도록 하기 위해 시작 번호를 저장하여 관리
 int index_StageImages_Start;
+int index_Area_PC;
 int index_Area_UI_Start;
 int index_Area_UI_HP_Start;
 int index_Area_UI_O2_Start;
@@ -144,7 +145,7 @@ char bmpNameNormalAtkSelected[] = "UI_rewardAtkSelected.bmp";
 char bmpNameNormalAtk[] = "UI_rewardAtk.bmp";
 char bmpNameNormalAtkSpdSelected[] = "UI_rewardAtkSpdSelected.bmp";
 char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
-char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";
+char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";	
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
 // 함수 코드 시작
@@ -317,6 +318,10 @@ void changeLayer(ImageLayer currentLayer, ImageLayer nextLayer) { // 레이어�
 		setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
 
 		imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar0;
+		if (isOnMiniGameArea) {
+			if (OrichalcumNum >= 2) pc.setStone(pc.getStone() + 200);
+			else if (OrichalcumNum >= 1) pc.setStone(pc.getStone() + 100);
+		}
 		OrichalcumNum = 0;
 		break;
 	case 3:
@@ -580,14 +585,14 @@ bool collisionCheck(int x, int y) {
 	return false;
 }
 
-void printTimeInMiniGameArea(float t) {
+void printTimeInMiniGameArea(float t) { // 미니게임 에어리어에서 남은 시간을 출력하는 함수
 	wchar_t timeLimit[20];
 	if (t > 0.0) swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%.2f", t);
 	else swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%0.00");
 	printText(targetLayer->_consoleDC, 1750, 1458, 40, 0, RGB(255, 255, 255), TA_CENTER, timeLimit);
 }
 
-void printMyOriInMiniGameArea() {
+void printMyOriInMiniGameArea() { // 미니게임 에어리어에서 information과 획득한 광물 수를 출력하는 함수
 	wchar_t info1[30] = L"1 Star (5) = 100 Stones";
 	wchar_t info2[30] = L"2 Star(10) = 200 Stones";
 	wchar_t info3[30] = L"3 Star(20) = 300 Stones";
@@ -601,7 +606,7 @@ void printMyOriInMiniGameArea() {
 }
 
 void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
-	int index1 = 0;
+	int index1 = -1;
 	int flags = 1;
 
 	while (flags) {
@@ -609,25 +614,40 @@ void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
 			int key = _getch();
 
 			switch (key) {
+			case NUM1:
+				index1 = 0;
+				break;
+			case NUM2:
+				index1 = 1;
+				break;
 			case LEFT:
+				if (index1 == -1) index1 = 0;
+				else if (index1 != 0) index1--;
+				break;
+			case RIGHT:
+				if (index1 == -1) index1 = 1;
+				else if (index1 != 1) index1++;
+				break;
+			case SPACE:
+				if (index1 == -1) break;
+				flags = 0;
+				break;
+			}
+			if (index1 != -1) index1 %= 2;
+
+			if (index1 == 0) {
 				imagesReward[0].isHide = 0;
 				imagesReward[1].isHide = 1;
 				imagesReward[2].isHide = 1;
 				imagesReward[3].isHide = 0;
-				index1 = 1;
-				break;
-			case RIGHT:
+			}
+			else if (index1 == 1) {
 				imagesReward[0].isHide = 1;
 				imagesReward[1].isHide = 0;
 				imagesReward[2].isHide = 0;
 				imagesReward[3].isHide = 1;
-				index1 = 2;
-				break;
-			case SPACE:
-				if (index1 == 0) break;
-				flags = 0;
-				break;
 			}
+
 			if (key) targetLayer->renderAll(targetLayer);
 		}
 	}
@@ -649,7 +669,7 @@ void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
 	targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);
 
-	int index2 = 0;
+	int index2 = -1;
 	flags = 1;
 
 
@@ -659,48 +679,57 @@ void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
 
 			switch (key) {
 			case NUM1:
+				index2 = 0;
+				break;
+			case NUM2:
+				index2 = 1;
+				break;
+			case NUM3:
+				index2 = 2;
+				break;
+			case LEFT:
+				if (index2 == -1) index2 = 0;
+				else if (index2 != 0) index2--;
+				break;
+			case RIGHT:
+				if (index2 == -1) index2 = 2;
+				else if (index2 != 2) index2++;
+				break;
+			case SPACE:
+				if (index2 == -1) break;
+				flags = 0;
+				break;
+			}
+
+			if (index2 != -1) index2 %= 3;
+
+			if (index2 == 0) {
 				imagesReward[4].isHide = 0;
 				imagesReward[5].isHide = 1;
 				imagesReward[6].isHide = 1;
 				imagesReward[7].isHide = 0;
 				imagesReward[8].isHide = 1;
 				imagesReward[9].isHide = 0;
-				index2 = 1;
-				break;
-			case NUM2:
+			}
+			else if (index2 == 1) {
 				imagesReward[4].isHide = 1;
 				imagesReward[5].isHide = 0;
 				imagesReward[6].isHide = 0;
 				imagesReward[7].isHide = 1;
 				imagesReward[8].isHide = 1;
 				imagesReward[9].isHide = 0;
-				index2 = 2;
-				break;
-			case NUM3:
+			}
+			else if (index2 == 2) {
 				imagesReward[4].isHide = 1;
 				imagesReward[5].isHide = 0;
 				imagesReward[6].isHide = 1;
 				imagesReward[7].isHide = 0;
 				imagesReward[8].isHide = 0;
 				imagesReward[9].isHide = 1;
-				index2 = 3;
-				break;
-			case SPACE:
-				if (index2 == 0) break;
-				flags = 0;
-				break;
 			}
 			if (key) targetLayer->renderAll(targetLayer);
 		}
 	}
-	//targetLayer->fadeOut(targetLayer, NULL);
-	//targetLayer = &stageLayer;
-	//isOnStage = true;
-	//isOnArea = false;
-	
-
-	//targetLayer->fadeIn(targetLayer, NULL);
-	//targetLayer->renderAll(targetLayer);
 
 	int num = 0;
 	if (index1 == 1) num = rand() % 3;

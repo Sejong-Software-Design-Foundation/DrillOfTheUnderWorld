@@ -174,12 +174,6 @@
     <Image Include="..\..\..\Shop.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\ui\UI_dynamicEnforce.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\ui\UI_dynamicEnforceSelected.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="..\..\..\ui\UI_HP_0pct.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
@@ -235,12 +229,6 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\..\..\ui\UI_maxO2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\ui\UI_normalEnforce.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\ui\UI_normalEnforceSelected.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\..\..\ui\UI_O2_0pct.bmp">
@@ -376,6 +364,18 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="UI_Star2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_dynamicEnforceSelected.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_normalEnforceSelected.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_dynamicEnforce.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_normalEnforce.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

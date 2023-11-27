@@ -45,7 +45,7 @@ int main() {
 
 	// NPC 이니셜라이징(최초 위치는 화면상에서 보이지 않도록 초기화)
 	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
-	//Bat* bat = new Bat(AREA_ORIGIN_X + BLOCKSIZE * 7, AREA_ORIGIN_Y + BLOCKSIZE * 16);
+	Bat* bat = new Bat(-48, -48);
 	Ladder* ladder = new Ladder(-48, -48);
 	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(-48, -48);
 
@@ -74,6 +74,7 @@ int main() {
 						getNewArea();
 						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						bat->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 					}
 					else {
 						isOnNormalArea = false;
@@ -121,7 +122,7 @@ int main() {
 			if (isOnNormalArea) {
 				// NPC에 움직임 부여(활성화)
 				//mole->move();
-				//bat->move();
+				bat->move();
 				ladder->move();
 				Emcee->move();
 
