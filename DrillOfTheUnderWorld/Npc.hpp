@@ -90,7 +90,7 @@ void NPC::NPCPatternMovement() {
 
     cnt++;
 
-    srand(static_cast<unsigned int>(time(nullptr)));
+    //srand(static_cast<unsigned int>(time(nullptr)));
 
     if (cnt == 3) {
         curDirection = rand() % 4;

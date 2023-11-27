@@ -17,6 +17,7 @@ public:
 
     void move();
     void attack();
+    void setNewPosition(int x, int y);
 };
 
 Bat::Bat(int x, int y) : NPC(x, y, 10, 5, 1) {
@@ -30,6 +31,11 @@ void Bat::move() {
 
 void Bat::attack() {
     pc.setHP(pc.getHP() - attack_damage);
+}
+
+void Bat::setNewPosition(int x, int y) {
+    imageLayer.images[imageidx].x = x;
+    imageLayer.images[imageidx].y = y;
 }
 
 #endif
