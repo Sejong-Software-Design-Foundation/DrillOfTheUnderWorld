@@ -69,6 +69,7 @@ int main() {
 	while (1) {
 		if (isOnStage) { // PC가 스테이지 맵에 존재하는 경우
 			generatedBatList.clear();
+			imageArray[ladder->imageidx].isHide = 0;
 			updateCharacterStatus(); // PC 상태창을 업데이트
 			while (_kbhit() != 0) {
 				int key = _getch();
