@@ -224,7 +224,7 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 		pc.setStone(pc.getStone() + 1000);
 	}
 
-	imageArray[targerImageIndex].fileName = bmpNullName;
+	imageArray[targerImageIndex].fileName = bmpNameNull;
 }
 
 void PC::increaseFlagCnt() {
@@ -244,7 +244,7 @@ int PC::getFlagCnt() {
 void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int imageIndex) {
 	if (blockInfo[infoY][infoX] <= 0) {
 		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpBrokenStoneBlockName) == 0)) {
-			imageLayer.images[imageIndex].fileName = bmpNullName;
+			imageLayer.images[imageIndex].fileName = bmpNameNull;
 		}
 		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre2) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenBronzeOre) == 0)) {
 			imageLayer.images[imageIndex].fileName = bmpNameBronzeMineral;
@@ -326,7 +326,7 @@ void PC::digQuestionBlock(int digY, int digX, int infoY, int infoX, int imageInd
 		boom(digY, digX, infoY, infoX, imageIndex);
 		break;
 	case 3:
-		imageLayer.images[imageIndex].fileName = bmpNullName;
+		imageLayer.images[imageIndex].fileName = bmpNameNull;
 		isGenerateMobByQuestionBlock = true;
 		questionBlockPosX = digX;
 		questionBlockPosY = digY;
@@ -361,7 +361,7 @@ void PC::boom(int digY, int digX, int infoY, int infoX, int imageIndex) {
 			int targetImageIndex = (row / BLOCKSIZE) * AREA_WIDTH + (col / BLOCKSIZE) + 1;
 
 			if ((strcmp(imageLayer.images[targetImageIndex].fileName, bmpStoneBlockName) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpBrokenStoneBlockName) == 0)) {
-				imageLayer.images[targetImageIndex].fileName = bmpNullName;
+				imageLayer.images[targetImageIndex].fileName = bmpNameNull;
 			}
 			if ((strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBronzeOre1) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBronzeOre2) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBrokenBronzeOre) == 0)) {
 				imageLayer.images[targetImageIndex].fileName = bmpNameBronzeMineral;
@@ -380,7 +380,7 @@ void PC::boom(int digY, int digX, int infoY, int infoX, int imageIndex) {
 				rewardImageIndexList.push_back(targetImageIndex);
 			}
 			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpBoomName) == 0) {
-				imageLayer.images[targetImageIndex].fileName = bmpNullName;
+				imageLayer.images[targetImageIndex].fileName = bmpNameNull;
 			}
 			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpQuestionMarkName) == 0) {
 				digQuestionBlock(digY, digX, row, col, targetImageIndex);

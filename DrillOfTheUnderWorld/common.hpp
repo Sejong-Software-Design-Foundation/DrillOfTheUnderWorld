@@ -65,39 +65,75 @@ extern int stageInfo[5][5];
 extern ImageLayer imageLayer;
 extern Image imageArray[1000];
 extern int blockInfo[1200][1200];
-
-extern bool isFlagStage;
-extern bool isButtonArea;
 extern int mapInfo[5][5];
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
+extern int NPCSpacePosX;
+extern int NPCSpacePosY;
+extern int NPCSpaceHeight;
+extern int NPCSpaceWidth;
+extern int OrichalcumNum;
+
+// BUTTON
+extern std::vector<int> buttonPressedOrderList;
+extern std::vector<int> buttonPressedOrderAnswerList;
+extern std::vector<std::vector<int>> buttonOrderCaseList;
+extern bool isButtonRoomClear;
+extern bool isGenerateMobByQuestionBlock;
+extern int questionBlockPosX;
+extern int questionBlockPosY;
+
+extern ImageLayer rewardLayer;
 
 extern bool isOnStage;
 extern bool isOnArea;
-extern bool isOnNormalArea;
-extern bool isOnMiniGameArea;
-extern bool isOnReward;
+extern bool isNormalArea;
+extern bool isMiniGameArea;
+extern bool isFlagArea;
+extern bool isButtonArea;
 
-extern int OrichalcumNum;
-extern char bmpNamePC[];
-extern char bmpStoneBlockName[];
-extern char bmpBrokenStoneBlockName[];
+extern int index_StageImages_Start;
+extern int index_Area_PC;
+extern int index_Area_Button_Start;
+extern int index_Area_UI_Start;
+extern int index_Area_UI_HP_Start;
+extern int index_Area_UI_O2_Start;
+extern int index_Area_UI_Map_Start;
+extern int index_Area_UI_blockInfo_Start;
+extern int index_Area_UI_mapTile_Start;
+extern int index_Area_UI_MiniGame_Start;
+extern int index_RewardImages_Start;
 
+// NULL BMP
 extern char bmpNameNull[];
-extern char bmpNullName[];
 
-// NPC BMP
-// 1. NORMAL NPC
+// STAGE MAP BMP
+extern char bmpNamePC[];
+extern char bmpStageLevel[];
+extern char bmpClearedAreaName[];
+extern char bmpNomalAreaName[];
+extern char bmpHiddenAreaName[];
+extern char bmpMovableAreaName[];
+extern char bmpCharacterStatusName[];
+
+// NORMAL NPC
 extern char bmpNameBat[];
 
-// 2. BOSS NPC
+// BOSS NPC
 extern char bmpNameMole[];
 extern char bmpNameFireball[];
 extern char bmpNameEmceeTheShyGuy[];
-
-
 extern char bmpNameLadder[];
-extern char bmpNameMineral[];
+
+// AREA UI BMP
+extern char bmpNameStar0[];
+extern char bmpNameStar1[];
+extern char bmpNameStar2[];
+extern char bmpNameStar3[];
+
+// BLOCK BMP
+extern char bmpStoneBlockName[];
+extern char bmpBrokenStoneBlockName[];
 
 // ORE BMP
 extern char bmpNameBronzeOre1[];
@@ -110,7 +146,6 @@ extern char bmpNameDiamondOre1[];
 extern char bmpNameDiamondOre2[];
 extern char bmpNameOrichalcumOre1[];
 extern char bmpNameOrichalcumOre2[];
-
 extern char bmpNameBrokenBronzeOre[];
 extern char bmpNameBrokenSilverOre[];
 extern char bmpNameBrokenGoldOre[];
@@ -123,55 +158,7 @@ extern char bmpNameGoldMineral[];
 extern char bmpNameDiamondMineral[];
 extern char bmpNameOrichalcumMineral[];
 
-extern char bmpNameStar0[];
-extern char bmpNameStar1[];
-extern char bmpNameStar2[];
-extern char bmpNameStar3[];
-
-extern ImageLayer rewardLayer;
-extern int index_StageImages_Start;
-extern int index_Area_PC;
-extern int index_Area_UI_Start;
-extern int index_Area_UI_HP_Start;
-extern int index_Area_UI_O2_Start;
-extern int index_Area_UI_Map_Start;
-extern int index_Area_UI_blockInfo_Start;
-extern int index_Area_UI_mapTile_Start;
-extern int index_Area_UI_MiniGame_Start;
-extern int index_RewardImages_Start;
-
-// stage Image
-extern char bmpStageLevel[];
-extern char bmpClearedAreaName[];
-extern char bmpNomalAreaName[];
-extern char bmpHiddenAreaName[];
-extern char bmpMovableAreaName[];
-extern char bmpCharacterStatusName[];
-
-extern char bmpMineralName[];
-extern char bmpBedrockName[];
-extern char bmpFlagName[];
-// item Image
-extern char bmpItem1Name[];
-extern char bmpItem2Name[];
-extern char bmpItem3Name[];
-
-extern int NPCSpacePosX;
-extern int NPCSpacePosY;
-extern int NPCSpaceHeight;
-extern int NPCSpaceWidth;
-
-extern int currentAreaRowIndex;
-extern int currentAreaColIndex;
-
-
-// BUTTON
-extern int button1ImageIndex;
-
-extern std::vector<int> buttonPressedOrderList;
-extern std::vector<int> buttonPressedOrderAnswerList;
-extern std::vector<std::vector<int>> buttonOrderCaseList;
-extern bool isButtonRoomClear;
+// BUTTON BMP
 extern char bmpButton1Name[];
 extern char bmpButton1PressedName[];
 extern char bmpButton2Name[];
@@ -179,15 +166,21 @@ extern char bmpButton2PressedName[];
 extern char bmpButton3Name[];
 extern char bmpButton3PressedName[];
 
+// QUESTIONBLOCK BMP
 extern char bmpQuestionMarkName[];
-
 extern char bmpOzPotionName[];
 extern char bmpHpPotionName[];
 extern char bmpBoomName[];
 
-extern bool isGenerateMobByQuestionBlock;
-extern int questionBlockPosX;
-extern int questionBlockPosY;
+// FLAG, BEDROCK BMP
+extern char bmpBedrockName[];
+extern char bmpFlagName[];
+
+// item Image
+extern char bmpItem1Name[];
+extern char bmpItem2Name[];
+extern char bmpItem3Name[];
+
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
@@ -214,7 +207,7 @@ void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
-void changeLayer(ImageLayer currentLayer, ImageLayer nextLayer);
+void changeLayer(ImageLayer* currentLayer, ImageLayer* nextLayer);
 void printTimeInMiniGameArea(float t);
 void printMyOriInMiniGameArea();
 void updateCharacterStatus();

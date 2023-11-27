@@ -16,45 +16,39 @@ int blockInfo[1200][1200];
 int mapInfo[5][5];
 int currentAreaRowIndex;
 int currentAreaColIndex;
-
-bool isButtonArea = false;
-
-// have to add all these bmp files as bitmap resources
-// ORE BMP
-char bmpNameBronzeOre[] = "block_Stage1_BronzeOre1.bmp";
-char bmpNameSilverOre[] = "block_Stage1_SilverOre1.bmp";
-char bmpNameGoldOre[] = "block_Stage1_GoldOre1.bmp";
-char bmpNameDiamondOre[] = "block_Stage1_DiamondOre1.bmp";
-
-char bmpNameBrokenBronzeOre[] = "block_Stage1_Broken_BronzeOre1.bmp";
-char bmpNameBrokenSilverOre[] = "block_Stage1_Broken_SilverOre1.bmp";
-char bmpNameBrokenGoldOre[] = "block_Stage1_Broken_GoldOre1.bmp";
-char bmpNameBrokenDiamondOre[] = "block_Stage1_Broken_DiamondOre1.bmp";
-
 int NPCSpacePosX;
 int NPCSpacePosY;
 int NPCSpaceHeight;
 int NPCSpaceWidth;
 int OrichalcumNum = 0;
-// rewardLayer와 해당 레이어에서 사용하는 변수들
 
+// BUTTON
+bool isButtonRoomClear = false;
+std::vector<int> buttonPressedOrderList;
+std::vector<int> buttonPressedOrderAnswerList;
+std::vector<std::vector<int>> buttonOrderCaseList = { {1,2,3}, {1,3,2}, {2,1,3}, {2,3,1}, {3,1,2}, {3,2,1} };
+bool isGenerateMobByQuestionBlock = false;
+int questionBlockPosX = 0;
+int questionBlockPosY = 0;
+
+// rewardLayer와 해당 레이어에서 사용하는 변수들
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
 Image imagesReward[1000];
 
 // PC가 현재 어디에 위치하는지 체크하기 위한 bool형 변수
 bool isOnStage = true;
 bool isOnArea = false;
-bool isOnReward = false;
-bool isFlagStage = false;
-
-bool isOnNormalArea = false;
-bool isOnMiniGameArea = false;
+bool isNormalArea = false;
+bool isMiniGameArea = false;
+bool isButtonArea = false;
+bool isFlagArea = false;
 
 // 각 레이어마다 사용되는 이미지들은 하나의 배열의 저장됨 (ex. imageLayer->imageArray, rewardLayer->imageReward)
 // 같은 배열에 저장되는 이미지들은 내부에서 목적에 따라 묶여서 저장됨
 // 접근하기 편하도록 하기 위해 시작 번호를 저장하여 관리
 int index_StageImages_Start;
 int index_Area_PC;
+int index_Area_Button_Start;
 int index_Area_UI_Start;
 int index_Area_UI_HP_Start;
 int index_Area_UI_O2_Start;
@@ -67,9 +61,7 @@ int index_RewardImages_Start;
 // BMP 파일 시작
 
 // NULL BMP
-char bmpNullName[] = "";
 char bmpNameNull[] = "";
-char bmpMineralName[] = "Mineral.bmp";
 
 // STAGE MAP BMP
 char bmpNamePC[] = "PlayerCharacter.bmp";
@@ -90,6 +82,7 @@ char bmpNameMapX[] = "UI_mapX.bmp";
 char bmpNameMapTile[] = "UI_mapTile.bmp";
 char bmpNameMapTileCleared[] = "UI_mapTileCleared.bmp";
 char bmpNameMapBox[] = "UI_mapBox.bmp";
+
 char bmpNameHP_0pct[] = "UI_HP_0pct.bmp";
 char bmpNameHP_10pct[] = "UI_HP_10pct.bmp";
 char bmpNameHP_20pct[] = "UI_HP_20pct.bmp";
@@ -114,6 +107,7 @@ char bmpNameO2_80pct[] = "UI_O2_80pct.bmp";
 char bmpNameO2_90pct[] = "UI_O2_90pct.bmp";
 char bmpNameO2_100pct[] = "UI_O2_100pct.bmp";
 char bmpNameMaxO2[] = "UI_maxO2.bmp";
+
 char bmpNameTimer[] = "UI_Timer.bmp";
 char bmpNameStar0[] = "UI_Star0.bmp";
 char bmpNameStar1[] = "UI_Star1.bmp";
@@ -135,6 +129,10 @@ char bmpNameDiamondOre1[] = "block_Stage1_DiamondOre1.bmp";
 char bmpNameDiamondOre2[] = "block_Stage1_DiamondOre2.bmp";
 char bmpNameOrichalcumOre1[] = "block_Stage1_OrichalcumOre1.bmp";
 char bmpNameOrichalcumOre2[] = "block_Stage1_OrichalcumOre2.bmp";
+char bmpNameBrokenBronzeOre[] = "block_Stage1_Broken_BronzeOre1.bmp";
+char bmpNameBrokenSilverOre[] = "block_Stage1_Broken_SilverOre1.bmp";
+char bmpNameBrokenGoldOre[] = "block_Stage1_Broken_GoldOre1.bmp";
+char bmpNameBrokenDiamondOre[] = "block_Stage1_Broken_DiamondOre1.bmp";
 
 // MINERAL BMP
 char bmpNameBronzeMineral[] = "block_MineralBronze.bmp";
@@ -142,6 +140,24 @@ char bmpNameSilverMineral[] = "block_MineralSilver.bmp";
 char bmpNameGoldMineral[] = "block_MineralGold.bmp";
 char bmpNameDiamondMineral[] = "block_MineralDiamond.bmp";
 char bmpNameOrichalcumMineral[] = "block_MineralOrichalcum.bmp";
+
+// BUTTON BMP
+char bmpButton1Name[] = "button1.bmp";
+char bmpButton1PressedName[] = "button1Pressed.bmp";
+char bmpButton2Name[] = "button2.bmp";
+char bmpButton2PressedName[] = "button2Pressed.bmp";
+char bmpButton3Name[] = "button3.bmp";
+char bmpButton3PressedName[] = "button3Pressed.bmp";
+
+// QUESTIONBLOCK BMP
+char bmpQuestionMarkName[] = "questionMark.bmp";
+char bmpOzPotionName[] = "ozPotion.bmp";
+char bmpHpPotionName[] = "hpPotion.bmp";
+char bmpBoomName[] = "boom.bmp";
+
+// FLAG, BEDROCK BMP
+char bmpBedrockName[] = "emptyTile.bmp";
+char bmpFlagName[] = "flag.bmp";
 
 // NORMAL NPC BMP
 char bmpNameBat[] = "Bat.bmp";
@@ -164,30 +180,7 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";	
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
-// FLAG, BEDROCK
-char bmpBedrockName[] = "emptyTile.bmp";
-char bmpFlagName[] = "flag.bmp";
-
-// BUTTON
-int button1ImageIndex;
-bool isButtonRoomClear = false;
-std::vector<int> buttonPressedOrderList;
-std::vector<int> buttonPressedOrderAnswerList;
-std::vector<std::vector<int>> buttonOrderCaseList = { {1,2,3}, {1,3,2}, {2,1,3}, {2,3,1}, {3,1,2}, {3,2,1} };
-char bmpButton1Name[] = "button1.bmp";
-char bmpButton1PressedName[] = "button1Pressed.bmp";
-char bmpButton2Name[] = "button2.bmp";
-char bmpButton2PressedName[] = "button2Pressed.bmp";
-char bmpButton3Name[] = "button3.bmp";
-char bmpButton3PressedName[] = "button3Pressed.bmp";
-
-char bmpQuestionMarkName[] = "questionMark.bmp";
-char bmpOzPotionName[] = "ozPotion.bmp";
-char bmpHpPotionName[] = "hpPotion.bmp";
-char bmpBoomName[] = "boom.bmp";
-bool isGenerateMobByQuestionBlock = false;
-int questionBlockPosX = 0;
-int questionBlockPosY = 0;
+// 함수 시작
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
     int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
@@ -338,74 +331,7 @@ void initRewardImage() { // rewardLayer에서 사용하는 모든 이미지 최�
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void changeLayer(ImageLayer currentLayer, ImageLayer nextLayer) { // 레이어를 변경하는 함수
-	// 레이어의 각 고유 번호를 저장
-	int currentLayerNum = currentLayer.NUM;
-	int nextLayerNum = nextLayer.NUM;
-	//printf("%d %d\n", currentLayerNum, nextLayerNum);
-
-	targetLayer->fadeOut(targetLayer, NULL); // 레이어 변경 전 현재 레이어 Fade Out
-
-	switch (currentLayerNum) // 레이어 변경 전 현재 레이어 작업 마무리
-	{
-	case 1:
-		isOnStage = false;
-		break;
-	case 2:
-		isOnArea = false;
-
-		for (int idx = button1ImageIndex; idx < button1ImageIndex + 3; idx++) {
-			imageArray[idx].isHide = 1;
-		}
-
-		// 에어리어 클리어를 스테이지 맵에 반영하기 위한 코드
-		stageLayer.images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-		stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-		setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-
-		imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar0;
-		if (isOnMiniGameArea) {
-			if (OrichalcumNum >= 2) pc.setStone(pc.getStone() + 200);
-			else if (OrichalcumNum >= 1) pc.setStone(pc.getStone() + 100);
-		}
-		OrichalcumNum = 0;
-		break;
-	case 3:
-		isOnReward = false;
-		// 다음 RewardUI() 호출을 위한 코드
-		imagesReward[4].isHide = 1;
-		imagesReward[5].isHide = 1;
-		imagesReward[6].isHide = 1;
-		imagesReward[7].isHide = 1;
-		imagesReward[8].isHide = 1;
-		imagesReward[9].isHide = 1;
-		imagesReward[0].isHide = 0;
-		imagesReward[2].isHide = 0;
-		break;
-	}
-
-	switch (nextLayerNum) // 새 레이어 이동 전 작업
-	{
-	case 1:
-		isOnStage = true;
-		//printf("Sup");
-		break;
-	case 2:
-		isOnArea = true;
-		break;
-	case 3:
-		isOnReward = true;
-		break;
-	}
-
-	// 타겟 변경 후 Fade In
-	targetLayer = &nextLayer;
-	targetLayer->fadeIn(targetLayer, NULL);
-	targetLayer->renderAll(targetLayer);
-}
-
 void updateCharacterStatus() { // PC 상태창을 업데이트
-
 	wchar_t playerStone[20];
 	wchar_t playerHp[20];
 	wchar_t playerOz[20];
@@ -422,7 +348,6 @@ void updateCharacterStatus() { // PC 상태창을 업데이트
 	else swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.%d", pc.getAtkSpdLev());
 	if (pc.getSpdLev() == 11) swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.MAX");
 	else swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
-
 
 	printText(targetLayer->_consoleDC, 390, 332, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
 	printText(targetLayer->_consoleDC, 250, 432, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
@@ -451,7 +376,6 @@ void setMovableStageInfo(int row, int col) { // 스테이지 맵에서 새롭게
 			stageInfo[row][col - 1] = 0;
 		}
 	}
-
 	if (col + 1 < 5) {
 		if (stageInfo[row][col + 1]) {
 			stageLayer.images[(row) * 5 + col + 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
@@ -459,7 +383,6 @@ void setMovableStageInfo(int row, int col) { // 스테이지 맵에서 새롭게
 		}
 	}
 }
-
 
 void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
 	// 에어리어 상에서 NPC가 생성되는 검은 공간의 크기를 설정하는 변수들
@@ -476,7 +399,7 @@ void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
 			if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
 				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
 				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
-				imageArray[cnt++] = { bmpNullName, x,y,1 };
+				imageArray[cnt++] = { bmpNameNull, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
 						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 0;
@@ -503,10 +426,35 @@ void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
 		}
 	}
 	// 스폰되는 위치에 블록 지우기
-	imageArray[13].fileName = bmpNullName;
+	imageArray[13].fileName = bmpNameNull;
 
 	// 현재 캐릭터 스폰 위치에 광석이 생성될 수 있는 버그가 존재함.
 	// getNewArea() 후 Generate~() 해서 발생하는 현상.
+}
+
+void getNewMiniGameArea() // 미니게임 에어리어(25x25)를 초기화하는 변수
+{
+	int cnt = 1;
+	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
+			for (int dy = 0;dy < BLOCKSIZE;dy++) {
+				for (int dx = 0;dx < BLOCKSIZE;dx++) {
+					blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+				}
+			}
+		}
+	}
+	// 에어리어에서 PC가 스폰되는 초기 위치
+	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
+	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
+	for (int y = 0;y < BLOCKSIZE;y++) {
+		for (int x = 0;x < BLOCKSIZE;x++) {
+			blockInfo[y][576 + x] = 0;
+		}
+	}
+	// 스폰되는 위치에 블록 지우기
+	imageArray[12 * 25 + 13].fileName = bmpNameNull;
 }
 
 void drawUI() { // 에어리어 UI 활성화
@@ -533,7 +481,7 @@ void drawUI() { // 에어리어 UI 활성화
 	imageArray[index_Area_UI_Map_Start].x = 1590 + (BLOCKSIZE + 2) * currentAreaColIndex;
 	imageArray[index_Area_UI_Map_Start].y = 100 + (BLOCKSIZE + 2) * currentAreaRowIndex;
 	
-	if (isOnMiniGameArea) {
+	if (isMiniGameArea) {
 		for (int i = 0; i < 3; i++) {
 			imageArray[index_Area_UI_MiniGame_Start + i].isHide = 0;
 		}
@@ -563,35 +511,6 @@ bool collisionCheckInStage(int x, int y) {
 	//return 0;
 	return stageInfo[infoY][infoX];
 }
-
-
-void getNewMiniGameArea() // 미니게임 에어리어(25x25)를 초기화하는 변수
-{
-	int cnt = 1;
-	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
-		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
-			for (int dy = 0;dy < BLOCKSIZE;dy++) {
-				for (int dx = 0;dx < BLOCKSIZE;dx++) {
-					blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
-				}
-			}
-		}
-	}
-	// 에어리어에서 PC가 스폰되는 초기 위치
-	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
-	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
-	for (int y = 0;y < BLOCKSIZE;y++) {
-		for (int x = 0;x < BLOCKSIZE;x++) {
-			blockInfo[y][576 + x] = 0;
-		}
-	}
-	// 스폰되는 위치에 블록 지우기
-	imageArray[12 * 25 + 13].fileName = bmpNullName;
-
-	//printf("%d\n", imageLayer.imageCount);
-}
-
 
 int getNPCSpaceHeight() { return (rand() % 10 + 5); }
 int getNPCSpaceWidth() { return (rand() % 10 + 5); }
@@ -640,9 +559,18 @@ void printMyOriInMiniGameArea() { // 미니게임 에어리어에서 information
 }
 
 void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &rewardLayer;
+
+	imagesReward[0].isHide = 0;
+	imagesReward[2].isHide = 0;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+
+
 	int index1 = -1;
 	int flags = 1;
-
 	while (flags) {
 		while (_kbhit() != 0) {
 			int key = _getch();
@@ -687,7 +615,6 @@ void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
 	}
 
 	targetLayer->fadeOut(targetLayer, NULL);
-
 	imagesReward[0].isHide = 1;
 	imagesReward[1].isHide = 1;
 	imagesReward[2].isHide = 1;
@@ -698,15 +625,11 @@ void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
 	imagesReward[7].isHide = 1;
 	imagesReward[8].isHide = 0;
 	imagesReward[9].isHide = 1;
-
-
 	targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);
 
 	int index2 = -1;
 	flags = 1;
-
-
 	while (flags) {
 		while (_kbhit() != 0) {
 			int key = _getch();
@@ -764,19 +687,38 @@ void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
 			if (key) targetLayer->renderAll(targetLayer);
 		}
 	}
+	targetLayer->fadeOut(targetLayer, NULL);
+	// 다음 RewardUI() 호출을 위한 코드
+	imagesReward[4].isHide = 1;
+	imagesReward[5].isHide = 1;
+	imagesReward[6].isHide = 1;
+	imagesReward[7].isHide = 1;
+	imagesReward[8].isHide = 1;
+	imagesReward[9].isHide = 1;
+
+	targetLayer = &stageLayer;
+	isOnStage = true;
+	targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+	stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+	setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
 	int num = 0;
 	if (index1 == 1) num = rand() % 3;
-	//if (index1 == 1) num = -5;
-	//else if (index1 == 2) num = 6;
 	else if (index1 == 2) num = rand() % 11 + (-5);
 	if (index2 == 1) pc.setAtkLev(pc.getAtkLev() + num);
 	else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
 	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
 	pc.setStone(pc.getStone() + 100);
 
-	//targetLayer->fadeIn(targetLayer, NULL);
-	//printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
+	imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar0;
+	if (isMiniGameArea) {
+		if (OrichalcumNum >= 2) pc.setStone(pc.getStone() + 200);
+		else if (OrichalcumNum >= 1) pc.setStone(pc.getStone() + 100);
+	}
+	OrichalcumNum = 0;
 }
 
 bool printButtonStageStatus() {

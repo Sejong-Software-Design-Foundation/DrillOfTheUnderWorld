@@ -8,14 +8,11 @@
 
 int main() {
 	initialize(); // 기초적인 이니셜라이징(콘솔 사이즈 지정, 포인터 삭제 등)
+
 	// 레이어 이니셜라이징
-	// 각 레이어에 고유 NUM 지정
 	stageLayer.initialize(&stageLayer);
-	stageLayer.NUM = 1;
 	imageLayer.initialize(&imageLayer); // imageLayer는 에어리어 레이어라고 보면 됨
-	imageLayer.NUM = 2;
 	rewardLayer.initialize(&rewardLayer);
-	rewardLayer.NUM = 3;
 
 	// 음악 재생
 	char bgmName[] = "start_bgm.wav";
@@ -26,7 +23,8 @@ int main() {
 	imageLayer.imageCount = 1;
 
 	initStageImage();				// stageLayer에서 사용하는 모든 이미지 최초 생성
-	fillBlockImages();				// imageLayer의 블록(25x25) 최초 생성 
+	fillBlockImages();				// imageLayer의 블록(25x25) 최초 생성
+
 	Button* button1 = new Button(1);
 	Button* button2 = new Button(2);
 	Button* button3 = new Button(3);
@@ -36,7 +34,7 @@ int main() {
 	imageArray[button1->imageidx].isHide = 1;
 	imageArray[button2->imageidx].isHide = 1;
 	imageArray[button3->imageidx].isHide = 1;
-	button1ImageIndex = button1->imageidx;
+	index_Area_Button_Start = button1->imageidx;
 
 	initAreaUI();					// imageLayer의 UI 이미지 최초 생성
 	initRewardImage();				// rewardLayer에서 사용하는 모든 이미지 최초 생성
@@ -61,7 +59,6 @@ int main() {
 	Ladder* ladder = new Ladder(-48, -48);
 	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(-48, -48);
 
-	// 추후에 gameStartLayer(게임 실행 시 처음 나오는 프롤로그 등을 포함) 만들면 아래 코드 changeLayer로 호출되도록 수정
 	targetLayer = &stageLayer;
 	targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);
@@ -73,6 +70,7 @@ int main() {
 			imageArray[button1->imageidx].isHide = 1;
 			imageArray[button2->imageidx].isHide = 1;
 			imageArray[button3->imageidx].isHide = 1;
+
 			updateCharacterStatus(); // PC 상태창을 업데이트
 			while (_kbhit() != 0) {
 				int key = _getch();
@@ -83,37 +81,38 @@ int main() {
 				switch (key) {
 				case S:
 				{
-					// 랜덤 변수를 사용하여 어떤 스테이지로 진입할 지 정하는 코드
+					// 랜덤 변수를 사용하여 어떤 에어리어로 진입할 지 정하는 코드
 					int num = rand() % 4;
-					if (num == 0) { // normal
-						isOnNormalArea = true;
-						isOnMiniGameArea = false;
+					if (num == 0) { // 노말 에어리어로 진입
+						isNormalArea = true;
+						isMiniGameArea = false;
 						isButtonArea = false;
-						isFlagStage = false;
+						isFlagArea = false;
 						getNewArea();
 						Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-						Mineral* mineral = new Mineral(); // stageLevel 대입
+						Mineral* mineral = new Mineral();
 						setBedrock(3);
 						mineral->getCluster();
 					}
-					else if (num == 1) { // minigame
-						isOnNormalArea = false;
-						isOnMiniGameArea = true;
+					else if (num == 1) { // 미니게임 에어리어로 진입
+						isNormalArea = false;
+						isMiniGameArea = true;
 						isButtonArea = false;
-						isFlagStage = false;
+						isFlagArea = false;
 						getNewMiniGameArea();
 						Emcee->NPCSetPosition(-48, -48);
 						ladder->NPCSetPosition(-48, -48);
 						minigameStartTime = clock();
 						Mineral* mineral = new Mineral(); // stageLevel 대입
 					}
-					else if (num == 2) { // button
-						isOnNormalArea = false;
+					else if (num == 2) { // 버튼 에어리어로 진입
+						isNormalArea = false;
+						isMiniGameArea = false;
 						isButtonArea = true;
-						isOnMiniGameArea = false;
-						isFlagStage = false;
+						isFlagArea = false;
+
 						imageArray[button1->imageidx].isHide = 0;
 						imageArray[button2->imageidx].isHide = 0;
 						imageArray[button3->imageidx].isHide = 0;
@@ -136,11 +135,11 @@ int main() {
 						setBedrock(3);
 						mineral->getCluster();
 					}
-					else if (num == 3) { // flag
-						isOnNormalArea = false;
+					else if (num == 3) { // 플래그 에어리어로 진입
+						isNormalArea = false;
+						isMiniGameArea = false;
 						isButtonArea = false;
-						isOnMiniGameArea = false;
-						isFlagStage = true;
+						isFlagArea = true;
 
 						pc.initFlagCnt();
 						getNewArea();
@@ -153,17 +152,19 @@ int main() {
 						setFlag(3);
 					}
 
-
-					// 에어리어 맵에서 현재 PC 위치를 밝게 표시하도록 하는 코드
+					// 에어리어 맵에서 현재 PC 위치를 밝게 표시하도록 하는 코드(클리어 처리)
 					currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
 
-					// 레이어 변경
-					changeLayer(stageLayer, imageLayer);
+					isOnStage = false;
+					isOnArea = true;
+					targetLayer->fadeOut(targetLayer, NULL);
+					targetLayer = &imageLayer;
+					targetLayer->fadeIn(targetLayer, NULL);
+					targetLayer->renderAll(targetLayer);
 				}
-				break;
-
+					break;
 				case LEFT:
 					pc.setDirLeft();
 					if (!collisionCheckInStage(curPosX - AREA_BLOCK_SIZE, curPosY)) pc.moveInStage();
@@ -184,16 +185,16 @@ int main() {
 				if (key) targetLayer->renderAll(targetLayer);
 			}
 		}
-		else if (isOnArea) { // PC가 노말 에어리어에 있는 경우
-
+		else if (isOnArea) { // PC가 에어리어에 있는 경우
 			targetLayer->renderAll(targetLayer);
 			drawUI(); // 에어리어 UI를 그리는 함수
-			if (isOnNormalArea) {
+
+			if (isNormalArea) { // PC가 노멀 에어리어에 있는 경우
+				// QuestionBlock 박쥐 생성 관련 코드
 				if (isGenerateMobByQuestionBlock) {
 					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
 					isGenerateMobByQuestionBlock = false;
 				}
-
 				if (!generatedBatList.empty()) {
 					for (Bat* mob : generatedBatList) {
 						mob->move();
@@ -204,7 +205,7 @@ int main() {
 				bat->move();
 				ladder->move();
 				Emcee->move();
-
+				// 키보드 입력 수행
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -214,9 +215,16 @@ int main() {
 
 						switch (key) {
 						case S:
-							changeLayer(imageLayer, stageLayer);
+							isOnStage = true;
+							isOnArea = false;
+							isNormalArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
 							break;
-
 						case LEFT:
 							pc.setDirLeft();
 							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
@@ -238,14 +246,12 @@ int main() {
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
 							break;
 						case ESC:
-							isOnArea = false;
-							isOnReward = true;
+							rewardUI();
 							break;
 						case SPACE:
 							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
 							pc.dig(targetPos.X, targetPos.Y);
 							break;
-
 						case O:
 							pc.setHP(pc.getHP() - 10);
 							break;
@@ -257,8 +263,9 @@ int main() {
 					Sleep(5);
 				}
 			}
-			else if (isOnMiniGameArea) { // PC가 미니게임 에어리어에 있는 경우
-				printMyOriInMiniGameArea();
+			else if (isMiniGameArea) { // PC가 미니게임 에어리어에 있는 경우
+				printMyOriInMiniGameArea(); // 미니게임 에어리어에서 information과 획득한 광물 수를 출력하는 함수
+				// 키보드 입력 수행
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -268,7 +275,15 @@ int main() {
 
 						switch (key) {
 						case S:
-							changeLayer(imageLayer, stageLayer);
+							isOnStage = true;
+							isOnArea = false;
+							isMiniGameArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
 							break;
 						case LEFT:
 							pc.setDirLeft();
@@ -291,8 +306,7 @@ int main() {
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
 							break;
 						case ESC:
-							isOnArea = false;
-							isOnReward = true;
+							rewardUI();
 							break;
 						case SPACE:
 							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
@@ -307,11 +321,10 @@ int main() {
 				printTimeInMiniGameArea(remain_time);
 				if (remain_time < 0.0) {
 					Sleep(3000);
-					isOnArea = false;
-					isOnReward = true;
+					rewardUI();
 				}
 			}
-			else if (isButtonArea) {
+			else if (isButtonArea) { // PC가 버튼 에어리어에 있는 경우
 
 				if (button1->getIsPressed()) {
 					imageArray[button1->imageidx].fileName = bmpButton1PressedName;
@@ -334,15 +347,11 @@ int main() {
 					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
 					isGenerateMobByQuestionBlock = false;
 				}
-
-
 				if (!generatedBatList.empty()) {
 					for (Bat* mob : generatedBatList) {
 						mob->move();
 					}
 				}
-
-
 				if (isButtonRoomClear) {
 					imageArray[ladder->imageidx].isHide = 0;
 					ladder->move();
@@ -352,6 +361,7 @@ int main() {
 				button1->move();
 				button2->move();
 				button3->move();
+
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -361,19 +371,16 @@ int main() {
 
 						switch (key) {
 						case S:
-							targetLayer->fadeOut(targetLayer, NULL);
-							targetLayer = &stageLayer;
 							isOnStage = true;
 							isOnArea = false;
 							isButtonArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
 							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
 							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
 							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
 							targetLayer->fadeIn(targetLayer, NULL);
-
 							break;
-
-
 						case LEFT:
 							pc.setDirLeft();
 							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
@@ -400,23 +407,19 @@ int main() {
 						case SPACE:
 							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
 							pc.dig(targetPos.X, targetPos.Y);
-							//pc.setOxygen(pc.getOxygen() - 1);
 							break;
-
 						case O:
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
 							pc.setHP(pc.getHP() + 10);
 							break;
-
 						}
 					}
 					Sleep(5);
 				}
 			}
-
-			else if (isFlagStage) { // flag
+			else if (isFlagArea) { // PC가 플래그 에어리어에 있는 경우
 				printFlagStageStatus(pc.getFlagCnt());
 				//mole->move();
 				bat->move();
@@ -431,35 +434,16 @@ int main() {
 
 						switch (key) {
 						case S:
+							isOnStage = true;
+							isOnArea = false;
+							isFlagArea = false;
 							targetLayer->fadeOut(targetLayer, NULL);
-							if (isOnStage) {
-								targetLayer = &imageLayer;
-								isOnStage = false;
-								currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
-								currentAreaColIndex = convertPosToInfoXInStage(curPosX);
-
-								/*
-								imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
-								imageLayer.images = imageArray;
-								imageLayer.imageCount = 1;
-
-								initBlockImages();
-								*/
-
-								targetLayer->fadeIn(targetLayer, NULL);
-							}
-							else {
-								targetLayer->fadeOut(targetLayer, NULL);
-								targetLayer = &stageLayer;
-								isOnStage = true;
-								targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-								stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-								setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-								targetLayer->fadeIn(targetLayer, NULL);
-							}
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
 							break;
-
-
 						case LEFT:
 							pc.setDirLeft();
 							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
@@ -486,27 +470,19 @@ int main() {
 						case SPACE:
 							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
 							pc.dig(targetPos.X, targetPos.Y);
-							//pc.setOxygen(pc.getOxygen() - 1);
 							break;
-
 						case O:
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
 							pc.setHP(pc.getHP() + 10);
 							break;
-
 						}
 					}
-
 					Sleep(5);
 				}
 			}
-
-
-
-
-
+			// 모든 에어리어에 공통으로 적용되는 코드
 			// 3초마다 산소 게이지를 1씩 감소시키는 코드
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
@@ -514,11 +490,6 @@ int main() {
 				pc.setOxygen(pc.getOxygen() - 1);
 				start_time = end_time;
 			}
-		}
-		else if (isOnReward) { // PC가 에어리어를 클리어하고 보상을 획득하는 경우
-			changeLayer(imageLayer, rewardLayer);
-			rewardUI();
-			changeLayer(rewardLayer, stageLayer);
 		}
 	}
 	return 0;

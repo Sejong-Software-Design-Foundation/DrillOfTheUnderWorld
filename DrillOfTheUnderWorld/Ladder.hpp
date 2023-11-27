@@ -25,9 +25,8 @@ void Ladder::move() {
 }
 
 void Ladder::attack() {
-    if (isFlagStage && pc.getFlagCnt() < 3) return;
-    isOnArea = false;
-    isOnReward = true;
+    if (isFlagArea && pc.getFlagCnt() < 3) return;
+    rewardUI();
 }
 
 #endif

@@ -41,10 +41,6 @@ NPCBullet::NPCBullet(int x, int y) : NPC(x, y, 0, 10, 1) {
 void NPCBullet::move() {
 	if (PCNear()) {
 		attack();
-	}
-
-	if (PCNear()) {
-		attack();
 		imageLayer.images[imageidx].fileName = bmpNameNull;
 		return;
 	}
