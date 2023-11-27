@@ -390,8 +390,7 @@ int main() {
 						}
 					}
 
-					Sleep(5);
-					targetLayer->renderAll(targetLayer);
+					Sleep(5); 
 				}
 			}
 

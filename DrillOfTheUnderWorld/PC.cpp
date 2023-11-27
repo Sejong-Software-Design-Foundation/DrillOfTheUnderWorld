@@ -219,10 +219,6 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 	}
 	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameOrichalcumMineral) == 0) {
 		pc.setStone(pc.getStone() + 1000);
-		OrichalcumNum++;
-		if (OrichalcumNum >= 5) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar1;
-		if (OrichalcumNum >= 10) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar2;
-		if (OrichalcumNum >= 20) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar3;
 	}
 
 	imageArray[targerImageIndex].fileName = bmpNullName;
@@ -247,6 +243,14 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 		}
 		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenDiamondOre) == 0)) {
 			imageLayer.images[imageIndex].fileName = bmpNameDiamondMineral;
+			applyDigReward(imageIndex, 300);
+		}
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameOrichalcumOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameOrichalcumOre2) == 0)) {
+			OrichalcumNum++;
+			if (OrichalcumNum >= 5) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar1;
+			if (OrichalcumNum >= 10) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar2;
+			if (OrichalcumNum >= 20) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar3;
+			imageLayer.images[imageIndex].fileName = bmpNameOrichalcumMineral;
 			applyDigReward(imageIndex, 300);
 		}
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpQuestionMarkName) == 0) {
@@ -349,6 +353,12 @@ void PC::boom(int digY, int digX, int infoY, int infoX, int imageIndex) {
 			if ((strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameDiamondOre1) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBrokenDiamondOre) == 0)) {
 				imageLayer.images[targetImageIndex].fileName = bmpNameDiamondMineral;
 				rewardImageIndexList.push_back(targetImageIndex);
+			}
+			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameOrichalcumMineral) == 0) {
+				OrichalcumNum++;
+				if (OrichalcumNum >= 5) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar1;
+				if (OrichalcumNum >= 10) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar2;
+				if (OrichalcumNum >= 20) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar3;
 			}
 			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpBoomName) == 0) {
 				imageLayer.images[targetImageIndex].fileName = bmpNullName;
