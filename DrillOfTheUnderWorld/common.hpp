@@ -50,9 +50,13 @@ extern "C" {
 #define UI_ITEM_START_POS_Y 220
 #define UI_ITEM_SIZE 170
 
+#define REWARD_BRONZE = 10
+#define REWARD_SILVER = 30
+#define REWARD_GLOD = 50
+#define REWARD_DIAMOND = 100
+#define REWARD_POSSION = 50
 
 extern PC& pc;
-
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 extern HWND WINDOW_HANDLE;
 extern ImageLayer* targetLayer;
@@ -62,6 +66,8 @@ extern Image imageArray[1000];
 extern Image stageImageArray[40];
 extern int stageInfo[5][5];
 extern int blockInfo[1200][1200];
+extern bool isFlagStage;
+extern bool isButtonStage;
 extern bool isOnStage;
 extern char bmpNamePC[];
 extern char bmpStoneBlockName[];
@@ -88,6 +94,11 @@ extern char bmpNameBronzeOre[];
 extern char bmpNameSilverOre[];
 extern char bmpNameGoldOre[];
 extern char bmpNameDiamondOre[];
+
+extern char bmpNameBrokenBronzeOre[];
+extern char bmpNameBrokenSilverOre[];
+extern char bmpNameBrokenGoldOre[];
+extern char bmpNameBrokenDiamondOre[];
 
 // MINERAL BMP
 extern char bmpNameBronzeMineral[];
@@ -116,7 +127,8 @@ extern char bmpMovableAreaName[];
 extern char bmpCharacterStatusName[];
 
 extern char bmpMineralName[];
-
+extern char bmpBedrockName[];
+extern char bmpFlagName[];
 // item Image
 extern char bmpItem1Name[];
 extern char bmpItem2Name[];
@@ -130,6 +142,21 @@ extern int NPCSpaceWidth;
 
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
+
+extern std::vector<int> buttonPressedOrderList;
+extern std::vector<int> buttonPressedOrderAnswerList;
+extern std::vector<std::vector<int>> buttonOrderCaseList;
+extern bool isButtonRoomClear;
+extern char bmpButton1Name[];
+extern char bmpButton1PressedName[];
+extern char bmpButton2Name[];
+extern char bmpButton2PressedName[];
+extern char bmpButton3Name[];
+extern char bmpButton3PressedName[];
+
+extern char bmpQuestionMarkName[];
+
+extern int rewardItemImageIndex;
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
@@ -168,8 +195,8 @@ int getNPCSpacePosY();
 void setMinerals(int max);
 void getNewArea();
 
-// AREA MINERAL CHECK FUNCTIONS
-void checkAreaOre(int imageIndex);
-void checkAreaMineral(int imageIndex);
-
+bool printButtonStageStatus();
+void printFlagStageStatus(int curFlagCnt);
+void setBedrock(int max);
+void setFlag(int cnt);
 #endif COMMON_HPP

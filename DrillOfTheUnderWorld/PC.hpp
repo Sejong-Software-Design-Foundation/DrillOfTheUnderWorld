@@ -6,8 +6,10 @@ extern "C" {
 
 class PC {
 private:
+
 	int MAX_HP = 100, MAX_O2 = 100;
 	int AtkLev = 1, AtkSpdLev = 1, SpdLev = 1;
+	int flagCnt = 0;
 
 	int HP = 100, O2 = 100, ATK = 1, curDirection = 0;
 	int stone = 0;
@@ -68,4 +70,9 @@ public:
 	void setAtkSpdLev(int lev);
 	void setSpdLev(int lev);
 	bool isDigable(int x, int y);
+	void showDigRewardOnPcTop(int targerImageIndex);
+	void applyDigReward(int targerImageIndex);
+	void increaseFlagCnt();
+	int getFlagCnt();
+	void initFlagCnt();
 };

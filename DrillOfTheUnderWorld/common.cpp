@@ -1,7 +1,6 @@
 #include "common.hpp"
 
 PC& pc = PC::getPC();
-
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
 ImageLayer* targetLayer = NULL;
@@ -14,8 +13,10 @@ int currentAreaColIndex;
 int blockInfo[1200][1200];
 int stageInfo[5][5];
 bool isOnStage = true;
-char bmpStoneBlockName[] = "stoneBlock.bmp";
-char bmpBrokenStoneBlockName[] = "brokenStoneBlock.bmp";
+bool isButtonStage = false;
+bool isFlagStage = false;
+char bmpStoneBlockName[] = "block_Stage1_Normal.bmp";
+char bmpBrokenStoneBlockName[] = "block_Stage1_Broken.bmp";
 
 char bmpNamePC[] = "PlayerCharacter.bmp";
 char bmpStageLevel[] = "Stage1.bmp";
@@ -26,6 +27,7 @@ char bmpMovableAreaName[] = "movableArea.bmp";
 char bmpCharacterStatusName[] = "UI_character_status.bmp";
 
 char bmpNameNull[] = "";
+char bmpBedrockName[] = "emptyTile.bmp";
 
 char bmpNullName[] = "";
 
@@ -41,16 +43,21 @@ char bmpNameLadder[] = "Ladder.bmp";
 
 // have to add all these bmp files as bitmap resources
 // ORE BMP
-char bmpNameBronzeOre[] = "BronzeOre.bmp";
-char bmpNameSilverOre[] = "SilverOre.bmp";
-char bmpNameGoldOre[] = "GoldOre.bmp";
-char bmpNameDiamondOre[] = "DiamondOre.bmp";
+char bmpNameBronzeOre[] = "block_Stage1_BronzeOre1.bmp";
+char bmpNameSilverOre[] = "block_Stage1_SilverOre1.bmp";
+char bmpNameGoldOre[] = "block_Stage1_GoldOre1.bmp";
+char bmpNameDiamondOre[] = "block_Stage1_DiamondOre1.bmp";
+
+char bmpNameBrokenBronzeOre[] = "block_Stage1_Broken_BronzeOre1.bmp";
+char bmpNameBrokenSilverOre[] = "block_Stage1_Broken_SilverOre1.bmp";
+char bmpNameBrokenGoldOre[] = "block_Stage1_Broken_GoldOre1.bmp";
+char bmpNameBrokenDiamondOre[] = "block_Stage1_Broken_DiamondOre1.bmp";
 
 // MINERAL BMP
-char bmpNameBronzeMineral[] = "BronzeMineral.bmp";
-char bmpNameSilverMineral[] = "SilverMineral.bmp";
-char bmpNameGoldMineral[] = "GoldMineral.bmp";
-char bmpNameDiamondMineral[] = "DiamondMineral.bmp";
+char bmpNameBronzeMineral[] = "block_MineralBronze.bmp";
+char bmpNameSilverMineral[] = "block_MineralSilver.bmp";
+char bmpNameGoldMineral[] = "block_MineralGold.bmp";
+char bmpNameDiamondMineral[] = "block_MineralDiamond.bmp";
 
 
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
@@ -118,11 +125,25 @@ int NPCSpacePosY;
 int NPCSpaceHeight;
 int NPCSpaceWidth;
 
-
+char bmpFlagName[] = "flag.bmp";
 
 char bmpItem1Name[] = "item1.bmp";
 char bmpItem2Name[] = "item2.bmp";
 char bmpItem3Name[] = "item3.bmp";
+
+bool isButtonRoomClear = false;
+std::vector<int> buttonPressedOrderList;
+std::vector<int> buttonPressedOrderAnswerList;
+std::vector<std::vector<int>> buttonOrderCaseList = { {1,2,3}, {1,3,2}, {2,1,3}, {2,3,1}, {3,1,2}, {3,2,1} };
+char bmpButton1Name[] = "button1.bmp";
+char bmpButton1PressedName[] = "button1Pressed.bmp";
+char bmpButton2Name[] = "button2.bmp";
+char bmpButton2PressedName[] = "button2Pressed.bmp";
+char bmpButton3Name[] = "button3.bmp";
+char bmpButton3PressedName[] = "button3Pressed.bmp";
+
+char bmpQuestionMarkName[] = "questionMark.bmp";
+int rewardItemImageIndex;
 
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
@@ -158,7 +179,7 @@ void initialize() {
     srand((unsigned)time(NULL));
 }
 
-// NPC ���� �����?
+// NPC Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿Â½ Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿?
 
 
 void initBlockImages() {
@@ -242,25 +263,25 @@ void fillBlockImages() {
 }
 
 
-void initStageImage() { // 최초 스테이지 관련 이미지를 생성
-    stageLayer.images = stageImageArray;
-    stageLayer.imageCount = 0;
+void initStageImage() { // Ã¬ÂµÅ“Ã¬Â´? ?Â¤Ã­?¦Å?Â´Ã¬? ÃªÂ´????Â´Ã«?Ã¬Â§??«Â??ÂÃ¬?žÂ?
+	stageLayer.images = stageImageArray;
+	stageLayer.imageCount = 0;
 
-    index_StageImages_Start = stageLayer.imageCount;
-    stageImageArray[stageLayer.imageCount++] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
-    stageImageArray[stageLayer.imageCount++] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
-    stageImageArray[stageLayer.imageCount++] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
+	index_StageImages_Start = stageLayer.imageCount;
+	stageImageArray[stageLayer.imageCount++] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
+	stageImageArray[stageLayer.imageCount++] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
+	stageImageArray[stageLayer.imageCount++] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 
-    for (int y = STAGE_ORIGIN_Y; y < STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 5; y += AREA_BLOCK_SIZE) {
-        for (int x = STAGE_ORIGIN_X; x < STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 5; x += AREA_BLOCK_SIZE) {
-            //printf("%d %d\n", x, y);
-            stageImageArray[stageLayer.imageCount++] = { bmpNomalAreaName, x, y, 1 };
-            stageInfo[(y - STAGE_ORIGIN_Y) / AREA_BLOCK_SIZE][(x - STAGE_ORIGIN_X) / AREA_BLOCK_SIZE] = 1;
-        }
-    }
-    //stageInfo[2][2] = 0;
+	for (int y = STAGE_ORIGIN_Y; y < STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 5; y += AREA_BLOCK_SIZE) {
+		for (int x = STAGE_ORIGIN_X; x < STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 5; x += AREA_BLOCK_SIZE) {
+			//printf("%d %d\n", x, y);
+			stageImageArray[stageLayer.imageCount++] = { bmpNomalAreaName, x, y, 1 };
+			stageInfo[(y - STAGE_ORIGIN_Y) / AREA_BLOCK_SIZE][(x - STAGE_ORIGIN_X) / AREA_BLOCK_SIZE] = 1;
+		}
+	}
+	//stageInfo[2][2] = 0;
 
-    //stageLayer.images[(2) * 5 + 2 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+	//stageLayer.images[(2) * 5 + 2 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
 }
 
 void setMovableStageInfo(int row, int col) {
@@ -358,78 +379,78 @@ void setCurrentCurPos(int x, int y) {
 }
 
 
-void initAreaUI() // 최초 에어리어 UI 관련 이미지를 생성
+void initAreaUI() // Ã¬ÂµÅ“Ã¬Â´? ?ÂÃ¬?“Â´Ã«Â¦Â?¬â€“Â?UI ÃªÂ´????Â´Ã«?Ã¬Â§??«Â??ÂÃ¬?žÂ?
 {
-    index_Area_UI_Start = imageLayer.imageCount;
-    imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
-    index_Area_UI_HP_Start = imageLayer.imageCount;
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_0pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_10pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_20pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_30pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_40pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_50pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_60pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_70pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_80pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_90pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_100pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameMaxHP, UI_HP_ORIGIN_X - 120, UI_HP_ORIGIN_Y, 1, 1 };
+	index_Area_UI_Start = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
+	index_Area_UI_HP_Start = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_0pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_10pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_20pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_30pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_40pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_50pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_60pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_70pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_80pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_90pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_100pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameMaxHP, UI_HP_ORIGIN_X - 120, UI_HP_ORIGIN_Y, 1, 1 };
 
-    index_Area_UI_O2_Start = imageLayer.imageCount;
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_0pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_10pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_20pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_30pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_40pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_50pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_60pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_70pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_80pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_90pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1, 1 };
+	index_Area_UI_O2_Start = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_0pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_10pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_20pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_30pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_40pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_50pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_60pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_70pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_80pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_90pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1, 1 };
 
-    //index_Area_UI_blockInfo_Start = imageLayer.imageCount;
-    index_Area_UI_Map_Start = imageLayer.imageCount;
-    imageArray[imageLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1, 1 }; // 2
-    imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 }; // 3
-    imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 }; // 4
-    index_Area_UI_mapTile_Start = imageLayer.imageCount;
-    for (int y = 100; y < 100 + (BLOCKSIZE * 5) + 10; y += (BLOCKSIZE + 2)) {
-        for (int x = 1590; x < 1590 + (BLOCKSIZE * 5) + 10; x += (BLOCKSIZE + 2)) {
-            imageArray[imageLayer.imageCount++] = { bmpNameMapTile, x, y, 1, 1 };
-            mapInfo[(y - 100) / BLOCKSIZE][(x - 1590) / BLOCKSIZE] = 0;
-        }
-    }
-    // 1 ~ 25, 25개
-    // 5 ~ 29
-    imageArray[imageLayer.imageCount++] = { bmpNameMapBox, 1508, 0, 1, 1 }; // 30
+	//index_Area_UI_blockInfo_Start = imageLayer.imageCount;
+	index_Area_UI_Map_Start = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1, 1 }; // 2
+	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 }; // 3
+	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 }; // 4
+	index_Area_UI_mapTile_Start = imageLayer.imageCount;
+	for (int y = 100; y < 100 + (BLOCKSIZE * 5) + 10; y += (BLOCKSIZE + 2)) {
+		for (int x = 1590; x < 1590 + (BLOCKSIZE * 5) + 10; x += (BLOCKSIZE + 2)) {
+			imageArray[imageLayer.imageCount++] = { bmpNameMapTile, x, y, 1, 1 };
+			mapInfo[(y - 100) / BLOCKSIZE][(x - 1590) / BLOCKSIZE] = 0;
+		}
+	}
+	// 1 ~ 25, 25ÃªÂ°?
+	// 5 ~ 29
+	imageArray[imageLayer.imageCount++] = { bmpNameMapBox, 1508, 0, 1, 1 }; // 30
 }
 
-void drawUI() { // 에어리어 UI 활성화
-    imageArray[index_Area_UI_Start].isHide = 0; // 아이템 창이 보이도록
+void drawUI() { // ?ÂÃ¬?“Â´Ã«Â¦Â?¬â€“Â?UI ?Å“Ã¬?žÂ??
+	imageArray[index_Area_UI_Start].isHide = 0; // ??žÃ?Â??Ã¬Â°Â½Ã¬ÂÂ´ Ã«Â³Â´Ã¬ÂÂ´??žÃ«Â¡Â?
 
-    imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP바가 보이도록
-    pc.setHP(pc.getHP());
-    imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2바가 보이도록
-    pc.setOxygen(pc.getOxygen());
-    for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 맵이 보이도록
-        imageArray[i].isHide = 0;
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPÃ«Â°?Ã? Ã«Â³Â´Ã¬ÂÂ´??žÃ«Â¡Â?
+	pc.setHP(pc.getHP());
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2Ã«Â°?Ã? Ã«Â³Â´Ã¬ÂÂ´??žÃ«Â¡Â?
+	pc.setOxygen(pc.getOxygen());
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // Ã«Â§ÂµÃ¬ÂÂ´ Ã«Â³Â´Ã¬ÂÂ´??žÃ«Â¡Â?
+		imageArray[i].isHide = 0;
 
-    // 에어리어 X가 미구현이기 때문에 임시로 에어리어 지도에서 X가 표시되지 않도록
-    imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
-    imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
+	// ?ÂÃ¬?“Â´Ã«Â¦Â?¬â€“Â?XÃªÂ°??Ã«Â¯Â¸ÃªÂµÂ¬??žÃ?Â´ÃªÂ??Å’Ã«Â¬Â¸????žÃ¬â€¹Å“Ã«Â??ÂÃ¬?“Â´Ã«Â¦Â?¬â€“Â?Ã¬Â§???žÃ¬â€”Â??XÃªÂ°???Å“Ã¬?¹Å??Ã¬? ?Å Ã«Â?žÃ«Â?
+	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
+	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
-    int count = 0;
-    for (int y = 0; y < 5; y++) {
-        for (int x = 0; x < 5; x++) {
-            if (mapInfo[y][x] == 1) imageArray[index_Area_UI_mapTile_Start + count].fileName = bmpNameMapTileCleared;
-            count++;
-        }
-    }
-    imageArray[index_Area_UI_Map_Start].x = 1590 + (BLOCKSIZE + 2) * currentAreaColIndex;
-    imageArray[index_Area_UI_Map_Start].y = 100 + (BLOCKSIZE + 2) * currentAreaRowIndex;
+	int count = 0;
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 5; x++) {
+			if (mapInfo[y][x] == 1) imageArray[index_Area_UI_mapTile_Start + count].fileName = bmpNameMapTileCleared;
+			count++;
+		}
+	}
+	imageArray[index_Area_UI_Map_Start].x = 1590 + (BLOCKSIZE + 2) * currentAreaColIndex;
+	imageArray[index_Area_UI_Map_Start].y = 100 + (BLOCKSIZE + 2) * currentAreaRowIndex;
 }
 
 void initRewardImage() {
@@ -449,139 +470,140 @@ void initRewardImage() {
     imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void rewardUI() { // reward 레이어 출력
-    targetLayer->fadeOut(targetLayer, NULL);
-    targetLayer = &rewardLayer;
 
-    imagesReward[0].isHide = 0;
-    imagesReward[2].isHide = 0;
+void rewardUI() { // reward ??Ã¬ÂÂ´??Ã¬Â¶Å“Ã«Â Â¥
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &rewardLayer;
 
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	imagesReward[0].isHide = 0;
+	imagesReward[2].isHide = 0;
 
-
-    int index1 = 0;
-    int flags = 1;
-
-    while (flags) {
-        while (_kbhit() != 0) {
-            int key = _getch();
-
-            switch (key) {
-            case LEFT:
-                imagesReward[0].isHide = 0;
-                imagesReward[1].isHide = 1;
-                imagesReward[2].isHide = 1;
-                imagesReward[3].isHide = 0;
-                index1 = 1;
-                break;
-            case RIGHT:
-                imagesReward[0].isHide = 1;
-                imagesReward[1].isHide = 0;
-                imagesReward[2].isHide = 0;
-                imagesReward[3].isHide = 1;
-                index1 = 2;
-                break;
-            case SPACE:
-                if (index1 == 0) break;
-                flags = 0;
-                break;
-            }
-            if (key) targetLayer->renderAll(targetLayer);
-        }
-    }
-
-    targetLayer->fadeOut(targetLayer, NULL);
-
-    imagesReward[0].isHide = 1;
-    imagesReward[1].isHide = 1;
-    imagesReward[2].isHide = 1;
-    imagesReward[3].isHide = 1;
-    imagesReward[4].isHide = 0;
-    imagesReward[5].isHide = 1;
-    imagesReward[6].isHide = 0;
-    imagesReward[7].isHide = 1;
-    imagesReward[8].isHide = 0;
-    imagesReward[9].isHide = 1;
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
 
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	int index1 = 0;
+	int flags = 1;
 
-    int index2 = 0;
-    flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+
+			switch (key) {
+			case LEFT:
+				imagesReward[0].isHide = 0;
+				imagesReward[1].isHide = 1;
+				imagesReward[2].isHide = 1;
+				imagesReward[3].isHide = 0;
+				index1 = 1;
+				break;
+			case RIGHT:
+				imagesReward[0].isHide = 1;
+				imagesReward[1].isHide = 0;
+				imagesReward[2].isHide = 0;
+				imagesReward[3].isHide = 1;
+				index1 = 2;
+				break;
+			case SPACE:
+				if (index1 == 0) break;
+				flags = 0;
+				break;
+			}
+			if (key) targetLayer->renderAll(targetLayer);
+		}
+	}
+
+	targetLayer->fadeOut(targetLayer, NULL);
+
+	imagesReward[0].isHide = 1;
+	imagesReward[1].isHide = 1;
+	imagesReward[2].isHide = 1;
+	imagesReward[3].isHide = 1;
+	imagesReward[4].isHide = 0;
+	imagesReward[5].isHide = 1;
+	imagesReward[6].isHide = 0;
+	imagesReward[7].isHide = 1;
+	imagesReward[8].isHide = 0;
+	imagesReward[9].isHide = 1;
 
 
-    while (flags) {
-        while (_kbhit() != 0) {
-            int key = _getch();
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
-            switch (key) {
-            case NUM1:
-                imagesReward[4].isHide = 0;
-                imagesReward[5].isHide = 1;
-                imagesReward[6].isHide = 1;
-                imagesReward[7].isHide = 0;
-                imagesReward[8].isHide = 1;
-                imagesReward[9].isHide = 0;
-                index2 = 1;
-                break;
-            case NUM2:
-                imagesReward[4].isHide = 1;
-                imagesReward[5].isHide = 0;
-                imagesReward[6].isHide = 0;
-                imagesReward[7].isHide = 1;
-                imagesReward[8].isHide = 1;
-                imagesReward[9].isHide = 0;
-                index2 = 2;
-                break;
-            case NUM3:
-                imagesReward[4].isHide = 1;
-                imagesReward[5].isHide = 0;
-                imagesReward[6].isHide = 1;
-                imagesReward[7].isHide = 0;
-                imagesReward[8].isHide = 0;
-                imagesReward[9].isHide = 1;
-                index2 = 3;
-                break;
-            case SPACE:
-                if (index2 == 0) break;
-                flags = 0;
-                break;
-            }
-            if (key) targetLayer->renderAll(targetLayer);
-        }
-    }
-    targetLayer->fadeOut(targetLayer, NULL);
-    imagesReward[4].isHide = 1;
-    imagesReward[5].isHide = 1;
-    imagesReward[6].isHide = 1;
-    imagesReward[7].isHide = 1;
-    imagesReward[8].isHide = 1;
-    imagesReward[9].isHide = 1;
+	int index2 = 0;
+	flags = 1;
 
-    targetLayer = &stageLayer;
-    isOnStage = true;
-    targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-    stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-    setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
 
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
 
-    int num = 0;
-    if (index1 == 1) num = rand() % 3;
-    //if (index1 == 1) num = -5;
-    //else if (index1 == 2) num = 6;
-    else if (index1 == 2) num = rand() % 11 + (-5);
-    if (index2 == 1) pc.setAtkLev(pc.getAtkLev() + num);
-    else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
-    else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
+			switch (key) {
+			case NUM1:
+				imagesReward[4].isHide = 0;
+				imagesReward[5].isHide = 1;
+				imagesReward[6].isHide = 1;
+				imagesReward[7].isHide = 0;
+				imagesReward[8].isHide = 1;
+				imagesReward[9].isHide = 0;
+				index2 = 1;
+				break;
+			case NUM2:
+				imagesReward[4].isHide = 1;
+				imagesReward[5].isHide = 0;
+				imagesReward[6].isHide = 0;
+				imagesReward[7].isHide = 1;
+				imagesReward[8].isHide = 1;
+				imagesReward[9].isHide = 0;
+				index2 = 2;
+				break;
+			case NUM3:
+				imagesReward[4].isHide = 1;
+				imagesReward[5].isHide = 0;
+				imagesReward[6].isHide = 1;
+				imagesReward[7].isHide = 0;
+				imagesReward[8].isHide = 0;
+				imagesReward[9].isHide = 1;
+				index2 = 3;
+				break;
+			case SPACE:
+				if (index2 == 0) break;
+				flags = 0;
+				break;
+			}
+			if (key) targetLayer->renderAll(targetLayer);
+		}
+	}
+	targetLayer->fadeOut(targetLayer, NULL);
+	imagesReward[4].isHide = 1;
+	imagesReward[5].isHide = 1;
+	imagesReward[6].isHide = 1;
+	imagesReward[7].isHide = 1;
+	imagesReward[8].isHide = 1;
+	imagesReward[9].isHide = 1;
 
-    pc.setStone(pc.getStone() + 100);
+	targetLayer = &stageLayer;
+	isOnStage = true;
+	targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+	stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+	setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
 
-    //targetLayer->fadeIn(targetLayer, NULL);
-    //printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+
+	int num = 0;
+	if (index1 == 1) num = rand() % 3;
+	//if (index1 == 1) num = -5;
+	//else if (index1 == 2) num = 6;
+	else if (index1 == 2) num = rand() % 11 + (-5);
+	if (index2 == 1) pc.setAtkLev(pc.getAtkLev() + num);
+	else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
+	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
+
+	pc.setStone(pc.getStone() + 100);
+
+	//targetLayer->fadeIn(targetLayer, NULL);
+	//printf("%d %d %d %d", num, pc.getAtkLev(), pc.getAtkSpdLev(), pc.getSpdLev());
 }
 
 void updateCharacterStatus() {
@@ -630,8 +652,9 @@ void initItemImages() {
 
 int getNPCSpaceHeight() { return (rand() % 10 + 5); }
 int getNPCSpaceWidth() { return (rand() % 10 + 5); }
-int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth)+1) * BLOCKSIZE + AREA_ORIGIN_X); }
-int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight)+1) * BLOCKSIZE + AREA_ORIGIN_Y); }
+
+int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth) + 1) * BLOCKSIZE + AREA_ORIGIN_X); }
+int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight) + 1) * BLOCKSIZE + AREA_ORIGIN_Y) / 2 + 13*BLOCKSIZE; }
 
 void setMinerals(int max) {
     while (max) {
@@ -663,11 +686,107 @@ void checkAreaOre(int imageIndex) {
     }
 }
 
-void checkAreaMineral(int imageIndex) {
-    int stone = pc.getStone();
 
-    if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeMineral) == 0) { pc.setStone(stone + 30); }
-    else if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverMineral) == 0) { pc.setStone(stone + 60); }
-    else if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldMineral) == 0) { pc.setStone(stone + 90); }
-    else if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondMineral) == 0) { pc.setStone(stone + 120); }
+bool printButtonStageStatus() {
+	wchar_t playerStone[100] = L"Pessed Button List";
+	wchar_t pressed_button_info[20] = L"";
+	wchar_t pressed_button_status[20] = L"";
+	bool isClear = true;
+	bool isButtonReset = false;
+
+	if (buttonPressedOrderList.size() == 1) {
+		swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d", buttonPressedOrderList[0]);
+	}
+	else if (buttonPressedOrderList.size() == 2) {
+		swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d -> %d", buttonPressedOrderList[0], buttonPressedOrderList[1]);
+	}
+	else if (buttonPressedOrderList.size() == 3) {
+		swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d -> %d -> %d", buttonPressedOrderList[0], buttonPressedOrderList[1], buttonPressedOrderList[2]);
+
+		for (int i = 0; i < 3; i++) {
+			if (buttonPressedOrderList[i] != buttonPressedOrderAnswerList[i]) {
+				isClear = false;
+				break;
+			}
+		}
+		if (isClear) {
+			isButtonRoomClear = true;
+			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Correct Answer!");
+			printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+			printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+			printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+		}
+		else {
+			imageArray[0].y = imageArray[0].y + 96;
+			isButtonReset = true;
+			buttonPressedOrderList.clear();
+			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Not Correct Answer!");
+			printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+			printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+			printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+			Sleep(300);
+		}
+		
+		swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"");
+	}
+
+	printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+	printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+	printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+
+	return isButtonReset;
+ }
+
+void printFlagStageStatus(int curFlagCnt) {
+	wchar_t playerFlagInfo[100] = L"You're Current Flag Count : ";
+	wchar_t playerFlagCount[20] = L"";
+	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curFlagCnt);
+	printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
+	printText(targetLayer->_consoleDC, 1800, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
+}
+
+void setBedrock(int max) {
+	while (max) {
+		int bedrockX = (rand() % 21) * BLOCKSIZE + AREA_ORIGIN_X;
+		int bedrockY = (rand() % 12) * BLOCKSIZE + AREA_ORIGIN_Y;
+		if (blockInfo[convertPosToInfoY(bedrockY)][convertPosToInfoX(bedrockX)] != 2) continue;
+		bool ok = true;
+		for (int i = 1;i < 4;i++) {
+			if (blockInfo[convertPosToInfoY(bedrockY)][convertPosToInfoX(bedrockX+i*BLOCKSIZE)] != 2) {
+				ok = false;
+				break;
+			}
+		}
+		if (ok) {
+			for (int i = 0;i < 4;i++) {
+				int imageIndex = convertPosToInfoY(bedrockY) / BLOCKSIZE * 25 + convertPosToInfoX(bedrockX+i * BLOCKSIZE) / BLOCKSIZE + 1;
+				imageArray[imageIndex].fileName = bmpBedrockName;
+				blockInfo[convertPosToInfoY(bedrockY)][convertPosToInfoX(bedrockX+i * BLOCKSIZE)] = 999999;
+			}
+			max--;
+		}
+	}
+}
+
+void setFlag(int cnt) {
+	while (cnt) {
+		int flagX = (rand() % 23) * BLOCKSIZE + BLOCKSIZE + AREA_ORIGIN_X;
+		int flagY = (rand() % 20) * BLOCKSIZE + 3*BLOCKSIZE + AREA_ORIGIN_Y;
+		//flagX = cnt*BLOCKSIZE + AREA_ORIGIN_X;
+		//flagY = cnt*BLOCKSIZE + AREA_ORIGIN_Y;
+		if (blockInfo[convertPosToInfoY(flagY)][convertPosToInfoX(flagX)] != 2) continue;
+		int imageIndex = convertPosToInfoY(flagY) / BLOCKSIZE * 25 + convertPosToInfoX(flagX) / BLOCKSIZE + 1;
+		imageArray[imageIndex].fileName = bmpFlagName;
+
+		int infoX = convertPosToInfoX(flagX);
+		int infoY = convertPosToInfoY(flagY);
+		if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
+		for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+			for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+				if (blockInfo[curY][curX])
+					blockInfo[curY][curX] = 1;
+			}
+		}
+		cnt--;
+	}
 }

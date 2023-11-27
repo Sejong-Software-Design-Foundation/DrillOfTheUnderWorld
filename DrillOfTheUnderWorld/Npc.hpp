@@ -11,9 +11,9 @@ public:
 
 public:
     int dir[4][2] = { {1,0},{0,1},{-1,0}, {0,-1} };
-    // ½ÇÁ¦ Console x, yÁÂÇ¥°¡ µé¾î°¨
+    // ì‹¤ì œ Console x, yì¢Œí‘œê°€ ë“¤ì–´ê°
     int x, y;
-    // image array ³» ÇØ´ç °´Ã¼ bmpÀÇ idx ¹øÈ£
+    // image array ë‚´ í•´ë‹¹ ê°ì²´ bmpì˜ idx ë²ˆí˜¸
     int imageidx;
 
     int hp;
@@ -40,7 +40,7 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     this->y = y;
     this->hp = hp;
     this->attack_damage = ad;
-    // default°¡ ¿À¸¥ÂÊ ¿òÁ÷ÀÓ
+    // defaultê°€ ì˜¤ë¥¸ìª½ ì›€ì§ìž„
     this->curDirection = 0;
     // movecnt
     cnt = 0;
@@ -49,7 +49,7 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
 bool NPC::NPCDead() { return hp < 0 ? true : false; }
 
 bool NPC::PCNear() {
-    // PC ÁÂÇ¥ ¹Þ±â
+    // PC ì¢Œí‘œ ë°›ê¸°
     int PC_X = convertPosToInfoX(imageLayer.images[0].x);
     int PC_Y = convertPosToInfoY(imageLayer.images[0].y);
 
@@ -128,19 +128,19 @@ void NPC::NPCTrackingMovement() {
         return;
     }
 
-    // ÃßÀû ¿òÁ÷ÀÓ ÇÊ¿ä µ¥ÀÌÅÍ
+    // ì¶”ì  ì›€ì§ìž„ í•„ìš” ë°ì´í„°
     int curPosX = imageLayer.images[0].x;
     int curPosY = imageLayer.images[0].y;
 
     double angle = atan2(curPosY - y, curPosX - x);
 
-    // ÀÌµ¿ÇÒ °Å¸®¸¦ °è»ê
+    // ì´ë™í•  ê±°ë¦¬ë¥¼ ê³„ì‚°
     double dx = SPEED * cos(angle);
     double dy = SPEED * sin(angle);
 
     if (collisionCheck(x + dx, y + dy)) { return; }
 
-    // Mole ÁÂÇ¥¸¦ ¾÷µ¥ÀÌÆ®
+    // Mole ì¢Œí‘œë¥¼ ì—…ë°ì´íŠ¸
     imageLayer.images[imageidx].x += dx;
     imageLayer.images[imageidx].y += dy;
 
