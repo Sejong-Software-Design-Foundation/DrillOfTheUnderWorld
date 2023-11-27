@@ -54,12 +54,12 @@ void EmceeTheShyGuy::move() {
 
 	//printf("%d", movecnt);
 	// if moved 8 times shoot once and reset mvcnt
-	if (movecnt >= 8) {
-		bullets.push_back(NPCBullet(x, y));
+	if (movecnt == 8) {
+		//bullets.push_back(NPCBullet(x, y));
 		movecnt = 0;
 	}
 
-	// ÃßÀû ¿òÁ÷ÀÓ ÇÊ¿ä µ¥ÀÌÅÍ
+	// ÃƒÃŸÃ€Ã» Â¿Ã²ÃÃ·Ã€Ã“ Ã‡ÃŠÂ¿Ã¤ ÂµÂ¥Ã€ÃŒÃ…Ã
 	int curPosX = imageLayer.images[0].x;
 	int curPosY = imageLayer.images[0].y;
 

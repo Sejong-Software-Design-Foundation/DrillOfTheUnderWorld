@@ -4,71 +4,85 @@
 #include "Mineral.hpp"
 #include "Ladder.hpp"
 #include "Bat.hpp"
+#include "Button.hpp"
 
 int main() {
-	initialize(); // ±âÃÊÀûÀÎ ÀÌ´Ï¼È¶óÀÌÂ¡(ÄÜ¼Ö »çÀÌÁî ÁöÁ¤, Æ÷ÀÎÅÍ »èÁ¦ µî)
-
-	// ·¹ÀÌ¾î ÀÌ´Ï¼È¶óÀÌÂ¡
-	// °¢ ·¹ÀÌ¾î¿¡ °íÀ¯ NUM ÁöÁ¤
+	initialize(); // ê¸°ì´ˆì ì¸ ì´ë‹ˆì…œë¼ì´ì§•(ì½˜ì†” ì‚¬ì´ì¦ˆ ì§€ì •, í¬ì¸í„° ì‚­ì œ ë“±)
+	// ë ˆì´ì–´ ì´ë‹ˆì…œë¼ì´ì§•
+  // ê° ë ˆì´ì–´ì— ê³ ìœ  NUM ì§€ì •
 	stageLayer.initialize(&stageLayer);
 	stageLayer.NUM = 1;
-	imageLayer.initialize(&imageLayer); // imageLayer´Â ¿¡¾î¸®¾î ·¹ÀÌ¾î¶ó°í º¸¸é µÊ
+	imageLayer.initialize(&imageLayer); // imageLayerëŠ” ì—ì–´ë¦¬ì–´ ë ˆì´ì–´ë¼ê³  ë³´ë©´ ë¨
 	imageLayer.NUM = 2;
 	rewardLayer.initialize(&rewardLayer);
 	rewardLayer.NUM = 3;
 
-	// À½¾Ç Àç»ı
+	// ìŒì•… ì¬ìƒ
 	char bgmName[] = "start_bgm.wav";
 	playBGM(bgmName);
 
-	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 }; // PC´Â imageLayer 0¹ø¿¡ ÁöÁ¤
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 }; // PCëŠ” imageLayer 0ë²ˆì— ì§€ì •
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 
-	initStageImage();				// stageLayer¿¡¼­ »ç¿ëÇÏ´Â ¸ğµç ÀÌ¹ÌÁö ÃÖÃÊ »ı¼º
-	fillBlockImages();				// imageLayerÀÇ ºí·Ï(25x25) ÃÖÃÊ »ı¼º 
-	initAreaUI();					// imageLayerÀÇ UI ÀÌ¹ÌÁö ÃÖÃÊ »ı¼º
-	initRewardImage();				// rewardLayer¿¡¼­ »ç¿ëÇÏ´Â ¸ğµç ÀÌ¹ÌÁö ÃÖÃÊ »ı¼º
+	initStageImage();				// stageLayerì—ì„œ ì‚¬ìš©í•˜ëŠ” ëª¨ë“  ì´ë¯¸ì§€ ìµœì´ˆ ìƒì„±
+	fillBlockImages();				// imageLayerì˜ ë¸”ë¡(25x25) ìµœì´ˆ ìƒì„± 
+	initAreaUI();					// imageLayerì˜ UI ì´ë¯¸ì§€ ìµœì´ˆ ìƒì„±
+	initRewardImage();				// rewardLayerì—ì„œ ì‚¬ìš©í•˜ëŠ” ëª¨ë“  ì´ë¯¸ì§€ ìµœì´ˆ ìƒì„±
 
-	// ¾ÆÀÌÅÛ°ú °ü·ÃµÈ ÇÔ¼öµé(°³¹ß ÁøÇà Áß)
+	// ì•„ì´í…œê³¼ ê´€ë ¨ëœ í•¨ìˆ˜ë“¤(ê°œë°œ ì§„í–‰ ì¤‘)
 	pc.addItem(1);
 	pc.addItem(2);
 	pc.addItem(3);
 	initItemImages();
 
-	// ¿¡¾î¸®¾î ³»ºÎ¿¡¼­ ½Ã°£À» Àç±â À§ÇÑ º¯¼öµé
+	// ì—ì–´ë¦¬ì–´ ë‚´ë¶€ì—ì„œ ì‹œê°„ì„ ì¬ê¸° ìœ„í•œ ë³€ìˆ˜ë“¤
 	clock_t start_time = clock();
 	clock_t end_time;
 	clock_t timee;
 	clock_t minigameStartTime = clock();
 	double duration;
 
-	// NPC ÀÌ´Ï¼È¶óÀÌÂ¡(ÃÖÃÊ À§Ä¡´Â È­¸é»ó¿¡¼­ º¸ÀÌÁö ¾Êµµ·Ï ÃÊ±âÈ­)
+	// NPC ì´ë‹ˆì…œë¼ì´ì§•(ìµœì´ˆ ìœ„ì¹˜ëŠ” í™”ë©´ìƒì—ì„œ ë³´ì´ì§€ ì•Šë„ë¡ ì´ˆê¸°í™”)
 	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
+  std::vector<Bat*> generatedBatList;
 	Bat* bat = new Bat(-48, -48);
 	Ladder* ladder = new Ladder(-48, -48);
 	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(-48, -48);
+	Button* button1 = new Button(1);
+	Button* button2 = new Button(2);
+	Button* button3 = new Button(3);
+	imageArray[button1->imageidx].fileName = bmpButton1Name;
+	imageArray[button2->imageidx].fileName = bmpButton2Name;
+	imageArray[button3->imageidx].fileName = bmpButton3Name;
+  
+	pc.addItem(1);
+	pc.addItem(2);
+	pc.addItem(3);
 
-	// ÃßÈÄ¿¡ gameStartLayer(°ÔÀÓ ½ÇÇà ½Ã Ã³À½ ³ª¿À´Â ÇÁ·Ñ·Î±× µîÀ» Æ÷ÇÔ) ¸¸µé¸é ¾Æ·¡ ÄÚµå changeLayer·Î È£ÃâµÇµµ·Ï ¼öÁ¤
+	initItemImages();
+
+
+	// ì¶”í›„ì— gameStartLayer(ê²Œì„ ì‹¤í–‰ ì‹œ ì²˜ìŒ ë‚˜ì˜¤ëŠ” í”„ë¡¤ë¡œê·¸ ë“±ì„ í¬í•¨) ë§Œë“¤ë©´ ì•„ë˜ ì½”ë“œ changeLayerë¡œ í˜¸ì¶œë˜ë„ë¡ ìˆ˜ì •
 	targetLayer = &stageLayer;
 	targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);
 
 	while (1) {
-		if (isOnStage) { // PC°¡ ½ºÅ×ÀÌÁö ¸Ê¿¡ Á¸ÀçÇÏ´Â °æ¿ì
-			updateCharacterStatus(); // PC »óÅÂÃ¢À» ¾÷µ¥ÀÌÆ®
+		if (isOnStage) { // PCê°€ ìŠ¤í…Œì´ì§€ ë§µì— ì¡´ì¬í•˜ëŠ” ê²½ìš°
+			updateCharacterStatus(); // PC ìƒíƒœì°½ì„ ì—…ë°ì´íŠ¸
 			while (_kbhit() != 0) {
 				int key = _getch();
-				// PC À§Ä¡ Á¤º¸¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â º¯¼öµé(ÇÈ¼¿ Á¤º¸·Î)
+				// PC ìœ„ì¹˜ ì •ë³´ë¥¼ ì—…ë°ì´íŠ¸í•˜ëŠ” ë³€ìˆ˜ë“¤(í”½ì…€ ì •ë³´ë¡œ)
 				int curPosX = stageLayer.images[0].x;
 				int curPosY = stageLayer.images[0].y;
 
 				switch (key) {
 				case S:
 				{
-					// ·£´ı º¯¼ö¸¦ »ç¿ëÇÏ¿© ¾î¶² ½ºÅ×ÀÌÁö·Î ÁøÀÔÇÒ Áö Á¤ÇÏ´Â ÄÚµå
-					int num = rand() % 2;
-					if (num == 0) {
+					// ëœë¤ ë³€ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ ì–´ë–¤ ìŠ¤í…Œì´ì§€ë¡œ ì§„ì…í•  ì§€ ì •í•˜ëŠ” ì½”ë“œ
+					int num = rand() % 3;
+					if (num == 0) { // normal
 						isOnNormalArea = true;
 						isOnMiniGameArea = false;
 						getNewArea();
@@ -76,7 +90,7 @@ int main() {
 						ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 					}
-					else {
+					else if (num == 1) { // minigame
 						isOnNormalArea = false;
 						isOnMiniGameArea = true;
 						getNewMiniGameArea();
@@ -84,14 +98,33 @@ int main() {
 						ladder->setNewPosition(-48, -48);
 						minigameStartTime = clock();
 					}
-					Mineral* mineral = new Mineral(1); // stageLevel ´ëÀÔ
+          else if (num == 2){ // button
+            isButtonRoomClear = false;
+            int randomNumber = rand() % 6; // 0 ì—ì„œ 6 ì‚¬ì´ì˜ ë‚œìˆ˜
+            buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
+            getNewArea();
 
-					// ¿¡¾î¸®¾î ¸Ê¿¡¼­ ÇöÀç PC À§Ä¡¸¦ ¹à°Ô Ç¥½ÃÇÏµµ·Ï ÇÏ´Â ÄÚµå
+            button1->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 - BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
+            button2->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
+            button3->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 + BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
+
+            Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+            ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+            bat->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+
+            imageArray[ladder->imageidx].isHide = 1; 
+            isOnNormalArea = false;
+            isButtonStage = true;
+          }
+          
+					Mineral* mineral = new Mineral(); // stageLevel ëŒ€ì…
+
+					// ì—ì–´ë¦¬ì–´ ë§µì—ì„œ í˜„ì¬ PC ìœ„ì¹˜ë¥¼ ë°ê²Œ í‘œì‹œí•˜ë„ë¡ í•˜ëŠ” ì½”ë“œ
 					currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
 					
-					// ·¹ÀÌ¾î º¯°æ
+					// ë ˆì´ì–´ ë³€ê²½
 					changeLayer(stageLayer, imageLayer);
 				}
 					break;
@@ -116,11 +149,11 @@ int main() {
 				if (key) targetLayer->renderAll(targetLayer);
 			}
 		}
-		else if (isOnArea) { // PC°¡ ³ë¸» ¿¡¾î¸®¾î¿¡ ÀÖ´Â °æ¿ì
+		else if (isOnArea) { // PCê°€ ë…¸ë§ ì—ì–´ë¦¬ì–´ì— ìˆëŠ” ê²½ìš°
 			targetLayer->renderAll(targetLayer);
-			drawUI(); // ¿¡¾î¸®¾î UI¸¦ ±×¸®´Â ÇÔ¼ö
+			drawUI(); // ì—ì–´ë¦¬ì–´ UIë¥¼ ê·¸ë¦¬ëŠ” í•¨ìˆ˜
 			if (isOnNormalArea) {
-				// NPC¿¡ ¿òÁ÷ÀÓ ºÎ¿©(È°¼ºÈ­)
+				// NPCì— ì›€ì§ì„ ë¶€ì—¬(í™œì„±í™”)
 				//mole->move();
 				bat->move();
 				ladder->move();
@@ -173,13 +206,12 @@ int main() {
 						case P:
 							pc.setHP(pc.getHP() + 10);
 							break;
-
 						}
 					}
 					Sleep(5);
 				}
 			}
-			else if (isOnMiniGameArea) { // PC°¡ ¹Ì´Ï°ÔÀÓ ¿¡¾î¸®¾î¿¡ ÀÖ´Â °æ¿ì
+			else if (isOnMiniGameArea) { // PCê°€ ë¯¸ë‹ˆê²Œì„ ì—ì–´ë¦¬ì–´ì— ìˆëŠ” ê²½ìš°
 				printMyOriInMiniGameArea();
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
@@ -233,7 +265,117 @@ int main() {
 					isOnReward = true;
 				}	
 			}
-			// 3ÃÊ¸¶´Ù »ê¼Ò °ÔÀÌÁö¸¦ 1¾¿ °¨¼Ò½ÃÅ°´Â ÄÚµå
+      else if (isButtonStage) {
+        if (button1->getIsPressed()) {
+          imageArray[button1->imageidx].fileName = bmpButton1PressedName;
+        }
+        if (button2->getIsPressed()) {
+          imageArray[button2->imageidx].fileName = bmpButton2PressedName;
+        }
+        if (button3->getIsPressed()) {
+          imageArray[button3->imageidx].fileName = bmpButton3PressedName;
+        }
+        if (printButtonStageStatus()) {
+          button1->setIsPressed(false);
+          imageArray[button1->imageidx].fileName = bmpButton1Name;
+          button2->setIsPressed(false);
+          imageArray[button2->imageidx].fileName = bmpButton2Name;
+          button3->setIsPressed(false);
+          imageArray[button3->imageidx].fileName = bmpButton3Name;
+        }
+
+        if (isGenerateMobByQuestionBlock) {
+          generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
+          isGenerateMobByQuestionBlock = false;
+        }
+
+        if (!generatedBatList.empty()) {
+          for (Bat* mob : generatedBatList) {
+            mob->move();
+          }
+        }
+
+        //mole->move();
+        if (isButtonRoomClear) {
+          imageArray[ladder->imageidx].isHide = 0;
+          ladder->move();
+        }
+        bat->move();
+        Emcee->move();
+        button1->move();
+        button2->move();
+        button3->move();
+        for (int i = 0; i < 10; i++) {
+          if (_kbhit() != 0) {
+            int key = _getch();
+            int curPosX = imageLayer.images[0].x;
+            int curPosY = imageLayer.images[0].y;
+            COORD afterMovedPos;
+
+            switch (key) {
+            case S:
+              targetLayer->fadeOut(targetLayer, NULL);
+              if (isOnStage) {
+                targetLayer = &imageLayer;
+                isOnStage = false;
+                currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
+                currentAreaColIndex = convertPosToInfoXInStage(curPosX);
+                targetLayer->fadeIn(targetLayer, NULL);
+              }
+              else {
+                targetLayer->fadeOut(targetLayer, NULL);
+                targetLayer = &stageLayer;
+                isOnStage = true;
+                targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+                stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+                setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+                targetLayer->fadeIn(targetLayer, NULL);
+              }
+              break;
+
+
+            case LEFT:
+              pc.setDirLeft();
+              afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+              if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+              break;
+            case RIGHT:
+              pc.setDirRight();
+              afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+              if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+              break;
+            case UP:
+              pc.setDirUp();
+              afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+              if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+              break;
+            case DOWN:
+              pc.setDirDown();
+              afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+              if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+              break;
+            case ESC:
+              rewardUI();
+              break;
+            case SPACE:
+              COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+              pc.dig(targetPos.X, targetPos.Y);
+              //pc.setOxygen(pc.getOxygen() - 1);
+              break;
+
+            case O:
+              pc.setHP(pc.getHP() - 10);
+              break;
+            case P:
+              pc.setHP(pc.getHP() + 10);
+              break;
+
+            }
+          }
+
+          Sleep(5);
+      }
+			// 3ì´ˆë§ˆë‹¤ ì‚°ì†Œ ê²Œì´ì§€ë¥¼ 1ì”© ê°ì†Œì‹œí‚¤ëŠ” ì½”ë“œ
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
 			if (duration > 3.0) {
@@ -241,7 +383,7 @@ int main() {
 				start_time = end_time;
 			}
 		}
-		else if (isOnReward) { // PC°¡ ¿¡¾î¸®¾î¸¦ Å¬¸®¾îÇÏ°í º¸»óÀ» È¹µæÇÏ´Â °æ¿ì
+		else if (isOnReward) { // PCê°€ ì—ì–´ë¦¬ì–´ë¥¼ í´ë¦¬ì–´í•˜ê³  ë³´ìƒì„ íšë“í•˜ëŠ” ê²½ìš°
 			changeLayer(imageLayer, rewardLayer);
 			rewardUI();
 			changeLayer(rewardLayer, stageLayer);
