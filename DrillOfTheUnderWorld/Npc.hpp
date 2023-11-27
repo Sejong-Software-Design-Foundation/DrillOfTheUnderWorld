@@ -11,9 +11,9 @@ public:
 
 public:
     int dir[4][2] = { {1,0},{0,1},{-1,0}, {0,-1} };
-    // 실제 Console x, y좌표가 들어감
+    // ?�제 Console x, y좌표가 ?�어�?    
     int x, y;
-    // image array 내 해당 객체 bmp의 idx 번호
+    // image array ???�당 객체 bmp??idx 번호
     int imageidx;
 
     int hp;
@@ -40,7 +40,7 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     this->y = y;
     this->hp = hp;
     this->attack_damage = ad;
-    // default가 오른쪽 움직임
+    // default가 ?�른�??�직임
     this->curDirection = 0;
     // movecnt
     cnt = 0;
@@ -128,19 +128,19 @@ void NPC::NPCTrackingMovement() {
         return;
     }
 
-    // 추적 움직임 필요 데이터
+    // 추적 ?�직임 ?�요 ?�이??    
     int curPosX = imageLayer.images[0].x;
     int curPosY = imageLayer.images[0].y;
 
     double angle = atan2(curPosY - y, curPosX - x);
 
-    // 이동할 거리를 계산
+    // ?�동??거리�?계산
     double dx = SPEED * cos(angle);
     double dy = SPEED * sin(angle);
 
     if (collisionCheck(x + dx, y + dy)) { return; }
 
-    // Mole 좌표를 업데이트
+    // Mole 좌표�??�데?�트
     imageLayer.images[imageidx].x += dx;
     imageLayer.images[imageidx].y += dy;
 
@@ -158,4 +158,5 @@ void NPC::NPCBossMovement() {
         NPCTrackingMovement();
     }
 }
+
 #endif
