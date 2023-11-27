@@ -52,10 +52,10 @@ void EmceeTheShyGuy::checkBullets() {
 
 void EmceeTheShyGuy::move() {
 	movecnt++;
-
 	checkBullets();
 	attack();
 
+	//printf("%d", movecnt);
 	// if moved 8 times shoot once and reset mvcnt
 	if (movecnt == 8) {
 		bullets.push_back(NPCBullet(x, y));
@@ -70,6 +70,7 @@ void EmceeTheShyGuy::move() {
 
 // Emcee's attack is moving NPCBullets 
 void EmceeTheShyGuy::attack() {
+	//pc.setHP(pc.getHP() - 10);
 	list<NPCBullet>::iterator it;
 	for (it = bullets.begin(); it != bullets.end(); it++) { (*it).move(); }
 }

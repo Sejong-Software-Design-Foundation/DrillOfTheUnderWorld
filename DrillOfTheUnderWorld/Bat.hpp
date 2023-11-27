@@ -39,4 +39,5 @@ void Bat::setNewPosition(int x, int y) {
     this->y = y;
 }
 
+
 #endif

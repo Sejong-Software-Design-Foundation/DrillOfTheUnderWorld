@@ -23,7 +23,6 @@ extern "C" {
 #define UI_HP_ORIGIN_X 400
 #define UI_HP_ORIGIN_Y 60
 #define UI_O2_ORIGIN_Y 120
-
 #define LEFT 75
 #define RIGHT 77
 #define UP 72
@@ -33,19 +32,16 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 16
+#define SPEED 48
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 336
 #define AREA_WIDTH 25
 #define AREA_HEIGHT 25
-
-
 #define STAGE_ORIGIN_X 600
 #define STAGE_ORIGIN_Y 240
 #define AREA_BLOCK_SIZE 144
 #define STAGE_EXTRA_IMAGE_COUNT 3
-
 #define UI_ITEM_START_POS_X 1450
 #define UI_ITEM_START_POS_Y 220
 #define UI_ITEM_SIZE 170
@@ -59,16 +55,30 @@ extern "C" {
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 extern HWND WINDOW_HANDLE;
+
 extern ImageLayer* targetLayer;
-extern ImageLayer imageLayer;
+
 extern ImageLayer stageLayer;
-extern Image imageArray[1000];
 extern Image stageImageArray[40];
 extern int stageInfo[5][5];
+
+extern ImageLayer imageLayer;
+extern Image imageArray[1000];
 extern int blockInfo[1200][1200];
+
 extern bool isFlagStage;
-extern bool isButtonStage;
+extern bool isButtonArea;
+extern int mapInfo[5][5];
+extern int currentAreaRowIndex;
+extern int currentAreaColIndex;
+
 extern bool isOnStage;
+extern bool isOnArea;
+extern bool isOnNormalArea;
+extern bool isOnMiniGameArea;
+extern bool isOnReward;
+
+extern int OrichalcumNum;
 extern char bmpNamePC[];
 extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
@@ -90,10 +100,16 @@ extern char bmpNameLadder[];
 extern char bmpNameMineral[];
 
 // ORE BMP
-extern char bmpNameBronzeOre[];
-extern char bmpNameSilverOre[];
-extern char bmpNameGoldOre[];
-extern char bmpNameDiamondOre[];
+extern char bmpNameBronzeOre1[];
+extern char bmpNameBronzeOre2[];
+extern char bmpNameSilverOre1[];
+extern char bmpNameSilverOre2[];
+extern char bmpNameGoldOre1[];
+extern char bmpNameGoldOre2[];
+extern char bmpNameDiamondOre1[];
+extern char bmpNameDiamondOre2[];
+extern char bmpNameOrichalcumOre1[];
+extern char bmpNameOrichalcumOre2[];
 
 extern char bmpNameBrokenBronzeOre[];
 extern char bmpNameBrokenSilverOre[];
@@ -105,17 +121,23 @@ extern char bmpNameBronzeMineral[];
 extern char bmpNameSilverMineral[];
 extern char bmpNameGoldMineral[];
 extern char bmpNameDiamondMineral[];
+extern char bmpNameOrichalcumMineral[];
 
+extern char bmpNameStar0[];
+extern char bmpNameStar1[];
+extern char bmpNameStar2[];
+extern char bmpNameStar3[];
 
 extern ImageLayer rewardLayer;
-extern int mapInfo[5][5];
 extern int index_StageImages_Start;
+extern int index_Area_PC;
 extern int index_Area_UI_Start;
 extern int index_Area_UI_HP_Start;
 extern int index_Area_UI_O2_Start;
 extern int index_Area_UI_Map_Start;
 extern int index_Area_UI_blockInfo_Start;
 extern int index_Area_UI_mapTile_Start;
+extern int index_Area_UI_MiniGame_Start;
 extern int index_RewardImages_Start;
 
 // stage Image
@@ -139,9 +161,12 @@ extern int NPCSpacePosY;
 extern int NPCSpaceHeight;
 extern int NPCSpaceWidth;
 
-
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
+
+
+// BUTTON
+extern int button1ImageIndex;
 
 extern std::vector<int> buttonPressedOrderList;
 extern std::vector<int> buttonPressedOrderAnswerList;
@@ -156,7 +181,13 @@ extern char bmpButton3PressedName[];
 
 extern char bmpQuestionMarkName[];
 
-extern int rewardItemImageIndex;
+extern char bmpOzPotionName[];
+extern char bmpHpPotionName[];
+extern char bmpBoomName[];
+
+extern bool isGenerateMobByQuestionBlock;
+extern int questionBlockPosX;
+extern int questionBlockPosY;
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
@@ -183,7 +214,9 @@ void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
-
+void changeLayer(ImageLayer currentLayer, ImageLayer nextLayer);
+void printTimeInMiniGameArea(float t);
+void printMyOriInMiniGameArea();
 void updateCharacterStatus();
 void initItemImages();
 void fillBlockImages();
@@ -194,6 +227,7 @@ int getNPCSpacePosX();
 int getNPCSpacePosY();
 void setMinerals(int max);
 void getNewArea();
+void getNewMiniGameArea();
 
 bool printButtonStageStatus();
 void printFlagStageStatus(int curFlagCnt);
