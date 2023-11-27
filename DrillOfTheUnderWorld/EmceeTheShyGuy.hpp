@@ -16,6 +16,7 @@ using namespace std;
 
 class EmceeTheShyGuy : public NPC {
 public:
+	// if movecnt is 8 shoot bullet
 	int movecnt;
 	list<NPCBullet> bullets;
 
@@ -25,7 +26,6 @@ public:
 	void checkBullets();
 	void move();
 	void attack();
-	void setNewPosition(int x, int y);
 };
 
 EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 0, 10, 1) {
@@ -39,10 +39,13 @@ void EmceeTheShyGuy::checkBullets() {
 
 	list<NPCBullet>::iterator it;
 
-	for (it = bullets.begin(); it != bullets.end(); it++) {
+	for (it = bullets.begin(); it != bullets.end(); ) {
 		int bullet_idx = (*it).imageidx;
 		if (imageArray[bullet_idx].fileName == bmpNameNull) {
-			bullets.erase(it);
+			it = bullets.erase(it);
+		}
+		else {
+			it++;
 		}
 	}
 }
@@ -55,20 +58,13 @@ void EmceeTheShyGuy::move() {
 	//printf("%d", movecnt);
 	// if moved 8 times shoot once and reset mvcnt
 	if (movecnt == 8) {
-		//bullets.push_back(NPCBullet(x, y));
+		bullets.push_back(NPCBullet(x, y));
 		movecnt = 0;
 	}
-
-	// ÃßÀû ¿òÁ÷ÀÓ ÇÊ¿ä µ¥ÀÌÅÍ
-	int curPosX = imageLayer.images[0].x;
-	int curPosY = imageLayer.images[0].y;
-
-	if (NPCSpacePosX <= curPosX && curPosX <= NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE &&
-		NPCSpacePosY <= curPosY && curPosY <= NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE) {
-		NPCTrackingMovement();
-	}
 	else {
-		NPCPatternMovement();
+		NPCBossMovement();
+		//NPCTrackingMovement();
+		//NPCPatternMovement();
 	}
 }
 
@@ -77,11 +73,6 @@ void EmceeTheShyGuy::attack() {
 	//pc.setHP(pc.getHP() - 10);
 	list<NPCBullet>::iterator it;
 	for (it = bullets.begin(); it != bullets.end(); it++) { (*it).move(); }
-}
-
-void EmceeTheShyGuy::setNewPosition(int x, int y) {
-	imageLayer.images[imageidx].x = x;
-	imageLayer.images[imageidx].y = y;
 }
 
 #endif

@@ -43,6 +43,17 @@ void NPCBullet::move() {
 		attack();
 	}
 
+	if (PCNear()) {
+		attack();
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return;
+	}
+
+	if (collisionCheck(x + dx, y + dy)) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return;
+	}
+
 	// update bullet position
 	imageLayer.images[imageidx].x += dx;
 	imageLayer.images[imageidx].y += dy;

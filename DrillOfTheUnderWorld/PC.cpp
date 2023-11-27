@@ -60,7 +60,7 @@ int PC::getMaxHP() { return MAX_HP; }
 int PC::getMaxOxygen() { return MAX_O2; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
-void PC::setHP(int hp) { 
+void PC::setHP(int hp) {
 
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
@@ -102,7 +102,10 @@ void PC::dig(int x, int y) {
 	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
 		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
 			if (blockInfo[curY][curX])
+			{
 				blockInfo[curY][curX] = blockInfo[curY][curX] - pc.getAtkLev();
+				if (blockInfo[curY][curX] < 0) blockInfo[curY][curX] = 0;
+			}
 		}
 	}
 
@@ -223,6 +226,20 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 
 	imageArray[targerImageIndex].fileName = bmpNullName;
 }
+
+void PC::increaseFlagCnt() {
+	flagCnt++;
+
+	//imageArray[imageLayer.imageCount++] = { bmpFlagName, AREA_ORIGIN_X + BLOCKSIZE * 25 + 100 + flagCnt * BLOCKSIZE * 2,BLOCKSIZE * 13,2 };
+}
+void PC::initFlagCnt() {
+	flagCnt = 0;
+	//imageArray[imageLayer.imageCount] = { bmpFlagName, AREA_ORIGIN_X + BLOCKSIZE * 25 + 100 + flagCnt * BLOCKSIZE * 2,BLOCKSIZE * 13,2 };
+}
+int PC::getFlagCnt() {
+	return flagCnt;
+}
+
 
 void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int imageIndex) {
 	if (blockInfo[infoY][infoX] <= 0) {

@@ -5,11 +5,12 @@ Area::Area() {
 	this->posX = 0;
 	this->posY = 0;
 	this->isClear = false;
+
 	this->areaType = AreaType::Normal;
 	this->rewardStone = 100;
 	this->showedThumnailImageName = bmpNomalAreaName;
 	this->originThumnailmageName = bmpNomalAreaName;
-} 
+}
 
 int Area::getPosX() {
 	return this->posX;

@@ -66,6 +66,7 @@ extern ImageLayer imageLayer;
 extern Image imageArray[1000];
 extern int blockInfo[1200][1200];
 
+extern bool isFlagStage;
 extern bool isButtonArea;
 extern int mapInfo[5][5];
 extern int currentAreaRowIndex;
@@ -81,7 +82,9 @@ extern int OrichalcumNum;
 extern char bmpNamePC[];
 extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
+
 extern char bmpNameNull[];
+extern char bmpNullName[];
 
 // NPC BMP
 // 1. NORMAL NPC
@@ -137,7 +140,6 @@ extern int index_Area_UI_mapTile_Start;
 extern int index_Area_UI_MiniGame_Start;
 extern int index_RewardImages_Start;
 
-extern char bmpNullName[];
 // stage Image
 extern char bmpStageLevel[];
 extern char bmpClearedAreaName[];
@@ -147,7 +149,8 @@ extern char bmpMovableAreaName[];
 extern char bmpCharacterStatusName[];
 
 extern char bmpMineralName[];
-
+extern char bmpBedrockName[];
+extern char bmpFlagName[];
 // item Image
 extern char bmpItem1Name[];
 extern char bmpItem2Name[];
@@ -227,4 +230,7 @@ void getNewArea();
 void getNewMiniGameArea();
 
 bool printButtonStageStatus();
+void printFlagStageStatus(int curFlagCnt);
+void setBedrock(int max);
+void setFlag(int cnt);
 #endif COMMON_HPP

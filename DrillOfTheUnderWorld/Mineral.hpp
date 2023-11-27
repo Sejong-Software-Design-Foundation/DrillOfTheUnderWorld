@@ -18,6 +18,11 @@ public:
 	void GenerateDiamond();
 	void GenerateOrichalcum();
 	void GenerateQuestionMark();
+	void GenerateBronze(int x, int y);
+	void GenerateSilver(int x, int y);
+	void GenerateGold(int x, int y);
+	void GenerateDiamond(int x, int y);
+	void getCluster();
 };
 
 
@@ -83,7 +88,6 @@ void Mineral::GenerateSilver() {
 						blockInfo[curY][curX] = SILVER;
 					}
 				}
-
 				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameSilverOre1;
 				else imageLayer.images[imageIndex].fileName = bmpNameSilverOre2;
 
@@ -234,4 +238,73 @@ Mineral::Mineral() {
 	GenerateQuestionMark();
 }
 
+void Mineral::GenerateBronze(int x, int y) {
+	int infoX = convertPosToInfoX(x);
+	int infoY = convertPosToInfoY(y);
+
+	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+	blockInfo[infoY][infoX] = BRONZE;
+	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre;
+}
+
+void Mineral::GenerateSilver(int x, int y) {
+	int infoX = convertPosToInfoX(x);
+	int infoY = convertPosToInfoY(y);
+
+	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+	blockInfo[infoY][infoX] = SILVER;
+	imageLayer.images[imageIndex].fileName = bmpNameSilverOre;
+}
+void Mineral::GenerateGold(int x, int y) {
+	int infoX = convertPosToInfoX(x);
+	int infoY = convertPosToInfoY(y);
+
+	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+	blockInfo[infoY][infoX] = GOLD;
+	imageLayer.images[imageIndex].fileName = bmpNameGoldOre;
+}
+
+void Mineral::GenerateDiamond(int x, int y) {
+	int infoX = convertPosToInfoX(x);
+	int infoY = convertPosToInfoY(y);
+
+	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+	blockInfo[infoY][infoX] = DIAMOND;
+	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre;
+}
+void Mineral::getCluster() {
+	int clusterX;
+	int clusterY;
+	while (true) {
+		clusterX = (rand() % 22) * BLOCKSIZE + AREA_ORIGIN_X;
+		clusterY = (rand() % 13) * BLOCKSIZE + AREA_ORIGIN_Y + 10 * BLOCKSIZE;
+		bool ok = true;
+		for (int i = 0;i < 3;i++) {
+			for (int j = 0;j < 3;j++) {
+				if (!blockInfo[convertPosToInfoY(clusterY + i * BLOCKSIZE)][clusterX + j * BLOCKSIZE]) {
+					ok = false;
+					break;
+				}
+			}
+		}
+		if (ok) break;
+	}
+	for (int i = 0;i < 3;i++) {
+		for (int j = 0;j < 3;j++) {
+			int r = rand() % 4;
+			int x = clusterX + j * BLOCKSIZE;
+			int y = clusterY + i * BLOCKSIZE;
+			switch (r) {
+			case 0: GenerateBronze(x, y); break;
+			case 1: GenerateSilver(x, y); break;
+			case 2: GenerateGold(x, y); break;
+			case 3: GenerateDiamond(x, y); break;
+			}
+		}
+	}
+}
 #endif

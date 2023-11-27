@@ -382,6 +382,8 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="block_Stage1_Broken_SilverOre2.bmp">
+
+    <Image Include="flag.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="boom.bmp">
