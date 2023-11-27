@@ -60,7 +60,7 @@ int main() {
 	//initStageImages();
 	stageLayer.images = stageImageArray;
 	stageLayer.images[0] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48
-										, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
+	, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
 	stageLayer.images[1] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
 
 	stageLayer.images[2] = { bmpStageLevel, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
@@ -94,13 +94,13 @@ int main() {
 					if (isOnStage) {
 						isButtonStage = false;
 						isButtonRoomClear = false;
-
+ 
 						currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 						currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 						
 						if (currentAreaRowIndex == 2 && currentAreaColIndex == 2 && pc.getDir() == 0) {
 							isButtonRoomClear = false;
-							int randomNumber = rand() % 7; // 0 ï¿½ï¿½ï¿½ï¿½ 6 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+							int randomNumber = rand() % 7; // 0 å ì™ì˜™å ì™ì˜™ 6 å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
 							buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
 							getNewArea();
 							Mineral* mineral = new Mineral();
@@ -122,7 +122,7 @@ int main() {
 							isButtonStage = true;
 						}
 
-						else if (pc.getDir() == 2) { //¹æÇâÀÌ ¿ÞÂÊÀÏ ¶§ flagStage·Î ³Ñ¾î°¨
+						else if (pc.getDir() == 2) { //ë°©í–¥ì´ ì™¼ìª½ì¼ ë•Œ flagStageë¡œ ë„˜ì–´ê°
 							isFlagStage = true;
 							pc.initFlagCnt();
 							getNewArea();
@@ -158,6 +158,10 @@ int main() {
 						stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
 						targetLayer->fadeIn(targetLayer, NULL);
 					}
+					// else ë¬¸ í•˜ë‚˜ ì¶”ê°€í•´ì„œ ë³´ìŠ¤ëª¹ ìŠ¤í…Œì´ì§€ ë°©ë¡œ ë“¤ì–´ê°€ê²Œ í•˜ê¸°
+					// else if(isOnBoss) {
+					//
+					// }
 					break;
 
 				case LEFT:
@@ -183,7 +187,7 @@ int main() {
 				}
 			}
 		}
-		//¹öÆ°À¸·Î Å¬¸®¾îÇÏ´Â ½ºÅ×ÀÌÁö
+		//ë²„íŠ¼ìœ¼ë¡œ í´ë¦¬ì–´í•˜ëŠ” ìŠ¤í…Œì´ì§€
 		else if (isButtonStage) {
 			targetLayer->renderAll(targetLayer);
 			drawUI();
@@ -294,7 +298,7 @@ int main() {
 				start_time = end_time;
 			}
 		}
-		else if (isFlagStage) { //±ê¹ß ½ºÅ×ÀÌÁö
+		else if (isFlagStage) { //ê¹ƒë°œ ìŠ¤í…Œì´ì§€
 			{
 				targetLayer->renderAll(targetLayer);
 				drawUI();

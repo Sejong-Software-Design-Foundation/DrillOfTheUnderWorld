@@ -72,7 +72,9 @@ extern bool isOnStage;
 extern char bmpNamePC[];
 extern char bmpStoneBlockName[];
 extern char bmpBrokenStoneBlockName[];
+
 extern char bmpNameNull[];
+extern char bmpNullName[];
 
 // NPC BMP
 // 1. NORMAL NPC
@@ -116,7 +118,6 @@ extern int index_Area_UI_blockInfo_Start;
 extern int index_Area_UI_mapTile_Start;
 extern int index_RewardImages_Start;
 
-extern char bmpNullName[];
 // stage Image
 extern char bmpStageLevel[];
 extern char bmpClearedAreaName[];

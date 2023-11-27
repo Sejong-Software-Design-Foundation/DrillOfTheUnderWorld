@@ -56,7 +56,7 @@ int PC::getMaxHP() { return MAX_HP; }
 int PC::getMaxOxygen() { return MAX_O2; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
-void PC::setHP(int hp) { 
+void PC::setHP(int hp) {
 
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
@@ -137,7 +137,7 @@ void PC::dig(int x, int y) {
 			applyDigReward(imageIndex);
 		}
 	}
-	// ?�중??매직?�버 처리?�기 -> 광물 HP
+	// ?˜ì¤‘??ë§¤ì§?˜ë²„ ì²˜ë¦¬?˜ê¸° -> ê´‘ë¬¼ HP
 	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
 			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
@@ -270,7 +270,7 @@ void PC::showDigRewardOnPcTop(int targerImageIndex) {
 
 void PC::applyDigReward(int targerImageIndex) {
 	showDigRewardOnPcTop(targerImageIndex);
-	// ���� �� ó��
+	// ¹°¾à µî Ã³¸®
 }
 void PC::increaseFlagCnt() {
 	flagCnt++;
