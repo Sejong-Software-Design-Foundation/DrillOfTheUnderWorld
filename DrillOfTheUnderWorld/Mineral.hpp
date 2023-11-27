@@ -30,6 +30,8 @@ void Mineral::GenerateBronze() {
     else if (stagelevel == 2) num = 3;
     else if (stagelevel == 3) num = 0;
 
+    if (isOnMiniGameArea == 1) num = 0;
+
     for (int i = 0; i < num; i++) {
         while (1) {
             int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
@@ -62,6 +64,8 @@ void Mineral::GenerateSilver() {
     if (stagelevel == 1) num = 5;
     else if (stagelevel == 2) num = 3;
     else if (stagelevel == 3) num = 3;
+
+    if (isOnMiniGameArea == 1) num = 0;
 
     for (int i = 0; i < num; i++) {
         while (1) {
@@ -97,6 +101,8 @@ void Mineral::GenerateGold() {
     else if (stagelevel == 2) num = 3;
     else if (stagelevel == 3) num = 4;
 
+    if (isOnMiniGameArea == 1) num = 0;
+
     for (int i = 0; i < num; i++) {
         while (1) {
             int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
@@ -129,6 +135,8 @@ void Mineral::GenerateDiamond() {
     if (stagelevel == 1) num = 0;
     else if (stagelevel == 2) num = 1;
     else if (stagelevel == 3) num = 3;
+
+    if (isOnMiniGameArea == 1) num = 0;
 
     for (int i = 0; i < num; i++) {
         while (1) {
@@ -189,7 +197,9 @@ void Mineral::GenerateOrichalcum() {
 void Mineral::GenerateQuestionMark() {
     srand(static_cast<unsigned int>(time(nullptr)));
 
-    int num = 10;
+    int num = 200;
+    if (isOnMiniGameArea == 1) num = 0;
+
     for (int i = 0; i < num; i++) {
         while (1) {
             int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);

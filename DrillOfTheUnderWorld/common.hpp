@@ -66,7 +66,7 @@ extern ImageLayer imageLayer;
 extern Image imageArray[1000];
 extern int blockInfo[1200][1200];
 
-extern bool isButtonStage;
+extern bool isButtonArea;
 extern int mapInfo[5][5];
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
@@ -160,6 +160,10 @@ extern int NPCSpaceWidth;
 
 extern int currentAreaRowIndex;
 extern int currentAreaColIndex;
+
+
+// BUTTON
+extern int button1ImageIndex;
 
 extern std::vector<int> buttonPressedOrderList;
 extern std::vector<int> buttonPressedOrderAnswerList;

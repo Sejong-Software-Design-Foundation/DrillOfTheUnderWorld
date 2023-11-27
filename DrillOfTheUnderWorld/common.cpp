@@ -17,32 +17,7 @@ int mapInfo[5][5];
 int currentAreaRowIndex;
 int currentAreaColIndex;
 
-bool isButtonStage = false;
-char bmpStoneBlockName[] = "block_Stage1_Normal.bmp";
-char bmpBrokenStoneBlockName[] = "block_Stage1_Broken.bmp";
-
-char bmpNamePC[] = "PlayerCharacter.bmp";
-char bmpStageLevel[] = "Stage1.bmp";
-char bmpClearedAreaName[] = "clearedArea.bmp";
-char bmpNomalAreaName[] = "nomalArea.bmp";
-char bmpHiddenAreaName[] = "hiddenArea.bmp";
-char bmpMovableAreaName[] = "movableArea.bmp";
-char bmpCharacterStatusName[] = "UI_character_status.bmp";
-
-char bmpNameNull[] = "";
-
-// NPC BMP
-char bmpNullName[] = "";
-
-// 1. NORMAL NPC
-char bmpNameBat[] = "Bat.bmp";
-
-// 2. BOSS NPC
-char bmpNameMole[] = "Mole.bmp";
-char bmpNameFireball[] = "Fireball.bmp";
-char bmpNameEmceeTheShyGuy[] = "EmceeTheShyGuy.bmp";
-
-char bmpNameLadder[] = "Ladder.bmp";
+bool isButtonArea = false;
 
 // have to add all these bmp files as bitmap resources
 // ORE BMP
@@ -55,13 +30,6 @@ char bmpNameBrokenBronzeOre[] = "block_Stage1_Broken_BronzeOre1.bmp";
 char bmpNameBrokenSilverOre[] = "block_Stage1_Broken_SilverOre1.bmp";
 char bmpNameBrokenGoldOre[] = "block_Stage1_Broken_GoldOre1.bmp";
 char bmpNameBrokenDiamondOre[] = "block_Stage1_Broken_DiamondOre1.bmp";
-
-// MINERAL BMP
-char bmpNameBronzeMineral[] = "block_MineralBronze.bmp";
-char bmpNameSilverMineral[] = "block_MineralSilver.bmp";
-char bmpNameGoldMineral[] = "block_MineralGold.bmp";
-char bmpNameDiamondMineral[] = "block_MineralDiamond.bmp";
-
 
 int NPCSpacePosX;
 int NPCSpacePosY;
@@ -195,6 +163,8 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";	
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
+// BUTTON
+int button1ImageIndex;
 bool isButtonRoomClear = false;
 std::vector<int> buttonPressedOrderList;
 std::vector<int> buttonPressedOrderAnswerList;
@@ -263,6 +233,8 @@ void initStageImage() { // stageLayer에서 사용하는 모든 이미지 최초
 			stageInfo[(y - STAGE_ORIGIN_Y) / AREA_BLOCK_SIZE][(x - STAGE_ORIGIN_X) / AREA_BLOCK_SIZE] = 1;
 		}
 	}
+	stageImageArray[15].fileName = bmpMovableAreaName;
+
 }
 
 void initItemImages() { // 아이템 관련 함수 (개발 진행 중)
@@ -376,6 +348,11 @@ void changeLayer(ImageLayer currentLayer, ImageLayer nextLayer) { // 레이어�
 		break;
 	case 2:
 		isOnArea = false;
+
+		for (int idx = button1ImageIndex; idx < button1ImageIndex + 3; idx++) {
+			imageArray[idx].isHide = 1;
+		}
+
 		// 에어리어 클리어를 스테이지 맵에 반영하기 위한 코드
 		stageLayer.images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
 		stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
