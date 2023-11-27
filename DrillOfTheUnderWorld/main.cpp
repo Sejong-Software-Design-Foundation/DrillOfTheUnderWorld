@@ -70,6 +70,9 @@ int main() {
 		if (isOnStage) { // PC가 스테이지 맵에 존재하는 경우
 			generatedBatList.clear();
 			imageArray[ladder->imageidx].isHide = 0;
+			imageArray[button1->imageidx].isHide = 1;
+			imageArray[button2->imageidx].isHide = 1;
+			imageArray[button3->imageidx].isHide = 1;
 			updateCharacterStatus(); // PC 상태창을 업데이트
 			while (_kbhit() != 0) {
 				int key = _getch();
@@ -81,7 +84,6 @@ int main() {
 				case S:
 				{
 					// 랜덤 변수를 사용하여 어떤 스테이지로 진입할 지 정하는 코드
-					Mineral* mineral = new Mineral(); // stageLevel 대입
 					int num = rand() % 4;
 					if (num == 0) { // normal
 						isOnNormalArea = true;
@@ -89,9 +91,12 @@ int main() {
 						isButtonArea = false;
 						isFlagStage = false;
 						getNewArea();
-						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-						ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-						bat->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						Mineral* mineral = new Mineral(); // stageLevel 대입
+						setBedrock(3);
+						mineral->getCluster();
 					}
 					else if (num == 1) { // minigame
 						isOnNormalArea = false;
@@ -99,9 +104,10 @@ int main() {
 						isButtonArea = false;
 						isFlagStage = false;
 						getNewMiniGameArea();
-						Emcee->setNewPosition(-48, -48);
-						ladder->setNewPosition(-48, -48);
+						Emcee->NPCSetPosition(-48, -48);
+						ladder->NPCSetPosition(-48, -48);
 						minigameStartTime = clock();
+						Mineral* mineral = new Mineral(); // stageLevel 대입
 					}
 					else if (num == 2) { // button
 						isOnNormalArea = false;
@@ -117,15 +123,18 @@ int main() {
 						buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
 						getNewArea();
 
-						button1->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 - BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
-						button2->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
-						button3->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 + BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
+						button1->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 - BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
+						button2->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
+						button3->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 + BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
 
-						Emcee->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-						ladder->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-						bat->setNewPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 
 						imageArray[ladder->imageidx].isHide = 1;
+						Mineral* mineral = new Mineral(); // stageLevel 대입
+						setBedrock(3);
+						mineral->getCluster();
 					}
 					else if (num == 3) { // flag
 						isOnNormalArea = false;
@@ -408,92 +417,91 @@ int main() {
 			}
 
 			else if (isFlagStage) { // flag
-				{
-					printFlagStageStatus(pc.getFlagCnt());
-					//mole->move();
-					bat->move();
-					ladder->move();
-					Emcee->move();
-					for (int i = 0; i < 10; i++) {
-						if (_kbhit() != 0) {
-							int key = _getch();
-							int curPosX = imageLayer.images[0].x;
-							int curPosY = imageLayer.images[0].y;
-							COORD afterMovedPos;
+				printFlagStageStatus(pc.getFlagCnt());
+				//mole->move();
+				bat->move();
+				ladder->move();
+				Emcee->move();
+				for (int i = 0; i < 10; i++) {
+					if (_kbhit() != 0) {
+						int key = _getch();
+						int curPosX = imageLayer.images[0].x;
+						int curPosY = imageLayer.images[0].y;
+						COORD afterMovedPos;
 
-							switch (key) {
-							case S:
-								targetLayer->fadeOut(targetLayer, NULL);
-								if (isOnStage) {
-									targetLayer = &imageLayer;
-									isOnStage = false;
-									currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
-									currentAreaColIndex = convertPosToInfoXInStage(curPosX);
+						switch (key) {
+						case S:
+							targetLayer->fadeOut(targetLayer, NULL);
+							if (isOnStage) {
+								targetLayer = &imageLayer;
+								isOnStage = false;
+								currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
+								currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 
-									/*
-									imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
-									imageLayer.images = imageArray;
-									imageLayer.imageCount = 1;
+								/*
+								imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, 48, 1 };
+								imageLayer.images = imageArray;
+								imageLayer.imageCount = 1;
 
-									initBlockImages();
-									*/
+								initBlockImages();
+								*/
 
-									targetLayer->fadeIn(targetLayer, NULL);
-								}
-								else {
-									targetLayer->fadeOut(targetLayer, NULL);
-									targetLayer = &stageLayer;
-									isOnStage = true;
-									targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-									stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-									setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-									targetLayer->fadeIn(targetLayer, NULL);
-								}
-								break;
-
-
-							case LEFT:
-								pc.setDirLeft();
-								afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-								if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
-								break;
-							case RIGHT:
-								pc.setDirRight();
-								afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-								if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
-								break;
-							case UP:
-								pc.setDirUp();
-								afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-								if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
-								break;
-							case DOWN:
-								pc.setDirDown();
-								afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-								if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
-								break;
-							case ESC:
-								rewardUI();
-								break;
-							case SPACE:
-								COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-								pc.dig(targetPos.X, targetPos.Y);
-								//pc.setOxygen(pc.getOxygen() - 1);
-								break;
-
-							case O:
-								pc.setHP(pc.getHP() - 10);
-								break;
-							case P:
-								pc.setHP(pc.getHP() + 10);
-								break;
-
+								targetLayer->fadeIn(targetLayer, NULL);
 							}
-						}
+							else {
+								targetLayer->fadeOut(targetLayer, NULL);
+								targetLayer = &stageLayer;
+								isOnStage = true;
+								targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+								stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+								setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+								targetLayer->fadeIn(targetLayer, NULL);
+							}
+							break;
 
-						Sleep(5);
+
+						case LEFT:
+							pc.setDirLeft();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case RIGHT:
+							pc.setDirRight();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case UP:
+							pc.setDirUp();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case DOWN:
+							pc.setDirDown();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case ESC:
+							rewardUI();
+							break;
+						case SPACE:
+							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+							pc.dig(targetPos.X, targetPos.Y);
+							//pc.setOxygen(pc.getOxygen() - 1);
+							break;
+
+						case O:
+							pc.setHP(pc.getHP() - 10);
+							break;
+						case P:
+							pc.setHP(pc.getHP() + 10);
+							break;
+
+						}
 					}
+
+					Sleep(5);
 				}
+			}
 
 
 

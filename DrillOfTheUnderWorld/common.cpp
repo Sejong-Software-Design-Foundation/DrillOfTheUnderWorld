@@ -460,24 +460,6 @@ void setMovableStageInfo(int row, int col) { // 스테이지 맵에서 새롭게
 	}
 }
 
-int convertPosToInfoXInStage(int x) {
-	if (x - STAGE_ORIGIN_X <= 0) return -1;
-	return (x - STAGE_ORIGIN_X) / AREA_BLOCK_SIZE;
-}
-
-int convertPosToInfoYInStage(int y) {
-	if (y - STAGE_ORIGIN_Y <= 0) return -1;
-	return (y - STAGE_ORIGIN_Y) / AREA_BLOCK_SIZE;
-}
-
-bool collisionCheckInStage(int x, int y) {
-	int infoX = convertPosToInfoXInStage(x);
-	int infoY = convertPosToInfoYInStage(y);
-	if (infoY < 0 || infoY >= 5 || infoX < 0 || infoX >= 5)
-		return 1;
-	//return 0;
-	return stageInfo[infoY][infoX];
-}
 
 void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
 	// 에어리어 상에서 NPC가 생성되는 검은 공간의 크기를 설정하는 변수들
@@ -527,33 +509,6 @@ void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
 	// getNewArea() 후 Generate~() 해서 발생하는 현상.
 }
 
-void getNewMiniGameArea() // 미니게임 에어리어(25x25)를 초기화하는 변수
-{
-	int cnt = 1;
-	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
-		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
-			for (int dy = 0;dy < BLOCKSIZE;dy++) {
-				for (int dx = 0;dx < BLOCKSIZE;dx++) {
-					blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
-				}
-			}
-		}
-	}
-	// 에어리어에서 PC가 스폰되는 초기 위치
-	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
-	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
-	for (int y = 0;y < BLOCKSIZE;y++) {
-		for (int x = 0;x < BLOCKSIZE;x++) {
-			blockInfo[y][576 + x] = 0;
-		}
-	}
-	// 스폰되는 위치에 블록 지우기
-	imageArray[12 * 25 + 13].fileName = bmpNullName;
-
-	//printf("%d\n", imageLayer.imageCount);
-}
-
 void drawUI() { // 에어리어 UI 활성화
 	imageArray[index_Area_UI_Start].isHide = 0; // 아이템 창이 보이도록
 
@@ -589,12 +544,6 @@ void drawUI() { // 에어리어 UI 활성화
 		}
 	}
 }
-
-int getNPCSpaceHeight() { return (rand() % 10 + 5); }
-int getNPCSpaceWidth() { return (rand() % 10 + 5); }
-int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth) + 1) * BLOCKSIZE + AREA_ORIGIN_X); }
-int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight) + 1) * BLOCKSIZE + AREA_ORIGIN_Y); }
-
 
 int convertPosToInfoXInStage(int x) {
 	if (x - STAGE_ORIGIN_X <= 0) return -1;
@@ -615,53 +564,6 @@ bool collisionCheckInStage(int x, int y) {
 	return stageInfo[infoY][infoX];
 }
 
-void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
-	// 에어리어 상에서 NPC가 생성되는 검은 공간의 크기를 설정하는 변수들
-	NPCSpaceHeight = getNPCSpaceHeight();
-	NPCSpaceWidth = getNPCSpaceWidth();
-	// 검은 공간의 위치를 저장하는 변수
-	NPCSpacePosX = getNPCSpacePosX();
-	NPCSpacePosY = getNPCSpacePosY();
-
-	int cnt = 1;
-	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
-		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			// 검은 공간을 실제적으로 만드는 반복문
-			if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
-				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
-				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
-				imageArray[cnt++] = { bmpNullName, x,y,1 };
-				for (int dy = 0;dy < BLOCKSIZE;dy++) {
-					for (int dx = 0;dx < BLOCKSIZE;dx++) {
-						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 0;
-					}
-				}
-			}
-			// 다른 부분은 기본 돌로 그리기
-			else {
-				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
-				for (int dy = 0;dy < BLOCKSIZE;dy++) {
-					for (int dx = 0;dx < BLOCKSIZE;dx++) {
-						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
-					}
-				}
-			}
-		}
-	}
-	// 에어리어에서 PC가 스폰되는 초기 위치
-	imageArray[0].x = AREA_ORIGIN_X + 576;
-	imageArray[0].y = AREA_ORIGIN_Y;
-	for (int y = 0;y < BLOCKSIZE;y++) {
-		for (int x = 0;x < BLOCKSIZE;x++) {
-			blockInfo[y][576 + x] = 0;
-		}
-	}
-	// 스폰되는 위치에 블록 지우기
-	imageArray[13].fileName = bmpNullName;
-
-	// 현재 캐릭터 스폰 위치에 광석이 생성될 수 있는 버그가 존재함.
-	// getNewArea() 후 Generate~() 해서 발생하는 현상.
-}
 
 void getNewMiniGameArea() // 미니게임 에어리어(25x25)를 초기화하는 변수
 {
@@ -690,61 +592,11 @@ void getNewMiniGameArea() // 미니게임 에어리어(25x25)를 초기화하는
 	//printf("%d\n", imageLayer.imageCount);
 }
 
-void drawUI() { // 에어리어 UI 활성화
-	imageArray[index_Area_UI_Start].isHide = 0; // 아이템 창이 보이도록
-
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP바가 보이도록
-	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2바가 보이도록
-	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 맵이 보이도록
-		imageArray[i].isHide = 0;
-
-	// 에어리어 X가 미구현이기 때문에 임시로 에어리어 지도에서 X가 표시되지 않도록
-	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
-	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
-
-	int count = 0;
-	for (int y = 0; y < 5; y++) {
-		for (int x = 0; x < 5; x++) {
-			if (mapInfo[y][x] == 1) imageArray[index_Area_UI_mapTile_Start + count].fileName = bmpNameMapTileCleared;
-			count++;
-		}
-	}
-	imageArray[index_Area_UI_Map_Start].x = 1590 + (BLOCKSIZE + 2) * currentAreaColIndex;
-	imageArray[index_Area_UI_Map_Start].y = 100 + (BLOCKSIZE + 2) * currentAreaRowIndex;
-	
-	if (isOnMiniGameArea) {
-		for (int i = 0; i < 3; i++) {
-			imageArray[index_Area_UI_MiniGame_Start + i].isHide = 0;
-		}
-	}
-	else {
-		for (int i = 0; i < 3; i++) {
-			imageArray[index_Area_UI_MiniGame_Start + i].isHide = 1;
-		}
-	}
-}
-
-/*
-void setMinerals(int max) {
-	while (max) {
-		int x = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_X;
-		int y = (rand() % 25) * BLOCKSIZE + AREA_ORIGIN_Y;
-		if (blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] == 2) {
-			int imageIndex = convertPosToInfoY(y) / BLOCKSIZE * 25 + convertPosToInfoX(x) / BLOCKSIZE + 1;
-			imageArray[imageIndex].fileName = bmpMineralName;
-			blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 3;
-			max--;
-		}
-	}
-}
-*/
 
 int getNPCSpaceHeight() { return (rand() % 10 + 5); }
 int getNPCSpaceWidth() { return (rand() % 10 + 5); }
-int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth) + 1) * BLOCKSIZE + AREA_ORIGIN_X); }
-int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight) + 1) * BLOCKSIZE + AREA_ORIGIN_Y); }
+int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth)+1) * BLOCKSIZE + AREA_ORIGIN_X); }
+int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight)+1) * BLOCKSIZE + AREA_ORIGIN_Y) / 2 + 13 * BLOCKSIZE; }
 
 int convertPosToInfoX(int x) {
 	return (x - AREA_ORIGIN_X);

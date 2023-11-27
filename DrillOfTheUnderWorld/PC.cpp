@@ -273,6 +273,11 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpQuestionMarkName) == 0) {
 			digQuestionBlock(digY, digX, infoY, infoX, imageIndex);
 		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpFlagName) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameNull;
+			increaseFlagCnt();
+			applyDigReward(imageIndex, 300);
+		}
 	}
 	// 나중에 매직넘버 처리하기 -> 광물 HP
 	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
@@ -339,7 +344,10 @@ void PC::boom(int digY, int digX, int infoY, int infoX, int imageIndex) {
 	for (int row = infoY - BLOCKSIZE; row <= infoY + BLOCKSIZE * 2; row++) {
 		if (row < 0 || row >= 1200) continue;
 		for (int col = infoX - BLOCKSIZE; col <= infoX + BLOCKSIZE * 2; col++) {
+			int targetImageIndex = (row / BLOCKSIZE) * AREA_WIDTH + (col / BLOCKSIZE) + 1;
 			if (col < 0 || col >= 1200) continue;
+			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpBedrockName) == 0) continue;
+			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpFlagName) == 0) continue;
 			if (blockInfo[row][col]) blockInfo[row][col] = 0;
 		}
 	}

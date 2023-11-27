@@ -201,7 +201,7 @@ void Mineral::GenerateOrichalcum() {
 void Mineral::GenerateQuestionMark() {
 	srand(static_cast<unsigned int>(time(nullptr)));
 
-	int num = 200;
+	int num = 50;
 	if (isOnMiniGameArea == 1) num = 0;
 
 	for (int i = 0; i < num; i++) {
@@ -245,7 +245,7 @@ void Mineral::GenerateBronze(int x, int y) {
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 	blockInfo[infoY][infoX] = BRONZE;
-	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre;
+	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre1;
 }
 
 void Mineral::GenerateSilver(int x, int y) {
@@ -255,7 +255,7 @@ void Mineral::GenerateSilver(int x, int y) {
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 	blockInfo[infoY][infoX] = SILVER;
-	imageLayer.images[imageIndex].fileName = bmpNameSilverOre;
+	imageLayer.images[imageIndex].fileName = bmpNameSilverOre1;
 }
 void Mineral::GenerateGold(int x, int y) {
 	int infoX = convertPosToInfoX(x);
@@ -264,7 +264,7 @@ void Mineral::GenerateGold(int x, int y) {
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 	blockInfo[infoY][infoX] = GOLD;
-	imageLayer.images[imageIndex].fileName = bmpNameGoldOre;
+	imageLayer.images[imageIndex].fileName = bmpNameGoldOre1;
 }
 
 void Mineral::GenerateDiamond(int x, int y) {
@@ -274,7 +274,7 @@ void Mineral::GenerateDiamond(int x, int y) {
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
 
 	blockInfo[infoY][infoX] = DIAMOND;
-	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre;
+	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre1;
 }
 void Mineral::getCluster() {
 	int clusterX;
