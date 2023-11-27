@@ -39,4 +39,9 @@ void Bat::setNewPosition(int x, int y) {
     this->y = y;
 }
 
+void Bat::setNewPosition(int x, int y) {
+    imageLayer.images[imageidx].x = x;
+    imageLayer.images[imageidx].y = y;
+}
+
 #endif

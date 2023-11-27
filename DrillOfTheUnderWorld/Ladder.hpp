@@ -26,8 +26,8 @@ void Ladder::move() {
 }
 
 void Ladder::attack() {
-    rewardUI();
-    targetLayer->renderAll(targetLayer);
+    isOnArea = false;
+    isOnReward = true;
 }
 void Ladder::setNewPosition(int x, int y) {
     imageLayer.images[imageidx].x = x;

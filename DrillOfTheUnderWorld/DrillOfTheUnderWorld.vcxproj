@@ -135,23 +135,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Area.hpp" />
+    <ClInclude Include="Bat.hpp" />
     <ClInclude Include="Boss.hpp" />
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="EmceeTheShyGuy.hpp" />
     <ClInclude Include="ImageFading.h" />
     <ClInclude Include="ImageLayer.h" />
     <ClInclude Include="ImageLayerImpl.h" />
     <ClInclude Include="ImageLayerInterface.h" />
+    <ClInclude Include="Ladder.hpp" />
     <ClInclude Include="Mineral.hpp" />
+    <ClInclude Include="Mole.hpp" />
     <ClInclude Include="Npc.hpp" />
+    <ClInclude Include="NPCBullet.hpp" />
     <ClInclude Include="PC.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource2.h" />
-    <ClInclude Include="Shop.hpp" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="common.hpp" />
     <ClInclude Include="Stage.hpp" />
     <ClInclude Include="Text.hpp" />
-    <ClInclude Include="Zombie.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav" />
@@ -163,8 +166,6 @@
     <Image Include="..\..\..\Mineral.bmp" />
     <Image Include="..\..\..\NPC.bmp" />
     <Image Include="..\..\..\Shop.bmp" />
-    <Image Include="..\..\..\ui\UI_dynamicEnforce.bmp" />
-    <Image Include="..\..\..\ui\UI_dynamicEnforceSelected.bmp" />
     <Image Include="..\..\..\ui\UI_HP_0pct.bmp" />
     <Image Include="..\..\..\ui\UI_HP_100pct.bmp" />
     <Image Include="..\..\..\ui\UI_HP_10pct.bmp" />
@@ -184,8 +185,6 @@
     <Image Include="..\..\..\ui\UI_mapX.bmp" />
     <Image Include="..\..\..\ui\UI_maxHP.bmp" />
     <Image Include="..\..\..\ui\UI_maxO2.bmp" />
-    <Image Include="..\..\..\ui\UI_normalEnforce.bmp" />
-    <Image Include="..\..\..\ui\UI_normalEnforceSelected.bmp" />
     <Image Include="..\..\..\ui\UI_O2_0pct.bmp" />
     <Image Include="..\..\..\ui\UI_O2_100pct.bmp" />
     <Image Include="..\..\..\ui\UI_O2_10pct.bmp" />
@@ -268,6 +267,15 @@
     <Image Include="emptyTile.bmp" />
     <Image Include="PlayerCharacter.bmp" />
     <Image Include="UI_character_status.bmp" />
+    <Image Include="UI_dynamicEnforce.bmp" />
+    <Image Include="UI_dynamicEnforceSelected.bmp" />
+    <Image Include="UI_normalEnforce.bmp" />
+    <Image Include="UI_normalEnforceSelected.bmp" />
+    <Image Include="UI_Star0.bmp" />
+    <Image Include="UI_Star1.bmp" />
+    <Image Include="UI_Star2.bmp" />
+    <Image Include="UI_Star3.bmp" />
+    <Image Include="UI_Timer.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

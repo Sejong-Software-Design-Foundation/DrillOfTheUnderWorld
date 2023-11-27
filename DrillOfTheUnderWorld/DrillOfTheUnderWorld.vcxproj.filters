@@ -68,9 +68,6 @@
     <ClInclude Include="Npc.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Zombie.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Boss.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -80,7 +77,19 @@
     <ClInclude Include="Text.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Shop.hpp">
+    <ClInclude Include="Mole.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Bat.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EmceeTheShyGuy.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Ladder.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCBullet.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Button.hpp">
@@ -168,12 +177,6 @@
     <Image Include="..\..\..\Shop.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\ui\UI_dynamicEnforce.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\ui\UI_dynamicEnforceSelected.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="..\..\..\ui\UI_HP_0pct.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
@@ -229,12 +232,6 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\..\..\ui\UI_maxO2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\ui\UI_normalEnforce.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\ui\UI_normalEnforceSelected.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\..\..\ui\UI_O2_0pct.bmp">
@@ -327,21 +324,6 @@
     <Image Include="questionMark.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="block_MineralBronze.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="block_MineralDiamond.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="block_MineralGold.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="block_MineralOrichalcum.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="block_MineralSilver.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="block_Stage1_Broken.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
@@ -363,28 +345,13 @@
     <Image Include="block_Stage1_GoldOre2.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="block_Stage1_Normal.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="block_Stage1_OrichalcumOre1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="block_Stage1_OrichalcumOre2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="block_Stage1_SilverOre1.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="block_Stage1_SilverOre2.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="brick_dark2.png">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="BronzeMineral.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="BronzeOre.bmp">
+    <Image Include="block_Stage1_Normal.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="block_Stage1_Broken_BronzeOre1.bmp">
@@ -424,6 +391,54 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="ozPotion.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralSilver.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralBronze.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralDiamond.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralGold.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_MineralOrichalcum.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_OrichalcumOre1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="block_Stage1_OrichalcumOre2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_Timer.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_Star1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_Star0.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_Star3.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_Star2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_dynamicEnforceSelected.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_normalEnforceSelected.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_dynamicEnforce.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="UI_normalEnforce.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

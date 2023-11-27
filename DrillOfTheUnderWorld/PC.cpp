@@ -3,7 +3,11 @@
 #include <string>
 
 using namespace std;
+/*
+PC 능력치 로직
+팅기는 버그 해결
 
+*/
 PC& PC::getPC() {
 	static PC pc;
 	return pc;
@@ -97,15 +101,15 @@ void PC::dig(int x, int y) {
 	if (infoY < 0 || infoY >= 1200 || infoX < 0 || infoX >= 1200) return;
 	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
 		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
-			if (blockInfo[curY][curX]) 
+			if (blockInfo[curY][curX])
 				blockInfo[curY][curX] = blockInfo[curY][curX] - pc.getAtkLev();
 		}
 	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
 	updateDigResultReward(y, x, infoY, infoX, imageIndex);
-	
 }
+
 void PC::moveInStage() {
 	stageLayer.images[0].x += dx[curDirection] * AREA_BLOCK_SIZE;
 	stageLayer.images[0].y += dy[curDirection] * AREA_BLOCK_SIZE;
@@ -178,7 +182,6 @@ bool PC::isDigable(int x, int y) {
 	else return y % BLOCKSIZE == 0;
 	//return (x % BLOCKSIZE == 0 && y % BLOCKSIZE == 0);
 }
-
 void PC::applyDigReward(int targerImageIndex, int delay) {
 	// step1 move target reward image to PC top postion and reward value
 	targetLayer->renderAll(targetLayer);
@@ -213,6 +216,12 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 	}
 	else if (strcmp(imageArray[targerImageIndex].fileName, bmpOzPotionName) == 0) {
 		pc.setOxygen(pc.getOxygen() + (pc.getMaxOxygen() * 0.3));
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameOrichalcumMineral) == 0) {
+		pc.setStone(pc.getStone() + 1000);
+		OrichalcumNum++;
+		if (OrichalcumNum >= 5) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar1;
+		if (OrichalcumNum >= 10) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar2;
+		if (OrichalcumNum >= 20) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar3;
 	}
 
 	imageArray[targerImageIndex].fileName = bmpNullName;

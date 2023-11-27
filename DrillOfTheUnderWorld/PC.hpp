@@ -69,10 +69,9 @@ public:
 	void setAtkSpdLev(int lev);
 	void setSpdLev(int lev);
 	bool isDigable(int x, int y);
-
-
 	void updateDigResultReward(int digY, int digX, int infoY, int infoX, int imageIndex);
 	void applyDigReward(int targerImageIndex, int delay);
 	void digQuestionBlock(int digY, int digX, int infoY, int infoX, int imageIndex);
 	void boom(int digY, int digX, int infoY, int infoX, int imageIndex);
+
 };
