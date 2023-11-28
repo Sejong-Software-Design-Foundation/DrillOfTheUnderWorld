@@ -7,7 +7,7 @@ extern "C" {
 
 enum class AreaType
 {
-	Nomal,
+	Normal,
 	Boss,
 	Treasure,
 	MiniGame
@@ -32,5 +32,5 @@ public:
 	void setThumnailImage();
 	void provideReward();
 	void enterArea();
-	void exitArea();;
+	void exitArea();
 };
