@@ -4,8 +4,8 @@
 
 using namespace std;
 /*
-PC 능력치 로직
-팅기는 버그 해결
+PC ?�력�?로직
+?�기??버그 ?�결
 
 */
 PC& PC::getPC() {
@@ -61,6 +61,8 @@ int PC::getMaxOxygen() { return MAX_O2; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
 void PC::setHP(int hp) {
+	if (hp < HP) hitEffect();
+	else if (hp > HP) getHPEffect();
 
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
@@ -75,6 +77,8 @@ void PC::setHP(int hp) {
 }
 
 void PC::setOxygen(int o2) {
+	if (o2 < O2);
+	else if (o2 > O2) getOxygenEffect();
 
 	int prev_O2 = this->O2 / 10;
 	if (o2 <= 0) {
@@ -279,7 +283,7 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 			applyDigReward(imageIndex, 300);
 		}
 	}
-	// 나중에 매직넘버 처리하기 -> 광물 HP
+	// ?�중??매직?�버 처리?�기 -> 광물 HP
 	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
 			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
@@ -394,4 +398,49 @@ void PC::boom(int digY, int digX, int infoY, int infoX, int imageIndex) {
 		}
 	}
 	//boom
+}
+
+void PC::hitEffect() {
+	char* bmpNameForHitEffect = 0;
+	char* bmpCurName = imageArray[0].fileName;
+	switch (this->curDirection) {
+	case 0: bmpNameForHitEffect = bmpPCHitRightName; break;
+	case 1: bmpNameForHitEffect = bmpPCHitDownName; break;
+	case 2: bmpNameForHitEffect = bmpPCHitLeftName; break;
+	case 3: bmpNameForHitEffect = bmpPCHitUpName; break;
+	}
+	imageArray[0].fileName = bmpNameForHitEffect;
+	targetLayer->renderAll(targetLayer);
+	imageArray[0].fileName = bmpCurName;
+	targetLayer->renderAll(targetLayer);
+}
+
+void PC::getHPEffect() {
+	char* bmpNameForEffect = 0;
+	char* bmpCurName = imageArray[0].fileName;
+	switch (this->curDirection) {
+	case 0: bmpNameForEffect = bmpPCgetHPRightName; break;
+	case 1: bmpNameForEffect = bmpPCgetHPDownName; break;
+	case 2: bmpNameForEffect = bmpPCgetHPLeftName; break;
+	case 3: bmpNameForEffect = bmpPCgetHPUpName; break;
+	}
+	imageArray[0].fileName = bmpNameForEffect;
+	targetLayer->renderAll(targetLayer);
+	imageArray[0].fileName = bmpCurName;
+	targetLayer->renderAll(targetLayer);
+}
+
+void PC::getOxygenEffect() {
+	char* bmpNameForEffect = 0;
+	char* bmpCurName = imageArray[0].fileName;
+	switch (this->curDirection) {
+	case 0: bmpNameForEffect = bmpPCgetOxygenRightName; break;
+	case 1: bmpNameForEffect = bmpPCgetOxygenDownName; break;
+	case 2: bmpNameForEffect = bmpPCgetOxygenLeftName; break;
+	case 3: bmpNameForEffect = bmpPCgetOxygenUpName; break;
+	}
+	imageArray[0].fileName = bmpNameForEffect;
+	targetLayer->renderAll(targetLayer);
+	imageArray[0].fileName = bmpCurName;
+	targetLayer->renderAll(targetLayer);
 }

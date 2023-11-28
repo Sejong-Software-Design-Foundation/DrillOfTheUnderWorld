@@ -7,23 +7,23 @@
 #include "Button.hpp"
 
 int main() {
-	initialize(); // 기초적인 이니셜라이징(콘솔 사이즈 지정, 포인터 삭제 등)
+	initialize(); // 기초?�인 ?�니?�라?�징(콘솔 ?�이�?지?? ?�인????�� ??
 
-	// 레이어 이니셜라이징
+	// ?�이???�니?�라?�징
 	stageLayer.initialize(&stageLayer);
-	imageLayer.initialize(&imageLayer); // imageLayer는 에어리어 레이어라고 보면 됨
+	imageLayer.initialize(&imageLayer); // imageLayer???�어리어 ?�이?�라�?보면 ??
 	rewardLayer.initialize(&rewardLayer);
 
-	// 음악 재생
+	// ?�악 ?�생
 	char bgmName[] = "start_bgm.wav";
 	playBGM(bgmName);
 
-	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 }; // PC는 imageLayer 0번에 지정
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 }; // PC??imageLayer 0번에 지??
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 
-	initStageImage();				// stageLayer에서 사용하는 모든 이미지 최초 생성
-	fillBlockImages();				// imageLayer의 블록(25x25) 최초 생성
+	initStageImage();				// stageLayer?�서 ?�용?�는 모든 ?��?지 최초 ?�성
+	fillBlockImages();				// imageLayer??블록(25x25) 최초 ?�성
 
 	Button* button1 = new Button(1);
 	Button* button2 = new Button(2);
@@ -36,23 +36,23 @@ int main() {
 	imageArray[button3->imageidx].isHide = 1;
 	index_Area_Button_Start = button1->imageidx;
 
-	initAreaUI();					// imageLayer의 UI 이미지 최초 생성
-	initRewardImage();				// rewardLayer에서 사용하는 모든 이미지 최초 생성
+	initAreaUI();					// imageLayer??UI ?��?지 최초 ?�성
+	initRewardImage();				// rewardLayer?�서 ?�용?�는 모든 ?��?지 최초 ?�성
 
-	// 아이템과 관련된 함수들(개발 진행 중)
+	// ?�이?�과 관?�된 ?�수??개발 진행 �?
 	pc.addItem(1);
 	pc.addItem(2);
 	pc.addItem(3);
 	initItemImages();
 
-	// 에어리어 내부에서 시간을 재기 위한 변수들
+	// ?�어리어 ?��??�서 ?�간???�기 ?�한 변?�들
 	clock_t start_time = clock();
 	clock_t end_time;
 	clock_t timee;
 	clock_t minigameStartTime = clock();
 	double duration;
 
-	// NPC 이니셜라이징(최초 위치는 화면상에서 보이지 않도록 초기화)
+	// NPC ?�니?�라?�징(최초 ?�치???�면?�에??보이지 ?�도�?초기??
 	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
 	std::vector<Bat*> generatedBatList;
 	Bat* bat = new Bat(-48, -48);
@@ -64,26 +64,26 @@ int main() {
 	targetLayer->renderAll(targetLayer);
 
 	while (1) {
-		if (isOnStage) { // PC가 스테이지 맵에 존재하는 경우
+		if (isOnStage) { // PC가 ?�테?��? 맵에 존재?�는 경우
 			generatedBatList.clear();
 			imageArray[ladder->imageidx].isHide = 0;
 			imageArray[button1->imageidx].isHide = 1;
 			imageArray[button2->imageidx].isHide = 1;
 			imageArray[button3->imageidx].isHide = 1;
 
-			updateCharacterStatus(); // PC 상태창을 업데이트
+			updateCharacterStatus(); // PC ?�태창을 ?�데?�트
 			while (_kbhit() != 0) {
 				int key = _getch();
-				// PC 위치 정보를 업데이트하는 변수들(픽셀 정보로)
+				// PC ?�치 ?�보�??�데?�트?�는 변?�들(?��? ?�보�?
 				int curPosX = stageLayer.images[0].x;
 				int curPosY = stageLayer.images[0].y;
 
 				switch (key) {
 				case S:
 				{
-					// 랜덤 변수를 사용하여 어떤 에어리어로 진입할 지 정하는 코드
+					// ?�덤 변?��? ?�용?�여 ?�떤 ?�어리어�?진입??지 ?�하??코드
 					int num = rand() % 4;
-					if (num == 0) { // 노말 에어리어로 진입
+					if (num == 0) { // ?�말 ?�어리어�?진입
 						isNormalArea = true;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -96,7 +96,7 @@ int main() {
 						setBedrock(3);
 						mineral->getCluster();
 					}
-					else if (num == 1) { // 미니게임 에어리어로 진입
+					else if (num == 1) { // 미니게임 ?�어리어�?진입
 						isNormalArea = false;
 						isMiniGameArea = true;
 						isButtonArea = false;
@@ -105,9 +105,9 @@ int main() {
 						Emcee->NPCSetPosition(-48, -48);
 						ladder->NPCSetPosition(-48, -48);
 						minigameStartTime = clock();
-						Mineral* mineral = new Mineral(); // stageLevel 대입
+						Mineral* mineral = new Mineral(); // stageLevel ?�??
 					}
-					else if (num == 2) { // 버튼 에어리어로 진입
+					else if (num == 2) { // 버튼 ?�어리어�?진입
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = true;
@@ -118,7 +118,7 @@ int main() {
 						imageArray[button3->imageidx].isHide = 0;
 
 						isButtonRoomClear = false;
-						int randomNumber = rand() % 6; // 0 에서 6 사이의 난수
+						int randomNumber = rand() % 6; // 0 ?�서 6 ?�이???�수
 						buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
 						getNewArea();
 
@@ -131,11 +131,11 @@ int main() {
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 
 						imageArray[ladder->imageidx].isHide = 1;
-						Mineral* mineral = new Mineral(); // stageLevel 대입
+						Mineral* mineral = new Mineral(); // stageLevel ?�??
 						setBedrock(3);
 						mineral->getCluster();
 					}
-					else if (num == 3) { // 플래그 에어리어로 진입
+					else if (num == 3) { // ?�래�??�어리어�?진입
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -152,7 +152,7 @@ int main() {
 						setFlag(3);
 					}
 
-					// 에어리어 맵에서 현재 PC 위치를 밝게 표시하도록 하는 코드(클리어 처리)
+					// ?�어리어 맵에???�재 PC ?�치�?밝게 ?�시?�도�??�는 코드(?�리??처리)
 					currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
@@ -185,12 +185,12 @@ int main() {
 				if (key) targetLayer->renderAll(targetLayer);
 			}
 		}
-		else if (isOnArea) { // PC가 에어리어에 있는 경우
+		else if (isOnArea) { // PC가 ?�어리어???�는 경우
 			targetLayer->renderAll(targetLayer);
-			drawUI(); // 에어리어 UI를 그리는 함수
+			drawUI(); // ?�어리어 UI�?그리???�수
 
-			if (isNormalArea) { // PC가 노멀 에어리어에 있는 경우
-				// QuestionBlock 박쥐 생성 관련 코드
+			if (isNormalArea) { // PC가 ?��? ?�어리어???�는 경우
+				// QuestionBlock 박쥐 ?�성 관??코드
 				if (isGenerateMobByQuestionBlock) {
 					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
 					isGenerateMobByQuestionBlock = false;
@@ -200,12 +200,12 @@ int main() {
 						mob->move();
 					}
 				}
-				// NPC에 움직임 부여(활성화)
+				// NPC???�직임 부???�성??
 				//mole->move();
 				bat->move();
 				ladder->move();
 				Emcee->move();
-				// 키보드 입력 수행
+				// ?�보???�력 ?�행
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -263,9 +263,9 @@ int main() {
 					Sleep(5);
 				}
 			}
-			else if (isMiniGameArea) { // PC가 미니게임 에어리어에 있는 경우
-				printMyOriInMiniGameArea(); // 미니게임 에어리어에서 information과 획득한 광물 수를 출력하는 함수
-				// 키보드 입력 수행
+			else if (isMiniGameArea) { // PC가 미니게임 ?�어리어???�는 경우
+				printMyOriInMiniGameArea(); // 미니게임 ?�어리어?�서 information�??�득??광물 ?��? 출력?�는 ?�수
+				// ?�보???�력 ?�행
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -324,7 +324,7 @@ int main() {
 					rewardUI();
 				}
 			}
-			else if (isButtonArea) { // PC가 버튼 에어리어에 있는 경우
+			else if (isButtonArea) { // PC가 버튼 ?�어리어???�는 경우
 
 				if (button1->getIsPressed()) {
 					imageArray[button1->imageidx].fileName = bmpButton1PressedName;
@@ -419,7 +419,7 @@ int main() {
 					Sleep(5);
 				}
 			}
-			else if (isFlagArea) { // PC가 플래그 에어리어에 있는 경우
+			else if (isFlagArea) { // PC가 ?�래�??�어리어???�는 경우
 				printFlagStageStatus(pc.getFlagCnt());
 				//mole->move();
 				bat->move();
@@ -482,8 +482,8 @@ int main() {
 					Sleep(5);
 				}
 			}
-			// 모든 에어리어에 공통으로 적용되는 코드
-			// 3초마다 산소 게이지를 1씩 감소시키는 코드
+			// 모든 ?�어리어??공통?�로 ?�용?�는 코드
+			// 3초마???�소 게이지�?1??감소?�키??코드
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
 			if (duration > 3.0) {

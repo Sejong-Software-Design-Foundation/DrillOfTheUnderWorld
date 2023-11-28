@@ -389,6 +389,42 @@
     <Image Include="..\..\..\Shop.bmp">
       <Filter>images</Filter>
     </Image>
+    <Image Include="PC_down_hit.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_left_hit.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_right_hit.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_up_hit.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_down_getHP.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_down_getOxygen.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_left_getHP.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_left_getOxygen.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_right_getHP.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_right_getOxygen.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_up_getHP.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PC_up_getOxygen.bmp">
+      <Filter>images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="images">
