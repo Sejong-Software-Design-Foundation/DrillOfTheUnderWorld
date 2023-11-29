@@ -23,12 +23,36 @@ private:
 	char* bmpPCRightName;
 	char* bmpPCDownName;
 	char* bmpPCUpName;
+	char* bmpPCHitLeftName;
+	char* bmpPCHitRightName;
+	char* bmpPCHitDownName;
+	char* bmpPCHitUpName;
+	char* bmpPCgetHPLeftName;
+	char* bmpPCgetHPRightName;
+	char* bmpPCgetHPDownName;
+	char* bmpPCgetHPUpName;
+	char* bmpPCgetOxygenLeftName;
+	char* bmpPCgetOxygenRightName;
+	char* bmpPCgetOxygenDownName;
+	char* bmpPCgetOxygenUpName;
 	PC() {
 		bmpPCName = _strdup("PlayerCharacter.bmp");
 		bmpPCLeftName = _strdup("PC_left.bmp");
 		bmpPCRightName = _strdup("PC_right.bmp");
 		bmpPCDownName = _strdup("PC_down.bmp");
 		bmpPCUpName = _strdup("PC_up.bmp");
+		bmpPCHitLeftName = _strdup("PC_left_hit.bmp");
+		bmpPCHitRightName = _strdup("PC_right_hit.bmp");
+		bmpPCHitDownName = _strdup("PC_down_hit.bmp");;
+		bmpPCHitUpName = _strdup("PC_up_hit.bmp");
+		bmpPCgetHPLeftName = _strdup("PC_up_getHP.bmp");
+		bmpPCgetHPRightName = _strdup("PC_up_getHP.bmp");
+		bmpPCgetHPDownName = _strdup("PC_up_getHP.bmp");
+		bmpPCgetHPUpName = _strdup("PC_up_getHP.bmp");
+		bmpPCgetOxygenLeftName = _strdup("PC_up_getOxygen.bmp");
+		bmpPCgetOxygenRightName = _strdup("PC_up_getOxygen.bmp");
+		bmpPCgetOxygenDownName = _strdup("PC_up_getOxygen.bmp");
+		bmpPCgetOxygenUpName = _strdup("PC_up_getOxygen.bmp");
 	}
 	PC(const PC& pc_ref) {
 	}
@@ -77,5 +101,7 @@ public:
 	void applyDigReward(int targerImageIndex, int delay);
 	void digQuestionBlock(int digY, int digX, int infoY, int infoX, int imageIndex);
 	void boom(int digY, int digX, int infoY, int infoX, int imageIndex);
-
+	void hitEffect();
+	void getHPEffect();
+	void getOxygenEffect();
 };

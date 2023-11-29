@@ -5,11 +5,11 @@ HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
 
 ImageLayer* targetLayer = NULL;
-// stageLayer와 해당 레이어에서 사용하는 변수들
+// stageLayer?� ?�당 ?�이?�에???�용?�는 변?�들
 ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image stageImageArray[40];
 int stageInfo[5][5];
-// imageLayer와 해당 레이어에서 사용하는 변수들
+// imageLayer?� ?�당 ?�이?�에???�용?�는 변?�들
 ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
 Image imageArray[1000];
 int blockInfo[1200][1200];
@@ -31,11 +31,11 @@ bool isGenerateMobByQuestionBlock = false;
 int questionBlockPosX = 0;
 int questionBlockPosY = 0;
 
-// rewardLayer와 해당 레이어에서 사용하는 변수들
+// rewardLayer?� ?�당 ?�이?�에???�용?�는 변?�들
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
 Image imagesReward[1000];
 
-// PC가 현재 어디에 위치하는지 체크하기 위한 bool형 변수
+// PC가 ?�재 ?�디???�치?�는지 체크?�기 ?�한 bool??변??
 bool isOnStage = true;
 bool isOnArea = false;
 bool isNormalArea = false;
@@ -43,9 +43,9 @@ bool isMiniGameArea = false;
 bool isButtonArea = false;
 bool isFlagArea = false;
 
-// 각 레이어마다 사용되는 이미지들은 하나의 배열의 저장됨 (ex. imageLayer->imageArray, rewardLayer->imageReward)
-// 같은 배열에 저장되는 이미지들은 내부에서 목적에 따라 묶여서 저장됨
-// 접근하기 편하도록 하기 위해 시작 번호를 저장하여 관리
+// �??�이?�마???�용?�는 ?��?지?��? ?�나??배열???�?�됨 (ex. imageLayer->imageArray, rewardLayer->imageReward)
+// 같�? 배열???�?�되???��?지?��? ?��??�서 목적???�라 묶여???�?�됨
+// ?�근?�기 ?�하?�록 ?�기 ?�해 ?�작 번호�??�?�하??관�?
 int index_StageImages_Start;
 int index_Area_PC;
 int index_Area_Button_Start;
@@ -58,7 +58,7 @@ int index_Area_UI_mapTile_Start;
 int index_Area_UI_MiniGame_Start;
 int index_RewardImages_Start;
 
-// BMP 파일 시작
+// BMP ?�일 ?�작
 
 // NULL BMP
 char bmpNameNull[] = "";
@@ -156,7 +156,7 @@ char bmpHpPotionName[] = "hpPotion.bmp";
 char bmpBoomName[] = "boom.bmp";
 
 // FLAG, BEDROCK BMP
-char bmpBedrockName[] = "emptyTile.bmp";
+char bmpBedrockName[] = "lava.bmp";
 char bmpFlagName[] = "flag.bmp";
 
 // NORMAL NPC BMP
@@ -180,7 +180,7 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";	
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
-// 함수 시작
+// ?�수 ?�작
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
     int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
@@ -208,7 +208,7 @@ void removeCursor() {
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &c);
 }
 
-void initialize() { // 기초적인 이니셜라이징(콘솔 사이즈 지정, 포인터 삭제 등)
+void initialize() { // 기초?�인 ?�니?�라?�징(콘솔 ?�이�?지?? ?�인????�� ??
 
     getHandle();
     resizeConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
@@ -216,7 +216,7 @@ void initialize() { // 기초적인 이니셜라이징(콘솔 사이즈 지정, 
     srand((unsigned)time(NULL));
 }
 
-void initStageImage() { // stageLayer에서 사용하는 모든 이미지 최초 생성
+void initStageImage() { // stageLayer?�서 ?�용?�는 모든 ?��?지 최초 ?�성
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -235,7 +235,7 @@ void initStageImage() { // stageLayer에서 사용하는 모든 이미지 최초
 
 }
 
-void initItemImages() { // 아이템 관련 함수 (개발 진행 중)
+void initItemImages() { // ?�이??관???�수 (개발 진행 �?
 	std::vector<int> itemList = pc.getitemList();
 
 	for (int i = 0; i < itemList.size(); i++) {
@@ -251,7 +251,7 @@ void initItemImages() { // 아이템 관련 함수 (개발 진행 중)
 	}
 }
 
-void fillBlockImages() { // imageLayer의 블록(25x25) 최초 생성 
+void fillBlockImages() { // imageLayer??블록(25x25) 최초 ?�성 
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
@@ -260,7 +260,7 @@ void fillBlockImages() { // imageLayer의 블록(25x25) 최초 생성
 	}
 }
 
-void initAreaUI() // imageLayer의 UI 이미지 최초 생성
+void initAreaUI() // imageLayer??UI ?��?지 최초 ?�성
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
@@ -314,7 +314,7 @@ void initAreaUI() // imageLayer의 UI 이미지 최초 생성
 	imageArray[imageLayer.imageCount++] = { bmpNameTimer, 1600, 1450, 1, 1 };
 }
 
-void initRewardImage() { // rewardLayer에서 사용하는 모든 이미지 최초 생성
+void initRewardImage() { // rewardLayer?�서 ?�용?�는 모든 ?��?지 최초 ?�성
 	rewardLayer.images = imagesReward;
 	rewardLayer.imageCount = 0;
 
@@ -331,7 +331,7 @@ void initRewardImage() { // rewardLayer에서 사용하는 모든 이미지 최�
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void updateCharacterStatus() { // PC 상태창을 업데이트
+void updateCharacterStatus() { // PC ?�태창을 ?�데?�트
 	wchar_t playerStone[20];
 	wchar_t playerHp[20];
 	wchar_t playerOz[20];
@@ -357,7 +357,7 @@ void updateCharacterStatus() { // PC 상태창을 업데이트
 	printText(targetLayer->_consoleDC, 250, 700, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
 
-void setMovableStageInfo(int row, int col) { // 스테이지 맵에서 새롭게 이동 가능한 지역을 표시하기 위한 함수
+void setMovableStageInfo(int row, int col) { // ?�테?��? 맵에???�롭�??�동 가?�한 지??�� ?�시?�기 ?�한 ?�수
 	if (row - 1 >= 0) {
 		if (stageInfo[row - 1][col] == 1) {
 			stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
@@ -384,18 +384,18 @@ void setMovableStageInfo(int row, int col) { // 스테이지 맵에서 새롭게
 	}
 }
 
-void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
-	// 에어리어 상에서 NPC가 생성되는 검은 공간의 크기를 설정하는 변수들
+void getNewArea() { // ?�말 ?�어리어(25x25)�?초기?�하??변??
+	// ?�어리어 ?�에??NPC가 ?�성?�는 검?� 공간???�기�??�정?�는 변?�들
 	NPCSpaceHeight = getNPCSpaceHeight();
 	NPCSpaceWidth = getNPCSpaceWidth();
-	// 검은 공간의 위치를 저장하는 변수
+	// 검?� 공간???�치�??�?�하??변??
 	NPCSpacePosX = getNPCSpacePosX();
 	NPCSpacePosY = getNPCSpacePosY();
 
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			// 검은 공간을 실제적으로 만드는 반복문
+			// 검?� 공간???�제?�으�?만드??반복�?
 			if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
 				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
 				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
@@ -406,7 +406,7 @@ void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
 					}
 				}
 			}
-			// 다른 부분은 기본 돌로 그리기
+			// ?�른 부분�? 기본 ?�로 그리�?
 			else {
 				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
@@ -417,7 +417,7 @@ void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
 			}
 		}
 	}
-	// 에어리어에서 PC가 스폰되는 초기 위치
+	// ?�어리어?�서 PC가 ?�폰?�는 초기 ?�치
 	imageArray[0].x = AREA_ORIGIN_X + 576;
 	imageArray[0].y = AREA_ORIGIN_Y;
 	for (int y = 0;y < BLOCKSIZE;y++) {
@@ -425,14 +425,14 @@ void getNewArea() { // 노말 에어리어(25x25)를 초기화하는 변수
 			blockInfo[y][576 + x] = 0;
 		}
 	}
-	// 스폰되는 위치에 블록 지우기
+	// ?�폰?�는 ?�치??블록 지?�기
 	imageArray[13].fileName = bmpNameNull;
 
-	// 현재 캐릭터 스폰 위치에 광석이 생성될 수 있는 버그가 존재함.
-	// getNewArea() 후 Generate~() 해서 발생하는 현상.
+	// ?�재 캐릭???�폰 ?�치??광석???�성?????�는 버그가 존재??
+	// getNewArea() ??Generate~() ?�서 발생?�는 ?�상.
 }
 
-void getNewMiniGameArea() // 미니게임 에어리어(25x25)를 초기화하는 변수
+void getNewMiniGameArea() // 미니게임 ?�어리어(25x25)�?초기?�하??변??
 {
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
@@ -445,7 +445,7 @@ void getNewMiniGameArea() // 미니게임 에어리어(25x25)를 초기화하는
 			}
 		}
 	}
-	// 에어리어에서 PC가 스폰되는 초기 위치
+	// ?�어리어?�서 PC가 ?�폰?�는 초기 ?�치
 	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
 	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
 	for (int y = 0;y < BLOCKSIZE;y++) {
@@ -453,21 +453,21 @@ void getNewMiniGameArea() // 미니게임 에어리어(25x25)를 초기화하는
 			blockInfo[y][576 + x] = 0;
 		}
 	}
-	// 스폰되는 위치에 블록 지우기
+	// ?�폰?�는 ?�치??블록 지?�기
 	imageArray[12 * 25 + 13].fileName = bmpNameNull;
 }
 
-void drawUI() { // 에어리어 UI 활성화
-	imageArray[index_Area_UI_Start].isHide = 0; // 아이템 창이 보이도록
+void drawUI() { // ?�어리어 UI ?�성??
+	imageArray[index_Area_UI_Start].isHide = 0; // ?�이??창이 보이?�록
 
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP바가 보이도록
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP바�? 보이?�록
 	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2바가 보이도록
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2바�? 보이?�록
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 맵이 보이도록
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 맵이 보이?�록
 		imageArray[i].isHide = 0;
 
-	// 에어리어 X가 미구현이기 때문에 임시로 에어리어 지도에서 X가 표시되지 않도록
+	// ?�어리어 X가 미구?�이�??�문???�시�??�어리어 지?�에??X가 ?�시?��? ?�도�?
 	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
 	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
@@ -538,14 +538,14 @@ bool collisionCheck(int x, int y) {
 	return false;
 }
 
-void printTimeInMiniGameArea(float t) { // 미니게임 에어리어에서 남은 시간을 출력하는 함수
+void printTimeInMiniGameArea(float t) { // 미니게임 ?�어리어?�서 ?��? ?�간??출력?�는 ?�수
 	wchar_t timeLimit[20];
 	if (t > 0.0) swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%.2f", t);
 	else swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%0.00");
 	printText(targetLayer->_consoleDC, 1750, 1458, 40, 0, RGB(255, 255, 255), TA_CENTER, timeLimit);
 }
 
-void printMyOriInMiniGameArea() { // 미니게임 에어리어에서 information과 획득한 광물 수를 출력하는 함수
+void printMyOriInMiniGameArea() { // 미니게임 ?�어리어?�서 information�??�득??광물 ?��? 출력?�는 ?�수
 	wchar_t info1[30] = L"1 Star (5) = 100 Stones";
 	wchar_t info2[30] = L"2 Star(10) = 200 Stones";
 	wchar_t info3[30] = L"3 Star(20) = 300 Stones";
@@ -558,7 +558,7 @@ void printMyOriInMiniGameArea() { // 미니게임 에어리어에서 information
 	printText(targetLayer->_consoleDC, 1790, 1358, 40, 0, RGB(255, 255, 255), TA_CENTER, numOrichalcum);
 }
 
-void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
+void rewardUI() { // ?�어리어 ?�리????보상???�는 ?�수
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
 
@@ -688,7 +688,7 @@ void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
 		}
 	}
 	targetLayer->fadeOut(targetLayer, NULL);
-	// 다음 RewardUI() 호출을 위한 코드
+	// ?�음 RewardUI() ?�출???�한 코드
 	imagesReward[4].isHide = 1;
 	imagesReward[5].isHide = 1;
 	imagesReward[6].isHide = 1;
