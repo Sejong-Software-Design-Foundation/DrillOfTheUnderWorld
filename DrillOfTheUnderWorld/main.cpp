@@ -83,11 +83,25 @@ int main() {
 				{
 					// ?œë¤ ë³€?˜ë? ?¬ìš©?˜ì—¬ ?´ë–¤ ?ì–´ë¦¬ì–´ë¡?ì§„ìž…??ì§€ ?•í•˜??ì½”ë“œ
 					int num = rand() % 4;
-					if (num == 0) { // ?¸ë§ ?ì–´ë¦¬ì–´ë¡?ì§„ìž…
+					if (currentAreaColIndex == 3 && currentAreaRowIndex == 2) {
+						isNormalArea = false;
+						isMiniGameArea = false;
+						isButtonArea = false;
+						isFlagArea = false;
+						isBossArea = true;
+						getNewBossArea();
+						Emcee->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25);
+						imageArray[0].x = AREA_ORIGIN_X + BLOCKSIZE / 2 * 25;
+						imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
+						ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+						bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+					}
+					else if (num == 0) { // ?¸ë§ ?ì–´ë¦¬ì–´ë¡?ì§„ìž…
 						isNormalArea = true;
 						isMiniGameArea = false;
 						isButtonArea = false;
 						isFlagArea = false;
+						isBossArea = false;
 						getNewArea();
 						Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
@@ -101,6 +115,7 @@ int main() {
 						isMiniGameArea = true;
 						isButtonArea = false;
 						isFlagArea = false;
+						isBossArea = false;
 						getNewMiniGameArea();
 						Emcee->NPCSetPosition(-48, -48);
 						ladder->NPCSetPosition(-48, -48);
@@ -140,6 +155,7 @@ int main() {
 						isMiniGameArea = false;
 						isButtonArea = false;
 						isFlagArea = true;
+						isBossArea = false;
 
 						pc.initFlagCnt();
 						getNewArea();
@@ -218,6 +234,7 @@ int main() {
 							isOnStage = true;
 							isOnArea = false;
 							isNormalArea = false;
+							isBossArea = false;
 							targetLayer->fadeOut(targetLayer, NULL);
 							targetLayer = &stageLayer;
 							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
@@ -278,6 +295,7 @@ int main() {
 							isOnStage = true;
 							isOnArea = false;
 							isMiniGameArea = false;
+							isBossArea = false;
 							targetLayer->fadeOut(targetLayer, NULL);
 							targetLayer = &stageLayer;
 							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
@@ -373,6 +391,7 @@ int main() {
 						case S:
 							isOnStage = true;
 							isOnArea = false;
+							isBossArea = false;
 							isButtonArea = false;
 							targetLayer->fadeOut(targetLayer, NULL);
 							targetLayer = &stageLayer;
@@ -437,6 +456,67 @@ int main() {
 							isOnStage = true;
 							isOnArea = false;
 							isFlagArea = false;
+							isBossArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
+							break;
+						case LEFT:
+							pc.setDirLeft();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case RIGHT:
+							pc.setDirRight();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case UP:
+							pc.setDirUp();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case DOWN:
+							pc.setDirDown();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+							break;
+						case ESC:
+							rewardUI();
+							break;
+						case SPACE:
+							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+							pc.dig(targetPos.X, targetPos.Y);
+							break;
+						case O:
+							pc.setHP(pc.getHP() - 10);
+							break;
+						case P:
+							pc.setHP(pc.getHP() + 10);
+							break;
+						}
+					}
+					Sleep(5);
+				}
+			}
+			else if (isBossArea) {
+				Emcee->move();
+				for (int i = 0; i < 10; i++) {
+					if (_kbhit() != 0) {
+						int key = _getch();
+						int curPosX = imageLayer.images[0].x;
+						int curPosY = imageLayer.images[0].y;
+						COORD afterMovedPos;
+
+						switch (key) {
+						case S:
+							isOnStage = true;
+							isOnArea = false;
+							isFlagArea = false;
+							isBossArea = false;
 							targetLayer->fadeOut(targetLayer, NULL);
 							targetLayer = &stageLayer;
 							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;

@@ -201,7 +201,7 @@ void Mineral::GenerateOrichalcum() {
 void Mineral::GenerateQuestionMark() {
 	srand(static_cast<unsigned int>(time(nullptr)));
 
-	int num = 200;
+	int num = 10;
 	if (isMiniGameArea == 1) num = 0;
 
 	for (int i = 0; i < num; i++) {

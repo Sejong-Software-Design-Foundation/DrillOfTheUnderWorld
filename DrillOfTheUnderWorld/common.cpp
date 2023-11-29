@@ -42,6 +42,7 @@ bool isNormalArea = false;
 bool isMiniGameArea = false;
 bool isButtonArea = false;
 bool isFlagArea = false;
+bool isBossArea = false;
 
 // ê°??ˆì´?´ë§ˆ???¬ìš©?˜ëŠ” ?´ë?ì§€?¤ì? ?˜ë‚˜??ë°°ì—´???€?¥ë¨ (ex. imageLayer->imageArray, rewardLayer->imageReward)
 // ê°™ì? ë°°ì—´???€?¥ë˜???´ë?ì§€?¤ì? ?´ë??ì„œ ëª©ì ???°ë¼ ë¬¶ì—¬???€?¥ë¨
@@ -822,5 +823,34 @@ void setFlag(int cnt) {
 			}
 		}
 		cnt--;
+	}
+}
+
+
+
+void getNewBossArea() {
+	int cnt = 1;
+	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			// ê²€?€ ê³µê°„???¤ì œ?ìœ¼ë¡?ë§Œë“œ??ë°˜ë³µë¬?
+			if (y==AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x==AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
+				//Å×µÎ¸®¸¸ ¿ë¾Ïºí·ÏÀ¸·Î Ã¤¿ì±â
+				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 99999999;
+					}
+				}
+			}
+			// ³ª¸ÓÁö´Â ÀüºÎ ºó°ø°£
+			else { 
+				imageArray[cnt++] = { bmpNameNull, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 0;
+					}
+				}
+			}
+		}
 	}
 }
