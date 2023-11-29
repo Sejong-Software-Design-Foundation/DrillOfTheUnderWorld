@@ -425,6 +425,18 @@
     <Image Include="PC_up_getOxygen.bmp">
       <Filter>images</Filter>
     </Image>
+    <Image Include="bedrock.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="Lava2.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="lava.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="lava_block.bmp">
+      <Filter>images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="images">

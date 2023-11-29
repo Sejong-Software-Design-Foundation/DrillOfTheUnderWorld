@@ -156,7 +156,7 @@ char bmpHpPotionName[] = "hpPotion.bmp";
 char bmpBoomName[] = "boom.bmp";
 
 // FLAG, BEDROCK BMP
-char bmpBedrockName[] = "emptyTile.bmp";
+char bmpBedrockName[] = "lava.bmp";
 char bmpFlagName[] = "flag.bmp";
 
 // NORMAL NPC BMP

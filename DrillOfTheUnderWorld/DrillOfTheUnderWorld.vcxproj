@@ -211,6 +211,7 @@
     <Image Include="..\..\Stage2.bmp" />
     <Image Include="..\..\Stage3.bmp" />
     <Image Include="basicStoneBlocks.bmp" />
+    <Image Include="bedrock.bmp" />
     <Image Include="block_MineralBronze.bmp" />
     <Image Include="block_MineralDiamond.bmp" />
     <Image Include="block_MineralGold.bmp" />
@@ -254,6 +255,9 @@
     <Image Include="item1.bmp" />
     <Image Include="item2.bmp" />
     <Image Include="item3.bmp" />
+    <Image Include="lava.bmp" />
+    <Image Include="Lava2.bmp" />
+    <Image Include="lava_block.bmp" />
     <Image Include="nomalStage.bmp" />
     <Image Include="clearedStage.bmp" />
     <Image Include="brokenStoneBlock.bmp" />
