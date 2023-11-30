@@ -201,7 +201,10 @@ int main() {
 					if (!collisionCheckInStage(curPosX, curPosY + AREA_BLOCK_SIZE)) pc.moveInStage();
 					break;
 				}
-				if (key) targetLayer->renderAll(targetLayer);
+				if (key) {
+					targetLayer->renderAll(targetLayer);
+					updateCharacterStatus();
+				}
 			}
 		}
 		else if (isOnArea) { // PC가 ?�어리어???�는 경우
