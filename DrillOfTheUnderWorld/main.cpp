@@ -510,6 +510,9 @@ int main() {
 			}
 			else if (isBossArea) {
 				Emcee->move();
+				for (int i = 0;i < pc.getBulletList().size();i++) {
+					pc.getBulletList()[i].move();
+				}
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -554,8 +557,7 @@ int main() {
 							rewardUI();
 							break;
 						case SPACE:
-							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-							pc.dig(targetPos.X, targetPos.Y);
+							pc.attack();
 							break;
 						case O:
 							pc.setHP(pc.getHP() - 10);

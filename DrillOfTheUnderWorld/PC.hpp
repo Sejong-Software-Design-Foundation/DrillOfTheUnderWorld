@@ -4,6 +4,21 @@ extern "C" {
 }
 #include <vector>
 
+class PCBullet {
+private:
+	int x, y;
+	int dx[4] = { 1,0,-1,0 };
+	int dy[4] = { 0,1,0,-1 };
+	int dir;
+	int speed=48;
+	int imageidx;
+
+public:
+	PCBullet();
+	PCBullet(int x, int y, int dir);
+	void move();
+};
+
 class PC {
 private:
 
@@ -15,8 +30,8 @@ private:
 	int stone = 0;
 	int dx[4] = { 1,0,-1,0 };
 	int dy[4] = { 0,1,0,-1 };
-
 	std::vector<int> itemList;
+	std::vector<PCBullet>pcBullets;
 
 	char* bmpPCName;
 	char* bmpPCLeftName;
@@ -104,4 +119,6 @@ public:
 	void hitEffect();
 	void getHPEffect();
 	void getOxygenEffect();
+	void attack();
+	std::vector<PCBullet> getBulletList();
 };

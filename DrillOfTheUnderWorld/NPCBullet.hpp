@@ -1,8 +1,8 @@
 #ifndef __NPCBULLET_
 #define __NPCBULLET_
 
-#include "NPC.hpp"
-
+#include "common.hpp"
+#include <vector>
 /// <summary>
 /// === NPCBULLET INFO ===
 /// HP : 0
@@ -61,5 +61,6 @@ void NPCBullet::move() {
 void NPCBullet::attack() {
 	pc.setHP(pc.getHP() - attack_damage);
 }
+
 
 #endif

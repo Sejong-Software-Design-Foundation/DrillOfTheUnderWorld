@@ -1,6 +1,6 @@
 #include "PC.hpp"
-#include "common.hpp"
 #include <string>
+#include "common.hpp"
 
 using namespace std;
 /*
@@ -455,4 +455,40 @@ void PC::getOxygenEffect() {
 	targetLayer->renderAll(targetLayer);
 	imageArray[0].fileName = bmpCurName;
 	targetLayer->renderAll(targetLayer);
+}
+
+void PC::attack() {
+	pcBullets.push_back(PCBullet(imageArray[0].x, imageArray[0].y, this->curDirection));
+}
+
+PCBullet::PCBullet() {
+	x = imageArray[0].x;
+	y = imageArray[0].y;
+	dir = pc.getDir();
+	this->imageidx = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
+}
+PCBullet::PCBullet(int x, int y, int dir) {
+	this->x = x;
+	this->y = y;
+	this->dir = dir;
+	this->imageidx = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
+}
+void PCBullet::move() {
+	if (collisionCheck(x + dx[dir], y + dy[dir])) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return;
+	}
+
+	// update bullet position
+	imageLayer.images[imageidx].x += dx[dir]*speed;
+	imageLayer.images[imageidx].y += dy[dir]*speed;
+
+	x = imageLayer.images[imageidx].x;
+	y = imageLayer.images[imageidx].y;
+}
+
+std::vector<PCBullet> PC::getBulletList() {
+	return pcBullets;
 }

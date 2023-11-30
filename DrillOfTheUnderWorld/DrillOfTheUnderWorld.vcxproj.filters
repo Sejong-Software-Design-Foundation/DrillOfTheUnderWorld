@@ -31,6 +31,7 @@
     <ClInclude Include="Boss.hpp">
       <Filter>images</Filter>
     </ClInclude>
+    <ClInclude Include="PCBullets.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav">

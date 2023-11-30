@@ -14,6 +14,7 @@ extern "C" {
 #include "PC.hpp"
 #include "Stage.hpp"
 #include "Text.hpp"
+#include <vector>
 
 #define NUM1 49  
 #define NUM2 50  
@@ -63,7 +64,7 @@ extern Image stageImageArray[40];
 extern int stageInfo[5][5];
 
 extern ImageLayer imageLayer;
-extern Image imageArray[1000];
+extern Image imageArray[2000];
 extern int blockInfo[1200][1200];
 extern int mapInfo[5][5];
 extern int currentAreaRowIndex;

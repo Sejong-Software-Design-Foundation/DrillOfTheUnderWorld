@@ -1,5 +1,4 @@
 #include "common.hpp"
-
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
@@ -11,7 +10,7 @@ Image stageImageArray[40];
 int stageInfo[5][5];
 // imageLayer?€ ?´ë‹¹ ?ˆì´?´ì—???¬ìš©?˜ëŠ” ë³€?˜ë“¤
 ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
-Image imageArray[1000];
+Image imageArray[2000];
 int blockInfo[1200][1200];
 int mapInfo[5][5];
 int currentAreaRowIndex;

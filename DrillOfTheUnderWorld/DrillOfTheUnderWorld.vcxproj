@@ -149,6 +149,7 @@
     <ClInclude Include="Npc.hpp" />
     <ClInclude Include="NPCBullet.hpp" />
     <ClInclude Include="PC.hpp" />
+    <ClInclude Include="PCBullets.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource2.h" />
     <ClInclude Include="SoundPlayer.h" />

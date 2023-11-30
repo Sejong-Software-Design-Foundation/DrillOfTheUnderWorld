@@ -2,7 +2,6 @@
 #define __NPC_
 
 #include "common.hpp"
-
 // abstract class
 class NPC {
 public:
@@ -158,5 +157,6 @@ void NPC::NPCBossMovement() {
         NPCTrackingMovement();
     }
 }
+
 
 #endif
