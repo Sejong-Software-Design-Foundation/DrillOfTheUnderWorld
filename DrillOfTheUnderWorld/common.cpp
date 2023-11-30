@@ -460,7 +460,7 @@ void getNewMiniGameArea() // 미니게임 ?�어리어(25x25)�?초기?�하??변?
 	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
 	for (int y = 0;y < BLOCKSIZE;y++) {
 		for (int x = 0;x < BLOCKSIZE;x++) {
-			blockInfo[y][576 + x] = 0;
+			blockInfo[576 + y][576 + x] = 0;
 		}
 	}
 	// ?�폰?�는 ?�치??블록 지?�기
