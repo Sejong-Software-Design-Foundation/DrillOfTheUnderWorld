@@ -83,7 +83,7 @@ int main() {
 				{
 					// ?œë¤ ë³€?˜ë? ?¬ìš©?˜ì—¬ ?´ë–¤ ?ì–´ë¦¬ì–´ë¡?ì§„ìž…??ì§€ ?•í•˜??ì½”ë“œ
 					int num = rand() % 4;
-					if (currentAreaColIndex == 3 && currentAreaRowIndex == 2) {
+					if (currentAreaColIndex == 2 && currentAreaRowIndex == 1) {
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -203,7 +203,7 @@ int main() {
 				}
 				if (key) {
 					targetLayer->renderAll(targetLayer);
-					updateCharacterStatus();
+					if (key != S) updateCharacterStatus();
 				}
 			}
 		}
