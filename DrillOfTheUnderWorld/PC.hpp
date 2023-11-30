@@ -45,13 +45,13 @@ private:
 		bmpPCHitRightName = _strdup("PC_right_hit.bmp");
 		bmpPCHitDownName = _strdup("PC_down_hit.bmp");;
 		bmpPCHitUpName = _strdup("PC_up_hit.bmp");
-		bmpPCgetHPLeftName = _strdup("PC_up_getHP.bmp");
-		bmpPCgetHPRightName = _strdup("PC_up_getHP.bmp");
-		bmpPCgetHPDownName = _strdup("PC_up_getHP.bmp");
+		bmpPCgetHPLeftName = _strdup("PC_left_getHP.bmp");
+		bmpPCgetHPRightName = _strdup("PC_right_getHP.bmp");
+		bmpPCgetHPDownName = _strdup("PC_down_getHP.bmp");
 		bmpPCgetHPUpName = _strdup("PC_up_getHP.bmp");
-		bmpPCgetOxygenLeftName = _strdup("PC_up_getOxygen.bmp");
-		bmpPCgetOxygenRightName = _strdup("PC_up_getOxygen.bmp");
-		bmpPCgetOxygenDownName = _strdup("PC_up_getOxygen.bmp");
+		bmpPCgetOxygenLeftName = _strdup("PC_left_getOxygen.bmp");
+		bmpPCgetOxygenRightName = _strdup("PC_right_getOxygen.bmp");
+		bmpPCgetOxygenDownName = _strdup("PC_down_getOxygen.bmp");
 		bmpPCgetOxygenUpName = _strdup("PC_up_getOxygen.bmp");
 	}
 	PC(const PC& pc_ref) {

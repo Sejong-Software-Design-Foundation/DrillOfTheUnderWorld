@@ -91,6 +91,7 @@ extern bool isNormalArea;
 extern bool isMiniGameArea;
 extern bool isFlagArea;
 extern bool isButtonArea;
+extern bool isBossArea;
 
 extern int index_StageImages_Start;
 extern int index_Area_PC;
@@ -226,4 +227,8 @@ bool printButtonStageStatus();
 void printFlagStageStatus(int curFlagCnt);
 void setBedrock(int max);
 void setFlag(int cnt);
+
+void getNewBossArea();
+void printStoneStatus(int curStone);
+
 #endif COMMON_HPP

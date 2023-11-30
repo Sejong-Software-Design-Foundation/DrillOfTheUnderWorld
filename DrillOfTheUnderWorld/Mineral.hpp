@@ -201,7 +201,7 @@ void Mineral::GenerateOrichalcum() {
 void Mineral::GenerateQuestionMark() {
 	srand(static_cast<unsigned int>(time(nullptr)));
 
-	int num = 200;
+	int num = 10;
 	if (isMiniGameArea == 1) num = 0;
 
 	for (int i = 0; i < num; i++) {
@@ -281,11 +281,14 @@ void Mineral::getCluster() {
 	int clusterY;
 	while (true) {
 		clusterX = (rand() % 22) * BLOCKSIZE + AREA_ORIGIN_X;
-		clusterY = (rand() % 13) * BLOCKSIZE + AREA_ORIGIN_Y + 10 * BLOCKSIZE;
+		clusterY = (rand() % 13 + 10) * BLOCKSIZE + AREA_ORIGIN_Y;
 		bool ok = true;
 		for (int i = 0;i < 3;i++) {
 			for (int j = 0;j < 3;j++) {
-				if (!blockInfo[convertPosToInfoY(clusterY + i * BLOCKSIZE)][clusterX + j * BLOCKSIZE]) {
+				int infoX = convertPosToInfoX(clusterX + j * BLOCKSIZE);
+				int infoY = convertPosToInfoY(clusterY + i * BLOCKSIZE);
+				if (!blockInfo[infoY][infoX]
+					|| infoX <= 0 || infoX >= 1200-BLOCKSIZE || infoY <= 0 || infoY >= 1200-BLOCKSIZE) {
 					ok = false;
 					break;
 				}

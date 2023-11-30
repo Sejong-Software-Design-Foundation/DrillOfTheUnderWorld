@@ -42,6 +42,7 @@ bool isNormalArea = false;
 bool isMiniGameArea = false;
 bool isButtonArea = false;
 bool isFlagArea = false;
+bool isBossArea = false;
 
 // Í∞??àÏù¥?¥Îßà???¨Ïö©?òÎäî ?¥Î?ÏßÄ?§Ï? ?òÎÇò??Î∞∞Ïó¥???Ä?•Îê® (ex. imageLayer->imageArray, rewardLayer->imageReward)
 // Í∞ôÏ? Î∞∞Ïó¥???Ä?•Îêò???¥Î?ÏßÄ?§Ï? ?¥Î??êÏÑú Î™©Ï†Å???∞Îùº Î¨∂Ïó¨???Ä?•Îê®
@@ -395,8 +396,17 @@ void getNewArea() { // ?∏Îßê ?êÏñ¥Î¶¨Ïñ¥(25x25)Î•?Ï¥àÍ∏∞?îÌïò??Î≥Ä??
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			if (y == AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x == AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
+				//≈◊µŒ∏Æ∏∏ øÎæœ∫Ì∑œ¿∏∑Œ √§øÏ±‚
+				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 99999999;
+					}
+				}
+			}
 			// Í≤Ä?Ä Í≥µÍ∞Ñ???§Ï†ú?ÅÏúºÎ°?ÎßåÎìú??Î∞òÎ≥µÎ¨?
-			if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
+			else if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
 				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
 				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
 				imageArray[cnt++] = { bmpNameNull, x,y,1 };
@@ -419,14 +429,14 @@ void getNewArea() { // ?∏Îßê ?êÏñ¥Î¶¨Ïñ¥(25x25)Î•?Ï¥àÍ∏∞?îÌïò??Î≥Ä??
 	}
 	// ?êÏñ¥Î¶¨Ïñ¥?êÏÑú PCÍ∞Ä ?§Ìè∞?òÎäî Ï¥àÍ∏∞ ?ÑÏπò
 	imageArray[0].x = AREA_ORIGIN_X + 576;
-	imageArray[0].y = AREA_ORIGIN_Y;
-	for (int y = 0;y < BLOCKSIZE;y++) {
+	imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE;
+	for (int y = BLOCKSIZE;y < 2*BLOCKSIZE;y++) {
 		for (int x = 0;x < BLOCKSIZE;x++) {
 			blockInfo[y][576 + x] = 0;
 		}
 	}
 	// ?§Ìè∞?òÎäî ?ÑÏπò??Î∏îÎ°ù ÏßÄ?∞Í∏∞
-	imageArray[13].fileName = bmpNameNull;
+	imageArray[13 + 25].fileName = bmpNameNull;
 
 	// ?ÑÏû¨ Ï∫êÎ¶≠???§Ìè∞ ?ÑÏπò??Í¥ëÏÑù???ùÏÑ±?????àÎäî Î≤ÑÍ∑∏Í∞Ä Ï°¥Ïû¨??
 	// getNewArea() ??Generate~() ?¥ÏÑú Î∞úÏÉù?òÎäî ?ÑÏÉÅ.
@@ -512,8 +522,8 @@ bool collisionCheckInStage(int x, int y) {
 	return stageInfo[infoY][infoX];
 }
 
-int getNPCSpaceHeight() { return (rand() % 10 + 5); }
-int getNPCSpaceWidth() { return (rand() % 10 + 5); }
+int getNPCSpaceHeight() { return (rand() % 8 + 4); }
+int getNPCSpaceWidth() { return (rand() % 8 + 4); }
 int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth)+1) * BLOCKSIZE + AREA_ORIGIN_X); }
 int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight)+1) * BLOCKSIZE + AREA_ORIGIN_Y) / 2 + 13 * BLOCKSIZE; }
 
@@ -706,11 +716,11 @@ void rewardUI() { // ?êÏñ¥Î¶¨Ïñ¥ ?¥Î¶¨????Î≥¥ÏÉÅ???ªÎäî ?®Ïàò
 	targetLayer->renderAll(targetLayer);
 
 	int num = 0;
-	if (index1 == 1) num = rand() % 3;
-	else if (index1 == 2) num = rand() % 11 + (-5);
-	if (index2 == 1) pc.setAtkLev(pc.getAtkLev() + num);
-	else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
-	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
+	if (index1 == 0) num = rand() % 3;
+	else if (index1 == 1) num = rand() % 11 + (-5);
+	if (index2 == 0) pc.setAtkLev(pc.getAtkLev() + num);
+	else if (index2 == 1) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
+	else if (index2 == 2) pc.setSpdLev(pc.getSpdLev() + num);
 	pc.setStone(pc.getStone() + 100);
 
 	imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar0;
@@ -772,7 +782,7 @@ bool printButtonStageStatus() {
  }
 
 void printFlagStageStatus(int curFlagCnt) {
-	wchar_t playerFlagInfo[100] = L"You're Current Flag Count : ";
+	wchar_t playerFlagInfo[100] = L"Your Current Flag Count : ";
 	wchar_t playerFlagCount[20] = L"";
 	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curFlagCnt);
 	printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
@@ -823,4 +833,41 @@ void setFlag(int cnt) {
 		}
 		cnt--;
 	}
+}
+
+
+
+void getNewBossArea() {
+	int cnt = 1;
+	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			// Í≤Ä?Ä Í≥µÍ∞Ñ???§Ï†ú?ÅÏúºÎ°?ÎßåÎìú??Î∞òÎ≥µÎ¨?
+			if (y==AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x==AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
+				//≈◊µŒ∏Æ∏∏ øÎæœ∫Ì∑œ¿∏∑Œ √§øÏ±‚
+				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 99999999;
+					}
+				}
+			}
+			// ≥™∏”¡ˆ¥¬ ¿¸∫Œ ∫Û∞¯∞£
+			else { 
+				imageArray[cnt++] = { bmpNameNull, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+void printStoneStatus(int curStone) {
+	wchar_t playerFlagInfo[100] = L"∫∏¿Ø¡ﬂ¿Œ STONE : ";
+	wchar_t playerFlagCount[20] = L"";
+	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
+	printText(targetLayer->_consoleDC, 500,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
+	printText(targetLayer->_consoleDC, 700,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
 }
