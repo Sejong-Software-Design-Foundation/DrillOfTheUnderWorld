@@ -285,7 +285,10 @@ void Mineral::getCluster() {
 		bool ok = true;
 		for (int i = 0;i < 3;i++) {
 			for (int j = 0;j < 3;j++) {
-				if (!blockInfo[convertPosToInfoY(clusterY + i * BLOCKSIZE)][convertPosToInfoX(clusterX + j * BLOCKSIZE)]) {
+				int infoX = convertPosToInfoX(clusterX + j * BLOCKSIZE);
+				int infoY = convertPosToInfoY(clusterY + i * BLOCKSIZE);
+				if (!blockInfo[infoY][infoX]
+					|| infoX <= 0 || infoX >= 1200-BLOCKSIZE || infoY <= 0 || infoY >= 1200-BLOCKSIZE) {
 					ok = false;
 					break;
 				}

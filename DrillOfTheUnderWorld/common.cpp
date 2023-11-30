@@ -782,7 +782,7 @@ bool printButtonStageStatus() {
  }
 
 void printFlagStageStatus(int curFlagCnt) {
-	wchar_t playerFlagInfo[100] = L"You're Current Flag Count : ";
+	wchar_t playerFlagInfo[100] = L"Your Current Flag Count : ";
 	wchar_t playerFlagCount[20] = L"";
 	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curFlagCnt);
 	printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
@@ -862,4 +862,12 @@ void getNewBossArea() {
 			}
 		}
 	}
+}
+
+void printStoneStatus(int curStone) {
+	wchar_t playerFlagInfo[100] = L"보유중인 STONE : ";
+	wchar_t playerFlagCount[20] = L"";
+	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
+	printText(targetLayer->_consoleDC, 500,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
+	printText(targetLayer->_consoleDC, 700,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
 }

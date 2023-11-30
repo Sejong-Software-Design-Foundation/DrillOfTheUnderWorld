@@ -229,5 +229,6 @@ void setBedrock(int max);
 void setFlag(int cnt);
 
 void getNewBossArea();
+void printStoneStatus(int curStone);
 
 #endif COMMON_HPP

@@ -103,7 +103,7 @@ int main() {
 						isFlagArea = false;
 						isBossArea = false;
 						getNewArea();
-						Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						//Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						Mineral* mineral = new Mineral();
@@ -118,7 +118,7 @@ int main() {
 						isFlagArea = false;
 						isBossArea = false;
 						getNewMiniGameArea();
-						Emcee->NPCSetPosition(-48, -48);
+						//Emcee->NPCSetPosition(-48, -48);
 						ladder->NPCSetPosition(-48, -48);
 						minigameStartTime = clock();
 						Mineral* mineral = new Mineral(); // stageLevel ?�??
@@ -142,7 +142,7 @@ int main() {
 						button2->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
 						button3->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 + BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
 
-						Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						//Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 
@@ -162,7 +162,7 @@ int main() {
 						pc.initFlagCnt();
 						getNewArea();
 						Mineral* mineral = new Mineral();
-						Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						//Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						setBedrock(3);
@@ -207,7 +207,7 @@ int main() {
 		else if (isOnArea) { // PC가 ?�어리어???�는 경우
 			targetLayer->renderAll(targetLayer);
 			drawUI(); // ?�어리어 UI�?그리???�수
-
+			printStoneStatus(pc.getStone());
 			if (isNormalArea) { // PC가 ?��? ?�어리어???�는 경우
 				// QuestionBlock 박쥐 ?�성 관??코드
 				if (isGenerateMobByQuestionBlock) {
@@ -223,7 +223,7 @@ int main() {
 				//mole->move();
 				bat->move();
 				ladder->move();
-				Emcee->move();
+				//Emcee->move();
 				// ?�보???�력 ?�행
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
@@ -378,7 +378,7 @@ int main() {
 					ladder->move();
 				}
 				bat->move();
-				Emcee->move();
+				//Emcee->move();
 				button1->move();
 				button2->move();
 				button3->move();
@@ -446,7 +446,7 @@ int main() {
 				//mole->move();
 				bat->move();
 				ladder->move();
-				Emcee->move();
+				//Emcee->move();
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
