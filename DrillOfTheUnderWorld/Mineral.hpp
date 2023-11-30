@@ -281,11 +281,11 @@ void Mineral::getCluster() {
 	int clusterY;
 	while (true) {
 		clusterX = (rand() % 22) * BLOCKSIZE + AREA_ORIGIN_X;
-		clusterY = (rand() % 13) * BLOCKSIZE + AREA_ORIGIN_Y + 10 * BLOCKSIZE;
+		clusterY = (rand() % 13 + 10) * BLOCKSIZE + AREA_ORIGIN_Y;
 		bool ok = true;
 		for (int i = 0;i < 3;i++) {
 			for (int j = 0;j < 3;j++) {
-				if (!blockInfo[convertPosToInfoY(clusterY + i * BLOCKSIZE)][clusterX + j * BLOCKSIZE]) {
+				if (!blockInfo[convertPosToInfoY(clusterY + i * BLOCKSIZE)][convertPosToInfoX(clusterX + j * BLOCKSIZE)]) {
 					ok = false;
 					break;
 				}

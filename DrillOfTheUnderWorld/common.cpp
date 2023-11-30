@@ -396,8 +396,17 @@ void getNewArea() { // ?╦К╖░ ?░Л√╢К╕╛Л√╢(25x25)К╔?Л╢┬Й╦╟?■М∙≤??КЁ─??
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			if (y == AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x == AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
+				//ев╣н╦╝╦╦ ©К╬о╨М╥ою╦╥н ц╓©Л╠Б
+				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 99999999;
+					}
+				}
+			}
 			// Й╡─?─ ЙЁ╣Й╟└???╓Л═°?│Л°╪К║?К╖▄К⌠°??К╟≤КЁ╣К╛?
-			if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
+			else if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
 				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
 				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
 				imageArray[cnt++] = { bmpNameNull, x,y,1 };
@@ -420,14 +429,14 @@ void getNewArea() { // ?╦К╖░ ?░Л√╢К╕╛Л√╢(25x25)К╔?Л╢┬Й╦╟?■М∙≤??КЁ─??
 	}
 	// ?░Л√╢К╕╛Л√╢?░Л└° PCЙ╟─ ?╓М▐╟?≤К┼■ Л╢┬Й╦╟ ?└Л╧≤
 	imageArray[0].x = AREA_ORIGIN_X + 576;
-	imageArray[0].y = AREA_ORIGIN_Y;
-	for (int y = 0;y < BLOCKSIZE;y++) {
+	imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE;
+	for (int y = BLOCKSIZE;y < 2*BLOCKSIZE;y++) {
 		for (int x = 0;x < BLOCKSIZE;x++) {
 			blockInfo[y][576 + x] = 0;
 		}
 	}
 	// ?╓М▐╟?≤К┼■ ?└Л╧≤??К╦■К║² Л╖─?╟Й╦╟
-	imageArray[13].fileName = bmpNameNull;
+	imageArray[13 + 25].fileName = bmpNameNull;
 
 	// ?└Л·╛ Л╨░К╕╜???╓М▐╟ ?└Л╧≤??Й╢▒Л└²???²Л└╠?????┬К┼■ К╡└Й╥╦Й╟─ Л║╢Л·╛??
 	// getNewArea() ??Generate~() ?╢Л└° К╟°Л┐²?≤К┼■ ?└Л┐│.
@@ -513,8 +522,8 @@ bool collisionCheckInStage(int x, int y) {
 	return stageInfo[infoY][infoX];
 }
 
-int getNPCSpaceHeight() { return (rand() % 10 + 5); }
-int getNPCSpaceWidth() { return (rand() % 10 + 5); }
+int getNPCSpaceHeight() { return (rand() % 8 + 4); }
+int getNPCSpaceWidth() { return (rand() % 8 + 4); }
 int getNPCSpacePosX() { return((rand() % (NPCSpaceWidth)+1) * BLOCKSIZE + AREA_ORIGIN_X); }
 int getNPCSpacePosY() { return ((rand() % (NPCSpaceHeight)+1) * BLOCKSIZE + AREA_ORIGIN_Y) / 2 + 13 * BLOCKSIZE; }
 

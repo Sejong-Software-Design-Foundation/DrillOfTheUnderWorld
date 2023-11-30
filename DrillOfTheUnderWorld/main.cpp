@@ -109,6 +109,7 @@ int main() {
 						Mineral* mineral = new Mineral();
 						setBedrock(3);
 						mineral->getCluster();
+						mineral->getCluster();
 					}
 					else if (num == 1) { // 미니게임 ?�어리어�?진입
 						isNormalArea = false;
@@ -149,6 +150,7 @@ int main() {
 						Mineral* mineral = new Mineral(); // stageLevel ?�??
 						setBedrock(3);
 						mineral->getCluster();
+						mineral->getCluster();
 					}
 					else if (num == 3) { // ?�래�??�어리어�?진입
 						isNormalArea = false;
@@ -164,6 +166,7 @@ int main() {
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						setBedrock(3);
+						mineral->getCluster();
 						mineral->getCluster();
 						setFlag(3);
 					}
