@@ -250,6 +250,7 @@
     <Image Include="button2Pressed.bmp" />
     <Image Include="button3.bmp" />
     <Image Include="button3Pressed.bmp" />
+    <Image Include="EmceeTheShyGuyHit.bmp" />
     <Image Include="flag.bmp" />
     <Image Include="hiddenStage.bmp" />
     <Image Include="hpPotion.bmp" />

@@ -26,9 +26,10 @@ public:
 	void checkBullets();
 	void move();
 	void attack();
+	void NPCHit(int AtkLev);
 };
 
-EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 0, 10, 1) {
+EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 3, 10, 1) {
 	movecnt = 0;
 
 	this->imageidx = imageLayer.imageCount;
@@ -73,6 +74,15 @@ void EmceeTheShyGuy::attack() {
 	//pc.setHP(pc.getHP() - 10);
 	list<NPCBullet>::iterator it;
 	for (it = bullets.begin(); it != bullets.end(); it++) { (*it).move(); }
+}
+
+void EmceeTheShyGuy::NPCHit(int AtkLev) {
+	NPC::NPCHit(AtkLev);
+	char bmpNameHit[] = "EmceeTheShyGuyHit.bmp";
+	imageArray[imageidx].fileName = bmpNameHit;
+	imageLayer.renderAll(&imageLayer);
+	imageArray[imageidx].fileName = bmpNameEmceeTheShyGuy;
+	imageLayer.renderAll(&imageLayer);
 }
 
 #endif

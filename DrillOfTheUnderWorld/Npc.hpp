@@ -32,6 +32,8 @@ public:
     void NPCTrackingMovement();
 
     void NPCBossMovement();
+
+    void NPCHit(int atkLev);
 };
 
 NPC::NPC(int x, int y, int hp, int ad, int dir) {
@@ -158,5 +160,8 @@ void NPC::NPCBossMovement() {
     }
 }
 
+void NPC::NPCHit(int atkLev) {
+    this->hp -= atkLev;
+}
 
 #endif

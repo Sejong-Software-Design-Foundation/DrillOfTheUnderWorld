@@ -438,6 +438,9 @@
     <Image Include="lava_block.bmp">
       <Filter>images</Filter>
     </Image>
+    <Image Include="EmceeTheShyGuyHit.bmp">
+      <Filter>images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="images">

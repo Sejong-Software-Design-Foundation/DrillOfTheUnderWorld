@@ -457,8 +457,10 @@ void PC::getOxygenEffect() {
 	targetLayer->renderAll(targetLayer);
 }
 
-void PC::attack() {
+void PC::attack(clock_t t) {
+	if ((t - this->lastAttackTime) < 1000) return;
 	pcBullets.push_back(PCBullet(imageArray[0].x, imageArray[0].y, this->curDirection));
+	lastAttackTime = t;
 }
 
 PCBullet::PCBullet() {
@@ -475,10 +477,10 @@ PCBullet::PCBullet(int x, int y, int dir) {
 	this->imageidx = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
 }
-void PCBullet::move() {
-	if (collisionCheck(x + dx[dir], y + dy[dir])) {
+bool PCBullet::move() {
+	if (collisionCheck(x + dx[dir]*speed, y + dy[dir]*speed)) {
 		imageLayer.images[imageidx].fileName = bmpNameNull;
-		return;
+		return false;
 	}
 
 	// update bullet position
@@ -487,8 +489,29 @@ void PCBullet::move() {
 
 	x = imageLayer.images[imageidx].x;
 	y = imageLayer.images[imageidx].y;
+	return true;
 }
 
-std::vector<PCBullet> PC::getBulletList() {
+std::vector<PCBullet>& PC::getBulletList() {
 	return pcBullets;
+}
+
+bool PCBullet::checkBulletHit(int bossX, int bossY) {
+	if (abs(bossX - x) < BLOCKSIZE && abs(bossY - y) < BLOCKSIZE) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return true;
+	}
+	/*for (int dy = 0; dy < BLOCKSIZE;dy++) {
+		for (int dx = 0;dx < BLOCKSIZE;dx++) {
+			if (bossX == this->x + dx && bossY == this->y + dy) {
+				imageLayer.images[imageidx].fileName = bmpNameNull;
+				return true;
+			}
+		}
+	}*/
+	return false;
+}
+
+void PC::setLastAttackTime(clock_t t) {
+	lastAttackTime = t;
 }

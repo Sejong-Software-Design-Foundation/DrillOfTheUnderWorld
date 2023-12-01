@@ -83,7 +83,7 @@ int main() {
 				{
 					// ?œë¤ ë³€?˜ë? ?¬ìš©?˜ì—¬ ?´ë–¤ ?ì–´ë¦¬ì–´ë¡?ì§„ìž…??ì§€ ?•í•˜??ì½”ë“œ
 					int num = rand() % 4;
-					if (currentAreaColIndex == 2 && currentAreaRowIndex == 1) {
+					if (currentAreaColIndex == 0 && currentAreaRowIndex == 0) {
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -509,9 +509,16 @@ int main() {
 				}
 			}
 			else if (isBossArea) {
-				Emcee->move();
-				for (int i = 0;i < pc.getBulletList().size();i++) {
-					pc.getBulletList()[i].move();
+				if (Emcee->NPCDead() == false)Emcee->move();
+
+				//vector<PCBullet>::iterator itr;
+				for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end(); ) {
+					if (itr->checkBulletHit(Emcee->x, Emcee->y)) {
+						Emcee->NPCHit(pc.getATK());
+						itr = pc.getBulletList().erase(itr);
+					}
+					else if (!(itr->move())) itr = pc.getBulletList().erase(itr);
+					else itr++;
 				}
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
@@ -557,7 +564,7 @@ int main() {
 							rewardUI();
 							break;
 						case SPACE:
-							pc.attack();
+							pc.attack(clock());
 							break;
 						case O:
 							pc.setHP(pc.getHP() - 10);

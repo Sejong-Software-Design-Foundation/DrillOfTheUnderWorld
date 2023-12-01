@@ -3,6 +3,7 @@ extern "C" {
 #include <Windows.h>
 }
 #include <vector>
+#include <time.h>
 
 class PCBullet {
 private:
@@ -16,7 +17,8 @@ private:
 public:
 	PCBullet();
 	PCBullet(int x, int y, int dir);
-	void move();
+	bool move();
+	bool checkBulletHit(int bossX, int bossY);
 };
 
 class PC {
@@ -25,7 +27,7 @@ private:
 	int MAX_HP = 100, MAX_O2 = 100;
 	int AtkLev = 1, AtkSpdLev = 1, SpdLev = 1;
 	int flagCnt = 0;
-
+	int lastAttackTime;
 	int HP = 100, O2 = 100, ATK = 1, curDirection = 0;
 	int stone = 0;
 	int dx[4] = { 1,0,-1,0 };
@@ -51,6 +53,7 @@ private:
 	char* bmpPCgetOxygenDownName;
 	char* bmpPCgetOxygenUpName;
 	PC() {
+		lastAttackTime = 0;
 		bmpPCName = _strdup("PlayerCharacter.bmp");
 		bmpPCLeftName = _strdup("PC_left.bmp");
 		bmpPCRightName = _strdup("PC_right.bmp");
@@ -119,6 +122,7 @@ public:
 	void hitEffect();
 	void getHPEffect();
 	void getOxygenEffect();
-	void attack();
-	std::vector<PCBullet> getBulletList();
+	void attack(clock_t t);
+	void setLastAttackTime(clock_t t);
+	std::vector<PCBullet>& getBulletList();
 };
