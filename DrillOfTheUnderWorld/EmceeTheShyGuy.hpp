@@ -17,7 +17,7 @@ using namespace std;
 class EmceeTheShyGuy : public NPC {
 public:
 	// if movecnt is 8 shoot bullet
-	int movecnt;
+	int movecnt, maxHP;
 	list<NPCBullet> bullets;
 
 public:
@@ -28,13 +28,19 @@ public:
 	void attack();
 	void NPCHit(int AtkLev);
 	void AfterDead();
+	void updateHPBar();
 };
 
-EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 3, 10, 1) {
+EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 50, 10, 1) {
 	movecnt = 0;
+	maxHP = hp;
 
 	this->imageidx = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, x, y, BOSS_SCALE };
+	for (int i = 0;i < maxHP;i++) {
+		imageArray[imageLayer.imageCount++] = { bmpBossHPName,AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH*i,AREA_ORIGIN_Y - BLOCKSIZE,1};
+	}
+	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
 }
 
 void EmceeTheShyGuy::checkBullets() {
@@ -80,6 +86,7 @@ void EmceeTheShyGuy::attack() {
 
 void EmceeTheShyGuy::NPCHit(int AtkLev) {
 	NPC::NPCHit(AtkLev);
+	updateHPBar();
 	char bmpNameHit[] = "EmceeTheShyGuyHit.bmp";
 	imageArray[imageidx].fileName = bmpNameHit;
 	imageLayer.renderAll(&imageLayer);
@@ -106,6 +113,12 @@ void EmceeTheShyGuy::AfterDead() {
 	}
 	imageArray[imageidx].fileName = bmpNameNull;
 	imageLayer.renderAll(&imageLayer);
+}
+
+void EmceeTheShyGuy::updateHPBar() {
+	for (int i = 1;i <= maxHP;i++) {
+		if (hp < i && strcmp(imageArray[imageidx + i].fileName, bmpNameNull) != 0) imageArray[imageidx + i].fileName = bmpNameNull;
+	}
 }
 
 #endif

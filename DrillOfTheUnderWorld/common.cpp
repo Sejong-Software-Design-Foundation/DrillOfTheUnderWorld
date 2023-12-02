@@ -115,6 +115,7 @@ char bmpNameStar0[] = "UI_Star0.bmp";
 char bmpNameStar1[] = "UI_Star1.bmp";
 char bmpNameStar2[] = "UI_Star2.bmp";
 char bmpNameStar3[] = "UI_Star3.bmp";
+char bmpBossHPName[] = "BossHP.bmp";
 
 // AREA BLOCK BMP
 char bmpStoneBlockName[] = "block_Stage1_Normal.bmp";
@@ -537,6 +538,18 @@ int convertPosToInfoY(int y) {
 	return (y - AREA_ORIGIN_Y);
 }
 
+bool collisionCheck(int x, int y, int scale) { //scale 인자 추가해서 오버라이딩
+	int startX = convertPosToInfoX(x);
+	int startY = convertPosToInfoY(y);
+
+	for (int curY = startY; curY < startY + BLOCKSIZE * scale; curY++) {
+		for (int curX = startX; curX < startX + BLOCKSIZE * scale; curX++) {
+			if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+			if (blockInfo[curY][curX]) return true;
+		}
+	}
+	return false;
+}
 bool collisionCheck(int x, int y) {
 	int startX = convertPosToInfoX(x);
 	int startY = convertPosToInfoY(y);
@@ -872,6 +885,13 @@ void printStoneStatus(int curStone) {
 	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
 	printText(targetLayer->_consoleDC, 500,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
 	printText(targetLayer->_consoleDC, 700,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
+}
+void printWarning(int curHP) {
+	wchar_t warningText[100] = L"WARNING!";
+	for (int i = 0;i < curHP;i++) {
+		if (i%10 == 1 && curHP-i >= 9)
+			printText(targetLayer->_consoleDC, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE*3/4, 20, 0, RGB(255, 255, 255), TA_LEFT, warningText);
+	}
 }
 
 void getMoleSpace() {

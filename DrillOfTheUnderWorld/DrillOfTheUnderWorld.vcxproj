@@ -241,6 +241,7 @@
     <Image Include="block_Stage1_SilverOre1.bmp" />
     <Image Include="block_Stage1_SilverOre2.bmp" />
     <Image Include="boom.bmp" />
+    <Image Include="BossHP.bmp" />
     <Image Include="brick_dark2.png" />
     <Image Include="BronzeMineral.bmp" />
     <Image Include="BronzeOre.bmp" />

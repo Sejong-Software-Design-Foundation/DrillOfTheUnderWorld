@@ -474,6 +474,9 @@
     <Image Include="MoleDigging.bmp">
       <Filter>images</Filter>
     </Image>
+    <Image Include="BossHP.bmp">
+      <Filter>images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="images">

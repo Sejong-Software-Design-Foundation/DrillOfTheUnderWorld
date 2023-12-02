@@ -47,6 +47,7 @@ extern "C" {
 #define UI_ITEM_START_POS_Y 220
 #define UI_ITEM_SIZE 170
 #define BOSS_SCALE 4
+#define BOSS_HP_BAR_WIDTH 16
 
 #define REWARD_BRONZE = 10
 #define REWARD_SILVER = 30
@@ -136,6 +137,7 @@ extern char bmpNameStar0[];
 extern char bmpNameStar1[];
 extern char bmpNameStar2[];
 extern char bmpNameStar3[];
+extern char bmpBossHPName[];
 
 // BLOCK BMP
 extern char bmpStoneBlockName[];
@@ -197,6 +199,7 @@ void getHandle();
 void removeCursor();
 void resizeConsole(int w, int h);
 void initialize();
+bool collisionCheck(int x, int y, int scale);
 bool collisionCheck(int x, int y);
 int convertPosToInfoX(int x);
 int convertPosToInfoY(int y);
@@ -235,6 +238,7 @@ void setFlag(int cnt);
 
 void getNewBossArea();
 void printStoneStatus(int curStone);
+void printWarning(int curHP);
 void getMoleSpace();
 
 #endif COMMON_HPP

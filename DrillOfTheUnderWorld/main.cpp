@@ -91,7 +91,7 @@ int main() {
 						isFlagArea = false;
 						isBossArea = true;
 						getNewBossArea();
-						Emcee->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25);
+						Emcee->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25 - BLOCKSIZE*BOSS_SCALE/2, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25 - BLOCKSIZE*BOSS_SCALE);
 						imageArray[0].x = AREA_ORIGIN_X + BLOCKSIZE / 2 * 25;
 						imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
 						ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
@@ -536,6 +536,7 @@ int main() {
 					else if (!(itr->move())) itr = pc.getBulletList().erase(itr);
 					else itr++;
 				}
+				printWarning(Emcee->hp);
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();

@@ -48,7 +48,7 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     cnt = 0;
 }
 
-bool NPC::NPCDead() { return hp < 0 ? true : false; }
+bool NPC::NPCDead() { return hp <= 0 ? true : false; }
 
 bool NPC::PCNear() {
     // PC 좌표 받기
@@ -111,7 +111,7 @@ void NPC::NPCPatternMovement() {
         cnt = 0;
     }
 
-    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * SPEED, imageLayer.images[imageidx].y + dir[curDirection][1] * SPEED)) {
+    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * SPEED, imageLayer.images[imageidx].y + dir[curDirection][1] * SPEED, imageLayer.images[imageidx].scale)) {
         curDirection = rand() % 4;
         cnt = 0;
         return;
