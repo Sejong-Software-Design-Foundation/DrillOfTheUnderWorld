@@ -84,7 +84,7 @@ int main() {
 				{
 					// ?œë¤ ë³€?˜ë? ?¬ìš©?˜ì—¬ ?´ë–¤ ?ì–´ë¦¬ì–´ë¡?ì§„ìž…??ì§€ ?•í•˜??ì½”ë“œ
 					int num = rand() % 4;
-					if (currentAreaColIndex == 1 && currentAreaRowIndex == 0) {
+					if (currentAreaColIndex == 0 && currentAreaRowIndex == 0) {
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -519,7 +519,9 @@ int main() {
 				}
 			}
 			else if (isBossArea) {
-				if (Emcee->NPCDead() == false)Emcee->move();
+				if (Emcee->NPCDead() == false) {
+					Emcee->move();
+				}
 				else {
 					Emcee->AfterDead();
 					ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
@@ -527,7 +529,7 @@ int main() {
 				}
 				//vector<PCBullet>::iterator itr;
 				for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end(); ) {
-					if (itr->checkBulletHit(Emcee->x, Emcee->y)) {
+					if (Emcee->NPCDead() == false && itr->checkBulletHit(Emcee->x, Emcee->y)) {
 						Emcee->NPCHit(pc.getATK());
 						itr = pc.getBulletList().erase(itr);
 					}
@@ -578,7 +580,7 @@ int main() {
 							rewardUI();
 							break;
 						case SPACE:
-							pc.attack(clock());
+							if (Emcee->NPCDead() == false) pc.attack(clock());
 							break;
 						case O:
 							pc.setHP(pc.getHP() - 10);

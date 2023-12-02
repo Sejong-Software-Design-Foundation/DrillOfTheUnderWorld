@@ -43,7 +43,7 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     this->hp = hp;
     this->attack_damage = ad;
     // defaultê°€ ?¤ë¥¸ìª??€ì§ìž„
-    this->curDirection = 0;
+    this->curDirection = dir;
     // movecnt
     cnt = 0;
 }

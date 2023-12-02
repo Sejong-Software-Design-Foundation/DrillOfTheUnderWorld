@@ -23,20 +23,19 @@ public:
 	int moveCnt = 0;
 };
 
-Mole::Mole(int x, int y) : NPC(x, y, 50, 15, 1) {
+Mole::Mole(int x, int y) : NPC(x, y, 50, 15, rand() % 4) {
     this->imageidx = imageLayer.imageCount;
     imageArray[imageLayer.imageCount++] = { bmpNameMole, x, y, 1 };
 }
 
 void Mole::move() {
-    NPCBossMovement();
-	moveCnt++;
-    if (collisionCheck(x + dx[curDirection]*BLOCKSIZE, y + dy[curDirection]*BLOCKSIZE)) {
-		if (moveCnt >= 10) {
+	if (collisionCheck(x + dx[curDirection] * BLOCKSIZE, y + dy[curDirection] * BLOCKSIZE)) {
+		if (moveCnt == 0) {
 			this->dig(x + dx[curDirection] * BLOCKSIZE, y + dy[curDirection] * BLOCKSIZE);
-			moveCnt = 0;
 		}
-    }
+	}
+    NPCBossMovement();
+	moveCnt = (moveCnt + 1) % 10;
 }
 
 void Mole::attack() {
