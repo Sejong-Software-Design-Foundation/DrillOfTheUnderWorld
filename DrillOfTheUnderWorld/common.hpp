@@ -32,7 +32,7 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 48
+#define SPEED 16
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 336
@@ -91,6 +91,7 @@ extern bool isNormalArea;
 extern bool isMiniGameArea;
 extern bool isFlagArea;
 extern bool isButtonArea;
+extern bool isBossArea;
 
 extern int index_StageImages_Start;
 extern int index_Area_PC;
@@ -182,6 +183,32 @@ extern char bmpItem2Name[];
 extern char bmpItem3Name[];
 
 
+// item Image
+extern char bmpUndergroundTicketName[];
+extern char bmpMetalDetectorName[];
+extern char bmpThornCrownName[];
+extern char bmpBeggarDollName[];
+extern char bmpOrichalcumName[];
+extern char bmpTwoHeartsName[];
+extern char bmpLuckyCharmName[];
+extern char bmpDisassemblerName[];
+extern char bmpBatFangName[];
+extern char bmpMoleClawName[];
+extern char bmpDiceName[];
+extern char bmpLuckStoneName[];
+extern char bmpBloodBagName[];
+extern char bmpSupplyOxygenTankName[];
+extern char bmpFreshBrewedCoffeeName[];
+extern char bmpPortableOxygenCanName[];
+extern char bmpEnergyBarName[];
+extern char bmpAttackBoostName[];
+extern char bmpAttackSpeedBoostName[];
+extern char bmpMovementSpeedBoostName[];
+extern char bmpPrisonerShacklesName[];
+extern char bmpCursedTotemName[];
+extern char bmpAncientVirusName[];
+extern char bmpCaveSnakeName[];
+
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
 COORD getCurrentCurPos(void);
@@ -207,7 +234,7 @@ void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
-void changeLayer(ImageLayer* currentLayer, ImageLayer* nextLayer);
+//void changeLayer(ImageLayer* currentLayer, ImageLayer* nextLayer);
 void printTimeInMiniGameArea(float t);
 void printMyOriInMiniGameArea();
 void updateCharacterStatus();
@@ -226,4 +253,25 @@ bool printButtonStageStatus();
 void printFlagStageStatus(int curFlagCnt);
 void setBedrock(int max);
 void setFlag(int cnt);
+
+void getNewBossArea();
+void printStoneStatus(int curStone);
+
+// Ãß°¡
+extern ImageLayer lShopLayer;
+extern ImageLayer rShopLayer;
+extern bool isOnSafety;
+void initLShopImage();
+void initRShopImage();
+#define LSHOP_ITEMBOX_ORIGIN_X 850
+#define LSHOP_ITEMBOX_ORIGIN_Y 350
+#define RSHOP_ITEMBOX_ORIGIN_X 50
+#define RSHOP_ITEMBOX_ORIGIN_Y 350
+void visitLShop();
+void printItemTextInLShop();
+void printStatusInLShop(int price1, int price2, int num);
+void visitRShop();
+void printItemTextInRShop();
+void printStatusInRShop(int price1, int price2, int price3, int num);
+
 #endif COMMON_HPP
