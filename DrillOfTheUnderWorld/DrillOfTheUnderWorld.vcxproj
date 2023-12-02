@@ -251,6 +251,12 @@
     <Image Include="button3.bmp" />
     <Image Include="button3Pressed.bmp" />
     <Image Include="EmceeTheShyGuyHit.bmp" />
+    <Image Include="explode1.bmp" />
+    <Image Include="explode2.bmp" />
+    <Image Include="explode3.bmp" />
+    <Image Include="explode4.bmp" />
+    <Image Include="explode5.bmp" />
+    <Image Include="explodes.bmp" />
     <Image Include="flag.bmp" />
     <Image Include="hiddenStage.bmp" />
     <Image Include="hpPotion.bmp" />
@@ -264,6 +270,10 @@
     <Image Include="clearedStage.bmp" />
     <Image Include="brokenStoneBlock.bmp" />
     <Image Include="ozPotion.bmp" />
+    <Image Include="PCBullet_down.bmp" />
+    <Image Include="PCBullet_left.bmp" />
+    <Image Include="PCBullet_right.bmp" />
+    <Image Include="PCBullet_up.bmp" />
     <Image Include="PC_down.bmp" />
     <Image Include="PC_down_getHP.bmp" />
     <Image Include="PC_down_getOxygen.bmp" />

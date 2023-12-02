@@ -14,6 +14,11 @@ private:
 	int speed=48;
 	int imageidx;
 
+	static char bmpPCBulletLeftName[];
+	static char bmpPCBulletRightName[];
+	static char bmpPCBulletUpName[];
+	static char bmpPCBulletDownName[];
+
 public:
 	PCBullet();
 	PCBullet(int x, int y, int dir);
@@ -52,6 +57,7 @@ private:
 	char* bmpPCgetOxygenRightName;
 	char* bmpPCgetOxygenDownName;
 	char* bmpPCgetOxygenUpName;
+
 	PC() {
 		lastAttackTime = 0;
 		bmpPCName = _strdup("PlayerCharacter.bmp");

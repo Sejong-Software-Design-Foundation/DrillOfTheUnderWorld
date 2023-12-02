@@ -8,6 +8,11 @@ PC ?¥ë ¥ì¹?ë¡œì§
 ?…ê¸°??ë²„ê·¸ ?´ê²°
 
 */
+ char PCBullet::bmpPCBulletLeftName[] = "PCBullet_left.bmp";
+ char PCBullet::bmpPCBulletRightName[] = "PCBullet_right.bmp";
+ char PCBullet::bmpPCBulletUpName[] = "PCBullet_up.bmp";
+ char PCBullet::bmpPCBulletDownName[] = "PCBullet_down.bmp";
+
 PC& PC::getPC() {
 	static PC pc;
 	return pc;
@@ -458,7 +463,7 @@ void PC::getOxygenEffect() {
 }
 
 void PC::attack(clock_t t) {
-	if ((t - this->lastAttackTime) < 1000) return;
+	if ((t - this->lastAttackTime) < 1000/AtkSpdLev) return;
 	pcBullets.push_back(PCBullet(imageArray[0].x, imageArray[0].y, this->curDirection));
 	lastAttackTime = t;
 }
@@ -475,7 +480,18 @@ PCBullet::PCBullet(int x, int y, int dir) {
 	this->y = y;
 	this->dir = dir;
 	this->imageidx = imageLayer.imageCount;
-	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
+	switch (dir) {
+	case 0:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletRightName, x, y, 1 }; break;
+	case 1:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletDownName, x, y, 1 }; break;
+	case 2:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletLeftName, x, y, 1 }; break;
+	case 3:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletUpName, x, y, 1 }; break;
+	default :
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletUpName, x, y, 1 }; break;
+	}
 }
 bool PCBullet::move() {
 	if (collisionCheck(x + dx[dir]*speed, y + dy[dir]*speed)) {
@@ -497,7 +513,7 @@ std::vector<PCBullet>& PC::getBulletList() {
 }
 
 bool PCBullet::checkBulletHit(int bossX, int bossY) {
-	if (abs(bossX - x) < BLOCKSIZE && abs(bossY - y) < BLOCKSIZE) {
+	if (x - bossX >= 0 && x - bossX < BLOCKSIZE * BOSS_SCALE && y - bossY >= 0 && y - bossY < BLOCKSIZE * BOSS_SCALE) {
 		imageLayer.images[imageidx].fileName = bmpNameNull;
 		return true;
 	}

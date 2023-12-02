@@ -27,13 +27,14 @@ public:
 	void move();
 	void attack();
 	void NPCHit(int AtkLev);
+	void AfterDead();
 };
 
 EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 3, 10, 1) {
 	movecnt = 0;
 
 	this->imageidx = imageLayer.imageCount;
-	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, x, y, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, x, y, BOSS_SCALE };
 }
 
 void EmceeTheShyGuy::checkBullets() {
@@ -59,7 +60,8 @@ void EmceeTheShyGuy::move() {
 	//printf("%d", movecnt);
 	// if moved 8 times shoot once and reset mvcnt
 	if (movecnt == 8) {
-		bullets.push_back(NPCBullet(x, y));
+		if (rand()%2 == 0) bullets.push_back(NPCBullet(x, y+BLOCKSIZE*BOSS_SCALE/2));
+		else bullets.push_back(NPCBullet(x + BLOCKSIZE*BOSS_SCALE - 16, y + BLOCKSIZE * BOSS_SCALE / 2));
 		movecnt = 0;
 	}
 	else {
@@ -82,6 +84,27 @@ void EmceeTheShyGuy::NPCHit(int AtkLev) {
 	imageArray[imageidx].fileName = bmpNameHit;
 	imageLayer.renderAll(&imageLayer);
 	imageArray[imageidx].fileName = bmpNameEmceeTheShyGuy;
+	imageLayer.renderAll(&imageLayer);
+}
+
+void EmceeTheShyGuy::AfterDead() {
+	if (strcmp(imageArray[imageidx].fileName, bmpNameNull) == 0) return;
+	list<NPCBullet>::iterator it;
+	for (it = bullets.begin(); it != bullets.end(); ) {
+		imageArray[it->imageidx].fileName = bmpNameNull;
+		it++;
+	}
+	bullets.clear();
+	char bmpNameHit[] = "EmceeTheShyGuyHit.bmp";
+	imageArray[imageidx].fileName = bmpNameHit;
+	imageLayer.renderAll(&imageLayer);
+	Sleep(1000);
+	for (int i = 0;i < 5;i++) {
+		imageArray[imageidx].fileName = bmpExplodeName[i];
+		imageArray[imageidx].scale = BOSS_SCALE;
+		imageLayer.renderAll(&imageLayer);
+	}
+	imageArray[imageidx].fileName = bmpNameNull;
 	imageLayer.renderAll(&imageLayer);
 }
 

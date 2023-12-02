@@ -19,6 +19,7 @@ public:
     int attack_damage;
     int curDirection;
     int cnt;
+     char bmpExplodeName[5][15] = {"explode1.bmp","explode2.bmp" ,"explode3.bmp" ,"explode4.bmp" ,"explode5.bmp"};
 
     NPC(int x, int y, int hp, int ad, int dir);
     //~NPC();

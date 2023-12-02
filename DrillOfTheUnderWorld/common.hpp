@@ -46,6 +46,7 @@ extern "C" {
 #define UI_ITEM_START_POS_X 1450
 #define UI_ITEM_START_POS_Y 220
 #define UI_ITEM_SIZE 170
+#define BOSS_SCALE 4
 
 #define REWARD_BRONZE = 10
 #define REWARD_SILVER = 30

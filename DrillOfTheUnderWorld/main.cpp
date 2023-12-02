@@ -510,7 +510,11 @@ int main() {
 			}
 			else if (isBossArea) {
 				if (Emcee->NPCDead() == false)Emcee->move();
-
+				else {
+					Emcee->AfterDead();
+					ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
+					ladder->move();
+				}
 				//vector<PCBullet>::iterator itr;
 				for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end(); ) {
 					if (itr->checkBulletHit(Emcee->x, Emcee->y)) {
