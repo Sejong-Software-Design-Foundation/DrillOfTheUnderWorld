@@ -99,8 +99,8 @@ void EmceeTheShyGuy::AfterDead() {
 	imageArray[imageidx].fileName = bmpNameHit;
 	imageLayer.renderAll(&imageLayer);
 	Sleep(1000);
-	for (int i = 0;i < 5;i++) {
-		imageArray[imageidx].fileName = bmpExplodeName[i];
+	for (int i = 0;i < 15;i++) {
+		imageArray[imageidx].fileName = bmpExplodeName[i%5];
 		imageArray[imageidx].scale = BOSS_SCALE;
 		imageLayer.renderAll(&imageLayer);
 	}

@@ -513,7 +513,7 @@ std::vector<PCBullet>& PC::getBulletList() {
 }
 
 bool PCBullet::checkBulletHit(int bossX, int bossY) {
-	if (x - bossX >= 0 && x - bossX < BLOCKSIZE * BOSS_SCALE && y - bossY >= 0 && y - bossY < BLOCKSIZE * BOSS_SCALE) {
+	if (x + BLOCKSIZE >= bossX && x <= bossX + BLOCKSIZE * BOSS_SCALE && y + BLOCKSIZE >= bossY && y < bossY + BLOCKSIZE * BOSS_SCALE) {
 		imageLayer.images[imageidx].fileName = bmpNameNull;
 		return true;
 	}
