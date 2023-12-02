@@ -1,5 +1,7 @@
 #include "common.hpp"
 
+int stageLevel = 1;
+
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
@@ -180,6 +182,32 @@ char bmpNameNormalAtkSpdSelected[] = "UI_rewardAtkSpdSelected.bmp";
 char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";	
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
+
+// item Image
+char bmpUndergroundTicketName[] = "item1.bmp";
+char bmpMetalDetectorName[] = "item1.bmp";
+char bmpThornCrownName[] = "item1.bmp";
+char bmpBeggarDollName[] = "item1.bmp";
+char bmpOrichalcumName[] = "item1.bmp";
+char bmpTwoHeartsName[] = "item1.bmp";
+char bmpLuckyCharmName[] = "item1.bmp";
+char bmpDisassemblerName[] = "item1.bmp";
+char bmpBatFangName[] = "item1.bmp";
+char bmpMoleClawName[] = "item1.bmp";
+char bmpDiceName[] = "item1.bmp";
+char bmpLuckStoneName[] = "item1.bmp";
+char bmpBloodBagName[] = "item1.bmp";
+char bmpSupplyOxygenTankName[] = "item1.bmp";
+char bmpFreshBrewedCoffeeName[] = "item1.bmp";
+char bmpPortableOxygenCanName[] = "item1.bmp";
+char bmpEnergyBarName[] = "item1.bmp";
+char bmpAttackBoostName[] = "item1.bmp";
+char bmpAttackSpeedBoostName[] = "item1.bmp";
+char bmpMovementSpeedBoostName[] = "item1.bmp";
+char bmpPrisonerShacklesName[] = "item1.bmp";
+char bmpCursedTotemName[] = "item1.bmp";
+char bmpAncientVirusName[] = "item1.bmp";
+char bmpCaveSnakeName[] = "item1.bmp";
 
 // ?¨ìˆ˜ ?œìž‘
 
@@ -870,4 +898,11 @@ void printStoneStatus(int curStone) {
 	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
 	printText(targetLayer->_consoleDC, 500,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
 	printText(targetLayer->_consoleDC, 700,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
+}
+
+void setStageLevel(int level) {
+	stageLevel = level;
+}
+int getStageLevel() {
+	return stageLevel;
 }

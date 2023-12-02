@@ -31,6 +31,81 @@
     <ClInclude Include="Boss.hpp">
       <Filter>images</Filter>
     </ClInclude>
+    <ClInclude Include="Item.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="EnergyBar.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="PortableOxygenCan.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="UndergroundTicket.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MetalDetector.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ThronCrown.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="BeggarDoll.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Orichalcum.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="TwoHearts.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="LuckyCharm.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Disassembler.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="BatFang.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MoleClaw.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="LuckStone.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="BloodBag.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SupplyOxygenTank.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="FreshBrewedCoffee.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackBoost.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackSpeedBoost.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementSpeedBoost.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="PrisonerShackles.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="CursedTotem.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="AncientVirus.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="CaveSnake.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav">
@@ -441,6 +516,9 @@
   <ItemGroup>
     <Filter Include="images">
       <UniqueIdentifier>{6f4d1529-55de-4c0a-bb0a-0b8a9d8077e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{7f131c72-07e4-48ee-971a-a532414162d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
