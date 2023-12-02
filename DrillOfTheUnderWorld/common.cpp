@@ -20,6 +20,8 @@ int NPCSpacePosY;
 int NPCSpaceHeight;
 int NPCSpaceWidth;
 int OrichalcumNum = 0;
+int molePosX;
+int molePosY;
 
 // BUTTON
 bool isButtonRoomClear = false;
@@ -164,6 +166,7 @@ char bmpNameBat[] = "Bat.bmp";
 
 // BOSS NPC BMP
 char bmpNameMole[] = "Mole.bmp";
+char bmpNameMoleDigging[] = "MoleDigging.bmp";
 char bmpNameFireball[] = "Fireball.bmp";
 char bmpNameEmceeTheShyGuy[] = "EmceeTheShyGuy.bmp";
 char bmpNameLadder[] = "Ladder.bmp";
@@ -869,4 +872,19 @@ void printStoneStatus(int curStone) {
 	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
 	printText(targetLayer->_consoleDC, 500,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
 	printText(targetLayer->_consoleDC, 700,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
+}
+
+void getMoleSpace() {
+	molePosX = ((rand() % 23 + 1) * BLOCKSIZE + AREA_ORIGIN_X);
+	molePosY = ((rand() % 23 + 1) * BLOCKSIZE + AREA_ORIGIN_Y);
+	int infoX = convertPosToInfoX(molePosX);
+	int infoY = convertPosToInfoY(molePosY);
+	if (blockInfo[infoY][infoX] != 2) getMoleSpace();
+	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
+	imageArray[imageIndex].fileName = bmpNameNull;
+	for (int y = infoY;y < infoY + BLOCKSIZE;y++) {
+		for (int x = infoX;x < infoX + BLOCKSIZE;x++) {
+			blockInfo[y][x] = 0;
+		}
+	}
 }

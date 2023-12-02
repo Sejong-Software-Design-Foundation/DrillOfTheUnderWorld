@@ -266,6 +266,7 @@
     <Image Include="lava.bmp" />
     <Image Include="Lava2.bmp" />
     <Image Include="lava_block.bmp" />
+    <Image Include="MoleDigging.bmp" />
     <Image Include="nomalStage.bmp" />
     <Image Include="clearedStage.bmp" />
     <Image Include="brokenStoneBlock.bmp" />

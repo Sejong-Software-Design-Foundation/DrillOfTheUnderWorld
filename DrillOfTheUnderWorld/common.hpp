@@ -75,6 +75,8 @@ extern int NPCSpacePosY;
 extern int NPCSpaceHeight;
 extern int NPCSpaceWidth;
 extern int OrichalcumNum;
+extern int molePosX;
+extern int molePosY;
 
 // BUTTON
 extern std::vector<int> buttonPressedOrderList;
@@ -124,6 +126,7 @@ extern char bmpNameBat[];
 
 // BOSS NPC
 extern char bmpNameMole[];
+extern char bmpNameMoleDigging[];
 extern char bmpNameFireball[];
 extern char bmpNameEmceeTheShyGuy[];
 extern char bmpNameLadder[];
@@ -232,5 +235,6 @@ void setFlag(int cnt);
 
 void getNewBossArea();
 void printStoneStatus(int curStone);
+void getMoleSpace();
 
 #endif COMMON_HPP

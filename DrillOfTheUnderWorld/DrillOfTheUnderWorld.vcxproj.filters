@@ -471,6 +471,9 @@
     <Image Include="explode5.bmp">
       <Filter>images</Filter>
     </Image>
+    <Image Include="MoleDigging.bmp">
+      <Filter>images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="images">

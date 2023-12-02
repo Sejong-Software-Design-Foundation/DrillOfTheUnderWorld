@@ -57,7 +57,8 @@ int main() {
 	std::vector<Bat*> generatedBatList;
 	Bat* bat = new Bat(-48, -48);
 	Ladder* ladder = new Ladder(-48, -48);
-	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(-48, -48);
+	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(-BLOCKSIZE*BOSS_SCALE, -BLOCKSIZE * BOSS_SCALE);
+	Mole *mole = new Mole(-48, -48);
 
 	targetLayer = &stageLayer;
 	targetLayer->fadeIn(targetLayer, NULL);
@@ -83,7 +84,7 @@ int main() {
 				{
 					// ?œë¤ ë³€?˜ë? ?¬ìš©?˜ì—¬ ?´ë–¤ ?ì–´ë¦¬ì–´ë¡?ì§„ìž…??ì§€ ?•í•˜??ì½”ë“œ
 					int num = rand() % 4;
-					if (currentAreaColIndex == 0 && currentAreaRowIndex == 0) {
+					if (currentAreaColIndex == 1 && currentAreaRowIndex == 0) {
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -106,6 +107,8 @@ int main() {
 						//Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						getMoleSpace();
+						mole->NPCSetPosition(molePosX, molePosY);
 						Mineral* mineral = new Mineral();
 						setBedrock(3);
 						mineral->getCluster();
@@ -145,6 +148,8 @@ int main() {
 						//Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						getMoleSpace();
+						mole->NPCSetPosition(molePosX, molePosY);
 
 						imageArray[ladder->imageidx].isHide = 1;
 						Mineral* mineral = new Mineral(); // stageLevel ?€??
@@ -165,6 +170,8 @@ int main() {
 						//Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						getMoleSpace();
+						mole->NPCSetPosition(molePosX, molePosY);
 						setBedrock(3);
 						mineral->getCluster();
 						mineral->getCluster();
@@ -226,6 +233,7 @@ int main() {
 				//mole->move();
 				bat->move();
 				ladder->move();
+				mole->move();
 				//Emcee->move();
 				// ?¤ë³´???…ë ¥ ?˜í–‰
 				for (int i = 0; i < 10; i++) {
@@ -381,6 +389,7 @@ int main() {
 					ladder->move();
 				}
 				bat->move();
+				mole->move();
 				//Emcee->move();
 				button1->move();
 				button2->move();
@@ -449,6 +458,7 @@ int main() {
 				//mole->move();
 				bat->move();
 				ladder->move();
+				mole->move();
 				//Emcee->move();
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
