@@ -706,11 +706,11 @@ void rewardUI() { // 에어리어 클리어 후 보상을 얻는 함수
 	targetLayer->renderAll(targetLayer);
 
 	int num = 0;
-	if (index1 == 1) num = rand() % 3;
-	else if (index1 == 2) num = rand() % 11 + (-5);
-	if (index2 == 1) pc.setAtkLev(pc.getAtkLev() + num);
-	else if (index2 == 2) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
-	else if (index2 == 3) pc.setSpdLev(pc.getSpdLev() + num);
+	if (index1 == 0) num = rand() % 3;
+	else if (index1 == 1) num = rand() % 11 + (-5);
+	if (index2 == 0) pc.setAtkLev(pc.getAtkLev() + num);
+	else if (index2 == 1) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
+	else if (index2 == 2) pc.setSpdLev(pc.getSpdLev() + num);
 	pc.setStone(pc.getStone() + 100);
 
 	imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar0;
