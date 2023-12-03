@@ -211,7 +211,7 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 	int targetPosX = currentPcPosX;
 	int targetPosY = currentPcPosY - BLOCKSIZE;
 
-	//imageArray[targerImageIndex].scale = 2;
+	//imageArray[targerImageIndex].scale = 2;w
 	imageArray[targerImageIndex].x = targetPosX;
 	imageArray[targerImageIndex].y = targetPosY;
 
