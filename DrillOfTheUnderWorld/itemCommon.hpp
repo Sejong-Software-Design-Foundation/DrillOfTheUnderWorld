@@ -2,7 +2,6 @@
 #define ITEM_COMMON_HPP
 #define _CRT_SECURE_NO_WARNINGS
 
-/*
 #include "UndergroundTicket.hpp"
 #include "MetalDetector.hpp"
 #include "ThronCrown.hpp"
@@ -27,8 +26,6 @@
 #include "CursedTotem.hpp"
 #include "AncientVirus.hpp"
 #include "CaveSnake.hpp"
-*/
-#include "AncientVirus.hpp"
 #include <vector>
 
 // item vector
@@ -41,6 +38,13 @@ extern std::vector<Item*> eRankItems; // -소모형
 extern std::vector<Item*> nRankItems; // -부스트류
 extern std::vector<Item*> fRankItems; // -디벞
 
+void initItems();
 void initSRankItems();
+void initARankItems();
+void initBRankItems();
+void initCRankItems();
+void initERankItems();
+void initNRankItems();
+void initFRankItems();
 
 #endif ITEM_COMMON_HPP
