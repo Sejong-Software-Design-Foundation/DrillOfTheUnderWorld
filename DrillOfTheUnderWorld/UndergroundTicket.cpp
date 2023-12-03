@@ -6,6 +6,7 @@ UndergroundTicket::UndergroundTicket() : Item() {
     this->info = "상점에서 판매하는 아이템의 가격이 30%  할인된다.";
     this->rank = 'S';
     this->price = S_RANK_PRICE;
+    this->isUniqueHoldableItem = true;
     imageArray[imageLayer.imageCount++] = { bmpUndergroundTicketName, -1, -1, 1, 1 };
 }
 

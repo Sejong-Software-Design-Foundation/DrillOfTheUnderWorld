@@ -5,6 +5,7 @@ Item::Item(){
     this->imageidx = imageLayer.imageCount;
     this->price = 0;
     this->rank = 'N';
+    this->isUniqueHoldableItem = false;
 }
 
 std::string Item::getName() {
@@ -21,4 +22,12 @@ int Item::getPrice() {
 
 std::string Item::getInfo() {
     return this->info;
+}
+
+int Item::getImageIndex() {
+    return this->imageidx;
+}
+
+bool Item::getIsUniqueHoldableItem() {
+    return this->isUniqueHoldableItem;
 }

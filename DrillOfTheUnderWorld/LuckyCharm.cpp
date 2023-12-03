@@ -6,6 +6,7 @@ LuckyCharm::LuckyCharm() : Item() {
     this->info = "죽음의 이르는 공격을 1회 방어한다.";
     this->rank = 'A';
     this->price = A_RANK_PRICE;
+    this->isUniqueHoldableItem = true;
     imageArray[imageLayer.imageCount++] = { bmpLuckyCharmName, -1, -1, 1, 1 };
 }
 

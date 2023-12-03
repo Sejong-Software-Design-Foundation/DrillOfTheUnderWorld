@@ -10,7 +10,7 @@ enum ItemPrice {
     B_RANK_PRICE = 300,
     C_RANK_PRICE = 100,
     E_RANK_PRICE = 300,
-    N_RANK_PRICE = 0,
+    N_RANK_PRICE = 300,
     F_RANK_PRICE = 0
 };
 
@@ -22,6 +22,7 @@ protected:
     std::string imageName;
     std::string info;
     int imageidx;
+    bool isUniqueHoldableItem;
 
 public:
     Item();
@@ -29,6 +30,8 @@ public:
     char getRank();
     int getPrice();
     std::string getInfo();
+    int getImageIndex();
+    bool getIsUniqueHoldableItem();
     virtual void use() = 0;
 };
 

@@ -14,6 +14,7 @@ extern "C" {
 #include "PC.hpp"
 #include "Stage.hpp"
 #include "Text.hpp"
+#include "Item.hpp"
 
 #define NUM1 49  
 #define NUM2 50  
@@ -269,5 +270,10 @@ void printStatusInLShop(int price1, int price2, int num);
 void visitRShop();
 void printItemTextInRShop();
 void printStatusInRShop(int price1, int price2, int price3, int num);
+
+void generateShopItem();
+char getRandomRank();
+Item* getRandomItem();
+bool isItemExistItemVector(Item* targetItem, std::vector<Item*> itemList);
 
 #endif COMMON_HPP

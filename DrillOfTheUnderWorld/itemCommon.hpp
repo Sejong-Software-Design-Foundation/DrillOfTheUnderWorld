@@ -30,6 +30,8 @@
 
 // item vector
 extern std::vector<Item*> ownedItems;
+extern std::vector<Item*> shopItems;
+
 extern std::vector<Item*> sRankItems;
 extern std::vector<Item*> aRankItems;
 extern std::vector<Item*> bRankItems;

@@ -1,4 +1,5 @@
 #include "common.hpp"
+#include "itemCommon.hpp"
 
 int stageLevel = 1;
 
@@ -373,10 +374,16 @@ void visitRShop() {
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rShopLayer;
 
-	int item1_price = 100;
-	int item2_price = 200;
-	int item3_price = 300;
-	pc.setStone(pc.getStone() + 200);
+	generateShopItem();
+	rShopImageArray[1].fileName = imageArray[shopItems[0]->getImageIndex()].fileName;
+	rShopImageArray[2].fileName = imageArray[shopItems[1]->getImageIndex()].fileName;
+	rShopImageArray[3].fileName = imageArray[shopItems[2]->getImageIndex()].fileName;
+
+	int item1_price = shopItems[0]->getPrice();
+	int item2_price = shopItems[1]->getPrice();
+	int item3_price = shopItems[2]->getPrice();
+
+	//pc.setStone(pc.getStone() + 200);
 
 	if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
 	else rShopImageArray[4].fileName = bmpShopItemBox;
@@ -448,6 +455,11 @@ void visitRShop() {
 					if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
 					if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
 				}
+				if (shopItems[index]->getIsUniqueHoldableItem()) {
+					ownedItems.push_back(shopItems[index]);
+				}
+				shopItems[index]->use();
+
 				index = -1;
 				lastInputKey = 1;
 				break;
@@ -489,8 +501,8 @@ void printStatusInRShop(int price1, int price2, int price3, int num) { // 泅犁
 	printText(targetLayer->_consoleDC, 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 	printText(targetLayer->_consoleDC, 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
-	wchar_t info1[100] = L"숫자 키를 눌러 선택, Spacebar키를 눌러 구매할 수 있습니다. ESC키를 통해 상점을 나갑니다.";
-	wchar_t info2[100] = L"훌륭한 선택입니다!";
+	wchar_t info1[200] = L"숫자 키를 눌러 선택, Spacebar키를 눌러 구매할 수 있습니다. ESC키를 통해 상점을 나갑니다.";
+	wchar_t info2[200] = L"훌륭한 선택입니다!";
 
 	if (num == 0) printText(targetLayer->_consoleDC, 200, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
 	else if (num == 1)  printText(targetLayer->_consoleDC, 200, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
@@ -498,20 +510,116 @@ void printStatusInRShop(int price1, int price2, int price3, int num) { // 泅犁
 
 void printItemTextInRShop() // 酒捞袍 捞抚苞 汲疙 免仿
 {
-	wchar_t itemName1[10] = L"name1";
-	wchar_t itemName2[10] = L"name2";
-	wchar_t itemName3[10] = L"name3";
-	wchar_t itemInfo1[100] = L"INFO";
-	wchar_t itemInfo2[100] = L"INFO";
-	wchar_t itemInfo3[100] = L"INFO";
+	wchar_t itemName1[20] = L"";
+	wchar_t itemName2[20] = L"";
+	wchar_t itemName3[20] = L"";
+	wchar_t itemInfo1[200] = L"";
+	wchar_t itemInfo2[200] = L"";
+	wchar_t itemInfo3[200] = L"";
 
-	printText(targetLayer->_consoleDC, 200, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
-	printText(targetLayer->_consoleDC, 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 190);
-	printText(targetLayer->_consoleDC, 630, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
-	printText(targetLayer->_consoleDC, 550, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 190);
-	printText(targetLayer->_consoleDC, 1100, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName3);
-	printText(targetLayer->_consoleDC, 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 190);
+	swprintf(itemName1, sizeof(itemName1) / sizeof(itemName1[0]), L"%s", shopItems[0]->getName().c_str());
+	swprintf(itemName2, sizeof(itemName2) / sizeof(itemName2[0]), L"%s", shopItems[1]->getName().c_str());
+	swprintf(itemName3, sizeof(itemName3) / sizeof(itemName3[0]), L"%s", shopItems[2]->getName().c_str());
+
+	swprintf(itemInfo1, sizeof(itemInfo1) / sizeof(itemInfo1[0]), L"%s", shopItems[0]->getInfo().c_str());
+	swprintf(itemInfo2, sizeof(itemInfo2) / sizeof(itemInfo2[0]), L"%s", shopItems[1]->getInfo().c_str());
+	swprintf(itemInfo3, sizeof(itemInfo3) / sizeof(itemInfo3[0]), L"%s", shopItems[2]->getInfo().c_str());
+
+	printText(targetLayer->_consoleDC, 200, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1, 100);
+	printText(targetLayer->_consoleDC, 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
+	printText(targetLayer->_consoleDC, 630, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2, 100);
+	printText(targetLayer->_consoleDC, 550, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
+	printText(targetLayer->_consoleDC, 1100, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName3, 100);
+	printText(targetLayer->_consoleDC, 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
 }
+
+void generateShopItem() {
+	srand((unsigned)time(NULL));
+	shopItems.clear();
+
+	shopItems.push_back(getRandomItem());
+	shopItems.push_back(getRandomItem());
+	shopItems.push_back(getRandomItem());
+}
+
+char getRandomRank() {
+
+	int randomInt = rand() % 101;
+	if (randomInt < 10) {
+		return 'S';
+	}
+	else if (randomInt < 25) {
+		return 'A';
+	}
+	else if (randomInt < 45) {
+		return 'B';
+	}
+	else if (randomInt < 75) {
+		return 'C';
+	}
+	else {
+		return 'N';
+	}
+}
+
+bool isItemExistItemVector(Item* targetItem, std::vector<Item*> itemList) {
+	auto it = std::find(itemList.begin(), itemList.end(), targetItem);
+	return it != itemList.end();
+}
+
+Item* getRandomItem() {
+	srand((unsigned)time(NULL));
+	char rank;
+	Item* targetItem = nullptr;
+	bool isFinished = false;
+
+	while (!isFinished) {
+		rank = getRandomRank();
+		switch (rank) {
+		case 'S':
+			if (!sRankItems.empty()) {
+				int randomIndex = rand() % sRankItems.size();
+				targetItem = sRankItems[randomIndex];
+			}
+			break;
+		case 'A':
+			if (!aRankItems.empty()) {
+				int randomIndex = rand() % aRankItems.size();
+				targetItem = aRankItems[randomIndex];
+			}
+			break;
+		case 'B':
+			if (!bRankItems.empty()) {
+				int randomIndex = rand() % bRankItems.size();
+				targetItem = bRankItems[randomIndex];
+			}
+			break;
+		case 'C':
+			if (!cRankItems.empty()) {
+				int randomIndex = rand() % cRankItems.size();
+				targetItem = cRankItems[randomIndex];
+			}
+			break;
+		case 'N':
+			if (!nRankItems.empty()) {
+				int randomIndex = rand() % nRankItems.size();
+				targetItem = nRankItems[randomIndex];
+			}
+			break;
+		default:
+			break;
+		}
+
+		if (targetItem != nullptr &&
+			!isItemExistItemVector(targetItem, ownedItems) &&
+			!isItemExistItemVector(targetItem, shopItems)) {
+			isFinished = true;
+		}
+	}
+
+	return targetItem;
+}
+
 
 // ?垬 ?滌瀾
 
@@ -569,18 +677,10 @@ void initStageImage() { // stageLayer?愳劀 ?毄?橂姅 氇摖 ?措?歆�
 }
 
 void initItemImages() { // ?勳澊??甏�???垬 (臧滊皽 歆勴枆 欷?
-	std::vector<int> itemList = pc.getitemList();
+	std::vector<Item*> itemList = ownedItems;
 
 	for (int i = 0; i < itemList.size(); i++) {
-		if (itemList[i] == 1) {
-			stageImageArray[stageLayer.imageCount++] = { bmpItem1Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
-		}
-		if (itemList[i] == 2) {
-			stageImageArray[stageLayer.imageCount++] = { bmpItem2Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
-		}
-		if (itemList[i] == 3) {
-			stageImageArray[stageLayer.imageCount++] = { bmpItem3Name, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
-		}
+		stageImageArray[stageLayer.imageCount++] = { imageArray[itemList[i]->getImageIndex()].fileName, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1};
 	}
 }
 

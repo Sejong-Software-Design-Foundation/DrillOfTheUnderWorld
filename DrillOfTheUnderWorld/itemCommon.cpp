@@ -3,6 +3,8 @@
 
 // item vector
 std::vector<Item*> ownedItems;
+std::vector<Item*> shopItems;
+
 std::vector<Item*> sRankItems;
 std::vector<Item*> aRankItems;
 std::vector<Item*> bRankItems;

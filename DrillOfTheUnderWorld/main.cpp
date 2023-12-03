@@ -46,10 +46,10 @@ int main() {
 	initRewardImage();				// rewardLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„±
 
 	// ?„ì´?œê³¼ ê´€?¨ëœ ?¨ìˆ˜??ê°œë°œ ì§„í–‰ ì¤?
-	pc.addItem(1);
-	pc.addItem(2);
-	pc.addItem(3);
-	initItemImages();
+	//pc.addItem(1);
+	//pc.addItem(2);
+	//pc.addItem(3);
+	//initItemImages();
 	// new items
 	initItems();
 	
