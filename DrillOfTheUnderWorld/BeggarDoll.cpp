@@ -7,7 +7,7 @@ BeggarDoll::BeggarDoll() : Item() {
     this->rank = 'S';
     this->price = S_RANK_PRICE;
     this->isUniqueHoldableItem = true;
-    imageArray[imageLayer.imageCount++] = { bmpBeggarDollName - 1, -1, 1, 1 };
+    imageArray[imageLayer.imageCount++] = { bmpBeggarDollName, -1, -1, 1, 1 };
 }
 
 void BeggarDoll::use() {

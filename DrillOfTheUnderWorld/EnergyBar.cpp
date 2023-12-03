@@ -2,7 +2,7 @@
 #include "common.hpp"
 
 EnergyBar::EnergyBar() : Item() {
-    this->name = "에너지바";
+    this->name = "HP포션";
     this->info = "PC의 체력을 모두 회복한다.";
     this->rank = 'E';
     this->price = E_RANK_PRICE;
@@ -10,5 +10,5 @@ EnergyBar::EnergyBar() : Item() {
 }
 
 void EnergyBar::use() {
-    pc.setHP(pc.getMaxHP());
+    pc.setUsableEnergyBarCount(pc.getUsableEnergyBarCount() + 1);
 }

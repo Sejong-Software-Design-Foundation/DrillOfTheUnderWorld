@@ -271,6 +271,7 @@ void visitRShop();
 void printItemTextInRShop();
 void printStatusInRShop(int price1, int price2, int price3, int num);
 
+void stringToWchar(const std::string& input, wchar_t* output, size_t outputSize);
 void generateShopItem();
 char getRandomRank();
 Item* getRandomItem();

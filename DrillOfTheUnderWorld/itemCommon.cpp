@@ -50,8 +50,8 @@ void initCRankItems() {
 	cRankItems.push_back(new FreshBrewedCoffee());
 }
 void initERankItems() {
-	eRankItems.push_back(new PortableOxygenCan());
 	eRankItems.push_back(new EnergyBar());
+	eRankItems.push_back(new PortableOxygenCan());
 }
 void initNRankItems() {
 	nRankItems.push_back(new AttackBoost());

@@ -19,7 +19,6 @@ protected:
     std::string name;
     char rank;
     int price;
-    std::string imageName;
     std::string info;
     int imageidx;
     bool isUniqueHoldableItem;

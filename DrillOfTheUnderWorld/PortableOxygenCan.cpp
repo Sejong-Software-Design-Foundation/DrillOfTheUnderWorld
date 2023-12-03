@@ -10,5 +10,5 @@ PortableOxygenCan::PortableOxygenCan() : Item() {
 }
 
 void PortableOxygenCan::use() {
-    pc.setOxygen(pc.getMaxOxygen());
+    pc.setUsablePortableOxygenCanCount(pc.getUsablePortableOxygenCanCount() + 1);
 }
