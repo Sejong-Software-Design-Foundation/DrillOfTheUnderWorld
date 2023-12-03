@@ -49,9 +49,14 @@ char bmpShopItemBoxDisable[] = "Shop_ItemBox_disable.bmp";
 char bmpShopItemBoxSelected[] = "Shop_ItemBox_selected.bmp";
 char bmpShopStoneBox[] = "Shop_StoneBox.bmp";
 char bmpLShopMiner[] = "lShop_miner.bmp";
+char bmpLShopMinerSelected[] = "lShop_minerSelected.bmp";
 char bmpLShopBalloon[] = "lShop_Balloon.bmp";
 char bmpRShopMiner[] = "rShop_miner.bmp";
+char bmpRShopMinerSelected[] = "rShop_minerSelected.bmp";
 char bmpRShopBalloon[] = "rShop_Balloon.bmp";
+
+ImageLayer safetyLayer = DEFAULT_IMAGE_LAYER;
+Image safetyImageArray[100];
 
 // PCê°€ ?„ìž¬ ?´ë””???„ì¹˜?˜ëŠ”ì§€ ì²´í¬?˜ê¸° ?„í•œ bool??ë³€??
 bool isOnStage = true;
@@ -225,6 +230,112 @@ char bmpCursedTotemName[] = "item_CursedTotem.bmp";
 char bmpAncientVirusName[] = "item_AncientVirus.bmp";
 char bmpCaveSnakeName[] = "item_CaveSnake.bmp";
 
+
+//char bmpSafetyBG[] = "safety_bg.bmp";
+char bmpSafetyBG[] = "bg.bmp";
+char bmpSafetyArrow[] = "safety_arrow.bmp";
+char bmpSafetyArrowSelected[] = "safety_arrowSelected.bmp";
+int index_Safety_Object_Start;
+
+void initSafetyImage() {
+	safetyLayer.images = safetyImageArray;
+	safetyLayer.imageCount = 0;
+
+	safetyImageArray[safetyLayer.imageCount++] = { bmpNamePC, 1000, 1450, 2 };
+	safetyImageArray[safetyLayer.imageCount++] = { bmpNameUIItemBox, 180, 850, 1 };
+	safetyImageArray[safetyLayer.imageCount++] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
+
+	index_Safety_Object_Start = safetyLayer.imageCount;
+	safetyImageArray[safetyLayer.imageCount++] = { bmpLShopMiner, 650, 1240, 0.5 };
+	safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyArrow, 1000, 1130, 0.5 };
+	safetyImageArray[safetyLayer.imageCount++] = { bmpRShopMiner, 1200, 1210, 0.5 };
+
+	safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 }; // °¡Àå ¸¶Áö¸·¿¡ ¿Í¾ß ÇÔ
+}
+
+void visitSafety() {
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &safetyLayer;
+
+	safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
+	safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
+	safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+
+	updateCharacterStatus();
+
+	int index = -1;
+	int flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+
+			switch (key) {
+			case NUM1:
+				index = 0;
+				break;
+			case NUM2:
+				index = 1;
+				break;
+			case NUM3:
+				index = 2;
+				break;
+			case LEFT:
+				if (index == -1) index = 0;
+				else if (index != 0) index--;
+				break;
+			case RIGHT:
+				if (index == -1) index = 2;
+				else if (index != 2) index++;
+				break;
+			case SPACE:
+				if (index == -1) break;
+				else if (index == 0) {
+					visitLShop();
+				}
+				else if (index == 1) {
+					//visitLShop();
+					flags = 0;
+				}
+				else if (index == 2) {
+					visitRShop();
+				}
+				break;
+			}
+
+			if (index != -1) index %= 3;
+
+			if (index == 0) {
+				safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMinerSelected;
+				safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
+				safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
+			}
+			else if (index == 1) {
+				safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
+				safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrowSelected;
+				safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
+			}
+			else if (index == 2) {
+				safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
+				safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
+				safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMinerSelected;
+			}
+			if (key) {
+				targetLayer->renderAll(targetLayer);
+				updateCharacterStatus();
+			}
+		}
+	}
+
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &stageLayer;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+}
+
 void initLShopImage() {
 	lShopLayer.images = lShopImageArray;
 	lShopLayer.imageCount = 0;
@@ -259,7 +370,6 @@ void visitLShop() {
 
 	int item1_price = 100;
 	int item2_price = 200;
-	pc.setStone(pc.getStone() + 200);
 
 	// 3, 4¹øÀÌ ¾ÆÀÌÅÛ 2Á¾ÀÇ ¹Ú½º
 	if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
@@ -325,9 +435,7 @@ void visitLShop() {
 	}
 
 	targetLayer->fadeOut(targetLayer, NULL);
-	targetLayer = &stageLayer;
-	isOnStage = true;
-	isOnSafety = false;
+	targetLayer = &safetyLayer;
 
 	targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);
@@ -374,7 +482,6 @@ void visitRShop() {
 	int item1_price = 100;
 	int item2_price = 200;
 	int item3_price = 300;
-	pc.setStone(pc.getStone() + 200);
 
 	if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
 	else rShopImageArray[4].fileName = bmpShopItemBox;
@@ -461,9 +568,7 @@ void visitRShop() {
 	}
 
 	targetLayer->fadeOut(targetLayer, NULL);
-	targetLayer = &stageLayer;
-	isOnStage = true;
-	isOnSafety = false;
+	targetLayer = &safetyLayer;
 
 	targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);

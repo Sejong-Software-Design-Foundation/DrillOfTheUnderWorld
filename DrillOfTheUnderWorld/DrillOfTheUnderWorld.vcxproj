@@ -210,8 +210,9 @@
     <Image Include="..\..\Stage1.bmp" />
     <Image Include="..\..\Stage2.bmp" />
     <Image Include="..\..\Stage3.bmp" />
-    <Image Include="basicStoneBlocks.bmp" />
+    <Image Include="arrow.bmp" />
     <Image Include="bedrock.bmp" />
+    <Image Include="bg.bmp" />
     <Image Include="block_MineralBronze.bmp" />
     <Image Include="block_MineralDiamond.bmp" />
     <Image Include="block_MineralGold.bmp" />
@@ -284,6 +285,7 @@
     <Image Include="lava_block.bmp" />
     <Image Include="lShop_Balloon.bmp" />
     <Image Include="lShop_miner.bmp" />
+    <Image Include="lShop_minerSelected.bmp" />
     <Image Include="nomalStage.bmp" />
     <Image Include="clearedStage.bmp" />
     <Image Include="brokenStoneBlock.bmp" />
@@ -307,7 +309,11 @@
     <Image Include="questionMark.bmp" />
     <Image Include="rShop_Balloon.bmp" />
     <Image Include="rShop_miner.bmp" />
+    <Image Include="rShop_minerSelected.bmp" />
     <Image Include="rShop_spearkBalloon.bmp" />
+    <Image Include="safety_arrow.bmp" />
+    <Image Include="safety_arrowSelected.bmp" />
+    <Image Include="safety_bg.bmp" />
     <Image Include="Shop_ItemBox.bmp" />
     <Image Include="Shop_ItemBox_disable.bmp" />
     <Image Include="Shop_ItemBox_selected.bmp" />

@@ -274,4 +274,8 @@ void visitRShop();
 void printItemTextInRShop();
 void printStatusInRShop(int price1, int price2, int price3, int num);
 
+extern ImageLayer safetyLayer;
+void initSafetyImage();
+void visitSafety();
+extern int index_Safety_Object_Start;
 #endif COMMON_HPP

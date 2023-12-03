@@ -13,6 +13,7 @@ int main() {
 	stageLayer.initialize(&stageLayer);
 	imageLayer.initialize(&imageLayer); // imageLayer???ì–´ë¦¬ì–´ ?ˆì´?´ë¼ê³?ë³´ë©´ ??
 	rewardLayer.initialize(&rewardLayer);
+	safetyLayer.initialize(&safetyLayer);
 	rShopLayer.initialize(&rShopLayer);
 	lShopLayer.initialize(&lShopLayer);
 
@@ -27,6 +28,7 @@ int main() {
 	initStageImage();				// stageLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„±
 	fillBlockImages();				// imageLayer??ë¸”ë¡(25x25) ìµœì´ˆ ?ì„±
 
+	initSafetyImage();
 	initRShopImage();
 	initLShopImage();
 
@@ -205,15 +207,9 @@ int main() {
 					pc.setDirDown();
 					if (!collisionCheckInStage(curPosX, curPosY + AREA_BLOCK_SIZE)) pc.moveInStage();
 					break;
-				case O:
-					isOnStage = false;
-					isOnArea = false;
-					visitLShop();
-					break;
-				case P:
-					isOnStage = false;
-					isOnArea = false;
-					visitRShop();
+				case ESC:
+					pc.setStone(pc.getStone() + 5000);
+					visitSafety();
 					break;
 				}
 				if (key) {
