@@ -134,27 +134,52 @@
     <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AncientVirus.hpp" />
     <ClInclude Include="Area.hpp" />
+    <ClInclude Include="AttackBoost.hpp" />
+    <ClInclude Include="AttackSpeedBoost.hpp" />
     <ClInclude Include="Bat.hpp" />
+    <ClInclude Include="BatFang.hpp" />
+    <ClInclude Include="BeggarDoll.hpp" />
+    <ClInclude Include="BloodBag.hpp" />
     <ClInclude Include="Boss.hpp" />
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="CaveSnake.hpp" />
+    <ClInclude Include="CursedTotem.hpp" />
+    <ClInclude Include="Dice.hpp" />
+    <ClInclude Include="Disassembler.hpp" />
     <ClInclude Include="EmceeTheShyGuy.hpp" />
+    <ClInclude Include="EnergyBar.hpp" />
+    <ClInclude Include="FreshBrewedCoffee.hpp" />
     <ClInclude Include="ImageFading.h" />
     <ClInclude Include="ImageLayer.h" />
     <ClInclude Include="ImageLayerImpl.h" />
     <ClInclude Include="ImageLayerInterface.h" />
+    <ClInclude Include="Item.hpp" />
     <ClInclude Include="Ladder.hpp" />
+    <ClInclude Include="LuckStone.hpp" />
+    <ClInclude Include="LuckyCharm.hpp" />
+    <ClInclude Include="MetalDetector.hpp" />
     <ClInclude Include="Mineral.hpp" />
     <ClInclude Include="Mole.hpp" />
+    <ClInclude Include="MoleClaw.hpp" />
+    <ClInclude Include="MovementSpeedBoost.hpp" />
     <ClInclude Include="Npc.hpp" />
     <ClInclude Include="NPCBullet.hpp" />
+    <ClInclude Include="Orichalcum.hpp" />
+    <ClInclude Include="PortableOxygenCan.hpp" />
     <ClInclude Include="PC.hpp" />
+    <ClInclude Include="PrisonerShackles.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource2.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="common.hpp" />
     <ClInclude Include="Stage.hpp" />
+    <ClInclude Include="SupplyOxygenTank.hpp" />
     <ClInclude Include="Text.hpp" />
+    <ClInclude Include="ThronCrown.hpp" />
+    <ClInclude Include="TwoHearts.hpp" />
+    <ClInclude Include="UndergroundTicket.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav" />

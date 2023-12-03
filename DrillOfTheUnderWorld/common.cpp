@@ -1,15 +1,17 @@
 #include "common.hpp"
 
+int stageLevel = 1;
+
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
 
 ImageLayer* targetLayer = NULL;
-// stageLayer?€ ?´ë‹¹ ?ˆì´?´ì—???¬ìš©?˜ëŠ” ë³€?˜ë“¤
+// stageLayer?ï¿½ ?æªå«» ?å ¨æ¾Š?æŒ«æ£???î„‡æ¯„?æ©‚å§… æ°¤ï¿½?æ©‚æ‘›
 ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image stageImageArray[40];
 int stageInfo[5][5];
-// imageLayer?€ ?´ë‹¹ ?ˆì´?´ì—???¬ìš©?˜ëŠ” ë³€?˜ë“¤
+// imageLayer?ï¿½ ?æªå«» ?å ¨æ¾Š?æŒ«æ£???î„‡æ¯„?æ©‚å§… æ°¤ï¿½?æ©‚æ‘›
 ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
 Image imageArray[1000];
 int blockInfo[1200][1200];
@@ -31,7 +33,7 @@ bool isGenerateMobByQuestionBlock = false;
 int questionBlockPosX = 0;
 int questionBlockPosY = 0;
 
-// rewardLayer?€ ?´ë‹¹ ?ˆì´?´ì—???¬ìš©?˜ëŠ” ë³€?˜ë“¤
+// rewardLayer?ï¿½ ?æªå«» ?å ¨æ¾Š?æŒ«æ£???î„‡æ¯„?æ©‚å§… æ°¤ï¿½?æ©‚æ‘›
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
 Image imagesReward[1000];
 
@@ -53,7 +55,7 @@ char bmpLShopBalloon[] = "lShop_Balloon.bmp";
 char bmpRShopMiner[] = "rShop_miner.bmp";
 char bmpRShopBalloon[] = "rShop_Balloon.bmp";
 
-// PCê°€ ?„ì¬ ?´ë””???„ì¹˜?˜ëŠ”ì§€ ì²´í¬?˜ê¸° ?„í•œ bool??ë³€??
+// PCè‡§ï¿½ ?å‹³ç› ?æªæ•‚???å‹³ç®»?æ©‚å§…æ­†ï¿½ è§³é”™ä¼‚?æ©èµ´ ?å‹´æš… bool??æ°¤ï¿½??
 bool isOnStage = true;
 bool isOnArea = false;
 bool isNormalArea = false;
@@ -62,9 +64,9 @@ bool isButtonArea = false;
 bool isFlagArea = false;
 bool isBossArea = false;
 
-// ê°??ˆì´?´ë§ˆ???¬ìš©?˜ëŠ” ?´ë?ì§€?¤ì? ?˜ë‚˜??ë°°ì—´???€?¥ë¨ (ex. imageLayer->imageArray, rewardLayer->imageReward)
-// ê°™ì? ë°°ì—´???€?¥ë˜???´ë?ì§€?¤ì? ?´ë??ì„œ ëª©ì ???°ë¼ ë¬¶ì—¬???€?¥ë¨
-// ?‘ê·¼?˜ê¸° ?¸í•˜?„ë¡ ?˜ê¸° ?„í•´ ?œì‘ ë²ˆí˜¸ë¥??€?¥í•˜??ê´€ë¦?
+// è‡§??å ¨æ¾Š?æªî???î„‡æ¯„?æ©‚å§… ?æª?æ­†ï¿½?ã‚Œ? ?æ©‚å€¶??æ°šåŠæ£¿???ï¿½?ãƒ«æƒƒ (ex. imageLayer->imageArray, rewardLayer->imageReward)
+// è‡§æ¬–? æ°šåŠæ£¿???ï¿½?ãƒ«æ‚©???æª?æ­†ï¿½?ã‚Œ? ?æª??æ„³åŠ€ æ°‡â•ˆçˆœ???åŠæ¾• æ°é¹…æ£³???ï¿½?ãƒ«æƒƒ
+// ?æˆ§èŠ³?æ©èµ´ ?ç–™æ™¿?å‹²î”¢ ?æ©èµ´ ?å‹´æš£ ?æ»Œç€¾ æ°©å ©æ¨ƒæ¯³??ï¿½?ãƒ­æ™¿??ç”ï¿½æ¯½?
 int index_StageImages_Start;
 int index_Area_PC;
 int index_Area_Button_Start;
@@ -77,7 +79,7 @@ int index_Area_UI_mapTile_Start;
 int index_Area_UI_MiniGame_Start;
 int index_RewardImages_Start;
 
-// BMP ?Œì¼ ?œì‘
+// BMP ?å²‡æ¾• ?æ»Œç€¾
 
 // NULL BMP
 char bmpNameNull[] = "";
@@ -261,7 +263,7 @@ void visitLShop() {
 	int item2_price = 200;
 	pc.setStone(pc.getStone() + 200);
 
-	// 3, 4¹øÀÌ ¾ÆÀÌÅÛ 2Á¾ÀÇ ¹Ú½º
+	// 3, 4é”…æ é…’æè¢ 2è¾†ç‹¼ å† èƒ¶
 	if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
 	else lShopImageArray[3].fileName = bmpShopItemBox;
 	if (item2_price > pc.getStone()) lShopImageArray[4].fileName = bmpShopItemBoxDisable;
@@ -280,7 +282,7 @@ void visitLShop() {
 			int key = _getch();
 
 			switch (key) {
-			// 1, 2¹ø ÀÔ·ÂÇÏ¸é °¢ ¹Ú½º°¡ ¼±ÅÃµÇ°í, ³ª¸ÓÁö ¹Ú½º´Â ¼±ÅÃ ±âº»À¸·Î º¯°æ(¼±ÅÃ ÇØÁ¦)
+			// 1, 2é”… æ¶ä»¿çªæ é˜¿ å† èƒ¶å•Š æ€¥ç¶ç™»ç»Š, å”±èµ£ç˜¤ å† èƒ¶ç»° æ€¥ç¶ æ‰å¤¯æ è‚º å‡½ç‰ˆ(æ€¥ç¶ ç§¦åŠ›)
 			case NUM1:
 				if (strcmp(lShopImageArray[3].fileName, bmpShopItemBoxDisable) == 0) break;
 				lShopImageArray[3].fileName = bmpShopItemBoxSelected;
@@ -297,7 +299,7 @@ void visitLShop() {
 				index = 1;
 				lastInputKey = 0;
 				break;
-			// ½ºÆäÀÌ½º¹Ù ÀÔ·ÂÇÏ¸é ¾ÆÀÌÅÛ ±¸¸Å
+			// èƒ¶å…¶æèƒ¶å®˜ æ¶ä»¿çªæ é…’æè¢ å¤‡æ¦‚
 			case SPACE:
 				if (index == -1) break;
 				else if (index == 0) {
@@ -333,8 +335,8 @@ void visitLShop() {
 	targetLayer->renderAll(targetLayer);
 }
 
-void printStatusInLShop(int price1, int price2, int num) { // ÇöÀç µ¹ °³¼ö¿Í ¾ÆÀÌÅÛ °¡°İ, ¸»Ç³¼± Ãâ·Â
-	printItemTextInLShop(); // ¾ÆÀÌÅÛ ÀÌ¸§°ú ¼³¸í Ãâ·Â
+void printStatusInLShop(int price1, int price2, int num) { // æ³…çŠ å€’ ä¿ºèå®¢ é…’æè¢ å•Šæ‹œ, å¯Œæµ…æ€¥ å…ä»¿
+	printItemTextInLShop(); // é…’æè¢ ææŠšè‹ æ±²ç–™ å…ä»¿
 
 	wchar_t numStone[20];
 	wchar_t numPrice1[20];
@@ -348,18 +350,18 @@ void printStatusInLShop(int price1, int price2, int num) { // ÇöÀç µ¹ °³¼ö¿Í ¾ÆÀ
 	printText(targetLayer->_consoleDC, 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
 	printText(targetLayer->_consoleDC, 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 
-	wchar_t info1[100] = L"¼ıÀÚ Å°¸¦ ´­·¯ ¼±ÅÃ, SpacebarÅ°¸¦ ´­·¯ ±¸¸ÅÇÒ ¼ö ÀÖ½À´Ï´Ù. ESCÅ°¸¦ ÅëÇØ »óÁ¡À» ³ª°©´Ï´Ù.";
-	wchar_t info2[100] = L"ÈÇ¸¢ÇÑ ¼±ÅÃÀÔ´Ï´Ù!";
+	wchar_t info1[100] = L"ç®­ç£Š è™ç”« å–˜çŸ¾ æ€¥ç¶, Spacebarè™ç”« å–˜çŸ¾ å¤‡æ¦‚ä¸” è ä¹åš¼èªä¿ƒ. ESCè™ç”« çƒ¹ç§¦ æƒ‘ç—¢é˜‘ å”±ç™Œèªä¿ƒ.";
+	wchar_t info2[100] = L"æƒ¹æ¶ªèŒ„ æ€¥ç¶æ¶èªä¿ƒ!";
 
 	if (num == 0) printText(targetLayer->_consoleDC, 900, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
 	else if (num == 1)  printText(targetLayer->_consoleDC, 900, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
 }
 
-void printItemTextInLShop() { // ¾ÆÀÌÅÛ ÀÌ¸§°ú ¼³¸í Ãâ·Â
-	wchar_t itemName1[10] = L"ÁöÇÏ Æ¼ÄÏ";
-	wchar_t itemName2[10] = L"¹ÚÁã ¼Û°÷´Ï";
-	wchar_t itemInfo1[100] = L"»óÁ¡¿¡¼­ ÆÇ¸ÅÇÏ´Â ¾ÆÀÌÅÛÀÇ °¡°İÀÌ 30% ÇÒÀÎµÈ´Ù.";
-	wchar_t itemInfo2[100] = L"º¸½º °ø°İ½Ã ³·Àº È®·ü·Î HP¸¦ ÀÏÁ¤·® È¸º¹ÇÑ´Ù.";
+void printItemTextInLShop() { // é…’æè¢ ææŠšè‹ æ±²ç–™ å…ä»¿
+	wchar_t itemName1[10] = L"ç˜¤çª èå—";
+	wchar_t itemName2[10] = L"å† é›¶ ä»·é•‘èª";
+	wchar_t itemInfo1[100] = L"æƒ‘ç—¢ä¿Šè¾‘ é­„æ¦‚çªç»° é…’æè¢ç‹¼ å•Šæ‹œæ 30% ä¸”ç‰¢ç­‰ä¿ƒ.";
+	wchar_t itemInfo2[100] = L"ç„Šèƒ¶ å‚æ‹œçŸ« æ’¤ç¯® çŠ¬ä¼è‚º HPç”« è€æ²¥æ¨Š é›€æ±—èŒ„ä¿ƒ.";
 
 	printText(targetLayer->_consoleDC, 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
 	printText(targetLayer->_consoleDC, 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 190);
@@ -469,8 +471,8 @@ void visitRShop() {
 	targetLayer->renderAll(targetLayer);
 }
 
-void printStatusInRShop(int price1, int price2, int price3, int num) { // ÇöÀç µ¹ °³¼ö¿Í ¾ÆÀÌÅÛ °¡°İ, ¸»Ç³¼± Ãâ·Â
-	printItemTextInRShop(); // ¾ÆÀÌÅÛ ÀÌ¸§°ú ¼³¸í Ãâ·Â
+void printStatusInRShop(int price1, int price2, int price3, int num) { // æ³…çŠ å€’ ä¿ºèå®¢ é…’æè¢ å•Šæ‹œ, å¯Œæµ…æ€¥ å…ä»¿
+	printItemTextInRShop(); // é…’æè¢ ææŠšè‹ æ±²ç–™ å…ä»¿
 
 	wchar_t numStone[20];
 	wchar_t numPrice1[20];
@@ -487,21 +489,21 @@ void printStatusInRShop(int price1, int price2, int price3, int num) { // ÇöÀç µ
 	printText(targetLayer->_consoleDC, 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 	printText(targetLayer->_consoleDC, 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
-	wchar_t info1[100] = L"¼ıÀÚ Å°¸¦ ´­·¯ ¼±ÅÃ, SpacebarÅ°¸¦ ´­·¯ ±¸¸ÅÇÒ ¼ö ÀÖ½À´Ï´Ù. ESCÅ°¸¦ ÅëÇØ »óÁ¡À» ³ª°©´Ï´Ù.";
-	wchar_t info2[100] = L"ÈÇ¸¢ÇÑ ¼±ÅÃÀÔ´Ï´Ù!";
+	wchar_t info1[100] = L"ç®­ç£Š è™ç”« å–˜çŸ¾ æ€¥ç¶, Spacebarè™ç”« å–˜çŸ¾ å¤‡æ¦‚ä¸” è ä¹åš¼èªä¿ƒ. ESCè™ç”« çƒ¹ç§¦ æƒ‘ç—¢é˜‘ å”±ç™Œèªä¿ƒ.";
+	wchar_t info2[100] = L"æƒ¹æ¶ªèŒ„ æ€¥ç¶æ¶èªä¿ƒ!";
 
 	if (num == 0) printText(targetLayer->_consoleDC, 200, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
 	else if (num == 1)  printText(targetLayer->_consoleDC, 200, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
 }
 
-void printItemTextInRShop() // ¾ÆÀÌÅÛ ÀÌ¸§°ú ¼³¸í Ãâ·Â
+void printItemTextInRShop() // é…’æè¢ ææŠšè‹ æ±²ç–™ å…ä»¿
 {
-	wchar_t itemName1[10] = L"ÁöÇÏ Æ¼ÄÏ";
-	wchar_t itemName2[10] = L"¹ÚÁã ¼Û°÷´Ï";
-	wchar_t itemName3[10] = L"ºí·¯µå ¹é";
-	wchar_t itemInfo1[100] = L"»óÁ¡¿¡¼­ ÆÇ¸ÅÇÏ´Â ¾ÆÀÌÅÛÀÇ °¡°İÀÌ 30% ÇÒÀÎµÈ´Ù.";
-	wchar_t itemInfo2[100] = L"º¸½º °ø°İ½Ã ³·Àº È®·ü·Î HP¸¦ ÀÏÁ¤·® È¸º¹ÇÑ´Ù.";
-	wchar_t itemInfo3[100] = L"PCÀÇ ÃÖ´ë Ã¼·ÂÀÌ Áõ°¡ÇÑ´Ù.";
+	wchar_t itemName1[10] = L"ç˜¤çª èå—";
+	wchar_t itemName2[10] = L"å† é›¶ ä»·é•‘èª";
+	wchar_t itemName3[10] = L"å–‰çŸ¾é› å½’";
+	wchar_t itemInfo1[100] = L"æƒ‘ç—¢ä¿Šè¾‘ é­„æ¦‚çªç»° é…’æè¢ç‹¼ å•Šæ‹œæ 30% ä¸”ç‰¢ç­‰ä¿ƒ.";
+	wchar_t itemInfo2[100] = L"ç„Šèƒ¶ å‚æ‹œçŸ« æ’¤ç¯® çŠ¬ä¼è‚º HPç”« è€æ²¥æ¨Š é›€æ±—èŒ„ä¿ƒ.";
+	wchar_t itemInfo3[100] = L"PCç‹¼ å¼¥æª çœ‰ä»¿æ åˆ˜å•ŠèŒ„ä¿ƒ.";
 
 	printText(targetLayer->_consoleDC, 200, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
 	printText(targetLayer->_consoleDC, 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 190);
@@ -511,7 +513,7 @@ void printItemTextInRShop() // ¾ÆÀÌÅÛ ÀÌ¸§°ú ¼³¸í Ãâ·Â
 	printText(targetLayer->_consoleDC, 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 190);
 }
 
-// ?¨ìˆ˜ ?œì‘
+// ?îŸå¬ ?æ»Œç€¾
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
     int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
@@ -539,7 +541,7 @@ void removeCursor() {
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &c);
 }
 
-void initialize() { // ê¸°ì´ˆ?ì¸ ?´ë‹ˆ?œë¼?´ì§•(ì½˜ì†” ?¬ì´ì¦?ì§€?? ?¬ì¸???? œ ??
+void initialize() { // æ—®åŠç£®?ä¾…æ¾‘ ?æªåª¹?æ»Šæ¾•?æŒ«îš(æ—–æ©ƒå• ?î„‡æ¾Šæ­ƒ?æ­†ï¿½?? ?î„‡æ¾‘????ç‰… ??
 
     getHandle();
     resizeConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
@@ -547,7 +549,7 @@ void initialize() { // ê¸°ì´ˆ?ì¸ ?´ë‹ˆ?œë¼?´ì§•(ì½˜ì†” ?¬ì´ì¦?ì§€?? ?¬ì¸???
     srand((unsigned)time(NULL));
 }
 
-void initStageImage() { // stageLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„±
+void initStageImage() { // stageLayer?æ„³åŠ€ ?î„‡æ¯„?æ©‚å§… æ°‡îŸæ‘– ?æª?æ­†ï¿½ æ–“æ»Œç£® ?æ¿åŠš
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -566,7 +568,7 @@ void initStageImage() { // stageLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„
 
 }
 
-void initItemImages() { // ?„ì´??ê´€???¨ìˆ˜ (ê°œë°œ ì§„í–‰ ì¤?
+void initItemImages() { // ?å‹³æ¾Š??ç”ï¿½???îŸå¬ (è‡§æ»Šçš½ æ­†å‹´æ† æ¬·?
 	std::vector<int> itemList = pc.getitemList();
 
 	for (int i = 0; i < itemList.size(); i++) {
@@ -582,7 +584,7 @@ void initItemImages() { // ?„ì´??ê´€???¨ìˆ˜ (ê°œë°œ ì§„í–‰ ì¤?
 	}
 }
 
-void fillBlockImages() { // imageLayer??ë¸”ë¡(25x25) ìµœì´ˆ ?ì„± 
+void fillBlockImages() { // imageLayer??æ•«æ—Šî”¢(25x25) æ–“æ»Œç£® ?æ¿åŠš 
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
@@ -591,7 +593,7 @@ void fillBlockImages() { // imageLayer??ë¸”ë¡(25x25) ìµœì´ˆ ?ì„±
 	}
 }
 
-void initAreaUI() // imageLayer??UI ?´ë?ì§€ ìµœì´ˆ ?ì„±
+void initAreaUI() // imageLayer??UI ?æª?æ­†ï¿½ æ–“æ»Œç£® ?æ¿åŠš
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
@@ -645,7 +647,7 @@ void initAreaUI() // imageLayer??UI ?´ë?ì§€ ìµœì´ˆ ?ì„±
 	imageArray[imageLayer.imageCount++] = { bmpNameTimer, 1600, 1450, 1, 1 };
 }
 
-void initRewardImage() { // rewardLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„±
+void initRewardImage() { // rewardLayer?æ„³åŠ€ ?î„‡æ¯„?æ©‚å§… æ°‡îŸæ‘– ?æª?æ­†ï¿½ æ–“æ»Œç£® ?æ¿åŠš
 	rewardLayer.images = imagesReward;
 	rewardLayer.imageCount = 0;
 
@@ -662,7 +664,7 @@ void initRewardImage() { // rewardLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void updateCharacterStatus() { // PC ?íƒœì°½ì„ ?…ë°?´íŠ¸
+void updateCharacterStatus() { // PC ?ä¾†å„¨å½€å±Šæ½‰ ?å‘ºåµƒ?é”™å§¼
 	wchar_t playerStone[20];
 	wchar_t playerHp[20];
 	wchar_t playerOz[20];
@@ -688,7 +690,7 @@ void updateCharacterStatus() { // PC ?íƒœì°½ì„ ?…ë°?´íŠ¸
 	printText(targetLayer->_consoleDC, 250, 700, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
 
-void setMovableStageInfo(int row, int col) { // ?¤í…Œ?´ì? ë§µì—???ˆë¡­ê²??´ë™ ê°€?¥í•œ ì§€??„ ?œì‹œ?˜ê¸° ?„í•œ ?¨ìˆ˜
+void setMovableStageInfo(int row, int col) { // ?ã‚å¡?æŒ«? æ¯µå¥ æ£???å §â€¦ç“´??æªå½Š è‡§ï¿½?ãƒ­æš… æ­†ï¿½??æ½‰ ?æ»Œå«“?æ©èµ´ ?å‹´æš… ?îŸå¬
 	if (row - 1 >= 0) {
 		if (stageInfo[row - 1][col] == 1) {
 			stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
@@ -715,11 +717,11 @@ void setMovableStageInfo(int row, int col) { // ?¤í…Œ?´ì? ë§µì—???ˆë¡­ê²??´ë™ 
 	}
 }
 
-void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
-	// ?ì–´ë¦¬ì–´ ?ì—??NPCê°€ ?ì„±?˜ëŠ” ê²€?€ ê³µê°„???¬ê¸°ë¥??¤ì •?˜ëŠ” ë³€?˜ë“¤
+void getNewArea() { // ?é¸½î• ?æ„³æŸæ¯½î„‡æŸ(25x25)æ¯³?é½‘å ¦èµ´?æ—æ™¿??æ°¤ï¿½??
+	// ?æ„³æŸæ¯½î„‡æŸ ?ä¾…æ£??NPCè‡§ï¿½ ?æ¿åŠš?æ©‚å§… ç“´ï¿½?ï¿½ ç“¿åº—çš ???î„…èµ´æ¯³??ã‚Œçˆ¼?æ©‚å§… æ°¤ï¿½?æ©‚æ‘›
 	NPCSpaceHeight = getNPCSpaceHeight();
 	NPCSpaceWidth = getNPCSpaceWidth();
-	// ê²€?€ ê³µê°„???„ì¹˜ë¥??€?¥í•˜??ë³€??
+	// ç“´ï¿½?ï¿½ ç“¿åº—çš ???å‹³ç®»æ¯³??ï¿½?ãƒ­æ™¿??æ°¤ï¿½??
 	NPCSpacePosX = getNPCSpacePosX();
 	NPCSpacePosY = getNPCSpacePosY();
 
@@ -727,7 +729,7 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			if (y == AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x == AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
-				//Å×µÎ¸®¸¸ ¿ë¾Ïºí·ÏÀ¸·Î Ã¤¿ì±â
+				//æŠ›æ»´åºœçˆ¶ ä¾©é å–‰åºŸæ è‚º ç›²å¿«æ‰
 				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
@@ -735,7 +737,7 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 					}
 				}
 			}
-			// ê²€?€ ê³µê°„???¤ì œ?ìœ¼ë¡?ë§Œë“œ??ë°˜ë³µë¬?
+			// ç“´ï¿½?ï¿½ ç“¿åº—çš ???ã‚Œç‰…?ä¾…æº‚æ¿?æ¯µå²†æ‘??æ°šæ©‚è½¦æ°?
 			else if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
 				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
 				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
@@ -746,7 +748,7 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 					}
 				}
 			}
-			// ?¤ë¥¸ ë¶€ë¶„ì? ê¸°ë³¸ ?Œë¡œ ê·¸ë¦¬ê¸?
+			// ?ã‚‹ã‚¸ æ”µï¿½æ”µå‹³? æ—®åŠæ£ ?å²†î”¡ æ”´é¸½Îœæ—®?
 			else {
 				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
@@ -757,7 +759,7 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 			}
 		}
 	}
-	// ?ì–´ë¦¬ì–´?ì„œ PCê°€ ?¤í°?˜ëŠ” ì´ˆê¸° ?„ì¹˜
+	// ?æ„³æŸæ¯½î„‡æŸ?æ„³åŠ€ PCè‡§ï¿½ ?ã‚å½´?æ©‚å§… é½‘å ¦èµ´ ?å‹³ç®»
 	imageArray[0].x = AREA_ORIGIN_X + 576;
 	imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE;
 	for (int y = BLOCKSIZE;y < 2*BLOCKSIZE;y++) {
@@ -765,14 +767,14 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 			blockInfo[y][576 + x] = 0;
 		}
 	}
-	// ?¤í°?˜ëŠ” ?„ì¹˜??ë¸”ë¡ ì§€?°ê¸°
+	// ?ã‚å½´?æ©‚å§… ?å‹³ç®»??æ•«æ—Šî”¢ æ­†ï¿½?ç“£èµ´
 	imageArray[13 + 25].fileName = bmpNameNull;
 
-	// ?„ì¬ ìºë¦­???¤í° ?„ì¹˜??ê´‘ì„???ì„±?????ˆëŠ” ë²„ê·¸ê°€ ì¡´ì¬??
-	// getNewArea() ??Generate~() ?´ì„œ ë°œìƒ?˜ëŠ” ?„ìƒ.
+	// ?å‹³ç› æ—Œæ„²Î???ã‚å½´ ?å‹³ç®»??ç”æˆ©åŠƒ???æ¿åŠš?????å §å§… æ°©å‹±çŠ¯è‡§ï¿½ è‡æŒ«ç›??
+	// getNewArea() ??Generate~() ?æŒ«åŠ€ æ°šæ»Œå„©?æ©‚å§… ?å‹³å„Š.
 }
 
-void getNewMiniGameArea() // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
+void getNewMiniGameArea() // æ°™é¸½åª¹ç“´å²‡ç€¯ ?æ„³æŸæ¯½î„‡æŸ(25x25)æ¯³?é½‘å ¦èµ´?æ—æ™¿??æ°¤ï¿½??
 {
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
@@ -785,7 +787,7 @@ void getNewMiniGameArea() // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€?
 			}
 		}
 	}
-	// ?ì–´ë¦¬ì–´?ì„œ PCê°€ ?¤í°?˜ëŠ” ì´ˆê¸° ?„ì¹˜
+	// ?æ„³æŸæ¯½î„‡æŸ?æ„³åŠ€ PCè‡§ï¿½ ?ã‚å½´?æ©‚å§… é½‘å ¦èµ´ ?å‹³ç®»
 	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
 	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
 	for (int y = 0;y < BLOCKSIZE;y++) {
@@ -793,21 +795,21 @@ void getNewMiniGameArea() // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€?
 			blockInfo[576 + y][576 + x] = 0;
 		}
 	}
-	// ?¤í°?˜ëŠ” ?„ì¹˜??ë¸”ë¡ ì§€?°ê¸°
+	// ?ã‚å½´?æ©‚å§… ?å‹³ç®»??æ•«æ—Šî”¢ æ­†ï¿½?ç“£èµ´
 	imageArray[12 * 25 + 13].fileName = bmpNameNull;
 }
 
-void drawUI() { // ?ì–´ë¦¬ì–´ UI ?œì„±??
-	imageArray[index_Area_UI_Start].isHide = 0; // ?„ì´??ì°½ì´ ë³´ì´?„ë¡
+void drawUI() { // ?æ„³æŸæ¯½î„‡æŸ UI ?æ»ŒåŠš??
+	imageArray[index_Area_UI_Start].isHide = 0; // ?å‹³æ¾Š??å½€å±Šæ¾Š æ°¤æŒ«æ¾Š?å‹²î”¢
 
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPë°”ê? ë³´ì´?„ë¡
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPæ°šæ—‰? æ°¤æŒ«æ¾Š?å‹²î”¢
 	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2ë°”ê? ë³´ì´?„ë¡
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2æ°šæ—‰? æ°¤æŒ«æ¾Š?å‹²î”¢
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // ë§µì´ ë³´ì´?„ë¡
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // æ¯µå¥ æ¾Š æ°¤æŒ«æ¾Š?å‹²î”¢
 		imageArray[i].isHide = 0;
 
-	// ?ì–´ë¦¬ì–´ Xê°€ ë¯¸êµ¬?„ì´ê¸??Œë¬¸???„ì‹œë¡??ì–´ë¦¬ì–´ ì§€?„ì—??Xê°€ ?œì‹œ?˜ì? ?Šë„ë¡?
+	// ?æ„³æŸæ¯½î„‡æŸ Xè‡§ï¿½ æ°™æˆˆæƒ®?å‹³æ¾Šæ—®??å²†îƒ“???å‹³å«“æ¿??æ„³æŸæ¯½î„‡æŸ æ­†ï¿½?å‹³æ£??Xè‡§ï¿½ ?æ»Œå«“?æ©ƒ? ?å©‹å¼°æ¿?
 	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
 	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
@@ -878,14 +880,14 @@ bool collisionCheck(int x, int y) {
 	return false;
 }
 
-void printTimeInMiniGameArea(float t) { // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´?ì„œ ?¨ì? ?œê°„??ì¶œë ¥?˜ëŠ” ?¨ìˆ˜
+void printTimeInMiniGameArea(float t) { // æ°™é¸½åª¹ç“´å²‡ç€¯ ?æ„³æŸæ¯½î„‡æŸ?æ„³åŠ€ ?îŸ? ?æ»‰çš ??æ–¼æ»Šç‰“?æ©‚å§… ?îŸå¬
 	wchar_t timeLimit[20];
 	if (t > 0.0) swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%.2f", t);
 	else swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%0.00");
 	printText(targetLayer->_consoleDC, 1750, 1458, 40, 0, RGB(255, 255, 255), TA_CENTER, timeLimit);
 }
 
-void printMyOriInMiniGameArea() { // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´?ì„œ informationê³??ë“??ê´‘ë¬¼ ?˜ë? ì¶œë ¥?˜ëŠ” ?¨ìˆ˜
+void printMyOriInMiniGameArea() { // æ°™é¸½åª¹ç“´å²‡ç€¯ ?æ„³æŸæ¯½î„‡æŸ?æ„³åŠ€ informationç“¿??å¶‹æ‘‘??ç”æˆ¨îƒ— ?æ©‚? æ–¼æ»Šç‰“?æ©‚å§… ?îŸå¬
 	wchar_t info1[30] = L"1 Star (5) = 100 Stones";
 	wchar_t info2[30] = L"2 Star(10) = 200 Stones";
 	wchar_t info3[30] = L"3 Star(20) = 300 Stones";
@@ -898,7 +900,7 @@ void printMyOriInMiniGameArea() { // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´?ì„œ informationê³
 	printText(targetLayer->_consoleDC, 1790, 1358, 40, 0, RGB(255, 255, 255), TA_CENTER, numOrichalcum);
 }
 
-void rewardUI() { // ?ì–´ë¦¬ì–´ ?´ë¦¬????ë³´ìƒ???»ëŠ” ?¨ìˆ˜
+void rewardUI() { // ?æ„³æŸæ¯½î„‡æŸ ?æªÎœ????æ°¤æŒ«å„Š???æµ‘å§… ?îŸå¬
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
 
@@ -1028,7 +1030,7 @@ void rewardUI() { // ?ì–´ë¦¬ì–´ ?´ë¦¬????ë³´ìƒ???»ëŠ” ?¨ìˆ˜
 		}
 	}
 	targetLayer->fadeOut(targetLayer, NULL);
-	// ?¤ìŒ RewardUI() ?¸ì¶œ???„í•œ ì½”ë“œ
+	// ?ã‚Œæ½“ RewardUI() ?èƒ³ç¨–???å‹´æš… æ—–æ—Šæ‘
 	imagesReward[4].isHide = 1;
 	imagesReward[5].isHide = 1;
 	imagesReward[6].isHide = 1;
@@ -1171,9 +1173,9 @@ void getNewBossArea() {
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			// ê²€?€ ê³µê°„???¤ì œ?ìœ¼ë¡?ë§Œë“œ??ë°˜ë³µë¬?
+			// ç“´ï¿½?ï¿½ ç“¿åº—çš ???ã‚Œç‰…?ä¾…æº‚æ¿?æ¯µå²†æ‘??æ°šæ©‚è½¦æ°?
 			if (y==AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x==AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
-				//Å×µÎ¸®¸¸ ¿ë¾Ïºí·ÏÀ¸·Î Ã¤¿ì±â
+				//æŠ›æ»´åºœçˆ¶ ä¾©é å–‰åºŸæ è‚º ç›²å¿«æ‰
 				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
@@ -1181,7 +1183,7 @@ void getNewBossArea() {
 					}
 				}
 			}
-			// ³ª¸ÓÁö´Â ÀüºÎ ºó°ø°£
+			// å”±èµ£ç˜¤ç»° å‚ˆä½• åå‚åŸƒ
 			else { 
 				imageArray[cnt++] = { bmpNameNull, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
@@ -1195,9 +1197,16 @@ void getNewBossArea() {
 }
 
 void printStoneStatus(int curStone) {
-	wchar_t playerFlagInfo[100] = L"º¸À¯ÁßÀÎ STONE : ";
+	wchar_t playerFlagInfo[100] = L"ç„Šèœ¡åç‰¢ STONE : ";
 	wchar_t playerFlagCount[20] = L"";
 	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
 	printText(targetLayer->_consoleDC, 500,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
 	printText(targetLayer->_consoleDC, 700,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
+}
+
+void setStageLevel(int level) {
+	stageLevel = level;
+}
+int getStageLevel() {
+	return stageLevel;
 }

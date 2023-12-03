@@ -1,6 +1,7 @@
 #include "PC.hpp"
 #include "common.hpp"
 #include <string>
+//#include "Item.hpp"
 
 using namespace std;
 /*
@@ -79,7 +80,15 @@ void PC::setHP(int hp) {
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
 		this->HP = 0;
-		exit(0);
+		// item
+		if (this->hasLuckCharm) {
+			this->HP = this->MAX_HP;
+			this->hasLuckCharm = false;
+		}
+		else {
+			// die
+			exit(0);
+		}
 	}
 	else if (hp > MAX_HP) this->HP = MAX_HP;
 	else this->HP = hp;
@@ -455,4 +464,101 @@ void PC::getOxygenEffect() {
 	targetLayer->renderAll(targetLayer);
 	imageArray[0].fileName = bmpCurName;
 	targetLayer->renderAll(targetLayer);
+}
+
+void PC::setMaxHP(int maxHp) {
+	if (maxHp > 0) {
+		this->MAX_HP = maxHp;
+	}
+}
+void PC::setMaxOxygen(int maxOxygen) {
+	if (maxOxygen > 0) {
+		this->MAX_O2 = maxOxygen;
+	}
+}
+/*
+std::vector<Item*> PC::getOwnedItemList() {
+	return this->ownedItemList;
+}
+*/
+
+void PC::setUsableEnergyBarCount(int count) {
+	if (count > 0) {
+		this->usableEnergyBarCount = count;
+	}
+}
+void PC::setUsablePortableOxygenCanCount(int count) {
+	if (count > 0) {
+		this->usablePortableOxygenCanCount = count;
+	}
+}
+int PC::getUsableEnergyBarCount() {
+	return this->usableEnergyBarCount;
+}
+int PC::getUsablePortableOxygenCanCount() {
+	return this->usablePortableOxygenCanCount;
+}
+
+
+void PC::setHasBatFang(boolean isHas) {
+	this->hasBatFang = isHas;
+}
+
+bool PC::getHasBatFang() {
+	return this->hasBatFang;
+}
+
+void PC::setHashasBeggarDoll(boolean isHas) {
+	this->hasBeggarDoll = isHas;
+}
+bool PC::getHashasBeggarDoll() {
+	return this->hasBeggarDoll;
+}
+void PC::setHasLuckStone(boolean isHas) {
+	this->hasLuckStone = isHas;
+}
+bool PC::getHasLuckStone() {
+	return this->hasLuckStone;
+}
+void PC::setHasLuckCharm(boolean isHas) {
+	this->hasLuckCharm = isHas;
+}
+bool PC::getHasLuckCharm() {
+	return this->hasLuckCharm;
+}
+void PC::setLuckStoneStage(int luckStoneStage) {
+	this->luckStoneStage = luckStoneStage;
+}
+int PC::getLuckStoneStage() {
+	return this->luckStoneStage;
+}
+void PC::setHasMetalDetector(boolean isHas) {
+	this->hasMetalDetector = isHas;
+}
+bool PC::getHasMetalDetector() {
+	return this->hasMetalDetector;
+}
+void PC::setHasMoleClaw(boolean isHas) {
+	this->hasMoleClaw = isHas;
+}
+bool PC::getMoleClaw() {
+	return this->hasMoleClaw;
+}
+void PC::setHasThronCrown(boolean isHas) {
+	this->hasThronCrown = isHas;
+}
+bool PC::getHasThronCrown() {
+	return this->hasThronCrown;
+}
+void PC::setHasTwoHearts(boolean isHas) {
+	this->hasTwoHearts = isHas;
+}
+bool PC::getHasTwoHearts() {
+	return this->hasTwoHearts;
+}
+void PC::setHasUndergroundTicket(boolean isHas) {
+	this->hasUndergroundTicket = isHas;
+}
+bool PC::getHasUndergroundTicket() {
+	return this->hasUndergroundTicket;
 }

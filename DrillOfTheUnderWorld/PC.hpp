@@ -6,6 +6,19 @@ extern "C" {
 
 class PC {
 private:
+	bool hasBatFang = false; // "보스 공격시 낮은 확률로 HP를 일정량 회복한다.";
+	bool hasBeggarDoll = false; // "PC 공격속도가 증가하지만, 공격시마다 돌이 소모된다."
+	bool hasLuckStone = false; // "아이템 구매 후 다음 상점 방문 시 구매값의 2배를 돌려준다.";
+	bool hasLuckCharm = false; // "죽음의 이르는 공격을 1회 방어한다."; - OK
+	bool hasMetalDetector = false; // "광물이 더 자주 등장한다.";
+	bool hasMoleClaw = false; // "광물 파괴시 재화 획득량이 증가한다.";
+	bool hasThronCrown = false; // "PC 공격력이 증가하지만, 2배의 피해를 입게 된다.";
+	bool hasTwoHearts = false; // "산소 게이지 감소량이 감소한다.";
+	bool hasUndergroundTicket = false; //"상점에서 판매하는 아이템의 가격이 30%  할인된다.";
+	int luckStoneStage = 0;
+
+	//std::vector<Item*> ownedItemList;
+	int usableEnergyBarCount = 0, usablePortableOxygenCanCount = 0;
 
 	int MAX_HP = 100, MAX_O2 = 100;
 	int AtkLev = 1, AtkSpdLev = 1, SpdLev = 1;
@@ -78,6 +91,8 @@ public:
 	COORD getTargetPos(int x, int y);
 	void setHP(int hp);
 	void setOxygen(int o2);
+	void setMaxHP(int maxHp);
+	void setMaxOxygen(int maxOxygen);
 	void setATK(int atk);
 	void setDirRight();
 	void setDirLeft();
@@ -104,4 +119,40 @@ public:
 	void hitEffect();
 	void getHPEffect();
 	void getOxygenEffect();
+
+	//std::vector<Item*> getOwnedItemList();
+	void setUsablePortableOxygenCanCount(int count);
+	void setUsableEnergyBarCount(int count);
+	int getUsablePortableOxygenCanCount();
+	int getUsableEnergyBarCount();
+
+	void setHasBatFang(boolean isHas);
+	bool getHasBatFang();
+
+	void setHashasBeggarDoll(boolean isHas);
+	bool getHashasBeggarDoll();
+
+	void setHasLuckStone(boolean isHas);
+	bool getHasLuckStone();
+
+	void setHasLuckCharm(boolean isHas);
+	bool getHasLuckCharm();
+
+	void setLuckStoneStage(int luckStoneStage);
+	int getLuckStoneStage();
+
+	void setHasMetalDetector(boolean isHas);
+	bool getHasMetalDetector();
+
+	void setHasMoleClaw(boolean isHas);
+	bool getMoleClaw();
+
+	void setHasThronCrown(boolean isHas);
+	bool getHasThronCrown();
+
+	void setHasTwoHearts(boolean isHas);
+	bool getHasTwoHearts();
+
+	void setHasUndergroundTicket(boolean isHas);
+	bool getHasUndergroundTicket();
 };
