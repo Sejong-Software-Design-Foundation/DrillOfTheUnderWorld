@@ -5,7 +5,6 @@ Item::Item(){
     this->imageidx = imageLayer.imageCount;
     this->price = 0;
     this->rank = 'N';
-    imageArray[this->imageidx].isHide = 1;
 }
 
 std::string Item::getName() {

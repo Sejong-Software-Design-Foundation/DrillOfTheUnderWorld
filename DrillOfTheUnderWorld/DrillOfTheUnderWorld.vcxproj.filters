@@ -13,6 +13,75 @@
     <ClCompile Include="AncientVirus.cpp">
       <Filter>Items</Filter>
     </ClCompile>
+    <ClCompile Include="AttackBoost.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackSpeedBoost.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="BatFang.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="BeggarDoll.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="BloodBag.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CaveSnake.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CursedTotem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Disassembler.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="EnergyBar.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FreshBrewedCoffee.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="LuckStone.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="LuckyCharm.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MetalDetector.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MoleClaw.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementSpeedBoost.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Orichalcum.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PortableOxygenCan.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PrisonerShackles.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SupplyOxygenTank.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ThornCrown.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="TwoHearts.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="UndergroundTicket.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Area.hpp" />

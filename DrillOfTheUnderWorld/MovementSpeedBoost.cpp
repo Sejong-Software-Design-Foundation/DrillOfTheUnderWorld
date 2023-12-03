@@ -6,7 +6,7 @@ MovementSpeedBoost::MovementSpeedBoost() : Item() {
     this->info = "이동속도 레벨을 1 증가시킨다.";
     this->rank = 'N';
     this->price = N_RANK_PRICE;
-    imageArray[imageLayer.imageCount++] = { bmpMovementSpeedBoostName, -1,-1, 1 };
+    imageArray[imageLayer.imageCount++] = { bmpMovementSpeedBoostName, -1, -1, 1, 1 };
 }
 
 void MovementSpeedBoost::use() {

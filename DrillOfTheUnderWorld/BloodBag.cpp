@@ -6,7 +6,7 @@ BloodBag::BloodBag() : Item() {
     this->info = "PC의 최대 체력이 10% 증가한다.";
     this->rank = 'C';
     this->price = C_RANK_PRICE;
-    imageArray[imageLayer.imageCount++] = { bmpBloodBagName, -1,-1, 1 };
+    imageArray[imageLayer.imageCount++] = { bmpBloodBagName, -1, -1, 1, 1 };
 }
 
 void BloodBag::use() {

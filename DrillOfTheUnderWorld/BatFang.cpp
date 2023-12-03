@@ -6,7 +6,7 @@ BatFang::BatFang() : Item() {
     this->info = "보스 공격시 낮은 확률로 HP를 일정량 회복한다.";
     this->rank = 'B';
     this->price = B_RANK_PRICE;
-    imageArray[imageLayer.imageCount++] = { bmpBatFangName, -1,-1, 1 };
+    imageArray[imageLayer.imageCount++] = { bmpBatFangName, -1, -1, 1, 1 };
 }
 
 void BatFang::use() {

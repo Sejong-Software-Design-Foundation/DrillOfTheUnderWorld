@@ -1,4 +1,5 @@
-#include "itemCommon.hpp"
+ï»¿#include "itemCommon.hpp"
+#include "common.hpp"
 
 // item vector
 std::vector<Item*> ownedItems;
@@ -6,9 +7,9 @@ std::vector<Item*> sRankItems;
 std::vector<Item*> aRankItems;
 std::vector<Item*> bRankItems;
 std::vector<Item*> cRankItems;
-std::vector<Item*> eRankItems; // -¼Ò¸ðÇü
-std::vector<Item*> nRankItems; // -ºÎ½ºÆ®·ù
-std::vector<Item*> fRankItems; // -µð“¹
+std::vector<Item*> eRankItems; // -ì†Œëª¨í˜•
+std::vector<Item*> nRankItems; // -ë¶€ìŠ¤íŠ¸ë¥˜
+std::vector<Item*> fRankItems; // -ë””ë²ž
 
 
 void initItems() {

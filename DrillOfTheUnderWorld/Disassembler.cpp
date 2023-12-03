@@ -6,7 +6,7 @@ Disassembler::Disassembler() : Item() {
     this->info = "보유한 아이템 중 1개가 랭크에 맞는 돌개수로 치환된다.";
     this->rank = 'B';
     this->price = B_RANK_PRICE;
-    imageArray[imageLayer.imageCount++] = { bmpDisassemblerName, -1,-1, 1 };
+    imageArray[imageLayer.imageCount++] = { bmpDisassemblerName, -1, -1, 1, 1 };
 }
 
 void Disassembler::use() {

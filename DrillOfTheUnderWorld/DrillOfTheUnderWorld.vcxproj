@@ -129,12 +129,35 @@
   <ItemGroup>
     <ClCompile Include="AncientVirus.cpp" />
     <ClCompile Include="Area.cpp" />
+    <ClCompile Include="AttackBoost.cpp" />
+    <ClCompile Include="AttackSpeedBoost.cpp" />
+    <ClCompile Include="BatFang.cpp" />
+    <ClCompile Include="BeggarDoll.cpp" />
+    <ClCompile Include="BloodBag.cpp" />
+    <ClCompile Include="CaveSnake.cpp" />
     <ClCompile Include="common.cpp" />
+    <ClCompile Include="CursedTotem.cpp" />
+    <ClCompile Include="Dice.cpp" />
+    <ClCompile Include="Disassembler.cpp" />
+    <ClCompile Include="EnergyBar.cpp" />
+    <ClCompile Include="FreshBrewedCoffee.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="itemCommon.cpp" />
+    <ClCompile Include="LuckStone.cpp" />
+    <ClCompile Include="LuckyCharm.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MetalDetector.cpp" />
+    <ClCompile Include="MoleClaw.cpp" />
+    <ClCompile Include="MovementSpeedBoost.cpp" />
+    <ClCompile Include="Orichalcum.cpp" />
     <ClCompile Include="PC.cpp" />
+    <ClCompile Include="PortableOxygenCan.cpp" />
+    <ClCompile Include="PrisonerShackles.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="SupplyOxygenTank.cpp" />
+    <ClCompile Include="ThornCrown.cpp" />
+    <ClCompile Include="TwoHearts.cpp" />
+    <ClCompile Include="UndergroundTicket.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AncientVirus.hpp" />

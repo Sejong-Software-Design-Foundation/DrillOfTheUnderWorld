@@ -6,7 +6,7 @@ ThornCrown::ThornCrown() : Item() {
     this->info = "PC 공격력이 증가하지만, 2배의 피해를 입게 된다.";
     this->rank = 'S';
     this->price = S_RANK_PRICE;
-    imageArray[imageLayer.imageCount++] = { bmpThornCrownName, -1,-1, 1 };
+    imageArray[imageLayer.imageCount++] = { bmpThornCrownName, -1, -1, 1, 1 };
 }
 
 void ThornCrown::use() {

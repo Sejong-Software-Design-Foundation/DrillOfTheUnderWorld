@@ -205,33 +205,6 @@ extern char bmpCursedTotemName[];
 extern char bmpAncientVirusName[];
 extern char bmpCaveSnakeName[];
 
-
-// item Image
-extern char bmpUndergroundTicketName[];
-extern char bmpMetalDetectorName[];
-extern char bmpThornCrownName[];
-extern char bmpBeggarDollName[];
-extern char bmpOrichalcumName[];
-extern char bmpTwoHeartsName[];
-extern char bmpLuckyCharmName[];
-extern char bmpDisassemblerName[];
-extern char bmpBatFangName[];
-extern char bmpMoleClawName[];
-extern char bmpDiceName[];
-extern char bmpLuckStoneName[];
-extern char bmpBloodBagName[];
-extern char bmpSupplyOxygenTankName[];
-extern char bmpFreshBrewedCoffeeName[];
-extern char bmpPortableOxygenCanName[];
-extern char bmpEnergyBarName[];
-extern char bmpAttackBoostName[];
-extern char bmpAttackSpeedBoostName[];
-extern char bmpMovementSpeedBoostName[];
-extern char bmpPrisonerShacklesName[];
-extern char bmpCursedTotemName[];
-extern char bmpAncientVirusName[];
-extern char bmpCaveSnakeName[];
-
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
 COORD getCurrentCurPos(void);

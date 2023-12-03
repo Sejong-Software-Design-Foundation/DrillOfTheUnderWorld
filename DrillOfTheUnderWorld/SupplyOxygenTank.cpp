@@ -6,7 +6,7 @@ SupplyOxygenTank::SupplyOxygenTank() : Item() {
     this->info = "PC의 최대 산소 게이지가 10% 증가한다.";
     this->rank = 'C';
     this->price = C_RANK_PRICE;
-    imageArray[imageLayer.imageCount++] = { bmpSupplyOxygenTankName, -1,-1, 1 };
+    imageArray[imageLayer.imageCount++] = { bmpSupplyOxygenTankName, -1, -1, 1, 1 };
 }
 
 void SupplyOxygenTank::use() {
