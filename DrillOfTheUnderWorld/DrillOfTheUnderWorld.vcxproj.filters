@@ -6,6 +6,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PC.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="itemCommon.cpp" />
+    <ClCompile Include="Item.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="AncientVirus.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Area.hpp" />
@@ -106,6 +113,7 @@
     <ClInclude Include="CaveSnake.hpp">
       <Filter>Items</Filter>
     </ClInclude>
+    <ClInclude Include="itemCommon.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav">
@@ -510,6 +518,107 @@
       <Filter>images</Filter>
     </Image>
     <Image Include="lava_block.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="testImage1.bmp" />
+    <Image Include="testImage2.bmp" />
+    <Image Include="item_AncientVirus.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_AttackBoost.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_AttackSpeedBoost.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_BatFang.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_BeggarDoll.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_BloodBag.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_CaveSnake.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_CursedTotem.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_Dice.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_Disasemmbler.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_EnergyBar.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_FreshBrewedCoffee.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_LuckStone.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_LuckyCharm.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_MetalDetector.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_MoleClaw.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_MovementSpeedBoost.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_Orichalcum.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_PortableOxygenCan.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_PrisonerShackles.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_SupplyOxygenTank.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_ThornCrown.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_TwoHearts.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_UndergroundTicket.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="lShop_Balloon.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="lShop_miner.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="rShop_Balloon.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="rShop_miner.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="rShop_spearkBalloon.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="Shop_ItemBox.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="Shop_ItemBox_disable.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="Shop_ItemBox_selected.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="Shop_StoneBox.bmp">
       <Filter>images</Filter>
     </Image>
   </ItemGroup>

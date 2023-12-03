@@ -350,18 +350,18 @@ void printStatusInLShop(int price1, int price2, int num) { // 泅犁 倒 俺荐�
 	printText(targetLayer->_consoleDC, 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
 	printText(targetLayer->_consoleDC, 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 
-	wchar_t info1[100] = L"箭磊 虐甫 喘矾 急琶, Spacebar虐甫 喘矾 备概且 荐 乐嚼聪促. ESC虐甫 烹秦 惑痢阑 唱癌聪促.";
-	wchar_t info2[100] = L"惹涪茄 急琶涝聪促!";
+	wchar_t info1[100] = L"숫자 키를 눌러 선택, Spacebar키를 눌러 구매할 수 있습니다. ESC키를 통해 상점을 나갑니다.";
+	wchar_t info2[100] = L"훌륭한 선택입니다!";
 
 	if (num == 0) printText(targetLayer->_consoleDC, 900, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
 	else if (num == 1)  printText(targetLayer->_consoleDC, 900, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
 }
 
 void printItemTextInLShop() { // 酒捞袍 捞抚苞 汲疙 免仿
-	wchar_t itemName1[10] = L"瘤窍 萍南";
-	wchar_t itemName2[10] = L"冠零 价镑聪";
-	wchar_t itemInfo1[100] = L"惑痢俊辑 魄概窍绰 酒捞袍狼 啊拜捞 30% 且牢等促.";
-	wchar_t itemInfo2[100] = L"焊胶 傍拜矫 撤篮 犬伏肺 HP甫 老沥樊 雀汗茄促.";
+	wchar_t itemName1[10] = L"name1";
+	wchar_t itemName2[10] = L"name2";
+	wchar_t itemInfo1[100] = L"INFO";
+	wchar_t itemInfo2[100] = L"INFO";
 
 	printText(targetLayer->_consoleDC, 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
 	printText(targetLayer->_consoleDC, 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 190);
@@ -489,8 +489,8 @@ void printStatusInRShop(int price1, int price2, int price3, int num) { // 泅犁
 	printText(targetLayer->_consoleDC, 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 	printText(targetLayer->_consoleDC, 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
-	wchar_t info1[100] = L"箭磊 虐甫 喘矾 急琶, Spacebar虐甫 喘矾 备概且 荐 乐嚼聪促. ESC虐甫 烹秦 惑痢阑 唱癌聪促.";
-	wchar_t info2[100] = L"惹涪茄 急琶涝聪促!";
+	wchar_t info1[100] = L"숫자 키를 눌러 선택, Spacebar키를 눌러 구매할 수 있습니다. ESC키를 통해 상점을 나갑니다.";
+	wchar_t info2[100] = L"훌륭한 선택입니다!";
 
 	if (num == 0) printText(targetLayer->_consoleDC, 200, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
 	else if (num == 1)  printText(targetLayer->_consoleDC, 200, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
@@ -498,12 +498,12 @@ void printStatusInRShop(int price1, int price2, int price3, int num) { // 泅犁
 
 void printItemTextInRShop() // 酒捞袍 捞抚苞 汲疙 免仿
 {
-	wchar_t itemName1[10] = L"瘤窍 萍南";
-	wchar_t itemName2[10] = L"冠零 价镑聪";
-	wchar_t itemName3[10] = L"喉矾靛 归";
-	wchar_t itemInfo1[100] = L"惑痢俊辑 魄概窍绰 酒捞袍狼 啊拜捞 30% 且牢等促.";
-	wchar_t itemInfo2[100] = L"焊胶 傍拜矫 撤篮 犬伏肺 HP甫 老沥樊 雀汗茄促.";
-	wchar_t itemInfo3[100] = L"PC狼 弥措 眉仿捞 刘啊茄促.";
+	wchar_t itemName1[10] = L"name1";
+	wchar_t itemName2[10] = L"name2";
+	wchar_t itemName3[10] = L"name3";
+	wchar_t itemInfo1[100] = L"INFO";
+	wchar_t itemInfo2[100] = L"INFO";
+	wchar_t itemInfo3[100] = L"INFO";
 
 	printText(targetLayer->_consoleDC, 200, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
 	printText(targetLayer->_consoleDC, 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 190);

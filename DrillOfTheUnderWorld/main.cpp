@@ -5,6 +5,7 @@
 #include "Ladder.hpp"
 #include "Bat.hpp"
 #include "Button.hpp"
+#include "itemCommon.hpp"
 
 int main() {
 	initialize(); // ê¸°ì´ˆ?ì¸ ?´ë‹ˆ?œë¼?´ì§•(ì½˜ì†” ?¬ì´ì¦?ì§€?? ?¬ì¸???? œ ??
@@ -49,6 +50,7 @@ int main() {
 	pc.addItem(2);
 	pc.addItem(3);
 	initItemImages();
+	initSRankItems();
 	
 	// ?ì–´ë¦¬ì–´ ?´ë??ì„œ ?œê°„???¬ê¸° ?„í•œ ë³€?˜ë“¤
 	clock_t start_time = clock();
@@ -75,6 +77,7 @@ int main() {
 			imageArray[button1->imageidx].isHide = 1;
 			imageArray[button2->imageidx].isHide = 1;
 			imageArray[button3->imageidx].isHide = 1;
+			printf("%d", sRankItems[0]->getPrice());
 
 			updateCharacterStatus(); // PC ?íƒœì°½ì„ ?…ë°?´íŠ¸
 			while (_kbhit() != 0) {
