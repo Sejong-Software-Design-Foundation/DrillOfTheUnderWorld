@@ -11,9 +11,8 @@ public:
 
 public:
     int dir[4][2] = { {1,0},{0,1},{-1,0}, {0,-1} };
-    // 실제 Console x, y좌표가 들어감
+
     int x, y;
-    // image array 내 해당 객체 bmp의 idx 번호
     int imageidx;
 
     int hp;
@@ -29,10 +28,10 @@ public:
     bool NPCDead();
     bool PCNear();
 
-    void NPCPatternMovement();
-    void NPCTrackingMovement();
+    void NPCPatternMovement(int speed);
+    void NPCTrackingMovement(int speed);
 
-    void NPCBossMovement();
+    void NPCBossMovement(int speed);
 };
 
 NPC::NPC(int x, int y, int hp, int ad, int dir) {
@@ -40,7 +39,6 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     this->y = y;
     this->hp = hp;
     this->attack_damage = ad;
-    // default가 오른쪽 움직임
     this->curDirection = 0;
     // movecnt
     cnt = 0;
@@ -49,7 +47,6 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
 bool NPC::NPCDead() { return hp < 0 ? true : false; }
 
 bool NPC::PCNear() {
-    // PC 좌표 받기
     int PC_X = convertPosToInfoX(imageLayer.images[0].x);
     int PC_Y = convertPosToInfoY(imageLayer.images[0].y);
 
@@ -71,19 +68,7 @@ bool NPC::PCNear() {
             }
         }
     }
-    return false;/*
-    if (NPC_X - BLOCKSIZE <= PC_X && PC_X <= NPC_X + BLOCKSIZE
-        && NPC_Y - BLOCKSIZE <= PC_Y && PC_Y <= NPC_Y + BLOCKSIZE) return true;
-    return false;*/
-
-    /*return (NPC_X == PC_X && NPC_Y >= PC_Y - BLOCKSIZE && NPC_Y <= PC_Y + BLOCKSIZE) ||
-        (NPC_Y == PC_Y && NPC_X >= PC_X - BLOCKSIZE && NPC_X <= PC_X + BLOCKSIZE);*/
-
-
-        /*return ((NPC_Y - BLOCKSIZE == PC_Y && NPC_X == PC_X) ||
-            (NPC_Y + BLOCKSIZE == PC_Y && NPC_X == PC_X) ||
-            (NPC_Y == PC_Y && NPC_X - BLOCKSIZE == PC_X) ||
-            (NPC_Y == PC_Y && NPC_X + BLOCKSIZE == PC_X));*/
+    return false;
 
 }
 
@@ -94,7 +79,7 @@ void NPC::NPCSetPosition(int posx, int posy) {
     this->y = posy;
 }
 
-void NPC::NPCPatternMovement() {
+void NPC::NPCPatternMovement(int speed) {
     if (PCNear()) {
         attack();
         return;
@@ -102,45 +87,42 @@ void NPC::NPCPatternMovement() {
 
     cnt++;
 
-    srand(static_cast<unsigned int>(time(nullptr)));
+    //srand(static_cast<unsigned int>(time(nullptr)));
 
     if (cnt == 3) {
         curDirection = rand() % 4;
         cnt = 0;
     }
 
-    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * SPEED, imageLayer.images[imageidx].y + dir[curDirection][1] * SPEED)) {
+    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * speed, imageLayer.images[imageidx].y + dir[curDirection][1] * speed)) {
         curDirection = rand() % 4;
         cnt = 0;
         return;
     }
 
-    imageLayer.images[imageidx].x += dir[curDirection][0] * SPEED;
-    imageLayer.images[imageidx].y += dir[curDirection][1] * SPEED;
+    imageLayer.images[imageidx].x += dir[curDirection][0] * speed;
+    imageLayer.images[imageidx].y += dir[curDirection][1] * speed;
 
     x = imageLayer.images[imageidx].x;
     y = imageLayer.images[imageidx].y;
 }
 
-void NPC::NPCTrackingMovement() {
+void NPC::NPCTrackingMovement(int speed) {
     if (PCNear()) {
         attack();
         return;
     }
 
-    // 추적 움직임 필요 데이터
     int curPosX = imageLayer.images[0].x;
     int curPosY = imageLayer.images[0].y;
 
     double angle = atan2(curPosY - y, curPosX - x);
 
-    // 이동할 거리를 계산
-    double dx = SPEED * cos(angle);
-    double dy = SPEED * sin(angle);
+    double dx = speed * cos(angle);
+    double dy = speed * sin(angle);
 
     if (collisionCheck(x + dx, y + dy)) { return; }
 
-    // Mole 좌표를 업데이트
     imageLayer.images[imageidx].x += dx;
     imageLayer.images[imageidx].y += dy;
 
@@ -148,14 +130,15 @@ void NPC::NPCTrackingMovement() {
     y = imageLayer.images[imageidx].y;
 }
 
-void NPC::NPCBossMovement() {
+void NPC::NPCBossMovement(int speed) {
     int num = rand() % 5;
 
     if (num < 4) {
-        NPCPatternMovement();
+        NPCPatternMovement(speed);
     }
     else {
-        NPCTrackingMovement();
+        NPCTrackingMovement(speed);
     }
 }
+
 #endif

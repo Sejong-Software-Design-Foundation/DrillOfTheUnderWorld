@@ -1,13 +1,15 @@
 #ifndef __MOLE_
 #define __MOLE_
 
+#define MOLE_SPEED 48
+
 #include "NPC.hpp"
 
 /// <summary>
 /// === MOLE INFO ===
 /// HP : 50
 /// AD : 15
-/// MOVEMENT : NPCTRACKINGMOVEMENT
+/// MOVEMENT : NPCPATTERNMOVEMENT
 /// </summary>
 
 class Mole : public NPC {
@@ -24,7 +26,7 @@ Mole::Mole(int x, int y) : NPC(x, y, 50, 15, 1) {
 }
 
 void Mole::move() {
-    NPCTrackingMovement();
+    NPCPatternMovement(MOLE_SPEED);
 }
 
 void Mole::attack() {

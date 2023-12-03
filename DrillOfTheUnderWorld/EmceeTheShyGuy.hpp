@@ -1,6 +1,8 @@
 #ifndef __EMCEE_THE_SHY_GUY_
 #define __EMCEE_THE_SHY_GUY_
 
+#define EMCEE_THESHYGUY_SPEED 48
+
 #include "NPC.hpp"
 #include "NPCBullet.hpp"
 #include <list>
@@ -10,7 +12,7 @@ using namespace std;
 /// <summary>
 /// === EMCEETHESHYGUY INFO ===
 /// HP : 100
-/// AD : 20
+/// AD : 0 (ATTACK BY BULLETS)
 /// MOVEMENT : NPCPATTERNMOVEMENT
 /// </summary>
 
@@ -28,7 +30,7 @@ public:
 	void attack();
 };
 
-EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 0, 10, 1) {
+EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 100, 0, 1) {
 	movecnt = 0;
 
 	this->imageidx = imageLayer.imageCount;
@@ -52,17 +54,17 @@ void EmceeTheShyGuy::checkBullets() {
 
 void EmceeTheShyGuy::move() {
 	movecnt++;
-
 	checkBullets();
 	attack();
 
+	//printf("%d", movecnt);
 	// if moved 8 times shoot once and reset mvcnt
 	if (movecnt == 8) {
-		//bullets.push_back(NPCBullet(x, y));
+		bullets.push_back(NPCBullet(x, y));
 		movecnt = 0;
 	}
 	else {
-		NPCBossMovement();
+		NPCBossMovement(EMCEE_THESHYGUY_SPEED);
 		//NPCTrackingMovement();
 		//NPCPatternMovement();
 	}
