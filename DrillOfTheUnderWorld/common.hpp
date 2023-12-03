@@ -14,6 +14,7 @@ extern "C" {
 #include "PC.hpp"
 #include "Stage.hpp"
 #include "Text.hpp"
+#include "Item.hpp"
 
 #define NUM1 49  
 #define NUM2 50  
@@ -51,6 +52,8 @@ extern "C" {
 #define REWARD_GLOD = 50
 #define REWARD_DIAMOND = 100
 #define REWARD_POSSION = 50
+
+extern int stageLevel;
 
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
@@ -178,12 +181,6 @@ extern char bmpBedrockName[];
 extern char bmpFlagName[];
 
 // item Image
-extern char bmpItem1Name[];
-extern char bmpItem2Name[];
-extern char bmpItem3Name[];
-
-
-// item Image
 extern char bmpUndergroundTicketName[];
 extern char bmpMetalDetectorName[];
 extern char bmpThornCrownName[];
@@ -257,7 +254,7 @@ void setFlag(int cnt);
 void getNewBossArea();
 void printStoneStatus(int curStone);
 
-// �߰�
+// Ãß°¡
 extern ImageLayer lShopLayer;
 extern ImageLayer rShopLayer;
 extern bool isOnSafety;
@@ -274,8 +271,14 @@ void visitRShop();
 void printItemTextInRShop();
 void printStatusInRShop(int price1, int price2, int price3, int num);
 
+void generateShopItem();
+char getRandomRank();
+Item* getRandomItem();
+bool isItemExistItemVector(Item* targetItem, std::vector<Item*> itemList);
+
 extern ImageLayer safetyLayer;
 void initSafetyImage();
 void visitSafety();
 extern int index_Safety_Object_Start;
+
 #endif COMMON_HPP

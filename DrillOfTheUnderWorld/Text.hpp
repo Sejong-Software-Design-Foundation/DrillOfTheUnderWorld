@@ -2,12 +2,12 @@
 
 #pragma once
 
-// °¢µµ°¡ ÀÖ´Â °æ¿ì¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
+// ê°ë„ê°€ ìˆëŠ” ê²½ìš°ë¥¼ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
 inline void printTextWithAngle(HDC hdc, int x, int y, int size, int weight, int angle, COLORREF textColor, int align, wchar_t* text, int maxWidth) {
     if (weight == 0) weight = 900;
     size = (int)(size * RESOLUTION_MULTIPLIER);
     const HFONT font = CreateFont(size, 0, angle, 0, weight, 0, 0, 0, HANGEUL_CHARSET,
-        0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("µÕ±Ù¸ğ²Ã"));
+        0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("ë‘¥ê·¼ëª¨ê¼´"));
 
     SelectObject(hdc, font);
     SetBkMode(hdc, TRANSPARENT);
@@ -27,19 +27,19 @@ inline void printTextWithAngle(HDC hdc, int x, int y, int size, int weight, int 
         int charLength = 1;
         SIZE charSize;
 
-        // ÇöÀç ±ÛÀÚÀÇ Å©±â °è»ê
+        // í˜„ì¬ ê¸€ìì˜ í¬ê¸° ê³„ì‚°
         GetTextExtentPoint32(hdc, &text[i], charLength, &charSize);
 
-        // ÇöÀç À§Ä¡¿¡ ±ÛÀÚ¸¦ ±×·ÈÀ» ¶§ maxWidth¸¦ ÃÊ°úÇÏ¸é ÁÙ ¹Ù²Ş
+        // í˜„ì¬ ìœ„ì¹˜ì— ê¸€ìë¥¼ ê·¸ë ¸ì„ ë•Œ maxWidthë¥¼ ì´ˆê³¼í•˜ë©´ ì¤„ ë°”ê¿ˆ
         if (currentX + charSize.cx > x + maxWidth) {
             currentX = x;
             currentY += charSize.cy;
         }
 
-        // ÇöÀç ±ÛÀÚ Ãâ·Â
+        // í˜„ì¬ ê¸€ì ì¶œë ¥
         TextOut(hdc, currentX, currentY, &text[i], charLength);
 
-        // ´ÙÀ½ ±ÛÀÚ·Î ÀÌµ¿
+        // ë‹¤ìŒ ê¸€ìë¡œ ì´ë™
         currentX += charSize.cx;
         i += charLength;
     }
@@ -50,7 +50,7 @@ inline void printTextWithAngle(HDC hdc, int x, int y, int size, int weight, int 
     DeleteObject(font);
 }
 
-// °¢µµ°¡ ¾ø´Â °æ¿ì¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
+// ê°ë„ê°€ ì—†ëŠ” ê²½ìš°ë¥¼ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
 inline void printText(HDC hdc, int x, int y, int size, int weight, COLORREF textColor, int align, wchar_t* text, int maxWidth = 1000) {
     printTextWithAngle(hdc, x, y, size, weight, 0, textColor, align, text, maxWidth);
 }

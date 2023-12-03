@@ -6,6 +6,82 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PC.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="itemCommon.cpp" />
+    <ClCompile Include="Item.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="AncientVirus.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackBoost.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackSpeedBoost.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="BatFang.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="BeggarDoll.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="BloodBag.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CaveSnake.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CursedTotem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Disassembler.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="EnergyBar.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FreshBrewedCoffee.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="LuckStone.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="LuckyCharm.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MetalDetector.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MoleClaw.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementSpeedBoost.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Orichalcum.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PortableOxygenCan.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PrisonerShackles.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SupplyOxygenTank.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ThornCrown.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="TwoHearts.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="UndergroundTicket.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Area.hpp" />
@@ -31,6 +107,82 @@
     <ClInclude Include="Boss.hpp">
       <Filter>images</Filter>
     </ClInclude>
+    <ClInclude Include="Item.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="EnergyBar.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="PortableOxygenCan.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="UndergroundTicket.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MetalDetector.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ThronCrown.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="BeggarDoll.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Orichalcum.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="TwoHearts.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="LuckyCharm.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Disassembler.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="BatFang.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MoleClaw.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="LuckStone.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="BloodBag.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SupplyOxygenTank.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="FreshBrewedCoffee.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackBoost.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackSpeedBoost.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementSpeedBoost.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="PrisonerShackles.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="CursedTotem.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="AncientVirus.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="CaveSnake.hpp">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="itemCommon.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav">
@@ -494,6 +646,9 @@
   <ItemGroup>
     <Filter Include="images">
       <UniqueIdentifier>{6f4d1529-55de-4c0a-bb0a-0b8a9d8077e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{7f131c72-07e4-48ee-971a-a532414162d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
