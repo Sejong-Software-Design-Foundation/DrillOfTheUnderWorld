@@ -254,7 +254,7 @@ void setFlag(int cnt);
 void getNewBossArea();
 void printStoneStatus(int curStone);
 
-// �߰�
+// Ãß°¡
 extern ImageLayer lShopLayer;
 extern ImageLayer rShopLayer;
 extern bool isOnSafety;
@@ -275,5 +275,10 @@ void generateShopItem();
 char getRandomRank();
 Item* getRandomItem();
 bool isItemExistItemVector(Item* targetItem, std::vector<Item*> itemList);
+
+extern ImageLayer safetyLayer;
+void initSafetyImage();
+void visitSafety();
+extern int index_Safety_Object_Start;
 
 #endif COMMON_HPP
