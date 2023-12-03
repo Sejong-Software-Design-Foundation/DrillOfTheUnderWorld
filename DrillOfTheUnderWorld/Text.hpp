@@ -7,7 +7,7 @@ inline void printTextWithAngle(HDC hdc, int x, int y, int size, int weight, int 
     if (weight == 0) weight = 900;
     size = (int)(size * RESOLUTION_MULTIPLIER);
     const HFONT font = CreateFont(size, 0, angle, 0, weight, 0, 0, 0, HANGEUL_CHARSET,
-        0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("²Ã"));
+        0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("µÕ±Ù¸ð²Ã"));
 
     SelectObject(hdc, font);
     SetBkMode(hdc, TRANSPARENT);
