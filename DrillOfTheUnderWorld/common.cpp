@@ -7,11 +7,11 @@ HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
 
 ImageLayer* targetLayer = NULL;
-// stageLayer?� ?�당 ?�이?�에???�용?�는 변?�들
+// stageLayer?� ?措嫻 ?堨澊?挫棎???毄?橂姅 氤�?橂摛
 ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image stageImageArray[40];
 int stageInfo[5][5];
-// imageLayer?� ?�당 ?�이?�에???�용?�는 변?�들
+// imageLayer?� ?措嫻 ?堨澊?挫棎???毄?橂姅 氤�?橂摛
 ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
 Image imageArray[1000];
 int blockInfo[1200][1200];
@@ -33,11 +33,29 @@ bool isGenerateMobByQuestionBlock = false;
 int questionBlockPosX = 0;
 int questionBlockPosY = 0;
 
-// rewardLayer?� ?�당 ?�이?�에???�용?�는 변?�들
+// rewardLayer?� ?措嫻 ?堨澊?挫棎???毄?橂姅 氤�?橂摛
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
 Image imagesReward[1000];
 
-// PC가 ?�재 ?�디???�치?�는지 체크?�기 ?�한 bool??변??
+// lShopLayer
+ImageLayer lShopLayer = DEFAULT_IMAGE_LAYER;
+Image lShopImageArray[100];
+
+// rShopLayer
+ImageLayer rShopLayer = DEFAULT_IMAGE_LAYER;
+Image rShopImageArray[100];
+
+bool isOnSafety = false;
+char bmpShopItemBox[] = "Shop_ItemBox.bmp";
+char bmpShopItemBoxDisable[] = "Shop_ItemBox_disable.bmp";
+char bmpShopItemBoxSelected[] = "Shop_ItemBox_selected.bmp";
+char bmpShopStoneBox[] = "Shop_StoneBox.bmp";
+char bmpLShopMiner[] = "lShop_miner.bmp";
+char bmpLShopBalloon[] = "lShop_Balloon.bmp";
+char bmpRShopMiner[] = "rShop_miner.bmp";
+char bmpRShopBalloon[] = "rShop_Balloon.bmp";
+
+// PC臧� ?勳灛 ?措敂???勳箻?橂姅歆� 觳错伂?橁赴 ?勴暅 bool??氤�??
 bool isOnStage = true;
 bool isOnArea = false;
 bool isNormalArea = false;
@@ -46,9 +64,9 @@ bool isButtonArea = false;
 bool isFlagArea = false;
 bool isBossArea = false;
 
-// �??�이?�마???�용?�는 ?��?지?��? ?�나??배열???�?�됨 (ex. imageLayer->imageArray, rewardLayer->imageReward)
-// 같�? 배열???�?�되???��?지?��? ?��??�서 목적???�라 묶여???�?�됨
-// ?�근?�기 ?�하?�록 ?�기 ?�해 ?�작 번호�??�?�하??관�?
+// 臧??堨澊?措???毄?橂姅 ?措?歆�?れ? ?橂倶??氚办棿???�?ル惃 (ex. imageLayer->imageArray, rewardLayer->imageReward)
+// 臧欖? 氚办棿???�?ル悩???措?歆�?れ? ?措??愳劀 氇╈爜???半澕 氍鹅棳???�?ル惃
+// ?戧芳?橁赴 ?疙晿?勲 ?橁赴 ?勴暣 ?滌瀾 氩堩樃毳??�?ロ晿??甏�毽?
 int index_StageImages_Start;
 int index_Area_PC;
 int index_Area_Button_Start;
@@ -61,7 +79,7 @@ int index_Area_UI_mapTile_Start;
 int index_Area_UI_MiniGame_Start;
 int index_RewardImages_Start;
 
-// BMP ?�일 ?�작
+// BMP ?岇澕 ?滌瀾
 
 // NULL BMP
 char bmpNameNull[] = "";
@@ -183,33 +201,319 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";	
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
-// item Image
-char bmpUndergroundTicketName[] = "item1.bmp";
-char bmpMetalDetectorName[] = "item1.bmp";
-char bmpThornCrownName[] = "item1.bmp";
-char bmpBeggarDollName[] = "item1.bmp";
-char bmpOrichalcumName[] = "item1.bmp";
-char bmpTwoHeartsName[] = "item1.bmp";
-char bmpLuckyCharmName[] = "item1.bmp";
-char bmpDisassemblerName[] = "item1.bmp";
-char bmpBatFangName[] = "item1.bmp";
-char bmpMoleClawName[] = "item1.bmp";
-char bmpDiceName[] = "item1.bmp";
-char bmpLuckStoneName[] = "item1.bmp";
-char bmpBloodBagName[] = "item1.bmp";
-char bmpSupplyOxygenTankName[] = "item1.bmp";
-char bmpFreshBrewedCoffeeName[] = "item1.bmp";
-char bmpPortableOxygenCanName[] = "item1.bmp";
-char bmpEnergyBarName[] = "item1.bmp";
-char bmpAttackBoostName[] = "item1.bmp";
-char bmpAttackSpeedBoostName[] = "item1.bmp";
-char bmpMovementSpeedBoostName[] = "item1.bmp";
-char bmpPrisonerShacklesName[] = "item1.bmp";
-char bmpCursedTotemName[] = "item1.bmp";
-char bmpAncientVirusName[] = "item1.bmp";
-char bmpCaveSnakeName[] = "item1.bmp";
+// ITEM BMP
+char bmpUndergroundTicketName[] = "item_UndergroundTicket.bmp";
+char bmpMetalDetectorName[] = "item_MetalDetector.bmp";
+char bmpThornCrownName[] = "item_ThornCrown.bmp";
+char bmpBeggarDollName[] = "item_BeggarDoll.bmp";
+char bmpOrichalcumName[] = "item_Orichalcum.bmp";
+char bmpTwoHeartsName[] = "item_TwoHearts.bmp";
+char bmpLuckyCharmName[] = "item_LuckyCharm.bmp";
+char bmpDisassemblerName[] = "item_Disasemmbler.bmp";
+char bmpBatFangName[] = "item_BatFang.bmp";
+char bmpMoleClawName[] = "item_MoleClaw.bmp";
+char bmpDiceName[] = "item_Dice.bmp";
+char bmpLuckStoneName[] = "item_LuckStone.bmp";
+char bmpBloodBagName[] = "item_BloodBag.bmp";
+char bmpSupplyOxygenTankName[] = "item_SupplyOxygenTank.bmp";
+char bmpFreshBrewedCoffeeName[] = "item_FreshBrewedCoffee.bmp";
+char bmpPortableOxygenCanName[] = "item_PortableOxygenCan.bmp";
+char bmpEnergyBarName[] = "item_EnergyBar.bmp";
+char bmpAttackBoostName[] = "item_AttackBoost.bmp";
+char bmpAttackSpeedBoostName[] = "item_AttackSpeedBoost.bmp";
+char bmpMovementSpeedBoostName[] = "item_MovementSpeedBoost.bmp";
+char bmpPrisonerShacklesName[] = "item_PrisonerShackles.bmp";
+char bmpCursedTotemName[] = "item_CursedTotem.bmp";
+char bmpAncientVirusName[] = "item_AncientVirus.bmp";
+char bmpCaveSnakeName[] = "item_CaveSnake.bmp";
 
-// ?�수 ?�작
+void initLShopImage() {
+	lShopLayer.images = lShopImageArray;
+	lShopLayer.imageCount = 0;
+
+	lShopImageArray[lShopLayer.imageCount++] = { bmpShopStoneBox, 50, 50, 1 };
+	lShopImageArray[lShopLayer.imageCount++] = { bmpUndergroundTicketName, LSHOP_ITEMBOX_ORIGIN_X + 200 - 75, 550, 1 };
+	lShopImageArray[lShopLayer.imageCount++] = { bmpBatFangName, LSHOP_ITEMBOX_ORIGIN_X + 200 - 75 + 450, 550, 1 };
+	lShopImageArray[lShopLayer.imageCount++] = { bmpShopItemBox, LSHOP_ITEMBOX_ORIGIN_X, LSHOP_ITEMBOX_ORIGIN_Y, 1 };
+	lShopImageArray[lShopLayer.imageCount++] = { bmpShopItemBox, LSHOP_ITEMBOX_ORIGIN_X + 450, LSHOP_ITEMBOX_ORIGIN_Y, 1 };
+	lShopImageArray[lShopLayer.imageCount++] = { bmpLShopMiner, -50, 750, 3 };
+	lShopImageArray[lShopLayer.imageCount++] = { bmpLShopBalloon, 600, 1000, 1 };
+}
+
+void initRShopImage() {
+	rShopLayer.images = rShopImageArray;
+	rShopLayer.imageCount = 0;
+
+	rShopImageArray[rShopLayer.imageCount++] = { bmpShopStoneBox, 50, 50, 1 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpUndergroundTicketName, 200 + 50 - 75, 550, 1 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpBatFangName, 200 + 50 - 75 + 450, 550, 1 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpBloodBagName, 200 + 50 - 75 + 900, 550, 1 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpShopItemBox, RSHOP_ITEMBOX_ORIGIN_X, RSHOP_ITEMBOX_ORIGIN_Y, 1 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpShopItemBox, RSHOP_ITEMBOX_ORIGIN_X + 450, RSHOP_ITEMBOX_ORIGIN_Y, 1 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpShopItemBox, RSHOP_ITEMBOX_ORIGIN_X + 900, RSHOP_ITEMBOX_ORIGIN_Y, 1 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpRShopMiner, 1200, 750, 3 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpRShopBalloon, 30, 1000, 1 };
+}
+
+void visitLShop() {
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &lShopLayer;
+
+	int item1_price = 100;
+	int item2_price = 200;
+	pc.setStone(pc.getStone() + 200);
+
+	// 3, 4锅捞 酒捞袍 2辆狼 冠胶
+	if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
+	else lShopImageArray[3].fileName = bmpShopItemBox;
+	if (item2_price > pc.getStone()) lShopImageArray[4].fileName = bmpShopItemBoxDisable;
+	else lShopImageArray[4].fileName = bmpShopItemBox;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+
+	printStatusInLShop(item1_price, item2_price, 0);
+
+	int index = -1;
+	int flags = 1;
+	int lastInputKey = 0;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+
+			switch (key) {
+			// 1, 2锅 涝仿窍搁 阿 冠胶啊 急琶登绊, 唱赣瘤 冠胶绰 急琶 扁夯栏肺 函版(急琶 秦力)
+			case NUM1:
+				if (strcmp(lShopImageArray[3].fileName, bmpShopItemBoxDisable) == 0) break;
+				lShopImageArray[3].fileName = bmpShopItemBoxSelected;
+				if (strcmp(lShopImageArray[4].fileName, bmpShopItemBoxSelected) == 0)
+					lShopImageArray[4].fileName = bmpShopItemBox;
+				index = 0;
+				lastInputKey = 0;
+				break;
+			case NUM2:
+				if (strcmp(lShopImageArray[4].fileName, bmpShopItemBoxDisable) == 0) break;
+				lShopImageArray[4].fileName = bmpShopItemBoxSelected;
+				if (strcmp(lShopImageArray[3].fileName, bmpShopItemBoxSelected) == 0)
+					lShopImageArray[3].fileName = bmpShopItemBox;
+				index = 1;
+				lastInputKey = 0;
+				break;
+			// 胶其捞胶官 涝仿窍搁 酒捞袍 备概
+			case SPACE:
+				if (index == -1) break;
+				else if (index == 0) {
+					pc.setStone(pc.getStone() - item1_price);
+					lShopImageArray[3].fileName = bmpShopItemBoxDisable;
+					if (item2_price > pc.getStone()) lShopImageArray[4].fileName = bmpShopItemBoxDisable;
+				}
+				else if (index == 1) {
+					pc.setStone(pc.getStone() - item2_price);
+					lShopImageArray[4].fileName = bmpShopItemBoxDisable;
+					if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
+				}
+				index = -1;
+				lastInputKey = 1;
+				break;
+			case ESC:
+				flags = 0;
+				break;
+			}
+			if (key) {
+				targetLayer->renderAll(targetLayer);
+				printStatusInLShop(item1_price, item2_price, lastInputKey);
+			}
+		}
+	}
+
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &stageLayer;
+	isOnStage = true;
+	isOnSafety = false;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+}
+
+void printStatusInLShop(int price1, int price2, int num) { // 泅犁 倒 俺荐客 酒捞袍 啊拜, 富浅急 免仿
+	printItemTextInLShop(); // 酒捞袍 捞抚苞 汲疙 免仿
+
+	wchar_t numStone[20];
+	wchar_t numPrice1[20];
+	wchar_t numPrice2[20];
+
+	swprintf(numStone, sizeof(numStone) / sizeof(numStone[0]), L"%d", pc.getStone());
+	swprintf(numPrice1, sizeof(numPrice1) / sizeof(numPrice1[0]), L"%d", price1);
+	swprintf(numPrice2, sizeof(numPrice2) / sizeof(numPrice2[0]), L"%d", price2);
+
+	printText(targetLayer->_consoleDC, 320, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
+	printText(targetLayer->_consoleDC, 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
+	printText(targetLayer->_consoleDC, 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
+
+	wchar_t info1[100] = L"箭磊 虐甫 喘矾 急琶, Spacebar虐甫 喘矾 备概且 荐 乐嚼聪促. ESC虐甫 烹秦 惑痢阑 唱癌聪促.";
+	wchar_t info2[100] = L"惹涪茄 急琶涝聪促!";
+
+	if (num == 0) printText(targetLayer->_consoleDC, 900, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
+	else if (num == 1)  printText(targetLayer->_consoleDC, 900, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
+}
+
+void printItemTextInLShop() { // 酒捞袍 捞抚苞 汲疙 免仿
+	wchar_t itemName1[10] = L"瘤窍 萍南";
+	wchar_t itemName2[10] = L"冠零 价镑聪";
+	wchar_t itemInfo1[100] = L"惑痢俊辑 魄概窍绰 酒捞袍狼 啊拜捞 30% 且牢等促.";
+	wchar_t itemInfo2[100] = L"焊胶 傍拜矫 撤篮 犬伏肺 HP甫 老沥樊 雀汗茄促.";
+
+	printText(targetLayer->_consoleDC, 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
+	printText(targetLayer->_consoleDC, 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 190);
+	printText(targetLayer->_consoleDC, 1430, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
+	printText(targetLayer->_consoleDC, 1350, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 190);
+}
+
+void visitRShop() {
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &rShopLayer;
+
+	int item1_price = 100;
+	int item2_price = 200;
+	int item3_price = 300;
+	pc.setStone(pc.getStone() + 200);
+
+	if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
+	else rShopImageArray[4].fileName = bmpShopItemBox;
+	if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
+	else rShopImageArray[5].fileName = bmpShopItemBox;
+	if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
+	else rShopImageArray[6].fileName = bmpShopItemBox;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+
+	printStatusInRShop(item1_price, item2_price, item3_price, 0);
+
+	int index = -1;
+	int flags = 1;
+	int lastInputKey = 0;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+
+			switch (key) {
+			case NUM1:
+				if (strcmp(rShopImageArray[4].fileName, bmpShopItemBoxDisable) == 0) break;
+				rShopImageArray[4].fileName = bmpShopItemBoxSelected;
+				if (strcmp(rShopImageArray[5].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[5].fileName = bmpShopItemBox;
+				if (strcmp(rShopImageArray[6].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[6].fileName = bmpShopItemBox;
+				index = 0;
+				lastInputKey = 0;
+				break;
+			case NUM2:
+				if (strcmp(rShopImageArray[5].fileName, bmpShopItemBoxDisable) == 0) break;
+				rShopImageArray[5].fileName = bmpShopItemBoxSelected;
+				if (strcmp(rShopImageArray[4].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[4].fileName = bmpShopItemBox;
+				if (strcmp(rShopImageArray[6].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[6].fileName = bmpShopItemBox;
+				index = 1;
+				lastInputKey = 0;
+				break;
+			case NUM3:
+				if (strcmp(rShopImageArray[6].fileName, bmpShopItemBoxDisable) == 0) break;
+				rShopImageArray[6].fileName = bmpShopItemBoxSelected;
+				if (strcmp(rShopImageArray[4].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[4].fileName = bmpShopItemBox;
+				if (strcmp(rShopImageArray[5].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[5].fileName = bmpShopItemBox;
+				index = 2;
+				lastInputKey = 0;
+				break;
+			case SPACE:
+				if (index == -1) break;
+				else if (index == 0) {
+					pc.setStone(pc.getStone() - item1_price);
+					rShopImageArray[4].fileName = bmpShopItemBoxDisable;
+					if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
+					if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
+				}
+				else if (index == 1) {
+					pc.setStone(pc.getStone() - item2_price);
+					rShopImageArray[5].fileName = bmpShopItemBoxDisable;
+					if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
+					if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
+				}
+				else if (index == 2) {
+					pc.setStone(pc.getStone() - item3_price);
+					rShopImageArray[6].fileName = bmpShopItemBoxDisable;
+					if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
+					if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
+				}
+				index = -1;
+				lastInputKey = 1;
+				break;
+			case ESC:
+				flags = 0;
+				break;
+			}
+			if (key) {
+				targetLayer->renderAll(targetLayer);
+				printStatusInRShop(item1_price, item2_price, item3_price, lastInputKey);
+			}
+		}
+	}
+
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &stageLayer;
+	isOnStage = true;
+	isOnSafety = false;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+}
+
+void printStatusInRShop(int price1, int price2, int price3, int num) { // 泅犁 倒 俺荐客 酒捞袍 啊拜, 富浅急 免仿
+	printItemTextInRShop(); // 酒捞袍 捞抚苞 汲疙 免仿
+
+	wchar_t numStone[20];
+	wchar_t numPrice1[20];
+	wchar_t numPrice2[20];
+	wchar_t numPrice3[20];
+
+	swprintf(numStone, sizeof(numStone) / sizeof(numStone[0]), L"%d", pc.getStone());
+	swprintf(numPrice1, sizeof(numPrice1) / sizeof(numPrice1[0]), L"%d", price1);
+	swprintf(numPrice2, sizeof(numPrice2) / sizeof(numPrice2[0]), L"%d", price2);
+	swprintf(numPrice3, sizeof(numPrice3) / sizeof(numPrice3[0]), L"%d", price3);
+
+	printText(targetLayer->_consoleDC, 320, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
+	printText(targetLayer->_consoleDC, 280, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
+	printText(targetLayer->_consoleDC, 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
+	printText(targetLayer->_consoleDC, 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
+
+	wchar_t info1[100] = L"箭磊 虐甫 喘矾 急琶, Spacebar虐甫 喘矾 备概且 荐 乐嚼聪促. ESC虐甫 烹秦 惑痢阑 唱癌聪促.";
+	wchar_t info2[100] = L"惹涪茄 急琶涝聪促!";
+
+	if (num == 0) printText(targetLayer->_consoleDC, 200, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
+	else if (num == 1)  printText(targetLayer->_consoleDC, 200, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
+}
+
+void printItemTextInRShop() // 酒捞袍 捞抚苞 汲疙 免仿
+{
+	wchar_t itemName1[10] = L"瘤窍 萍南";
+	wchar_t itemName2[10] = L"冠零 价镑聪";
+	wchar_t itemName3[10] = L"喉矾靛 归";
+	wchar_t itemInfo1[100] = L"惑痢俊辑 魄概窍绰 酒捞袍狼 啊拜捞 30% 且牢等促.";
+	wchar_t itemInfo2[100] = L"焊胶 傍拜矫 撤篮 犬伏肺 HP甫 老沥樊 雀汗茄促.";
+	wchar_t itemInfo3[100] = L"PC狼 弥措 眉仿捞 刘啊茄促.";
+
+	printText(targetLayer->_consoleDC, 200, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
+	printText(targetLayer->_consoleDC, 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 190);
+	printText(targetLayer->_consoleDC, 630, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
+	printText(targetLayer->_consoleDC, 550, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 190);
+	printText(targetLayer->_consoleDC, 1100, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName3);
+	printText(targetLayer->_consoleDC, 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 190);
+}
+
+// ?垬 ?滌瀾
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
     int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
@@ -237,7 +541,7 @@ void removeCursor() {
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &c);
 }
 
-void initialize() { // 기초?�인 ?�니?�라?�징(콘솔 ?�이�?지?? ?�인????�� ??
+void initialize() { // 旮办磮?侅澑 ?措媹?滊澕?挫(旖橃啍 ?澊歃?歆�?? ?澑????牅 ??
 
     getHandle();
     resizeConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
@@ -245,7 +549,7 @@ void initialize() { // 기초?�인 ?�니?�라?�징(콘솔 ?�이�?지?? ?�인???
     srand((unsigned)time(NULL));
 }
 
-void initStageImage() { // stageLayer?�서 ?�용?�는 모든 ?��?지 최초 ?�성
+void initStageImage() { // stageLayer?愳劀 ?毄?橂姅 氇摖 ?措?歆� 斓滌磮 ?濎劚
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -264,7 +568,7 @@ void initStageImage() { // stageLayer?�서 ?�용?�는 모든 ?��?지 최초 ?��
 
 }
 
-void initItemImages() { // ?�이??관???�수 (개발 진행 �?
+void initItemImages() { // ?勳澊??甏�???垬 (臧滊皽 歆勴枆 欷?
 	std::vector<int> itemList = pc.getitemList();
 
 	for (int i = 0; i < itemList.size(); i++) {
@@ -280,7 +584,7 @@ void initItemImages() { // ?�이??관???�수 (개발 진행 �?
 	}
 }
 
-void fillBlockImages() { // imageLayer??블록(25x25) 최초 ?�성 
+void fillBlockImages() { // imageLayer??敫旊(25x25) 斓滌磮 ?濎劚 
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
@@ -289,7 +593,7 @@ void fillBlockImages() { // imageLayer??블록(25x25) 최초 ?�성
 	}
 }
 
-void initAreaUI() // imageLayer??UI ?��?지 최초 ?�성
+void initAreaUI() // imageLayer??UI ?措?歆� 斓滌磮 ?濎劚
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
@@ -343,7 +647,7 @@ void initAreaUI() // imageLayer??UI ?��?지 최초 ?�성
 	imageArray[imageLayer.imageCount++] = { bmpNameTimer, 1600, 1450, 1, 1 };
 }
 
-void initRewardImage() { // rewardLayer?�서 ?�용?�는 모든 ?��?지 최초 ?�성
+void initRewardImage() { // rewardLayer?愳劀 ?毄?橂姅 氇摖 ?措?歆� 斓滌磮 ?濎劚
 	rewardLayer.images = imagesReward;
 	rewardLayer.imageCount = 0;
 
@@ -360,7 +664,7 @@ void initRewardImage() { // rewardLayer?�서 ?�용?�는 모든 ?��?지 최초 ?�
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void updateCharacterStatus() { // PC ?�태창을 ?�데?�트
+void updateCharacterStatus() { // PC ?來儨彀届潉 ?呺嵃?错姼
 	wchar_t playerStone[20];
 	wchar_t playerHp[20];
 	wchar_t playerOz[20];
@@ -386,7 +690,7 @@ void updateCharacterStatus() { // PC ?�태창을 ?�데?�트
 	printText(targetLayer->_consoleDC, 250, 700, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
 
-void setMovableStageInfo(int row, int col) { // ?�테?��? 맵에???�롭�??�동 가?�한 지??�� ?�시?�기 ?�한 ?�수
+void setMovableStageInfo(int row, int col) { // ?ろ厡?挫? 毵奠棎???堧…瓴??措彊 臧�?ロ暅 歆�??潉 ?滌嫓?橁赴 ?勴暅 ?垬
 	if (row - 1 >= 0) {
 		if (stageInfo[row - 1][col] == 1) {
 			stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
@@ -413,11 +717,11 @@ void setMovableStageInfo(int row, int col) { // ?�테?��? 맵에???�롭�??�동 
 	}
 }
 
-void getNewArea() { // ?�말 ?�어리어(25x25)�?초기?�하??변??
-	// ?�어리어 ?�에??NPC가 ?�성?�는 검?� 공간???�기�??�정?�는 변?�들
+void getNewArea() { // ?鸽 ?愳柎毽柎(25x25)毳?齑堦赴?旐晿??氤�??
+	// ?愳柎毽柎 ?侅棎??NPC臧� ?濎劚?橂姅 瓴�?� 瓿店皠???赴毳??れ爼?橂姅 氤�?橂摛
 	NPCSpaceHeight = getNPCSpaceHeight();
 	NPCSpaceWidth = getNPCSpaceWidth();
-	// 검?� 공간???�치�??�?�하??변??
+	// 瓴�?� 瓿店皠???勳箻毳??�?ロ晿??氤�??
 	NPCSpacePosX = getNPCSpacePosX();
 	NPCSpacePosY = getNPCSpacePosY();
 
@@ -425,7 +729,7 @@ void getNewArea() { // ?�말 ?�어리어(25x25)�?초기?�하??변??
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			if (y == AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x == AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
-				//�׵θ��� ��Ϻ������� ä���
+				//抛滴府父 侩鞠喉废栏肺 盲快扁
 				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
@@ -433,7 +737,7 @@ void getNewArea() { // ?�말 ?�어리어(25x25)�?초기?�하??변??
 					}
 				}
 			}
-			// 검?� 공간???�제?�으�?만드??반복�?
+			// 瓴�?� 瓿店皠???れ牅?侅溂搿?毵岆摐??氚橂车氍?
 			else if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
 				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
 				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
@@ -444,7 +748,7 @@ void getNewArea() { // ?�말 ?�어리어(25x25)�?초기?�하??변??
 					}
 				}
 			}
-			// ?�른 부분�? 기본 ?�로 그리�?
+			// ?るジ 攵�攵勳? 旮半掣 ?岆 攴鸽Μ旮?
 			else {
 				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
@@ -455,7 +759,7 @@ void getNewArea() { // ?�말 ?�어리어(25x25)�?초기?�하??변??
 			}
 		}
 	}
-	// ?�어리어?�서 PC가 ?�폰?�는 초기 ?�치
+	// ?愳柎毽柎?愳劀 PC臧� ?ろ彴?橂姅 齑堦赴 ?勳箻
 	imageArray[0].x = AREA_ORIGIN_X + 576;
 	imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE;
 	for (int y = BLOCKSIZE;y < 2*BLOCKSIZE;y++) {
@@ -463,14 +767,14 @@ void getNewArea() { // ?�말 ?�어리어(25x25)�?초기?�하??변??
 			blockInfo[y][576 + x] = 0;
 		}
 	}
-	// ?�폰?�는 ?�치??블록 지?�기
+	// ?ろ彴?橂姅 ?勳箻??敫旊 歆�?瓣赴
 	imageArray[13 + 25].fileName = bmpNameNull;
 
-	// ?�재 캐릭???�폰 ?�치??광석???�성?????�는 버그가 존재??
-	// getNewArea() ??Generate~() ?�서 발생?�는 ?�상.
+	// ?勳灛 旌愲Ν???ろ彴 ?勳箻??甏戩劃???濎劚?????堧姅 氩勱犯臧� 臁挫灛??
+	// getNewArea() ??Generate~() ?挫劀 氚滌儩?橂姅 ?勳儊.
 }
 
-void getNewMiniGameArea() // 미니게임 ?�어리어(25x25)�?초기?�하??변??
+void getNewMiniGameArea() // 氙鸽媹瓴岇瀯 ?愳柎毽柎(25x25)毳?齑堦赴?旐晿??氤�??
 {
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
@@ -483,7 +787,7 @@ void getNewMiniGameArea() // 미니게임 ?�어리어(25x25)�?초기?�하??변?
 			}
 		}
 	}
-	// ?�어리어?�서 PC가 ?�폰?�는 초기 ?�치
+	// ?愳柎毽柎?愳劀 PC臧� ?ろ彴?橂姅 齑堦赴 ?勳箻
 	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
 	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
 	for (int y = 0;y < BLOCKSIZE;y++) {
@@ -491,21 +795,21 @@ void getNewMiniGameArea() // 미니게임 ?�어리어(25x25)�?초기?�하??변?
 			blockInfo[576 + y][576 + x] = 0;
 		}
 	}
-	// ?�폰?�는 ?�치??블록 지?�기
+	// ?ろ彴?橂姅 ?勳箻??敫旊 歆�?瓣赴
 	imageArray[12 * 25 + 13].fileName = bmpNameNull;
 }
 
-void drawUI() { // ?�어리어 UI ?�성??
-	imageArray[index_Area_UI_Start].isHide = 0; // ?�이??창이 보이?�록
+void drawUI() { // ?愳柎毽柎 UI ?滌劚??
+	imageArray[index_Area_UI_Start].isHide = 0; // ?勳澊??彀届澊 氤挫澊?勲
 
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP바�? 보이?�록
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP氚旉? 氤挫澊?勲
 	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2바�? 보이?�록
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2氚旉? 氤挫澊?勲
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 맵이 보이?�록
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 毵奠澊 氤挫澊?勲
 		imageArray[i].isHide = 0;
 
-	// ?�어리어 X가 미구?�이�??�문???�시�??�어리어 지?�에??X가 ?�시?��? ?�도�?
+	// ?愳柎毽柎 X臧� 氙戈惮?勳澊旮??岆???勳嫓搿??愳柎毽柎 歆�?勳棎??X臧� ?滌嫓?橃? ?婋弰搿?
 	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
 	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
@@ -576,14 +880,14 @@ bool collisionCheck(int x, int y) {
 	return false;
 }
 
-void printTimeInMiniGameArea(float t) { // 미니게임 ?�어리어?�서 ?��? ?�간??출력?�는 ?�수
+void printTimeInMiniGameArea(float t) { // 氙鸽媹瓴岇瀯 ?愳柎毽柎?愳劀 ?? ?滉皠??於滊牓?橂姅 ?垬
 	wchar_t timeLimit[20];
 	if (t > 0.0) swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%.2f", t);
 	else swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%0.00");
 	printText(targetLayer->_consoleDC, 1750, 1458, 40, 0, RGB(255, 255, 255), TA_CENTER, timeLimit);
 }
 
-void printMyOriInMiniGameArea() { // 미니게임 ?�어리어?�서 information�??�득??광물 ?��? 출력?�는 ?�수
+void printMyOriInMiniGameArea() { // 氙鸽媹瓴岇瀯 ?愳柎毽柎?愳劀 information瓿??嶋摑??甏戨 ?橂? 於滊牓?橂姅 ?垬
 	wchar_t info1[30] = L"1 Star (5) = 100 Stones";
 	wchar_t info2[30] = L"2 Star(10) = 200 Stones";
 	wchar_t info3[30] = L"3 Star(20) = 300 Stones";
@@ -596,7 +900,7 @@ void printMyOriInMiniGameArea() { // 미니게임 ?�어리어?�서 information�
 	printText(targetLayer->_consoleDC, 1790, 1358, 40, 0, RGB(255, 255, 255), TA_CENTER, numOrichalcum);
 }
 
-void rewardUI() { // ?�어리어 ?�리????보상???�는 ?�수
+void rewardUI() { // ?愳柎毽柎 ?措Μ????氤挫儊???浑姅 ?垬
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
 
@@ -726,7 +1030,7 @@ void rewardUI() { // ?�어리어 ?�리????보상???�는 ?�수
 		}
 	}
 	targetLayer->fadeOut(targetLayer, NULL);
-	// ?�음 RewardUI() ?�출???�한 코드
+	// ?れ潓 RewardUI() ?胳稖???勴暅 旖旊摐
 	imagesReward[4].isHide = 1;
 	imagesReward[5].isHide = 1;
 	imagesReward[6].isHide = 1;
@@ -869,9 +1173,9 @@ void getNewBossArea() {
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			// 검?� 공간???�제?�으�?만드??반복�?
+			// 瓴�?� 瓿店皠???れ牅?侅溂搿?毵岆摐??氚橂车氍?
 			if (y==AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x==AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
-				//�׵θ��� ��Ϻ������� ä���
+				//抛滴府父 侩鞠喉废栏肺 盲快扁
 				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
@@ -879,7 +1183,7 @@ void getNewBossArea() {
 					}
 				}
 			}
-			// �������� ���� �����
+			// 唱赣瘤绰 傈何 后傍埃
 			else { 
 				imageArray[cnt++] = { bmpNameNull, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
@@ -893,7 +1197,7 @@ void getNewBossArea() {
 }
 
 void printStoneStatus(int curStone) {
-	wchar_t playerFlagInfo[100] = L"�������� STONE : ";
+	wchar_t playerFlagInfo[100] = L"焊蜡吝牢 STONE : ";
 	wchar_t playerFlagCount[20] = L"";
 	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
 	printText(targetLayer->_consoleDC, 500,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);

@@ -13,6 +13,8 @@ int main() {
 	stageLayer.initialize(&stageLayer);
 	imageLayer.initialize(&imageLayer); // imageLayer???ì–´ë¦¬ì–´ ?ˆì´?´ë¼ê³?ë³´ë©´ ??
 	rewardLayer.initialize(&rewardLayer);
+	rShopLayer.initialize(&rShopLayer);
+	lShopLayer.initialize(&lShopLayer);
 
 	// ?Œì•… ?¬ìƒ
 	char bgmName[] = "start_bgm.wav";
@@ -24,6 +26,9 @@ int main() {
 
 	initStageImage();				// stageLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„±
 	fillBlockImages();				// imageLayer??ë¸”ë¡(25x25) ìµœì´ˆ ?ì„±
+
+	initRShopImage();
+	initLShopImage();
 
 	Button* button1 = new Button(1);
 	Button* button2 = new Button(2);
@@ -44,7 +49,7 @@ int main() {
 	pc.addItem(2);
 	pc.addItem(3);
 	initItemImages();
-
+	
 	// ?ì–´ë¦¬ì–´ ?´ë??ì„œ ?œê°„???¬ê¸° ?„í•œ ë³€?˜ë“¤
 	clock_t start_time = clock();
 	clock_t end_time;
@@ -199,6 +204,16 @@ int main() {
 				case DOWN:
 					pc.setDirDown();
 					if (!collisionCheckInStage(curPosX, curPosY + AREA_BLOCK_SIZE)) pc.moveInStage();
+					break;
+				case O:
+					isOnStage = false;
+					isOnArea = false;
+					visitLShop();
+					break;
+				case P:
+					isOnStage = false;
+					isOnArea = false;
+					visitRShop();
 					break;
 				}
 				if (key) {
