@@ -3,20 +3,55 @@ extern "C" {
 #include <Windows.h>
 }
 #include <vector>
+#include <time.h>
+
+class PCBullet {
+private:
+	int x, y;
+	int dx[4] = { 1,0,-1,0 };
+	int dy[4] = { 0,1,0,-1 };
+	int dir;
+	int speed=48;
+	int imageidx;
+
+	static char bmpPCBulletLeftName[];
+	static char bmpPCBulletRightName[];
+	static char bmpPCBulletUpName[];
+	static char bmpPCBulletDownName[];
+
+public:
+	PCBullet();
+	PCBullet(int x, int y, int dir);
+	bool move();
+	bool checkBulletHit(int bossX, int bossY);
+};
 
 class PC {
 private:
+	bool hasBatFang = false; // "���� ���ݽ� ���� Ȯ���� HP�� ������ ȸ���Ѵ�.";
+	bool hasBeggarDoll = false; // "PC ���ݼӵ��� ����������, ���ݽø��� ���� �Ҹ�ȴ�."
+	bool hasLuckStone = false; // "������ ���� �� ���� ���� �湮 �� ���Ű��� 2�踦 �����ش�.";
+	bool hasLuckCharm = false; // "������ �̸��� ������ 1ȸ ����Ѵ�."; - OK
+	bool hasMetalDetector = false; // "������ �� ���� �����Ѵ�.";
+	bool hasMoleClaw = false; // "���� �ı��� ��ȭ ȹ�淮�� �����Ѵ�.";
+	bool hasThronCrown = false; // "PC ���ݷ��� ����������, 2���� ���ظ� �԰� �ȴ�.";
+	bool hasTwoHearts = false; // "��� ������ ���ҷ��� �����Ѵ�.";
+	bool hasUndergroundTicket = false; //"�������� �Ǹ��ϴ� �������� ������ 30%  ���εȴ�.";
+	int luckStoneStage = 0;
 
-	int MAX_HP = 100, MAX_O2 = 100;
+	//std::vector<Item*> ownedItemList;
+	int usableEnergyBarCount = 0, usablePortableOxygenCanCount = 0;
+
+	int MAX_HP = 100, MAX_O2 = 100, MAX_FATIGUE = 10;
 	int AtkLev = 1, AtkSpdLev = 1, SpdLev = 1;
 	int flagCnt = 0;
-
-	int HP = 100, O2 = 100, ATK = 1, curDirection = 0;
-	int stone = 0;
+	int lastAttackTime;
+	int HP = 100, O2 = 100, FATIGUE = 10, ATK = 1, curDirection = 0;
+	int stone = 10000;
 	int dx[4] = { 1,0,-1,0 };
 	int dy[4] = { 0,1,0,-1 };
-
 	std::vector<int> itemList;
+	std::vector<PCBullet>pcBullets;
 
 	char* bmpPCName;
 	char* bmpPCLeftName;
@@ -35,7 +70,9 @@ private:
 	char* bmpPCgetOxygenRightName;
 	char* bmpPCgetOxygenDownName;
 	char* bmpPCgetOxygenUpName;
+
 	PC() {
+		lastAttackTime = 0;
 		bmpPCName = _strdup("PlayerCharacter.bmp");
 		bmpPCLeftName = _strdup("PC_left.bmp");
 		bmpPCRightName = _strdup("PC_right.bmp");
@@ -69,8 +106,10 @@ public:
 	int getStone();
 	int getHP();
 	int getOxygen();
+	int getFatigue();
 	int getMaxHP();
 	int getMaxOxygen();
+	int getMaxFatigue();
 	int getATK();
 	int getDir();
 	COORD getPosAfterMove(int x, int y);
@@ -78,6 +117,10 @@ public:
 	COORD getTargetPos(int x, int y);
 	void setHP(int hp);
 	void setOxygen(int o2);
+	void setFatigue(int ft);
+	void setMaxHP(int maxHp);
+	void setMaxOxygen(int maxOxygen);
+	void setMaxFatigue(int maxFt);
 	void setATK(int atk);
 	void setDirRight();
 	void setDirLeft();
@@ -104,4 +147,46 @@ public:
 	void hitEffect();
 	void getHPEffect();
 	void getOxygenEffect();
+
+	void setUsablePortableOxygenCanCount(int count);
+	void setUsableEnergyBarCount(int count);
+	int getUsablePortableOxygenCanCount();
+	int getUsableEnergyBarCount();
+
+	void setHasBatFang(boolean isHas);
+	bool getHasBatFang();
+
+	void setHashasBeggarDoll(boolean isHas);
+	bool getHashasBeggarDoll();
+
+	void setHasLuckStone(boolean isHas);
+	bool getHasLuckStone();
+
+	void setHasLuckCharm(boolean isHas);
+	bool getHasLuckCharm();
+
+	void setLuckStoneStage(int luckStoneStage);
+	int getLuckStoneStage();
+
+	void setHasMetalDetector(boolean isHas);
+	bool getHasMetalDetector();
+
+	void setHasMoleClaw(boolean isHas);
+	bool getMoleClaw();
+
+	void setHasThronCrown(boolean isHas);
+	bool getHasThronCrown();
+
+	void setHasTwoHearts(boolean isHas);
+	bool getHasTwoHearts();
+
+	void setHasUndergroundTicket(boolean isHas);
+	bool getHasUndergroundTicket();
+
+	void attack(clock_t t);
+
+
+	void setLastAttackTime(clock_t t);
+	std::vector<PCBullet>& getBulletList();
+
 };
