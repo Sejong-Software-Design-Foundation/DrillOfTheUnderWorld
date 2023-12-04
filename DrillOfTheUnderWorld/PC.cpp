@@ -1,13 +1,10 @@
 #include "PC.hpp"
 #include <string>
+//#include "Item.hpp"
 #include "common.hpp"
 
 using namespace std;
-/*
-PC ?�력�?로직
-?�기??버그 ?�결
 
-*/
  char PCBullet::bmpPCBulletLeftName[] = "PCBullet_left.bmp";
  char PCBullet::bmpPCBulletRightName[] = "PCBullet_right.bmp";
  char PCBullet::bmpPCBulletUpName[] = "PCBullet_up.bmp";
@@ -84,7 +81,15 @@ void PC::setHP(int hp) {
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
 		this->HP = 0;
-		exit(0);
+		// item
+		if (this->hasLuckCharm) {
+			this->HP = this->MAX_HP;
+			this->hasLuckCharm = false;
+		}
+		else {
+			// die
+			exit(0);
+		}
 	}
 	else if (hp > MAX_HP) this->HP = MAX_HP;
 	else this->HP = hp;
@@ -300,7 +305,7 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 			applyDigReward(imageIndex, 300);
 		}
 	}
-	// ?�중??매직?�버 처리?�기 -> 광물 HP
+	// ?˜ì¤‘??ë§¤ì§?˜ë²„ ì²˜ë¦¬?˜ê¸° -> ê´‘ë¬¼ HP
 	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
 			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
@@ -462,6 +467,103 @@ void PC::getOxygenEffect() {
 	targetLayer->renderAll(targetLayer);
 }
 
+
+void PC::setMaxHP(int maxHp) {
+	if (maxHp > 0) {
+		this->MAX_HP = maxHp;
+	}
+}
+void PC::setMaxOxygen(int maxOxygen) {
+	if (maxOxygen > 0) {
+		this->MAX_O2 = maxOxygen;
+	}
+}
+/*
+std::vector<Item*> PC::getOwnedItemList() {
+	return this->ownedItemList;
+}
+*/
+
+void PC::setUsableEnergyBarCount(int count) {
+	if (count > 0) {
+		this->usableEnergyBarCount = count;
+	}
+}
+void PC::setUsablePortableOxygenCanCount(int count) {
+	if (count > 0) {
+		this->usablePortableOxygenCanCount = count;
+	}
+}
+int PC::getUsableEnergyBarCount() {
+	return this->usableEnergyBarCount;
+}
+int PC::getUsablePortableOxygenCanCount() {
+	return this->usablePortableOxygenCanCount;
+}
+
+
+void PC::setHasBatFang(boolean isHas) {
+	this->hasBatFang = isHas;
+}
+
+bool PC::getHasBatFang() {
+	return this->hasBatFang;
+}
+
+void PC::setHashasBeggarDoll(boolean isHas) {
+	this->hasBeggarDoll = isHas;
+}
+bool PC::getHashasBeggarDoll() {
+	return this->hasBeggarDoll;
+}
+void PC::setHasLuckStone(boolean isHas) {
+	this->hasLuckStone = isHas;
+}
+bool PC::getHasLuckStone() {
+	return this->hasLuckStone;
+}
+void PC::setHasLuckCharm(boolean isHas) {
+	this->hasLuckCharm = isHas;
+}
+bool PC::getHasLuckCharm() {
+	return this->hasLuckCharm;
+}
+void PC::setLuckStoneStage(int luckStoneStage) {
+	this->luckStoneStage = luckStoneStage;
+}
+int PC::getLuckStoneStage() {
+	return this->luckStoneStage;
+}
+void PC::setHasMetalDetector(boolean isHas) {
+	this->hasMetalDetector = isHas;
+}
+bool PC::getHasMetalDetector() {
+	return this->hasMetalDetector;
+}
+void PC::setHasMoleClaw(boolean isHas) {
+	this->hasMoleClaw = isHas;
+}
+bool PC::getMoleClaw() {
+	return this->hasMoleClaw;
+}
+void PC::setHasThronCrown(boolean isHas) {
+	this->hasThronCrown = isHas;
+}
+bool PC::getHasThronCrown() {
+	return this->hasThronCrown;
+}
+void PC::setHasTwoHearts(boolean isHas) {
+	this->hasTwoHearts = isHas;
+}
+bool PC::getHasTwoHearts() {
+	return this->hasTwoHearts;
+}
+void PC::setHasUndergroundTicket(boolean isHas) {
+	this->hasUndergroundTicket = isHas;
+}
+bool PC::getHasUndergroundTicket() {
+	return this->hasUndergroundTicket;
+
 void PC::attack(clock_t t) {
 	if ((t - this->lastAttackTime) < 1000/AtkSpdLev) return;
 	pcBullets.push_back(PCBullet(imageArray[0].x, imageArray[0].y, this->curDirection));
@@ -530,4 +632,5 @@ bool PCBullet::checkBulletHit(int bossX, int bossY) {
 
 void PC::setLastAttackTime(clock_t t) {
 	lastAttackTime = t;
+
 }

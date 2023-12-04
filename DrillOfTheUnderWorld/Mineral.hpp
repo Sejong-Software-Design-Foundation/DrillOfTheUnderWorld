@@ -3,8 +3,6 @@
 
 class Mineral {
 private:
-	// change stagelevel in constructor for tests
-	int stagelevel;
 	// value is the hit counts
 	enum MineralHP { BRONZE = 3, SILVER = 6, GOLD = 9, DIAMOND = 12, ORICHALCUM = 3, QUESTION_MARK = 3 };
 
@@ -33,11 +31,15 @@ void Mineral::GenerateBronze() {
 
 	int num;
 
-	if (stagelevel == 1) num = 4;
-	else if (stagelevel == 2) num = 3;
-	else if (stagelevel == 3) num = 0;
+	if (stageLevel == 1) num = 4;
+	else if (stageLevel == 2) num = 3;
+	else if (stageLevel == 3) num = 0;
 
 	if (isMiniGameArea == 1) num = 0;
+
+	if (pc.getHasMetalDetector()) {
+		num *= 2;
+	}
 
 	for (int i = 0; i < num; i++) {
 		while (1) {
@@ -68,11 +70,15 @@ void Mineral::GenerateSilver() {
 
 	int num;
 
-	if (stagelevel == 1) num = 5;
-	else if (stagelevel == 2) num = 3;
-	else if (stagelevel == 3) num = 3;
+	if (stageLevel == 1) num = 5;
+	else if (stageLevel == 2) num = 3;
+	else if (stageLevel == 3) num = 3;
 
 	if (isMiniGameArea == 1) num = 0;
+
+	if (pc.getHasMetalDetector()) {
+		num *= 2;
+	}
 
 	for (int i = 0; i < num; i++) {
 		while (1) {
@@ -103,11 +109,15 @@ void Mineral::GenerateGold() {
 
 	int num;
 
-	if (stagelevel == 1) num = 1;
-	else if (stagelevel == 2) num = 3;
-	else if (stagelevel == 3) num = 4;
+	if (stageLevel == 1) num = 1;
+	else if (stageLevel == 2) num = 3;
+	else if (stageLevel == 3) num = 4;
 
 	if (isMiniGameArea == 1) num = 0;
+
+	if (pc.getHasMetalDetector()) {
+		num *= 2;
+	}
 
 	for (int i = 0; i < num; i++) {
 		while (1) {
@@ -138,11 +148,15 @@ void Mineral::GenerateDiamond() {
 
 	int num;
 
-	if (stagelevel == 1) num = 0;
-	else if (stagelevel == 2) num = 1;
-	else if (stagelevel == 3) num = 3;
+	if (stageLevel == 1) num = 0;
+	else if (stageLevel == 2) num = 1;
+	else if (stageLevel == 3) num = 3;
 
 	if (isMiniGameArea == 1) num = 0;
+
+	if (pc.getHasMetalDetector()) {
+		num *= 2;
+	}
 
 	for (int i = 0; i < num; i++) {
 		while (1) {
@@ -206,6 +220,10 @@ void Mineral::GenerateQuestionMark() {
 	int num = 10;
 	if (isMiniGameArea == 1) num = 0;
 
+	if (pc.getHasMetalDetector()) {
+		num *= 2;
+	}
+
 	for (int i = 0; i < num; i++) {
 		while (1) {
 			int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
@@ -230,8 +248,6 @@ void Mineral::GenerateQuestionMark() {
 
 
 Mineral::Mineral() {
-
-	stagelevel = 3;
 	GenerateBronze();
 	GenerateSilver();
 	GenerateGold();

@@ -14,6 +14,7 @@ extern "C" {
 #include "PC.hpp"
 #include "Stage.hpp"
 #include "Text.hpp"
+#include "Item.hpp"
 #include <vector>
 
 #define NUM1 49  
@@ -54,6 +55,8 @@ extern "C" {
 #define REWARD_GLOD = 50
 #define REWARD_DIAMOND = 100
 #define REWARD_POSSION = 50
+
+extern int stageLevel;
 
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
@@ -194,10 +197,30 @@ extern char bmpBedrockName[];
 extern char bmpFlagName[];
 
 // item Image
-extern char bmpItem1Name[];
-extern char bmpItem2Name[];
-extern char bmpItem3Name[];
-
+extern char bmpUndergroundTicketName[];
+extern char bmpMetalDetectorName[];
+extern char bmpThornCrownName[];
+extern char bmpBeggarDollName[];
+extern char bmpOrichalcumName[];
+extern char bmpTwoHeartsName[];
+extern char bmpLuckyCharmName[];
+extern char bmpDisassemblerName[];
+extern char bmpBatFangName[];
+extern char bmpMoleClawName[];
+extern char bmpDiceName[];
+extern char bmpLuckStoneName[];
+extern char bmpBloodBagName[];
+extern char bmpSupplyOxygenTankName[];
+extern char bmpFreshBrewedCoffeeName[];
+extern char bmpPortableOxygenCanName[];
+extern char bmpEnergyBarName[];
+extern char bmpAttackBoostName[];
+extern char bmpAttackSpeedBoostName[];
+extern char bmpMovementSpeedBoostName[];
+extern char bmpPrisonerShacklesName[];
+extern char bmpCursedTotemName[];
+extern char bmpAncientVirusName[];
+extern char bmpCaveSnakeName[];
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
@@ -225,7 +248,7 @@ void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
-void changeLayer(ImageLayer* currentLayer, ImageLayer* nextLayer);
+//void changeLayer(ImageLayer* currentLayer, ImageLayer* nextLayer);
 void printTimeInMiniGameArea(float t);
 void printMyOriInMiniGameArea();
 void updateCharacterStatus();
@@ -249,5 +272,33 @@ void getNewBossArea();
 void printStoneStatus(int curStone);
 void printWarning(int curHP);
 void getMoleSpace();
+
+// Ãß°¡
+extern ImageLayer lShopLayer;
+extern ImageLayer rShopLayer;
+extern bool isOnSafety;
+void initLShopImage();
+void initRShopImage();
+#define LSHOP_ITEMBOX_ORIGIN_X 850
+#define LSHOP_ITEMBOX_ORIGIN_Y 350
+#define RSHOP_ITEMBOX_ORIGIN_X 50
+#define RSHOP_ITEMBOX_ORIGIN_Y 350
+void visitLShop();
+void printItemTextInLShop();
+void printStatusInLShop(int price1, int price2, int num);
+void visitRShop();
+void printItemTextInRShop();
+void printStatusInRShop(int price1, int price2, int price3, int num);
+
+void stringToWchar(const std::string& input, wchar_t* output, size_t outputSize);
+void generateShopItem();
+char getRandomRank();
+Item* getRandomItem();
+bool isItemExistItemVector(Item* targetItem, std::vector<Item*> itemList);
+
+extern ImageLayer safetyLayer;
+void initSafetyImage();
+void visitSafety();
+extern int index_Safety_Object_Start;
 
 #endif COMMON_HPP
