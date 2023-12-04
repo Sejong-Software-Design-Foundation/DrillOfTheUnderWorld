@@ -25,7 +25,6 @@ void initItems() {
 }
 
 void initSRankItems(){
-	sRankItems.push_back(new AncientVirus());
 	sRankItems.push_back(new MetalDetector());
 	sRankItems.push_back(new ThornCrown());
 	sRankItems.push_back(new BeggarDoll());
@@ -38,7 +37,7 @@ void initARankItems() {
 }
 
 void initBRankItems() {
-	//bRankItems.push_back(new Disassembler()); //  todo
+	bRankItems.push_back(new Disassembler()); //  todo
 	bRankItems.push_back(new BatFang());
 	bRankItems.push_back(new MoleClaw());
 	bRankItems.push_back(new Dice());
