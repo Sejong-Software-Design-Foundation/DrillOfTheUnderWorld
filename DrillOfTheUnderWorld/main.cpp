@@ -7,23 +7,23 @@
 #include "Button.hpp"
 
 int main() {
-	initialize(); // ê¸°ì´ˆ?ì¸ ?´ë‹ˆ?œë¼?´ì§•(ì½˜ì†” ?¬ì´ì¦?ì§€?? ?¬ì¸???? œ ??
+	initialize(); // æ¹²ê³—??ê³¸ì”¤ ??€???•ì”ª??ì­ (?„ì„????? ï§?ï§Â€?? ???????????
 
-	// ?ˆì´???´ë‹ˆ?œë¼?´ì§•
+	// ??‰ì” ????€???•ì”ª??ì­ 
 	stageLayer.initialize(&stageLayer);
-	imageLayer.initialize(&imageLayer); // imageLayer???ì–´ë¦¬ì–´ ?ˆì´?´ë¼ê³?ë³´ë©´ ??
+	imageLayer.initialize(&imageLayer); // imageLayer???ë¨?¼±?±ÑŠë¼± ??‰ì” ??€?ªæ€?è¹‚ë?????
 	rewardLayer.initialize(&rewardLayer);
 
-	// ?Œì•… ?¬ìƒ
+	// ???¸™ ??ê¹?
 	char bgmName[] = "start_bgm.wav";
 	playBGM(bgmName);
 
-	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 }; // PC??imageLayer 0ë²ˆì— ì§€??
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 }; // PC??imageLayer 0è¸°ë‰ë¿?ï§Â€??
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 
-	initStageImage();				// stageLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„±
-	fillBlockImages();				// imageLayer??ë¸”ë¡(25x25) ìµœì´ˆ ?ì„±
+	initStageImage();				// stageLayer?ë¨?½Œ ?????ë’— ï§â‘¤ë±???€?ï§Â€ ï§¤ì’–????¹ê½¦
+	fillBlockImages();				// imageLayer???‰ë¶¾ì¤?25x25) ï§¤ì’–????¹ê½¦
 
 	Button* button1 = new Button(1);
 	Button* button2 = new Button(2);
@@ -36,67 +36,72 @@ int main() {
 	imageArray[button3->imageidx].isHide = 1;
 	index_Area_Button_Start = button1->imageidx;
 
-	initAreaUI();					// imageLayer??UI ?´ë?ì§€ ìµœì´ˆ ?ì„±
-	initRewardImage();				// rewardLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„±
+	initAreaUI();					// imageLayer??UI ??€?ï§Â€ ï§¤ì’–????¹ê½¦
+	initRewardImage();				// rewardLayer?ë¨?½Œ ?????ë’— ï§â‘¤ë±???€?ï§Â€ ï§¤ì’–????¹ê½¦
 
-	// ?„ì´?œê³¼ ê´€?¨ëœ ?¨ìˆ˜??ê°œë°œ ì§„í–‰ ì¤?
+	// ?ê¾©ì” ??“ë‚µ ?¿Â€??¤ë§‚ ??¥ë‹”??åª›ì’•ì»?ï§ê¾ªë»?ä»?
 	pc.addItem(1);
 	pc.addItem(2);
 	pc.addItem(3);
 	initItemImages();
 
-	// ?ì–´ë¦¬ì–´ ?´ë??ì„œ ?œê°„???¬ê¸° ?„í•œ ë³€?˜ë“¤
+	// ?ë¨?¼±?±ÑŠë¼± ??€??ë¨?½Œ ??“ì»™????ë¦??ê¾ªë¸³ è¹‚Â€??ë±¾
 	clock_t start_time = clock();
 	clock_t end_time;
 	clock_t timee;
 	clock_t minigameStartTime = clock();
 	double duration;
 
-	// NPC ?´ë‹ˆ?œë¼?´ì§•(ìµœì´ˆ ?„ì¹˜???”ë©´?ì—??ë³´ì´ì§€ ?Šë„ë¡?ì´ˆê¸°??
+	// NPC ??€???•ì”ª??ì­ (ï§¤ì’–???ê¾©íŠ‚???ë¶¾ãˆƒ?ê³¸ë¿‰??è¹‚ëŒ? ï§? ??…ë£„æ¿??¥ë‡ë¦??
 	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
 	std::vector<Bat*> generatedBatList;
 	Bat* bat = new Bat(-48, -48);
 	Ladder* ladder = new Ladder(-48, -48);
-	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(-48, -48);
+	EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(-BLOCKSIZE*BOSS_SCALE, -BLOCKSIZE * BOSS_SCALE);
+	Mole *mole = new Mole(-48, -48);
 
 	targetLayer = &stageLayer;
 	targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);
 
 	while (1) {
-		if (isOnStage) { // PCê°€ ?¤í…Œ?´ì? ë§µì— ì¡´ì¬?˜ëŠ” ê²½ìš°
+		if (isOnStage) { // PCåª›Â€ ??½ë€??? ï§ë“­ë¿?è­°ëŒ???ë’— å¯ƒìŒ??
 			generatedBatList.clear();
 			imageArray[ladder->imageidx].isHide = 0;
 			imageArray[button1->imageidx].isHide = 1;
 			imageArray[button2->imageidx].isHide = 1;
 			imageArray[button3->imageidx].isHide = 1;
 
-			updateCharacterStatus(); // PC ?íƒœì°½ì„ ?…ë°?´íŠ¸
+			updateCharacterStatus(); // PC ?ê³¹ê¹­ï§¡ìŒ????…ëœ²??„ë“ƒ
 			while (_kbhit() != 0) {
 				int key = _getch();
-				// PC ?„ì¹˜ ?•ë³´ë¥??…ë°?´íŠ¸?˜ëŠ” ë³€?˜ë“¤(?½ì? ?•ë³´ë¡?
+				// PC ?ê¾©íŠ‚ ?ëº£ë‚«????…ëœ²??„ë“ƒ??ë’— è¹‚Â€??ë±¾(??? ?ëº£ë‚«æ¿?
 				int curPosX = stageLayer.images[0].x;
 				int curPosY = stageLayer.images[0].y;
 
 				switch (key) {
 				case S:
 				{
-					// ?œë¤ ë³€?˜ë? ?¬ìš©?˜ì—¬ ?´ë–¤ ?ì–´ë¦¬ì–´ë¡?ì§„ì…??ì§€ ?•í•˜??ì½”ë“œ
+					// ??•ëœ¡ è¹‚Â€??? ?????ë¿¬ ??€ë¼??ë¨?¼±?±ÑŠë¼±æ¿?ï§ê¾©???ï§Â€ ?ëº¥ë¸¯???„ë¶¾ë±?
 					int num = rand() % 4;
-					if (currentAreaColIndex == 2 && currentAreaRowIndex == 1) {
+					if (currentAreaColIndex == 0 && currentAreaRowIndex == 0) {
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
 						isFlagArea = false;
 						isBossArea = true;
 						getNewBossArea();
-						Emcee->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25);
+						Emcee->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25 - BLOCKSIZE*BOSS_SCALE/2, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25 - BLOCKSIZE*BOSS_SCALE);
 						imageArray[0].x = AREA_ORIGIN_X + BLOCKSIZE / 2 * 25;
 						imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
 						ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
 						bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+						for (int i = 1;i <= Emcee->getMaxHP()+1;i++) {
+							imageArray[Emcee->imageidx + i].isHide = false;
+						}//MaxHP
+						pc.setATK(1000);
 					}
-					else if (num == 0) { // ?¸ë§ ?ì–´ë¦¬ì–´ë¡?ì§„ì…
+					else if (num == 0) { // ?ëªƒì­š ?ë¨?¼±?±ÑŠë¼±æ¿?ï§ê¾©??
 						isNormalArea = true;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -106,12 +111,14 @@ int main() {
 						//Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						getMoleSpace();
+						mole->NPCSetPosition(molePosX, molePosY);
 						Mineral* mineral = new Mineral();
 						setBedrock(3);
 						mineral->getCluster();
 						mineral->getCluster();
 					}
-					else if (num == 1) { // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´ë¡?ì§„ì…
+					else if (num == 1) { // èª˜ëªƒ?²å¯ƒ??—« ?ë¨?¼±?±ÑŠë¼±æ¿?ï§ê¾©??
 						isNormalArea = false;
 						isMiniGameArea = true;
 						isButtonArea = false;
@@ -121,9 +128,9 @@ int main() {
 						//Emcee->NPCSetPosition(-48, -48);
 						ladder->NPCSetPosition(-48, -48);
 						minigameStartTime = clock();
-						Mineral* mineral = new Mineral(); // stageLevel ?€??
+						Mineral* mineral = new Mineral(); // stageLevel ????
 					}
-					else if (num == 2) { // ë²„íŠ¼ ?ì–´ë¦¬ì–´ë¡?ì§„ì…
+					else if (num == 2) { // è¸°ê¾ª???ë¨?¼±?±ÑŠë¼±æ¿?ï§ê¾©??
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = true;
@@ -134,7 +141,7 @@ int main() {
 						imageArray[button3->imageidx].isHide = 0;
 
 						isButtonRoomClear = false;
-						int randomNumber = rand() % 6; // 0 ?ì„œ 6 ?¬ì´???œìˆ˜
+						int randomNumber = rand() % 6; // 0 ?ë¨?½Œ 6 ???????–ë‹”
 						buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
 						getNewArea();
 
@@ -145,14 +152,16 @@ int main() {
 						//Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						getMoleSpace();
+						mole->NPCSetPosition(molePosX, molePosY);
 
 						imageArray[ladder->imageidx].isHide = 1;
-						Mineral* mineral = new Mineral(); // stageLevel ?€??
+						Mineral* mineral = new Mineral(); // stageLevel ????
 						setBedrock(3);
 						mineral->getCluster();
 						mineral->getCluster();
 					}
-					else if (num == 3) { // ?Œë˜ê·??ì–´ë¦¬ì–´ë¡?ì§„ì…
+					else if (num == 3) { // ???˜’æ´??ë¨?¼±?±ÑŠë¼±æ¿?ï§ê¾©??
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -165,13 +174,15 @@ int main() {
 						//Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
 						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						getMoleSpace();
+						mole->NPCSetPosition(molePosX, molePosY);
 						setBedrock(3);
 						mineral->getCluster();
 						mineral->getCluster();
 						setFlag(3);
 					}
 
-					// ?ì–´ë¦¬ì–´ ë§µì—???„ì¬ PC ?„ì¹˜ë¥?ë°ê²Œ ?œì‹œ?˜ë„ë¡??˜ëŠ” ì½”ë“œ(?´ë¦¬??ì²˜ë¦¬)
+					// ?ë¨?¼±?±ÑŠë¼± ï§ë“­ë¿???ê¾©ì˜± PC ?ê¾©íŠ‚??è«›ì•·ì¾???–ë–†??ë£„æ¿???ë’— ?„ë¶¾ë±???€???ï§£ì„??
 					currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
@@ -207,12 +218,12 @@ int main() {
 				}
 			}
 		}
-		else if (isOnArea) { // PCê°€ ?ì–´ë¦¬ì–´???ˆëŠ” ê²½ìš°
+		else if (isOnArea) { // PCåª›Â€ ?ë¨?¼±?±ÑŠë¼±????ˆë’— å¯ƒìŒ??
 			targetLayer->renderAll(targetLayer);
-			drawUI(); // ?ì–´ë¦¬ì–´ UIë¥?ê·¸ë¦¬???¨ìˆ˜
+			drawUI(); // ?ë¨?¼±?±ÑŠë¼± UI??æ´¹ëªƒ?????¥ë‹”
 			printStoneStatus(pc.getStone());
-			if (isNormalArea) { // PCê°€ ?¸ë? ?ì–´ë¦¬ì–´???ˆëŠ” ê²½ìš°
-				// QuestionBlock ë°•ì¥ ?ì„± ê´€??ì½”ë“œ
+			if (isNormalArea) { // PCåª›Â€ ?ëª? ?ë¨?¼±?±ÑŠë¼±????ˆë’— å¯ƒìŒ??
+				// QuestionBlock è«›ëº¤ìª???¹ê½¦ ?¿Â€???„ë¶¾ë±?
 				if (isGenerateMobByQuestionBlock) {
 					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
 					isGenerateMobByQuestionBlock = false;
@@ -222,12 +233,13 @@ int main() {
 						mob->move();
 					}
 				}
-				// NPC???€ì§ì„ ë¶€???œì„±??
+				// NPC????ï§ê³¸???ºÂ€????–ê½¦??
 				//mole->move();
 				bat->move();
 				ladder->move();
+				mole->move();
 				//Emcee->move();
-				// ?¤ë³´???…ë ¥ ?˜í–‰
+				// ??»ë‚«????…ì ° ??‘ë»¾
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -286,9 +298,9 @@ int main() {
 					Sleep(5);
 				}
 			}
-			else if (isMiniGameArea) { // PCê°€ ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´???ˆëŠ” ê²½ìš°
-				printMyOriInMiniGameArea(); // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´?ì„œ informationê³??ë“??ê´‘ë¬¼ ?˜ë? ì¶œë ¥?˜ëŠ” ?¨ìˆ˜
-				// ?¤ë³´???…ë ¥ ?˜í–‰
+			else if (isMiniGameArea) { // PCåª›Â€ èª˜ëªƒ?²å¯ƒ??—« ?ë¨?¼±?±ÑŠë¼±????ˆë’— å¯ƒìŒ??
+				printMyOriInMiniGameArea(); // èª˜ëªƒ?²å¯ƒ??—« ?ë¨?¼±?±ÑŠë¼±?ë¨?½Œ information????¾ë±·???¿ë¬Ğª ??? ?°ì’•???ë’— ??¥ë‹”
+				// ??»ë‚«????…ì ° ??‘ë»¾
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -348,7 +360,7 @@ int main() {
 					rewardUI();
 				}
 			}
-			else if (isButtonArea) { // PCê°€ ë²„íŠ¼ ?ì–´ë¦¬ì–´???ˆëŠ” ê²½ìš°
+			else if (isButtonArea) { // PCåª›Â€ è¸°ê¾ª???ë¨?¼±?±ÑŠë¼±????ˆë’— å¯ƒìŒ??
 
 				if (button1->getIsPressed()) {
 					imageArray[button1->imageidx].fileName = bmpButton1PressedName;
@@ -381,6 +393,7 @@ int main() {
 					ladder->move();
 				}
 				bat->move();
+				mole->move();
 				//Emcee->move();
 				button1->move();
 				button2->move();
@@ -444,11 +457,12 @@ int main() {
 					Sleep(5);
 				}
 			}
-			else if (isFlagArea) { // PCê°€ ?Œë˜ê·??ì–´ë¦¬ì–´???ˆëŠ” ê²½ìš°
+			else if (isFlagArea) { // PCåª›Â€ ???˜’æ´??ë¨?¼±?±ÑŠë¼±????ˆë’— å¯ƒìŒ??
 				printFlagStageStatus(pc.getFlagCnt());
 				//mole->move();
 				bat->move();
 				ladder->move();
+				mole->move();
 				//Emcee->move();
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
@@ -509,7 +523,24 @@ int main() {
 				}
 			}
 			else if (isBossArea) {
-				Emcee->move();
+				if (Emcee->NPCDead() == false) {
+					Emcee->move();
+				}
+				else {
+					Emcee->AfterDead();
+					ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
+					ladder->move();
+				}
+				//vector<PCBullet>::iterator itr;
+				for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end(); ) {
+					if (Emcee->NPCDead() == false && itr->checkBulletHit(Emcee->x, Emcee->y)) {
+						Emcee->NPCHit(pc.getATK());
+						itr = pc.getBulletList().erase(itr);
+					}
+					else if (!(itr->move())) itr = pc.getBulletList().erase(itr);
+					else itr++;
+				}
+				printWarning(Emcee->hp);
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -554,8 +585,7 @@ int main() {
 							rewardUI();
 							break;
 						case SPACE:
-							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-							pc.dig(targetPos.X, targetPos.Y);
+							if (Emcee->NPCDead() == false) pc.attack(clock());
 							break;
 						case O:
 							pc.setHP(pc.getHP() - 10);
@@ -568,8 +598,8 @@ int main() {
 					Sleep(5);
 				}
 			}
-			// ëª¨ë“  ?ì–´ë¦¬ì–´??ê³µí†µ?¼ë¡œ ?ìš©?˜ëŠ” ì½”ë“œ
-			// 3ì´ˆë§ˆ???°ì†Œ ê²Œì´ì§€ë¥?1??ê°ì†Œ?œí‚¤??ì½”ë“œ
+			// ï§â‘¤ë±??ë¨?¼±?±ÑŠë¼±???¨ë“¯???°ì¤ˆ ?ê³¸ìŠœ??ë’— ?„ë¶¾ë±?
+			// 3?¥ëˆì­???ê³—ëƒ¼ å¯ƒëš¯? ï§???1??åª›ë¨¯???—ê¶???„ë¶¾ë±?
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
 			if (duration > 3.0) {

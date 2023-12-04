@@ -1,17 +1,16 @@
 #include "common.hpp"
-
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
 
 ImageLayer* targetLayer = NULL;
-// stageLayer?€ ?´ë‹¹ ?ˆì´?´ì—???¬ìš©?˜ëŠ” ë³€?˜ë“¤
+// stageLayer?? ??€????‰ì” ??ë¿‰???????ë’— è¹‚Â€??ë±¾
 ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image stageImageArray[40];
 int stageInfo[5][5];
-// imageLayer?€ ?´ë‹¹ ?ˆì´?´ì—???¬ìš©?˜ëŠ” ë³€?˜ë“¤
+// imageLayer?? ??€????‰ì” ??ë¿‰???????ë’— è¹‚Â€??ë±¾
 ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
-Image imageArray[1000];
+Image imageArray[2000];
 int blockInfo[1200][1200];
 int mapInfo[5][5];
 int currentAreaRowIndex;
@@ -21,6 +20,8 @@ int NPCSpacePosY;
 int NPCSpaceHeight;
 int NPCSpaceWidth;
 int OrichalcumNum = 0;
+int molePosX;
+int molePosY;
 
 // BUTTON
 bool isButtonRoomClear = false;
@@ -31,11 +32,11 @@ bool isGenerateMobByQuestionBlock = false;
 int questionBlockPosX = 0;
 int questionBlockPosY = 0;
 
-// rewardLayer?€ ?´ë‹¹ ?ˆì´?´ì—???¬ìš©?˜ëŠ” ë³€?˜ë“¤
+// rewardLayer?? ??€????‰ì” ??ë¿‰???????ë’— è¹‚Â€??ë±¾
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
 Image imagesReward[1000];
 
-// PCê°€ ?„ì¬ ?´ë””???„ì¹˜?˜ëŠ”ì§€ ì²´í¬?˜ê¸° ?„í•œ bool??ë³€??
+// PCåª›Â€ ?ê¾©ì˜± ??€ëµ???ê¾©íŠ‚??ë’—ï§Â€ ï§£ëŒ„ê²??ë¦° ?ê¾ªë¸³ bool??è¹‚Â€??
 bool isOnStage = true;
 bool isOnArea = false;
 bool isNormalArea = false;
@@ -44,9 +45,9 @@ bool isButtonArea = false;
 bool isFlagArea = false;
 bool isBossArea = false;
 
-// ê°??ˆì´?´ë§ˆ???¬ìš©?˜ëŠ” ?´ë?ì§€?¤ì? ?˜ë‚˜??ë°°ì—´???€?¥ë¨ (ex. imageLayer->imageArray, rewardLayer->imageReward)
-// ê°™ì? ë°°ì—´???€?¥ë˜???´ë?ì§€?¤ì? ?´ë??ì„œ ëª©ì ???°ë¼ ë¬¶ì—¬???€?¥ë¨
-// ?‘ê·¼?˜ê¸° ?¸í•˜?„ë¡ ?˜ê¸° ?„í•´ ?œì‘ ë²ˆí˜¸ë¥??€?¥í•˜??ê´€ë¦?
+// åª???‰ì” ??€ì­???????ë’— ??€?ï§Â€??? ??êµ¹??è«›ê³—ë¿?????Î»ë§?(ex. imageLayer->imageArray, rewardLayer->imageReward)
+// åª›ìˆˆ? è«›ê³—ë¿?????Î»ë¦????€?ï§Â€??? ??€??ë¨?½Œ ï§â‘¹????ê³•ì”ª ?¾ë ë¿?????Î»ë§?
+// ?ë¬ë ??ë¦° ?ëª…ë¸¯?ê¾¨ì¤‰ ??ë¦° ?ê¾ªë¹ ??–ì˜‰ è¸°ëŠ?‡ç‘œ????Î½ë¸???¿Â€??
 int index_StageImages_Start;
 int index_Area_PC;
 int index_Area_Button_Start;
@@ -59,7 +60,7 @@ int index_Area_UI_mapTile_Start;
 int index_Area_UI_MiniGame_Start;
 int index_RewardImages_Start;
 
-// BMP ?Œì¼ ?œì‘
+// BMP ???”ª ??–ì˜‰
 
 // NULL BMP
 char bmpNameNull[] = "";
@@ -114,6 +115,7 @@ char bmpNameStar0[] = "UI_Star0.bmp";
 char bmpNameStar1[] = "UI_Star1.bmp";
 char bmpNameStar2[] = "UI_Star2.bmp";
 char bmpNameStar3[] = "UI_Star3.bmp";
+char bmpBossHPName[] = "BossHP.bmp";
 
 // AREA BLOCK BMP
 char bmpStoneBlockName[] = "block_Stage1_Normal.bmp";
@@ -162,11 +164,21 @@ char bmpFlagName[] = "flag.bmp";
 
 // NORMAL NPC BMP
 char bmpNameBat[] = "Bat.bmp";
+char bmpNameMole[] = "Mole.bmp";
+char bmpNameMoleDigging[] = "MoleDigging.bmp";
 
 // BOSS NPC BMP
-char bmpNameMole[] = "Mole.bmp";
-char bmpNameFireball[] = "Fireball.bmp";
 char bmpNameEmceeTheShyGuy[] = "EmceeTheShyGuy.bmp";
+char bmpNameFireball[] = "Fireball.bmp";
+
+char bmpNameRawkHawk_pattern[] = "RawkHawk_pattern.bmp";
+char bmpNameRawkHawk_ready[] = "RawkHawk_ready.bmp";
+char bmpNameRawkHawk_tracking[] = "RawkHawk_tracking.bmp";
+
+char bmpNameCharizard[] = "Charizard.bmp";
+char bmpNameFireground[] = "Fireground.bmp";
+
+// LADDER
 char bmpNameLadder[] = "Ladder.bmp";
 
 // REWARD BMP
@@ -181,7 +193,7 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";	
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
-// ?¨ìˆ˜ ?œì‘
+// ??¥ë‹” ??–ì˜‰
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
     int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
@@ -209,7 +221,7 @@ void removeCursor() {
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &c);
 }
 
-void initialize() { // ê¸°ì´ˆ?ì¸ ?´ë‹ˆ?œë¼?´ì§•(ì½˜ì†” ?¬ì´ì¦?ì§€?? ?¬ì¸???? œ ??
+void initialize() { // æ¹²ê³—??ê³¸ì”¤ ??€???•ì”ª??ì­ (?„ì„????? ï§?ï§Â€?? ???????????
 
     getHandle();
     resizeConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
@@ -217,7 +229,7 @@ void initialize() { // ê¸°ì´ˆ?ì¸ ?´ë‹ˆ?œë¼?´ì§•(ì½˜ì†” ?¬ì´ì¦?ì§€?? ?¬ì¸???
     srand((unsigned)time(NULL));
 }
 
-void initStageImage() { // stageLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„±
+void initStageImage() { // stageLayer?ë¨?½Œ ?????ë’— ï§â‘¤ë±???€?ï§Â€ ï§¤ì’–????¹ê½¦
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -236,7 +248,7 @@ void initStageImage() { // stageLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„
 
 }
 
-void initItemImages() { // ?„ì´??ê´€???¨ìˆ˜ (ê°œë°œ ì§„í–‰ ì¤?
+void initItemImages() { // ?ê¾©ì” ???¿Â€????¥ë‹” (åª›ì’•ì»?ï§ê¾ªë»?ä»?
 	std::vector<int> itemList = pc.getitemList();
 
 	for (int i = 0; i < itemList.size(); i++) {
@@ -252,7 +264,7 @@ void initItemImages() { // ?„ì´??ê´€???¨ìˆ˜ (ê°œë°œ ì§„í–‰ ì¤?
 	}
 }
 
-void fillBlockImages() { // imageLayer??ë¸”ë¡(25x25) ìµœì´ˆ ?ì„± 
+void fillBlockImages() { // imageLayer???‰ë¶¾ì¤?25x25) ï§¤ì’–????¹ê½¦ 
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
@@ -261,7 +273,7 @@ void fillBlockImages() { // imageLayer??ë¸”ë¡(25x25) ìµœì´ˆ ?ì„±
 	}
 }
 
-void initAreaUI() // imageLayer??UI ?´ë?ì§€ ìµœì´ˆ ?ì„±
+void initAreaUI() // imageLayer??UI ??€?ï§Â€ ï§¤ì’–????¹ê½¦
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
@@ -315,7 +327,7 @@ void initAreaUI() // imageLayer??UI ?´ë?ì§€ ìµœì´ˆ ?ì„±
 	imageArray[imageLayer.imageCount++] = { bmpNameTimer, 1600, 1450, 1, 1 };
 }
 
-void initRewardImage() { // rewardLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?ì„±
+void initRewardImage() { // rewardLayer?ë¨?½Œ ?????ë’— ï§â‘¤ë±???€?ï§Â€ ï§¤ì’–????¹ê½¦
 	rewardLayer.images = imagesReward;
 	rewardLayer.imageCount = 0;
 
@@ -332,7 +344,7 @@ void initRewardImage() { // rewardLayer?ì„œ ?¬ìš©?˜ëŠ” ëª¨ë“  ?´ë?ì§€ ìµœì´ˆ ?
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void updateCharacterStatus() { // PC ?íƒœì°½ì„ ?…ë°?´íŠ¸
+void updateCharacterStatus() { // PC ?ê³¹ê¹­ï§¡ìŒ????…ëœ²??„ë“ƒ
 	wchar_t playerStone[20];
 	wchar_t playerHp[20];
 	wchar_t playerOz[20];
@@ -358,7 +370,7 @@ void updateCharacterStatus() { // PC ?íƒœì°½ì„ ?…ë°?´íŠ¸
 	printText(targetLayer->_consoleDC, 250, 700, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
 
-void setMovableStageInfo(int row, int col) { // ?¤í…Œ?´ì? ë§µì—???ˆë¡­ê²??´ë™ ê°€?¥í•œ ì§€??„ ?œì‹œ?˜ê¸° ?„í•œ ?¨ìˆ˜
+void setMovableStageInfo(int row, int col) { // ??½ë€??? ï§ë“­ë¿????ˆâˆ¼å¯???€ë£?åª›Â€?Î½ë¸?ï§Â€??????–ë–†??ë¦° ?ê¾ªë¸³ ??¥ë‹”
 	if (row - 1 >= 0) {
 		if (stageInfo[row - 1][col] == 1) {
 			stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
@@ -385,11 +397,11 @@ void setMovableStageInfo(int row, int col) { // ?¤í…Œ?´ì? ë§µì—???ˆë¡­ê²??´ë™ 
 	}
 }
 
-void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
-	// ?ì–´ë¦¬ì–´ ?ì—??NPCê°€ ?ì„±?˜ëŠ” ê²€?€ ê³µê°„???¬ê¸°ë¥??¤ì •?˜ëŠ” ë³€?˜ë“¤
+void getNewArea() { // ?ëªƒì­š ?ë¨?¼±?±ÑŠë¼±(25x25)???¥ë‡ë¦?ë·€ë¸??è¹‚Â€??
+	// ?ë¨?¼±?±ÑŠë¼± ?ê³¸ë¿‰??NPCåª›Â€ ??¹ê½¦??ë’— å¯ƒÂ€?? ?¨ë“¦ì»????ë¦°ç‘œ???¼ì ™??ë’— è¹‚Â€??ë±¾
 	NPCSpaceHeight = getNPCSpaceHeight();
 	NPCSpaceWidth = getNPCSpaceWidth();
-	// ê²€?€ ê³µê°„???„ì¹˜ë¥??€?¥í•˜??ë³€??
+	// å¯ƒÂ€?? ?¨ë“¦ì»???ê¾©íŠ‚?????Î½ë¸??è¹‚Â€??
 	NPCSpacePosX = getNPCSpacePosX();
 	NPCSpacePosY = getNPCSpacePosY();
 
@@ -397,7 +409,7 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			if (y == AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x == AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
-				//Å×µÎ¸®¸¸ ¿ë¾Ïºí·ÏÀ¸·Î Ã¤¿ì±â
+				//?Œë‘ë¦¬ë§Œ ?©ì•”ë¸”ë¡?¼ë¡œ ì±„ìš°ê¸?
 				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
@@ -405,7 +417,7 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 					}
 				}
 			}
-			// ê²€?€ ê³µê°„???¤ì œ?ìœ¼ë¡?ë§Œë“œ??ë°˜ë³µë¬?
+			// å¯ƒÂ€?? ?¨ë“¦ì»????¼ì £?ê³¸ì‘æ¿?ï§ëš®ë±??è«›ì„?¬è‡¾?
 			else if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
 				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
 				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
@@ -416,7 +428,7 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 					}
 				}
 			}
-			// ?¤ë¥¸ ë¶€ë¶„ì? ê¸°ë³¸ ?Œë¡œ ê·¸ë¦¬ê¸?
+			// ??»â…¨ ?ºÂ€?ºê¾©? æ¹²ê³•?????¤ˆ æ´¹ëªƒ?æ¹²?
 			else {
 				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
@@ -427,7 +439,7 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 			}
 		}
 	}
-	// ?ì–´ë¦¬ì–´?ì„œ PCê°€ ?¤í°?˜ëŠ” ì´ˆê¸° ?„ì¹˜
+	// ?ë¨?¼±?±ÑŠë¼±?ë¨?½Œ PCåª›Â€ ??½ë£¿??ë’— ?¥ë‡ë¦??ê¾©íŠ‚
 	imageArray[0].x = AREA_ORIGIN_X + 576;
 	imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE;
 	for (int y = BLOCKSIZE;y < 2*BLOCKSIZE;y++) {
@@ -435,14 +447,14 @@ void getNewArea() { // ?¸ë§ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
 			blockInfo[y][576 + x] = 0;
 		}
 	}
-	// ?¤í°?˜ëŠ” ?„ì¹˜??ë¸”ë¡ ì§€?°ê¸°
+	// ??½ë£¿??ë’— ?ê¾©íŠ‚???‰ë¶¾ì¤?ï§Â€?ê³Œë¦°
 	imageArray[13 + 25].fileName = bmpNameNull;
 
-	// ?„ì¬ ìºë¦­???¤í° ?„ì¹˜??ê´‘ì„???ì„±?????ˆëŠ” ë²„ê·¸ê°€ ì¡´ì¬??
-	// getNewArea() ??Generate~() ?´ì„œ ë°œìƒ?˜ëŠ” ?„ìƒ.
+	// ?ê¾©ì˜± ï§?¨®?????½ë£¿ ?ê¾©íŠ‚???¿ë¬’ê½????¹ê½¦??????ˆë’— è¸°ê¾§?‡åª›? è­°ëŒ???
+	// getNewArea() ??Generate~() ??ê½Œ è«›ì’–ê¹??ë’— ?ê¾©ê¸½.
 }
 
-void getNewMiniGameArea() // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€??
+void getNewMiniGameArea() // èª˜ëªƒ?²å¯ƒ??—« ?ë¨?¼±?±ÑŠë¼±(25x25)???¥ë‡ë¦?ë·€ë¸??è¹‚Â€??
 {
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
@@ -455,7 +467,7 @@ void getNewMiniGameArea() // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€?
 			}
 		}
 	}
-	// ?ì–´ë¦¬ì–´?ì„œ PCê°€ ?¤í°?˜ëŠ” ì´ˆê¸° ?„ì¹˜
+	// ?ë¨?¼±?±ÑŠë¼±?ë¨?½Œ PCåª›Â€ ??½ë£¿??ë’— ?¥ë‡ë¦??ê¾©íŠ‚
 	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
 	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
 	for (int y = 0;y < BLOCKSIZE;y++) {
@@ -463,21 +475,21 @@ void getNewMiniGameArea() // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´(25x25)ë¥?ì´ˆê¸°?”í•˜??ë³€?
 			blockInfo[576 + y][576 + x] = 0;
 		}
 	}
-	// ?¤í°?˜ëŠ” ?„ì¹˜??ë¸”ë¡ ì§€?°ê¸°
+	// ??½ë£¿??ë’— ?ê¾©íŠ‚???‰ë¶¾ì¤?ï§Â€?ê³Œë¦°
 	imageArray[12 * 25 + 13].fileName = bmpNameNull;
 }
 
-void drawUI() { // ?ì–´ë¦¬ì–´ UI ?œì„±??
-	imageArray[index_Area_UI_Start].isHide = 0; // ?„ì´??ì°½ì´ ë³´ì´?„ë¡
+void drawUI() { // ?ë¨?¼±?±ÑŠë¼± UI ??–ê½¦??
+	imageArray[index_Area_UI_Start].isHide = 0; // ?ê¾©ì” ??ï§¡ìŒ??è¹‚ëŒ??ê¾¨ì¤‰
 
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPë°”ê? ë³´ì´?„ë¡
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HPè«›ë¶½? è¹‚ëŒ??ê¾¨ì¤‰
 	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2ë°”ê? ë³´ì´?„ë¡
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2è«›ë¶½? è¹‚ëŒ??ê¾¨ì¤‰
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // ë§µì´ ë³´ì´?„ë¡
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // ï§ë“­??è¹‚ëŒ??ê¾¨ì¤‰
 		imageArray[i].isHide = 0;
 
-	// ?ì–´ë¦¬ì–´ Xê°€ ë¯¸êµ¬?„ì´ê¸??Œë¬¸???„ì‹œë¡??ì–´ë¦¬ì–´ ì§€?„ì—??Xê°€ ?œì‹œ?˜ì? ?Šë„ë¡?
+	// ?ë¨?¼±?±ÑŠë¼± Xåª›Â€ èª˜ë©¸??ê¾©ì” æ¹???????ê¾©ë–†æ¿??ë¨?¼±?±ÑŠë¼± ï§Â€?ê¾©ë¿‰??Xåª›Â€ ??–ë–†??? ??…ë£„æ¿?
 	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
 	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
@@ -535,6 +547,18 @@ int convertPosToInfoY(int y) {
 	return (y - AREA_ORIGIN_Y);
 }
 
+bool collisionCheck(int x, int y, int scale) { //scale ?¸ì ì¶”ê??´ì„œ ?¤ë²„?¼ì´??
+	int startX = convertPosToInfoX(x);
+	int startY = convertPosToInfoY(y);
+
+	for (int curY = startY; curY < startY + BLOCKSIZE * scale; curY++) {
+		for (int curX = startX; curX < startX + BLOCKSIZE * scale; curX++) {
+			if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+			if (blockInfo[curY][curX]) return true;
+		}
+	}
+	return false;
+}
 bool collisionCheck(int x, int y) {
 	int startX = convertPosToInfoX(x);
 	int startY = convertPosToInfoY(y);
@@ -548,14 +572,14 @@ bool collisionCheck(int x, int y) {
 	return false;
 }
 
-void printTimeInMiniGameArea(float t) { // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´?ì„œ ?¨ì? ?œê°„??ì¶œë ¥?˜ëŠ” ?¨ìˆ˜
+void printTimeInMiniGameArea(float t) { // èª˜ëªƒ?²å¯ƒ??—« ?ë¨?¼±?±ÑŠë¼±?ë¨?½Œ ??? ??“ì»™???°ì’•???ë’— ??¥ë‹”
 	wchar_t timeLimit[20];
 	if (t > 0.0) swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%.2f", t);
 	else swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%0.00");
 	printText(targetLayer->_consoleDC, 1750, 1458, 40, 0, RGB(255, 255, 255), TA_CENTER, timeLimit);
 }
 
-void printMyOriInMiniGameArea() { // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´?ì„œ informationê³??ë“??ê´‘ë¬¼ ?˜ë? ì¶œë ¥?˜ëŠ” ?¨ìˆ˜
+void printMyOriInMiniGameArea() { // èª˜ëªƒ?²å¯ƒ??—« ?ë¨?¼±?±ÑŠë¼±?ë¨?½Œ information????¾ë±·???¿ë¬Ğª ??? ?°ì’•???ë’— ??¥ë‹”
 	wchar_t info1[30] = L"1 Star (5) = 100 Stones";
 	wchar_t info2[30] = L"2 Star(10) = 200 Stones";
 	wchar_t info3[30] = L"3 Star(20) = 300 Stones";
@@ -568,7 +592,7 @@ void printMyOriInMiniGameArea() { // ë¯¸ë‹ˆê²Œì„ ?ì–´ë¦¬ì–´?ì„œ informationê³
 	printText(targetLayer->_consoleDC, 1790, 1358, 40, 0, RGB(255, 255, 255), TA_CENTER, numOrichalcum);
 }
 
-void rewardUI() { // ?ì–´ë¦¬ì–´ ?´ë¦¬????ë³´ìƒ???»ëŠ” ?¨ìˆ˜
+void rewardUI() { // ?ë¨?¼±?±ÑŠë¼± ??€?????è¹‚ëŒê¸????³ë’— ??¥ë‹”
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
 
@@ -698,7 +722,7 @@ void rewardUI() { // ?ì–´ë¦¬ì–´ ?´ë¦¬????ë³´ìƒ???»ëŠ” ?¨ìˆ˜
 		}
 	}
 	targetLayer->fadeOut(targetLayer, NULL);
-	// ?¤ìŒ RewardUI() ?¸ì¶œ???„í•œ ì½”ë“œ
+	// ??¼ì“¬ RewardUI() ?ëª„í…§???ê¾ªë¸³ ?„ë¶¾ë±?
 	imagesReward[4].isHide = 1;
 	imagesReward[5].isHide = 1;
 	imagesReward[6].isHide = 1;
@@ -841,9 +865,9 @@ void getNewBossArea() {
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			// ê²€?€ ê³µê°„???¤ì œ?ìœ¼ë¡?ë§Œë“œ??ë°˜ë³µë¬?
+			// å¯ƒÂ€?? ?¨ë“¦ì»????¼ì £?ê³¸ì‘æ¿?ï§ëš®ë±??è«›ì„?¬è‡¾?
 			if (y==AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x==AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
-				//Å×µÎ¸®¸¸ ¿ë¾Ïºí·ÏÀ¸·Î Ã¤¿ì±â
+				//?Œë‘ë¦¬ë§Œ ?©ì•”ë¸”ë¡?¼ë¡œ ì±„ìš°ê¸?
 				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
@@ -851,7 +875,7 @@ void getNewBossArea() {
 					}
 				}
 			}
-			// ³ª¸ÓÁö´Â ÀüºÎ ºó°ø°£
+			// ?˜ë¨¸ì§€???„ë? ë¹ˆê³µê°?
 			else { 
 				imageArray[cnt++] = { bmpNameNull, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
@@ -865,9 +889,31 @@ void getNewBossArea() {
 }
 
 void printStoneStatus(int curStone) {
-	wchar_t playerFlagInfo[100] = L"º¸À¯ÁßÀÎ STONE : ";
+	wchar_t playerFlagInfo[100] = L"ë³´ìœ ì¤‘ì¸ STONE : ";
 	wchar_t playerFlagCount[20] = L"";
 	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
 	printText(targetLayer->_consoleDC, 500,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
 	printText(targetLayer->_consoleDC, 700,200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
+}
+void printWarning(int curHP) {
+	wchar_t warningText[100] = L"WARNING!";
+	for (int i = 0;i < curHP;i++) {
+		if (i%10 == 1 && curHP-i >= 9)
+			printText(targetLayer->_consoleDC, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE*3/4, 20, 0, RGB(255, 255, 255), TA_LEFT, warningText);
+	}
+}
+
+void getMoleSpace() {
+	molePosX = ((rand() % 23 + 1) * BLOCKSIZE + AREA_ORIGIN_X);
+	molePosY = ((rand() % 23 + 1) * BLOCKSIZE + AREA_ORIGIN_Y);
+	int infoX = convertPosToInfoX(molePosX);
+	int infoY = convertPosToInfoY(molePosY);
+	if (blockInfo[infoY][infoX] != 2) getMoleSpace();
+	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
+	imageArray[imageIndex].fileName = bmpNameNull;
+	for (int y = infoY;y < infoY + BLOCKSIZE;y++) {
+		for (int x = infoX;x < infoX + BLOCKSIZE;x++) {
+			blockInfo[y][x] = 0;
+		}
+	}
 }
