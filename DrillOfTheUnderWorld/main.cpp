@@ -86,7 +86,7 @@ int main() {
             case S:
             {
                int num = rand() % 4;
-               if (currentAreaColIndex == 0 && currentAreaRowIndex == 0) {
+               if (currentAreaColIndex == 1 && currentAreaRowIndex == 0) {
                   isNormalArea = false;
                   isMiniGameArea = false;
                   isButtonArea = false;

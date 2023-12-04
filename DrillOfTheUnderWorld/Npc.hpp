@@ -10,9 +10,7 @@ public:
 
 public:
     int dir[4][2] = { {1,0},{0,1},{-1,0}, {0,-1} };
-    // ?¤ì œ Console x, yì¢Œí?�œê°€ ?¤ì?�´ê�?    
     int x, y;
-    // image array ???´ë?��?ê°ì²´ bmp??idx ë²?í?¸
     int imageidx;
 
     int hp;
@@ -97,7 +95,7 @@ void NPC::NPCPatternMovement(int speed) {
         cnt = 0;
     }
 
-    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * SPEED, imageLayer.images[imageidx].y + dir[curDirection][1] * SPEED, imageLayer.images[imageidx].scale)) {
+    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * speed, imageLayer.images[imageidx].y + dir[curDirection][1] * speed, imageLayer.images[imageidx].scale)) {
         curDirection = rand() % 4;
         cnt = 0;
         return;
@@ -121,8 +119,8 @@ void NPC::NPCTrackingMovement(int speed) {
     double angle = atan2(curPosY - y, curPosX - x);
 
     // ?´ë???ê±°ë¦¬ë¥?ê³?�ì‚�?   
-    double dx = SPEED * cos(angle);
-    double dy = SPEED * sin(angle);
+    double dx = speed * cos(angle);
+    double dy = speed * sin(angle);
 
     if (collisionCheck(x + dx, y + dy)) { return; }
 

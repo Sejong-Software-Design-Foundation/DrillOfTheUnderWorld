@@ -563,6 +563,7 @@ void PC::setHasUndergroundTicket(boolean isHas) {
 }
 bool PC::getHasUndergroundTicket() {
 	return this->hasUndergroundTicket;
+}
 
 void PC::attack(clock_t t) {
 	if ((t - this->lastAttackTime) < 1000/AtkSpdLev) return;

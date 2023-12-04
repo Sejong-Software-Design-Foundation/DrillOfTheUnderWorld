@@ -47,7 +47,7 @@ private:
 	int flagCnt = 0;
 	int lastAttackTime;
 	int HP = 100, O2 = 100, ATK = 1, curDirection = 0;
-	int stone = 1000;
+	int stone = 10000;
 	int dx[4] = { 1,0,-1,0 };
 	int dy[4] = { 0,1,0,-1 };
 	std::vector<int> itemList;
@@ -178,7 +178,10 @@ public:
 
 	void setHasUndergroundTicket(boolean isHas);
 	bool getHasUndergroundTicket();
+
 	void attack(clock_t t);
+
+
 	void setLastAttackTime(clock_t t);
 	std::vector<PCBullet>& getBulletList();
 
