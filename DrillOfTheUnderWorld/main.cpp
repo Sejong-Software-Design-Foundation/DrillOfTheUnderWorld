@@ -85,8 +85,10 @@ int main() {
             switch (key) {
             case S:
             {
+                currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
+                currentAreaColIndex = convertPosToInfoXInStage(curPosX);
                int num = rand() % 4;
-               if (currentAreaColIndex == 1 && currentAreaRowIndex == 0) {
+               if (currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0]) {
                   isNormalArea = false;
                   isMiniGameArea = false;
                   isButtonArea = false;
@@ -101,7 +103,7 @@ int main() {
                   for (int i = 1;i <= Emcee->getMaxHP()+1;i++) {
                      imageArray[Emcee->imageidx + i].isHide = false;
                   }//MaxHP
-                  pc.setATK(1000);
+                  pc.setATK(100);
                }
                else if (num == 0) { // ?紐껋춾 ?癒?선?귐딅선嚥?筌욊쑴??
                   isNormalArea = true;
@@ -185,8 +187,6 @@ int main() {
                }
 
                // ?癒?선?귐딅선 筌띾벊肉???袁⑹삺 PC ?袁⑺뒄??獄쏆빓苡???뽯뻻??롫즲嚥???롫뮉 ?꾨뗀諭??????筌ｌ꼶??
-               currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
-               currentAreaColIndex = convertPosToInfoXInStage(curPosX);
                mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
 
                isOnStage = false;

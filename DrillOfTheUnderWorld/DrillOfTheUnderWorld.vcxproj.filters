@@ -752,6 +752,9 @@
     <Image Include="BossHP.bmp">
       <Filter>images</Filter>
     </Image>
+    <Image Include="movableHiddenArea.bmp">
+      <Filter>images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="images">

@@ -348,6 +348,7 @@
     <Image Include="lShop_miner.bmp" />
     <Image Include="lShop_minerSelected.bmp" />
     <Image Include="MoleDigging.bmp" />
+    <Image Include="movableHiddenArea.bmp" />
     <Image Include="nomalStage.bmp" />
     <Image Include="clearedStage.bmp" />
     <Image Include="brokenStoneBlock.bmp" />
