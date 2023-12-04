@@ -34,7 +34,7 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 16
+#define SPEED 48
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 336
@@ -127,6 +127,7 @@ extern char bmpClearedAreaName[];
 extern char bmpNomalAreaName[];
 extern char bmpHiddenAreaName[];
 extern char bmpMovableAreaName[];
+extern char bmpMovableHiddenAreaName[];
 extern char bmpCharacterStatusName[];
 
 // NORMAL NPC
@@ -227,6 +228,11 @@ extern char bmpCursedTotemName[];
 extern char bmpAncientVirusName[];
 extern char bmpCaveSnakeName[];
 
+// 히든 에어리어 관리
+extern std::vector<std::vector<int>> hiddenAreaPosList;
+extern std::vector<int> bossAreaPos;
+extern std::vector<int> treasureAreaPos;
+
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
 COORD getCurrentCurPos(void);
@@ -306,5 +312,8 @@ extern ImageLayer safetyLayer;
 void initSafetyImage();
 void visitSafety();
 extern int index_Safety_Object_Start;
+
+std::vector<int> getRandomHiddenAreaPos();
+void setHiddenAreaPos();
 
 #endif COMMON_HPP
