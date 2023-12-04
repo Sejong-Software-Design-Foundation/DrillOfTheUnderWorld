@@ -1,8 +1,17 @@
 #include "PC.hpp"
-#include "common.hpp"
 #include <string>
+#include "common.hpp"
 
 using namespace std;
+/*
+PC ?�력�?로직
+?�기??버그 ?�결
+
+*/
+ char PCBullet::bmpPCBulletLeftName[] = "PCBullet_left.bmp";
+ char PCBullet::bmpPCBulletRightName[] = "PCBullet_right.bmp";
+ char PCBullet::bmpPCBulletUpName[] = "PCBullet_up.bmp";
+ char PCBullet::bmpPCBulletDownName[] = "PCBullet_down.bmp";
 
 PC& PC::getPC() {
 	static PC pc;
@@ -13,34 +22,46 @@ void PC::vibe() {
 	if (curDirection == 0) {
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].x += 16;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 	}
 	else if (curDirection == 2) {
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].x -= 16;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 	}
 	else if (curDirection == 3) {
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].y -= 16;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 	}
 	else {
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].y += 16;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 	}
 }
 
@@ -57,6 +78,8 @@ int PC::getMaxOxygen() { return MAX_O2; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
 void PC::setHP(int hp) {
+	if (hp < HP) hitEffect();
+	else if (hp > HP) getHPEffect();
 
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
@@ -71,6 +94,8 @@ void PC::setHP(int hp) {
 }
 
 void PC::setOxygen(int o2) {
+	if (o2 < O2);
+	else if (o2 > O2) getOxygenEffect();
 
 	int prev_O2 = this->O2 / 10;
 	if (o2 <= 0) {
@@ -106,62 +131,9 @@ void PC::dig(int x, int y) {
 	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
-
-	if (blockInfo[infoY][infoX] <= 0) {
-		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpBrokenStoneBlockName) == 0)) {
-			imageLayer.images[imageIndex].fileName = bmpNullName;
-		}
-		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenBronzeOre) == 0)) {
-			imageLayer.images[imageIndex].fileName = bmpNameBronzeMineral;
-			applyDigReward(imageIndex);
-		}
-		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenSilverOre) == 0)) {
-			imageLayer.images[imageIndex].fileName = bmpNameSilverMineral;
-			applyDigReward(imageIndex);
-		}
-		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenGoldOre) == 0)) {
-			imageLayer.images[imageIndex].fileName = bmpNameGoldMineral;
-			applyDigReward(imageIndex);
-		}
-		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenDiamondOre) == 0)) {
-			imageLayer.images[imageIndex].fileName = bmpNameDiamondMineral;
-			applyDigReward(imageIndex);
-		}
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpQuestionMarkName) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpQuestionMarkName;
-			applyDigReward(imageIndex);
-		}
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpFlagName) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpNameNull;
-			increaseFlagCnt();
-			applyDigReward(imageIndex);
-		}
-	}
-	// ?˜ì¤‘??ë§¤ì§?˜ë²„ ì²˜ë¦¬?˜ê¸° -> ê´‘ë¬¼ HP
-	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
-		}
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpNameBrokenBronzeOre;
-		}
-	}
-	if (blockInfo[infoY][infoX] <= 3) { // silver -> 6
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpNameBrokenSilverOre;
-		}
-	}
-	if (blockInfo[infoY][infoX] <= 4) { // gold -> 9
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpNameBrokenGoldOre;
-		}
-	}
-	if (blockInfo[infoY][infoX] <= 6) { // diamond -> 12 
-		if (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre) == 0) {
-			imageLayer.images[imageIndex].fileName = bmpNameBrokenDiamondOre;
-		}
-	}
+	updateDigResultReward(y, x, infoY, infoX, imageIndex);
 }
+
 void PC::moveInStage() {
 	stageLayer.images[0].x += dx[curDirection] * AREA_BLOCK_SIZE;
 	stageLayer.images[0].y += dy[curDirection] * AREA_BLOCK_SIZE;
@@ -234,44 +206,48 @@ bool PC::isDigable(int x, int y) {
 	else return y % BLOCKSIZE == 0;
 	//return (x % BLOCKSIZE == 0 && y % BLOCKSIZE == 0);
 }
-
-void PC::showDigRewardOnPcTop(int targerImageIndex) {
+void PC::applyDigReward(int targerImageIndex, int delay) {
 	// step1 move target reward image to PC top postion and reward value
 	targetLayer->renderAll(targetLayer);
-	Sleep(300);
+	Sleep(delay);
 
 	int currentPcPosX = imageArray[0].x;
 	int currentPcPosY = imageArray[0].y;
-	int targetPosX = currentPcPosX - BLOCKSIZE / 2;
-	int targetPosY = currentPcPosY - BLOCKSIZE * 1.5;
+	int targetPosX = currentPcPosX;
+	int targetPosY = currentPcPosY - BLOCKSIZE;
 
-	imageArray[targerImageIndex].scale = 2;
+	//imageArray[targerImageIndex].scale = 2;
 	imageArray[targerImageIndex].x = targetPosX;
 	imageArray[targerImageIndex].y = targetPosY;
 
 	targetLayer->renderAll(targetLayer);
-	Sleep(500);
-	
-	if (strcmp(imageArray[targerImageIndex].fileName, bmpNameBronzeMineral)) {
+	Sleep(delay);
+
+	if (strcmp(imageArray[targerImageIndex].fileName, bmpNameBronzeMineral) == 0) {
 		pc.setStone(pc.getStone() + 10);
 	}
-	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameSilverMineral)) {
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameSilverMineral) == 0) {
 		pc.setStone(pc.getStone() + 30);
 	}
-	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameGoldMineral)) {
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameGoldMineral) == 0) {
 		pc.setStone(pc.getStone() + 50);
 	}
-	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameDiamondMineral)) {
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameDiamondMineral) == 0) {
 		pc.setStone(pc.getStone() + 100);
 	}
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpHpPotionName) == 0) {
+		pc.setHP(pc.getHP() + (pc.getMaxHP() * 0.3));
+	}
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpOzPotionName) == 0) {
+		pc.setOxygen(pc.getOxygen() + (pc.getMaxOxygen() * 0.3));
+	}
+	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameOrichalcumMineral) == 0) {
+		pc.setStone(pc.getStone() + 1000);
+	}
 
-	imageArray[targerImageIndex].fileName = bmpNullName;
+	imageArray[targerImageIndex].fileName = bmpNameNull;
 }
 
-void PC::applyDigReward(int targerImageIndex) {
-	showDigRewardOnPcTop(targerImageIndex);
-	// ¹°¾à µî Ã³¸®
-}
 void PC::increaseFlagCnt() {
 	flagCnt++;
 
@@ -283,4 +259,275 @@ void PC::initFlagCnt() {
 }
 int PC::getFlagCnt() {
 	return flagCnt;
+}
+
+
+void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int imageIndex) {
+	if (blockInfo[infoY][infoX] <= 0) {
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpBrokenStoneBlockName) == 0)) {
+			imageLayer.images[imageIndex].fileName = bmpNameNull;
+		}
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre2) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenBronzeOre) == 0)) {
+			imageLayer.images[imageIndex].fileName = bmpNameBronzeMineral;
+			applyDigReward(imageIndex, 300);
+		}
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre2) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenSilverOre) == 0)) {
+			imageLayer.images[imageIndex].fileName = bmpNameSilverMineral;
+			applyDigReward(imageIndex, 300);
+		}
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre2) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenGoldOre) == 0)) {
+			imageLayer.images[imageIndex].fileName = bmpNameGoldMineral;
+			applyDigReward(imageIndex, 300);
+		}
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre2) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBrokenDiamondOre) == 0)) {
+			imageLayer.images[imageIndex].fileName = bmpNameDiamondMineral;
+			applyDigReward(imageIndex, 300);
+		}
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameOrichalcumOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameOrichalcumOre2) == 0)) {
+			OrichalcumNum++;
+			if (OrichalcumNum >= 5) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar1;
+			if (OrichalcumNum >= 10) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar2;
+			if (OrichalcumNum >= 20) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar3;
+			imageLayer.images[imageIndex].fileName = bmpNameOrichalcumMineral;
+			applyDigReward(imageIndex, 300);
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpQuestionMarkName) == 0) {
+			digQuestionBlock(digY, digX, infoY, infoX, imageIndex);
+		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpFlagName) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpNameNull;
+			increaseFlagCnt();
+			applyDigReward(imageIndex, 300);
+		}
+	}
+	// ?�중??매직?�버 처리?�기 -> 광물 HP
+	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
+		}
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameBronzeOre2) == 0)){
+			imageLayer.images[imageIndex].fileName = bmpNameBrokenBronzeOre;
+		}
+	}
+	if (blockInfo[infoY][infoX] <= 3) { // silver -> 6
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameSilverOre2) == 0)){
+			imageLayer.images[imageIndex].fileName = bmpNameBrokenSilverOre;
+		}
+	}
+	if (blockInfo[infoY][infoX] <= 4) { // gold -> 9
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameGoldOre2) == 0)) {
+			imageLayer.images[imageIndex].fileName = bmpNameBrokenGoldOre;
+		}
+	}
+	if (blockInfo[infoY][infoX] <= 6) { // diamond -> 12 
+		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre1) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameDiamondOre2) == 0)) {
+			imageLayer.images[imageIndex].fileName = bmpNameBrokenDiamondOre;
+		}
+	}
+}
+
+void PC::digQuestionBlock(int digY, int digX, int infoY, int infoX, int imageIndex) {
+	srand(static_cast<unsigned int>(time(nullptr)));
+
+	int questionResult = rand() % 4;
+	switch (questionResult)
+	{
+	case 0:
+		imageLayer.images[imageIndex].fileName = bmpHpPotionName;
+		applyDigReward(imageIndex, 300);
+		break;
+	case 1:
+		imageLayer.images[imageIndex].fileName = bmpOzPotionName;
+		applyDigReward(imageIndex, 300);
+		break;
+	case 2:
+		imageLayer.images[imageIndex].fileName = bmpBoomName;
+		targetLayer->renderAll(targetLayer);
+		Sleep(200);
+		boom(digY, digX, infoY, infoX, imageIndex);
+		break;
+	case 3:
+		imageLayer.images[imageIndex].fileName = bmpNameNull;
+		isGenerateMobByQuestionBlock = true;
+		questionBlockPosX = digX;
+		questionBlockPosY = digY;
+		break;
+	default:
+		break;
+	}
+
+}
+
+void PC::boom(int digY, int digX, int infoY, int infoX, int imageIndex) {
+	std::vector<int> rewardImageIndexList;
+	// set blockinfo
+
+	for (int row = infoY - BLOCKSIZE; row <= infoY + BLOCKSIZE * 2; row++) {
+		if (row < 0 || row >= 1200) continue;
+		for (int col = infoX - BLOCKSIZE; col <= infoX + BLOCKSIZE * 2; col++) {
+			int targetImageIndex = (row / BLOCKSIZE) * AREA_WIDTH + (col / BLOCKSIZE) + 1;
+			if (col < 0 || col >= 1200) continue;
+			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpBedrockName) == 0) continue;
+			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpFlagName) == 0) continue;
+			if (blockInfo[row][col]) blockInfo[row][col] = 0;
+		}
+	}
+
+
+	for (int row = infoY - BLOCKSIZE; row < infoY + BLOCKSIZE * 2; row += BLOCKSIZE) {
+		if (row < 0 || row >= 1200) continue;
+		for (int col = infoX - BLOCKSIZE; col < infoX + BLOCKSIZE * 2; col += BLOCKSIZE) {
+			if (col < 0 || col >= 1200) continue;
+
+			int targetImageIndex = (row / BLOCKSIZE) * AREA_WIDTH + (col / BLOCKSIZE) + 1;
+
+			if ((strcmp(imageLayer.images[targetImageIndex].fileName, bmpStoneBlockName) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpBrokenStoneBlockName) == 0)) {
+				imageLayer.images[targetImageIndex].fileName = bmpNameNull;
+			}
+			if ((strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBronzeOre1) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBronzeOre2) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBrokenBronzeOre) == 0)) {
+				imageLayer.images[targetImageIndex].fileName = bmpNameBronzeMineral;
+				rewardImageIndexList.push_back(targetImageIndex);
+			}
+			if ((strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameSilverOre1) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameSilverOre2) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBrokenSilverOre) == 0)) {
+				imageLayer.images[targetImageIndex].fileName = bmpNameSilverMineral;
+				rewardImageIndexList.push_back(targetImageIndex);
+			}
+			if ((strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameGoldOre1) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameGoldOre2) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBrokenGoldOre) == 0)) {
+				imageLayer.images[targetImageIndex].fileName = bmpNameGoldMineral;
+				rewardImageIndexList.push_back(targetImageIndex);
+			}
+			if ((strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameDiamondOre1) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameDiamondOre2) == 0) || (strcmp(imageLayer.images[targetImageIndex].fileName, bmpNameBrokenDiamondOre) == 0)) {
+				imageLayer.images[targetImageIndex].fileName = bmpNameDiamondMineral;
+				rewardImageIndexList.push_back(targetImageIndex);
+			}
+			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpBoomName) == 0) {
+				imageLayer.images[targetImageIndex].fileName = bmpNameNull;
+			}
+			if (strcmp(imageLayer.images[targetImageIndex].fileName, bmpQuestionMarkName) == 0) {
+				digQuestionBlock(digY, digX, row, col, targetImageIndex);
+			}
+		}
+	}
+
+	if (!rewardImageIndexList.empty()) {
+		for (int imageIndex : rewardImageIndexList) {
+			applyDigReward(imageIndex, 100);
+		}
+	}
+	//boom
+}
+
+void PC::hitEffect() {
+	char* bmpNameForHitEffect = 0;
+	char* bmpCurName = imageArray[0].fileName;
+	switch (this->curDirection) {
+	case 0: bmpNameForHitEffect = bmpPCHitRightName; break;
+	case 1: bmpNameForHitEffect = bmpPCHitDownName; break;
+	case 2: bmpNameForHitEffect = bmpPCHitLeftName; break;
+	case 3: bmpNameForHitEffect = bmpPCHitUpName; break;
+	}
+	imageArray[0].fileName = bmpNameForHitEffect;
+	targetLayer->renderAll(targetLayer);
+	imageArray[0].fileName = bmpCurName;
+	targetLayer->renderAll(targetLayer);
+}
+
+void PC::getHPEffect() {
+	char* bmpNameForEffect = 0;
+	char* bmpCurName = imageArray[0].fileName;
+	switch (this->curDirection) {
+	case 0: bmpNameForEffect = bmpPCgetHPRightName; break;
+	case 1: bmpNameForEffect = bmpPCgetHPDownName; break;
+	case 2: bmpNameForEffect = bmpPCgetHPLeftName; break;
+	case 3: bmpNameForEffect = bmpPCgetHPUpName; break;
+	}
+	imageArray[0].fileName = bmpNameForEffect;
+	targetLayer->renderAll(targetLayer);
+	imageArray[0].fileName = bmpCurName;
+	targetLayer->renderAll(targetLayer);
+}
+
+void PC::getOxygenEffect() {
+	char* bmpNameForEffect = 0;
+	char* bmpCurName = imageArray[0].fileName;
+	switch (this->curDirection) {
+	case 0: bmpNameForEffect = bmpPCgetOxygenRightName; break;
+	case 1: bmpNameForEffect = bmpPCgetOxygenDownName; break;
+	case 2: bmpNameForEffect = bmpPCgetOxygenLeftName; break;
+	case 3: bmpNameForEffect = bmpPCgetOxygenUpName; break;
+	}
+	imageArray[0].fileName = bmpNameForEffect;
+	targetLayer->renderAll(targetLayer);
+	imageArray[0].fileName = bmpCurName;
+	targetLayer->renderAll(targetLayer);
+}
+
+void PC::attack(clock_t t) {
+	if ((t - this->lastAttackTime) < 1000/AtkSpdLev) return;
+	pcBullets.push_back(PCBullet(imageArray[0].x, imageArray[0].y, this->curDirection));
+	lastAttackTime = t;
+}
+
+PCBullet::PCBullet() {
+	x = imageArray[0].x;
+	y = imageArray[0].y;
+	dir = pc.getDir();
+	this->imageidx = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
+}
+PCBullet::PCBullet(int x, int y, int dir) {
+	this->x = x;
+	this->y = y;
+	this->dir = dir;
+	this->imageidx = imageLayer.imageCount;
+	switch (dir) {
+	case 0:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletRightName, x, y, 1 }; break;
+	case 1:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletDownName, x, y, 1 }; break;
+	case 2:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletLeftName, x, y, 1 }; break;
+	case 3:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletUpName, x, y, 1 }; break;
+	default :
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletUpName, x, y, 1 }; break;
+	}
+}
+bool PCBullet::move() {
+	if (collisionCheck(x + dx[dir]*speed, y + dy[dir]*speed)) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return false;
+	}
+
+	// update bullet position
+	imageLayer.images[imageidx].x += dx[dir]*speed;
+	imageLayer.images[imageidx].y += dy[dir]*speed;
+
+	x = imageLayer.images[imageidx].x;
+	y = imageLayer.images[imageidx].y;
+	return true;
+}
+
+std::vector<PCBullet>& PC::getBulletList() {
+	return pcBullets;
+}
+
+bool PCBullet::checkBulletHit(int bossX, int bossY) {
+	if (x + BLOCKSIZE >= bossX && x <= bossX + BLOCKSIZE * BOSS_SCALE && y + BLOCKSIZE >= bossY && y < bossY + BLOCKSIZE * BOSS_SCALE) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return true;
+	}
+	/*for (int dy = 0; dy < BLOCKSIZE;dy++) {
+		for (int dx = 0;dx < BLOCKSIZE;dx++) {
+			if (bossX == this->x + dx && bossY == this->y + dy) {
+				imageLayer.images[imageidx].fileName = bmpNameNull;
+				return true;
+			}
+		}
+	}*/
+	return false;
+}
+
+void PC::setLastAttackTime(clock_t t) {
+	lastAttackTime = t;
 }

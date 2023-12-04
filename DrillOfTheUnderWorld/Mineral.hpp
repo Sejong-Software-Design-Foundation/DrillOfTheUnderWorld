@@ -6,22 +6,27 @@ private:
 	// change stagelevel in constructor for tests
 	int stagelevel;
 	// value is the hit counts
-	enum MineralHP { BRONZE = 3, SILVER = 6, GOLD = 9, DIAMOND = 12, QUESTION_MARK = 3 };
+	enum MineralHP { BRONZE = 3, SILVER = 6, GOLD = 9, DIAMOND = 12, ORICHALCUM = 3, QUESTION_MARK = 3 };
 
 public:
 	Mineral();
+	Mineral(int n);
 
 	void GenerateBronze();
 	void GenerateSilver();
 	void GenerateGold();
 	void GenerateDiamond();
+	void GenerateOrichalcum();
 	void GenerateQuestionMark();
 	void GenerateBronze(int x, int y);
 	void GenerateSilver(int x, int y);
 	void GenerateGold(int x, int y);
 	void GenerateDiamond(int x, int y);
 	void getCluster();
+	void setStageLevel(int l);
+	int getStageLevel();
 };
+
 
 void Mineral::GenerateBronze() {
 	srand(static_cast<unsigned int>(time(nullptr)));
@@ -31,6 +36,8 @@ void Mineral::GenerateBronze() {
 	if (stagelevel == 1) num = 4;
 	else if (stagelevel == 2) num = 3;
 	else if (stagelevel == 3) num = 0;
+
+	if (isMiniGameArea == 1) num = 0;
 
 	for (int i = 0; i < num; i++) {
 		while (1) {
@@ -48,7 +55,8 @@ void Mineral::GenerateBronze() {
 						blockInfo[curY][curX] = BRONZE;
 					}
 				}
-				imageLayer.images[imageIndex].fileName = bmpNameBronzeOre;
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre1;
+				else imageLayer.images[imageIndex].fileName = bmpNameBronzeOre2;
 				break;
 			}
 		}
@@ -63,6 +71,8 @@ void Mineral::GenerateSilver() {
 	if (stagelevel == 1) num = 5;
 	else if (stagelevel == 2) num = 3;
 	else if (stagelevel == 3) num = 3;
+
+	if (isMiniGameArea == 1) num = 0;
 
 	for (int i = 0; i < num; i++) {
 		while (1) {
@@ -80,7 +90,9 @@ void Mineral::GenerateSilver() {
 						blockInfo[curY][curX] = SILVER;
 					}
 				}
-				imageLayer.images[imageIndex].fileName = bmpNameSilverOre;
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameSilverOre1;
+				else imageLayer.images[imageIndex].fileName = bmpNameSilverOre2;
+
 				break;
 			}
 		}
@@ -94,6 +106,8 @@ void Mineral::GenerateGold() {
 	if (stagelevel == 1) num = 1;
 	else if (stagelevel == 2) num = 3;
 	else if (stagelevel == 3) num = 4;
+
+	if (isMiniGameArea == 1) num = 0;
 
 	for (int i = 0; i < num; i++) {
 		while (1) {
@@ -111,12 +125,13 @@ void Mineral::GenerateGold() {
 						blockInfo[curY][curX] = GOLD;
 					}
 				}
-				imageLayer.images[imageIndex].fileName = bmpNameGoldOre;
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameGoldOre1;
+				else imageLayer.images[imageIndex].fileName = bmpNameGoldOre2;
 				break;
 			}
 		}
 	}
-}
+};
 
 void Mineral::GenerateDiamond() {
 	srand(static_cast<unsigned int>(time(nullptr)));
@@ -126,6 +141,8 @@ void Mineral::GenerateDiamond() {
 	if (stagelevel == 1) num = 0;
 	else if (stagelevel == 2) num = 1;
 	else if (stagelevel == 3) num = 3;
+
+	if (isMiniGameArea == 1) num = 0;
 
 	for (int i = 0; i < num; i++) {
 		while (1) {
@@ -143,7 +160,40 @@ void Mineral::GenerateDiamond() {
 						blockInfo[curY][curX] = DIAMOND;
 					}
 				}
-				imageLayer.images[imageIndex].fileName = bmpNameDiamondOre;
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre1;
+				else imageLayer.images[imageIndex].fileName = bmpNameDiamondOre2;
+				break;
+			}
+		}
+	}
+}
+
+void Mineral::GenerateOrichalcum() {
+	srand(static_cast<unsigned int>(time(nullptr)));
+
+	int num;
+
+	if (isMiniGameArea == 1) num = 100;
+	else num = 0;
+
+	for (int i = 0; i < num; i++) {
+		while (1) {
+			int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
+			int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
+
+			int infoX = convertPosToInfoX(x);
+			int infoY = convertPosToInfoY(y);
+
+			int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+			if (blockInfo[infoY][infoX] == 2) {
+				for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+					for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+						blockInfo[curY][curX] = ORICHALCUM;
+					}
+				}
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameOrichalcumOre1;
+				else imageLayer.images[imageIndex].fileName = bmpNameOrichalcumOre2;
 				break;
 			}
 		}
@@ -153,14 +203,13 @@ void Mineral::GenerateDiamond() {
 void Mineral::GenerateQuestionMark() {
 	srand(static_cast<unsigned int>(time(nullptr)));
 
-	int num = 2;
-
+	int num = 10;
+	if (isMiniGameArea == 1) num = 0;
 
 	for (int i = 0; i < num; i++) {
 		while (1) {
 			int x = AREA_ORIGIN_X + BLOCKSIZE * (rand() % 25);
 			int y = AREA_ORIGIN_Y + BLOCKSIZE * (rand() % 25);
-
 			int infoX = convertPosToInfoX(x);
 			int infoY = convertPosToInfoY(y);
 
@@ -179,65 +228,81 @@ void Mineral::GenerateQuestionMark() {
 	}
 }
 
+
 Mineral::Mineral() {
 
 	stagelevel = 3;
-
 	GenerateBronze();
 	GenerateSilver();
 	GenerateGold();
 	GenerateDiamond();
+	GenerateOrichalcum();
 	GenerateQuestionMark();
 }
 
 void Mineral::GenerateBronze(int x, int y) {
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
+	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+			blockInfo[curY][curX] = BRONZE;
+		}
+	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-
-	blockInfo[infoY][infoX] = BRONZE;
-	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre;
+	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre1;
 }
 
 void Mineral::GenerateSilver(int x, int y) {
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
+	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+			blockInfo[curY][curX] = SILVER;
+		}
+	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-
-	blockInfo[infoY][infoX] = SILVER;
-	imageLayer.images[imageIndex].fileName = bmpNameSilverOre;
+	imageLayer.images[imageIndex].fileName = bmpNameSilverOre1;
 }
 void Mineral::GenerateGold(int x, int y) {
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
+	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+			blockInfo[curY][curX] = GOLD;
+		}
+	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-
-	blockInfo[infoY][infoX] = GOLD;
-	imageLayer.images[imageIndex].fileName = bmpNameGoldOre;
+	imageLayer.images[imageIndex].fileName = bmpNameGoldOre1;
 }
 
 void Mineral::GenerateDiamond(int x, int y) {
 	int infoX = convertPosToInfoX(x);
 	int infoY = convertPosToInfoY(y);
+	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+			blockInfo[curY][curX] = DIAMOND;
+		}
+	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-
-	blockInfo[infoY][infoX] = DIAMOND;
-	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre;
+	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre1;
 }
 void Mineral::getCluster() {
 	int clusterX;
 	int clusterY;
 	while (true) {
 		clusterX = (rand() % 22) * BLOCKSIZE + AREA_ORIGIN_X;
-		clusterY = (rand() % 13) * BLOCKSIZE + AREA_ORIGIN_Y + 10 * BLOCKSIZE;
+		clusterY = (rand() % 13 + 10) * BLOCKSIZE + AREA_ORIGIN_Y;
 		bool ok = true;
 		for (int i = 0;i < 3;i++) {
 			for (int j = 0;j < 3;j++) {
-				if (!blockInfo[convertPosToInfoY(clusterY + i * BLOCKSIZE)][clusterX + j * BLOCKSIZE]) {
+				int infoX = convertPosToInfoX(clusterX + j * BLOCKSIZE);
+				int infoY = convertPosToInfoY(clusterY + i * BLOCKSIZE);
+				if (!blockInfo[infoY][infoX]
+					|| infoX <= 0 || infoX >= 1200-BLOCKSIZE || infoY <= 0 || infoY >= 1200-BLOCKSIZE) {
 					ok = false;
 					break;
 				}
@@ -259,4 +324,7 @@ void Mineral::getCluster() {
 		}
 	}
 }
+void Mineral::setStageLevel(int l) { this->stagelevel = l; }
+int Mineral::getStageLevel() { return this->stagelevel; }
+
 #endif

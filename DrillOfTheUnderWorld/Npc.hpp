@@ -2,7 +2,6 @@
 #define __NPC_
 
 #include "common.hpp"
-
 // abstract class
 class NPC {
 public:
@@ -11,14 +10,16 @@ public:
 
 public:
     int dir[4][2] = { {1,0},{0,1},{-1,0}, {0,-1} };
-
+    // ?¤ì œ Console x, yì¢Œí‘œê°€ ?¤ì–´ê°?    
     int x, y;
+    // image array ???´ë‹¹ ê°ì²´ bmp??idx ë²ˆí˜¸
     int imageidx;
 
     int hp;
     int attack_damage;
     int curDirection;
     int cnt;
+     char bmpExplodeName[5][15] = {"explode1.bmp","explode2.bmp" ,"explode3.bmp" ,"explode4.bmp" ,"explode5.bmp"};
 
     NPC(int x, int y, int hp, int ad, int dir);
     //~NPC();
@@ -30,8 +31,9 @@ public:
 
     void NPCPatternMovement(int speed);
     void NPCTrackingMovement(int speed);
-
     void NPCBossMovement(int speed);
+  
+    void NPCHit(int atkLev);
 };
 
 NPC::NPC(int x, int y, int hp, int ad, int dir) {
@@ -39,12 +41,13 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     this->y = y;
     this->hp = hp;
     this->attack_damage = ad;
-    this->curDirection = 0;
+    // defaultê°€ ?¤ë¥¸ìª??€ì§ìž„
+    this->curDirection = dir;
     // movecnt
     cnt = 0;
 }
 
-bool NPC::NPCDead() { return hp < 0 ? true : false; }
+bool NPC::NPCDead() { return hp <= 0 ? true : false; }
 
 bool NPC::PCNear() {
     int PC_X = convertPosToInfoX(imageLayer.images[0].x);
@@ -94,7 +97,7 @@ void NPC::NPCPatternMovement(int speed) {
         cnt = 0;
     }
 
-    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * speed, imageLayer.images[imageidx].y + dir[curDirection][1] * speed)) {
+    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * SPEED, imageLayer.images[imageidx].y + dir[curDirection][1] * SPEED, imageLayer.images[imageidx].scale)) {
         curDirection = rand() % 4;
         cnt = 0;
         return;
@@ -112,17 +115,18 @@ void NPC::NPCTrackingMovement(int speed) {
         attack();
         return;
     }
-
     int curPosX = imageLayer.images[0].x;
     int curPosY = imageLayer.images[0].y;
 
     double angle = atan2(curPosY - y, curPosX - x);
 
-    double dx = speed * cos(angle);
-    double dy = speed * sin(angle);
+    // ?´ë™??ê±°ë¦¬ë¥?ê³„ì‚°
+    double dx = SPEED * cos(angle);
+    double dy = SPEED * sin(angle);
 
     if (collisionCheck(x + dx, y + dy)) { return; }
 
+    // Mole ì¢Œí‘œë¥??…ë°?´íŠ¸
     imageLayer.images[imageidx].x += dx;
     imageLayer.images[imageidx].y += dy;
 
@@ -139,6 +143,9 @@ void NPC::NPCBossMovement(int speed) {
     else {
         NPCTrackingMovement(speed);
     }
+}
+void NPC::NPCHit(int atkLev) {
+    this->hp -= atkLev;
 }
 
 #endif

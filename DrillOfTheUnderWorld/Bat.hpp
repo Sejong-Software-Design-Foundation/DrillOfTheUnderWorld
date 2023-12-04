@@ -33,6 +33,7 @@ void Bat::move() {
 
 void Bat::attack() {
     pc.setHP(pc.getHP() - attack_damage);
+    pc.hitEffect();
 }
 void Bat::setNewPosition(int x, int y) {
     imageLayer.images[imageidx].x = x;
@@ -40,5 +41,6 @@ void Bat::setNewPosition(int x, int y) {
     this->x = x;
     this->y = y;
 }
+
 
 #endif

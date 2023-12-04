@@ -25,9 +25,8 @@ void Ladder::move() {
 }
 
 void Ladder::attack() {
-    if (isFlagStage && pc.getFlagCnt() < 3) return;
+    if (isFlagArea && pc.getFlagCnt() < 3) return;
     rewardUI();
-    targetLayer->renderAll(targetLayer);
 }
 
 #endif
