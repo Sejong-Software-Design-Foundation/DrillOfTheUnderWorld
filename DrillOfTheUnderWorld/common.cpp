@@ -477,18 +477,18 @@ void printStatusInLShop(int price1, int price2, int num) {
 	printText(targetLayer->_consoleDC, 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
 	printText(targetLayer->_consoleDC, 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 
-	wchar_t info1[100] = L"1, 2 숫자 키를 눌러 선택, Spaebar키를 눌러 구매할 수 있습니다. ESC키를 통해 상점을 나갈 수 있습니다.";
-	wchar_t info2[100] = L"훌륭한 선택입니다!";
+	wchar_t info1[100] = L"1, 2 ?�자 ?��? ?�러 ?�택, Spaebar?��? ?�러 구매?????�습?�다. ESC?��? ?�해 ?�점???�갈 ???�습?�다.";
+	wchar_t info2[100] = L"?��????�택?�니??";
 
 	if (num == 0) printText(targetLayer->_consoleDC, 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 520);
 	else if (num == 1)  printText(targetLayer->_consoleDC, 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 520);
 }
 
 void printItemTextInLShop() { 
-	wchar_t itemName1[10] = L"HP 포션";
-	wchar_t itemName2[10] = L"O2 포션";
-	wchar_t itemInfo1[100] = L"PC의 체력을 모두 회복한다.";
-	wchar_t itemInfo2[100] = L"PC의 산소게이지를 모두 회복한다.";
+	wchar_t itemName1[10] = L"HP ?�션";
+	wchar_t itemName2[10] = L"O2 ?�션";
+	wchar_t itemInfo1[100] = L"PC??체력??모두 ?�복?�다.";
+	wchar_t itemInfo2[100] = L"PC???�소게이지�?모두 ?�복?�다.";
 
 	printText(targetLayer->_consoleDC, 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
 	printText(targetLayer->_consoleDC, 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
@@ -632,8 +632,8 @@ void printStatusInRShop(int price1, int price2, int price3, int num) {
 	printText(targetLayer->_consoleDC, 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 	printText(targetLayer->_consoleDC, 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
-	wchar_t info1[100] = L"1, 2, 3 숫자 키를 눌러 선택, Spaebar키를 눌러 구매할 수 있습니다. ESC키를 통해 상점을 나갈 수 있습니다.";
-	wchar_t info2[100] = L"훌륭한 선택입니다!";
+	wchar_t info1[100] = L"1, 2, 3 ?�자 ?��? ?�러 ?�택, Spaebar?��? ?�러 구매?????�습?�다. ESC?��? ?�해 ?�점???�갈 ???�습?�다.";
+	wchar_t info2[100] = L"?��????�택?�니??";
 
 	if (num == 0) printText(targetLayer->_consoleDC, 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
 	else if (num == 1)  printText(targetLayer->_consoleDC, 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
@@ -666,21 +666,21 @@ void printItemTextInRShop()
 	printText(targetLayer->_consoleDC, 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
 }
 
-// 문자열을 wchar_t 배열로 변환하는 함수
+// 문자?�을 wchar_t 배열�?변?�하???�수
 void stringToWchar(const std::string& input, wchar_t* output, size_t outputSize) {
-	// 로캘 설정
+	// 로캘 ?�정
 	std::locale loc("");
 	const std::codecvt<wchar_t, char, std::mbstate_t>& codecvt_facet = std::use_facet<std::codecvt<wchar_t, char, std::mbstate_t>>(loc);
 	std::mbstate_t mbstate = std::mbstate_t();
 
-	// 변환 버퍼 할당
+	// 변??버퍼 ?�당
 	const char* inputCStr = input.c_str();
 	wchar_t* outputEnd;
 
-	// 변환 수행
+	// 변???�행
 	codecvt_facet.in(mbstate, inputCStr, inputCStr + input.size(), inputCStr, output, output + outputSize, outputEnd);
 
-	// 널 종료 문자 추가
+	// ??종료 문자 추�?
 	*outputEnd = L'\0';
 }
 
@@ -906,6 +906,7 @@ void initAreaUI()
 	}
 
 	imageArray[imageLayer.imageCount++] = { bmpNameMapBox, AREA_ORIGIN_X + 27 * BLOCKSIZE + 30, 0, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpCharacterStatusName, AREA_ORIGIN_X + 27 * BLOCKSIZE , AREA_ORIGIN_Y + BLOCKSIZE * 2, 1 };
 
 	index_Area_UI_MiniGame_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameStar0, 1500, 550, 1, 1 };
@@ -929,11 +930,11 @@ void initRewardImage() {
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpdSelected, 1320, 500, 1, 1 };
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
-
 void updateCharacterStatus() {
 	wchar_t playerStone[20];
 	wchar_t playerHp[20];
 	wchar_t playerOz[20];
+	wchar_t playerFatigue[20];
 	wchar_t playerAttackPower[20];
 	wchar_t playerAttackSpeed[20];
 	wchar_t playerMoveSpeed[20];
@@ -941,6 +942,7 @@ void updateCharacterStatus() {
 	swprintf(playerStone, sizeof(playerStone) / sizeof(playerStone[0]), L"%d", pc.getStone());
 	swprintf(playerHp, sizeof(playerHp) / sizeof(playerHp[0]), L"%d / %d", pc.getHP(), pc.getMaxHP());
 	swprintf(playerOz, sizeof(playerOz) / sizeof(playerOz[0]), L"%d / %d", pc.getOxygen(), pc.getMaxOxygen());
+	swprintf(playerFatigue, sizeof(playerFatigue) / sizeof(playerFatigue[0]), L"%d / %d", pc.getFatigue(), pc.getMaxFatigue());
 	if (pc.getAtkLev() == 11) swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.MAX");
 	else swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.%d", pc.getAtkLev());
 	if (pc.getAtkSpdLev() == 11) swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.MAX");
@@ -948,13 +950,18 @@ void updateCharacterStatus() {
 	if (pc.getSpdLev() == 11) swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.MAX");
 	else swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
 
-	printText(targetLayer->_consoleDC, 390, 332, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-	printText(targetLayer->_consoleDC, 250, 432, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
-	printText(targetLayer->_consoleDC, 250, 498, 40, 0, RGB(255, 255, 255), TA_LEFT, playerOz);
-	printText(targetLayer->_consoleDC, 250, 564, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
-	printText(targetLayer->_consoleDC, 250, 634, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
-	printText(targetLayer->_consoleDC, 250, 700, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
+	int X = 60, Y = 240;
+	X += 170;
+
+	printText(targetLayer->_consoleDC, X + 160, Y + 90, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+	printText(targetLayer->_consoleDC, X, Y + 190, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
+	printText(targetLayer->_consoleDC, X, Y + 245, 40, 0, RGB(255, 255, 255), TA_LEFT, playerOz);
+	printText(targetLayer->_consoleDC, X, Y + 300, 40, 0, RGB(255, 255, 255), TA_LEFT, playerFatigue);
+	printText(targetLayer->_consoleDC, X, Y + 355, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
+	printText(targetLayer->_consoleDC, X, Y + 410, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
+	printText(targetLayer->_consoleDC, X, Y + 465, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
+
 
 void setMovableStageInfo(int row, int col) {
 	if (row - 1 >= 0) {
@@ -1035,7 +1042,6 @@ void getNewArea() {
 	}
 
 	imageArray[13 + 25].fileName = bmpNameNull;
-	imageArray[imageLayer.imageCount++] = { bmpCharacterStatusName, AREA_ORIGIN_X + 27 * BLOCKSIZE , AREA_ORIGIN_Y + BLOCKSIZE * 2, 1 };
 }
 
 void getNewMiniGameArea()
@@ -1097,6 +1103,7 @@ void drawUI() {
 			imageArray[index_Area_UI_MiniGame_Start + i].isHide = 1;
 		}
 	}
+	updateCharacterStatusInArea();
 }
 
 int convertPosToInfoXInStage(int x) {
@@ -1131,7 +1138,7 @@ int convertPosToInfoY(int y) {
 	return (y - AREA_ORIGIN_Y);
 }
 
-bool collisionCheck(int x, int y, int scale) { //scale ?몄옄 異붽??댁꽌 ?ㅻ쾭?쇱씠??
+bool collisionCheck(int x, int y, int scale) { //scale ?몄옄 ?�붽???�꽌 ??�쾭??�씠??
 	int startX = convertPosToInfoX(x);
 	int startY = convertPosToInfoY(y);
 
@@ -1337,6 +1344,7 @@ void rewardUI() {
 		else if (OrichalcumNum >= 1) pc.setStone(pc.getStone() + 100);
 	}
 	OrichalcumNum = 0;
+	pc.setFatigue(pc.getFatigue() - 1);
 }
 
 bool printButtonStageStatus() {
@@ -1500,4 +1508,36 @@ void getMoleSpace() {
 			blockInfo[y][x] = 0;
 		}
 	}
+}
+
+void updateCharacterStatusInArea() {
+	wchar_t playerStone[20];
+	wchar_t playerHp[20];
+	wchar_t playerOz[20];
+	wchar_t playerFatigue[20];
+	wchar_t playerAttackPower[20];
+	wchar_t playerAttackSpeed[20];
+	wchar_t playerMoveSpeed[20];
+
+	swprintf(playerStone, sizeof(playerStone) / sizeof(playerStone[0]), L"%d", pc.getStone());
+	swprintf(playerHp, sizeof(playerHp) / sizeof(playerHp[0]), L"%d / %d", pc.getHP(), pc.getMaxHP());
+	swprintf(playerOz, sizeof(playerOz) / sizeof(playerOz[0]), L"%d / %d", pc.getOxygen(), pc.getMaxOxygen());
+	swprintf(playerFatigue, sizeof(playerFatigue) / sizeof(playerFatigue[0]), L"%d / %d", pc.getFatigue(), pc.getMaxFatigue());
+	if (pc.getAtkLev() == 11) swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.MAX");
+	else swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.%d", pc.getAtkLev());
+	if (pc.getAtkSpdLev() == 11) swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.MAX");
+	else swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.%d", pc.getAtkSpdLev());
+	if (pc.getSpdLev() == 11) swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.MAX");
+	else swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
+
+	int X = AREA_ORIGIN_X + 27 * BLOCKSIZE, Y = AREA_ORIGIN_Y + BLOCKSIZE * 2;
+	X += 170;
+
+	printText(targetLayer->_consoleDC, X + 160, Y + 90, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+	printText(targetLayer->_consoleDC, X, Y + 190, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
+	printText(targetLayer->_consoleDC, X, Y + 245, 40, 0, RGB(255, 255, 255), TA_LEFT, playerOz);
+	printText(targetLayer->_consoleDC, X, Y + 300, 40, 0, RGB(255, 255, 255), TA_LEFT, playerFatigue);
+	printText(targetLayer->_consoleDC, X, Y + 355, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
+	printText(targetLayer->_consoleDC, X, Y + 410, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
+	printText(targetLayer->_consoleDC, X, Y + 465, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
