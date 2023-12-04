@@ -228,7 +228,7 @@ extern char bmpCursedTotemName[];
 extern char bmpAncientVirusName[];
 extern char bmpCaveSnakeName[];
 
-// 히든 에어리어 관리
+// ?�든 ?�어리어 관�?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
 extern std::vector<int> bossAreaPos;
 extern std::vector<int> treasureAreaPos;

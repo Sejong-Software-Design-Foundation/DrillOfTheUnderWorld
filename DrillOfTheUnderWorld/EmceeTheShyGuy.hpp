@@ -28,7 +28,7 @@ public:
 
 	void checkBullets();
 	void move();
-	void attack();
+	void attack() ;
 	void ultimate();
 	void NPCHit(int AtkLev);
 	void AfterDead();

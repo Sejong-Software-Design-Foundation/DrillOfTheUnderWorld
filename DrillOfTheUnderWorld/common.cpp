@@ -101,6 +101,7 @@ char bmpCharacterStatusName[] = "UI_character_status.bmp";
 char bmpItem1Name[] = "item1.bmp";
 char bmpItem2Name[] = "item2.bmp";
 char bmpItem3Name[] = "item3.bmp";
+char bmpMovableHiddenAreaName[] = "movableHiddenArea.bmp";
 
 // AREA UI BMP
 char bmpNameUIItemBox[] = "UI_itemBox.bmp";
@@ -251,6 +252,16 @@ char bmpSafetyBG[] = "bg.bmp";
 char bmpSafetyArrow[] = "safety_arrow.bmp";
 char bmpSafetyArrowSelected[] = "safety_arrowSelected.bmp";
 int index_Safety_Object_Start;
+
+// 洒电 俊绢府绢 包府
+std::vector<int> bossAreaPos;
+std::vector<int> treasureAreaPos;
+std::vector<std::vector<int>> hiddenAreaPosList = { {0,0,3}, {0,1,4}, {0,2,5}, {0,3,6}, {0,4,7},
+													{1,0,8}, {1,4,12},
+													{2,0,13}, {2,4,17},
+													{3,0,18}, {3,4,22},
+													{4,0,23}, {4,1,24}, {4,2,25}, {4,3,26}, {4,4,27} };
+
 
 void initSafetyImage() {
 	safetyLayer.images = safetyImageArray;
@@ -809,6 +820,7 @@ void initialize() {
 }
 
 void initStageImage() { 
+	setHiddenAreaPos();
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -828,6 +840,8 @@ void initStageImage() {
 	stageImageArray[15].fileName = bmpMovableAreaName;
 	currentAreaRowIndex = 2;
 	currentAreaColIndex = 2;
+	stageImageArray[bossAreaPos[2]].fileName = bmpHiddenAreaName;
+	stageImageArray[treasureAreaPos[2]].fileName = bmpHiddenAreaName;
 }
 
 void initItemImages() { 
@@ -962,29 +976,48 @@ void updateCharacterStatus() {
 	printText(targetLayer->_consoleDC, X, Y + 465, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
 
-
 void setMovableStageInfo(int row, int col) {
 	if (row - 1 >= 0) {
 		if (stageInfo[row - 1][col] == 1) {
-			stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			if (strcmp(stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName, bmpHiddenAreaName) != 0) {
+				stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			}
+			else {
+				stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableHiddenAreaName;
+			}
 			stageInfo[row - 1][col] = 0;
 		}
 	}
 	if (row + 1 < 5) {
 		if (stageInfo[row + 1][col]) {
-			stageLayer.images[(row + 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			if (strcmp(stageLayer.images[(row + 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName, bmpHiddenAreaName) != 0) {
+				stageLayer.images[(row + 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			}
+			else {
+				stageLayer.images[(row + 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableHiddenAreaName;
+			}
 			stageInfo[row + 1][col] = 0;
 		}
 	}
 	if (col - 1 >= 0) {
 		if (stageInfo[row][col - 1]) {
-			stageLayer.images[(row) * 5 + col - 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			if (strcmp(stageLayer.images[(row) * 5 + col - 1 + STAGE_EXTRA_IMAGE_COUNT].fileName, bmpHiddenAreaName) != 0) {
+				stageLayer.images[(row) * 5 + col - 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			}
+			else {
+				stageLayer.images[(row) * 5 + col - 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableHiddenAreaName;
+			}
 			stageInfo[row][col - 1] = 0;
 		}
 	}
 	if (col + 1 < 5) {
 		if (stageInfo[row][col + 1]) {
-			stageLayer.images[(row) * 5 + col + 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			if (strcmp(stageLayer.images[(row) * 5 + col + 1 + STAGE_EXTRA_IMAGE_COUNT].fileName, bmpHiddenAreaName) != 0) {
+				stageLayer.images[(row) * 5 + col + 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
+			}
+			else {
+				stageLayer.images[(row) * 5 + col + 1 + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableHiddenAreaName;
+			}
 			stageInfo[row][col + 1] = 0;
 		}
 	}
@@ -1541,3 +1574,25 @@ void updateCharacterStatusInArea() {
 	printText(targetLayer->_consoleDC, X, Y + 410, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
 	printText(targetLayer->_consoleDC, X, Y + 465, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
+
+std::vector<int> getRandomHiddenAreaPos() {
+	int randomIndex = rand() % hiddenAreaPosList.size();
+	return hiddenAreaPosList[randomIndex];
+}
+
+void setHiddenAreaPos() {
+
+	srand((unsigned)time(NULL));
+
+	bossAreaPos = getRandomHiddenAreaPos();
+
+	while (true) {
+		treasureAreaPos = getRandomHiddenAreaPos();
+
+		int distance = abs(treasureAreaPos[0] - bossAreaPos[0]) + abs(treasureAreaPos[1] - bossAreaPos[1]);
+		if (distance > 4) {
+			break;
+		}
+	}
+}
+
