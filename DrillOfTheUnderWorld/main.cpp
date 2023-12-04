@@ -7,23 +7,23 @@
 #include "Button.hpp"
 
 int main() {
-	initialize(); // 湲곗큹?곸씤 ?대땲?쒕씪?댁쭠(肄섏넄 ?ъ씠利?吏?? ?ъ씤????젣 ??
+	initialize(); // 湲곗??곸씤 ??�???�씪??�쭠(?�섏?????�利?吏?? ???????????
 
-	// ?덉씠???대땲?쒕씪?댁쭠
+	// ??�씠????�???�씪??�쭠
 	stageLayer.initialize(&stageLayer);
-	imageLayer.initialize(&imageLayer); // imageLayer???먯뼱由ъ뼱 ?덉씠?대씪怨?蹂대㈃ ??
+	imageLayer.initialize(&imageLayer); // imageLayer???�?��?�ъ뼱 ??�씠??�?��?蹂�?????
 	rewardLayer.initialize(&rewardLayer);
 
-	// ?뚯븙 ?ъ깮
+	// ???�� ??�?
 	char bgmName[] = "start_bgm.wav";
 	playBGM(bgmName);
 
-	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 }; // PC??imageLayer 0踰덉뿉 吏??
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 }; // PC??imageLayer 0踰덉�?吏??
 	imageLayer.images = imageArray;
 	imageLayer.imageCount = 1;
 
-	initStageImage();				// stageLayer?먯꽌 ?ъ슜?섎뒗 紐⑤뱺 ?대?吏 理쒖큹 ?앹꽦
-	fillBlockImages();				// imageLayer??釉붾줉(25x25) 理쒖큹 ?앹꽦
+	initStageImage();				// stageLayer?�?�� ?????�뒗 紐⑤�???�?吏 理쒖????�꽦
+	fillBlockImages();				// imageLayer???�붾�?25x25) 理쒖????�꽦
 
 	Button* button1 = new Button(1);
 	Button* button2 = new Button(2);
@@ -36,23 +36,23 @@ int main() {
 	imageArray[button3->imageidx].isHide = 1;
 	index_Area_Button_Start = button1->imageidx;
 
-	initAreaUI();					// imageLayer??UI ?대?吏 理쒖큹 ?앹꽦
-	initRewardImage();				// rewardLayer?먯꽌 ?ъ슜?섎뒗 紐⑤뱺 ?대?吏 理쒖큹 ?앹꽦
+	initAreaUI();					// imageLayer??UI ??�?吏 理쒖????�꽦
+	initRewardImage();				// rewardLayer?�?�� ?????�뒗 紐⑤�???�?吏 理쒖????�꽦
 
-	// ?꾩씠?쒓낵 愿?⑤맂 ?⑥닔??媛쒕컻 吏꾪뻾 以?
+	// ?꾩씠??�낵 ?�??�맂 ??�닔??媛쒕�?吏꾪�?�?
 	pc.addItem(1);
 	pc.addItem(2);
 	pc.addItem(3);
 	initItemImages();
 
-	// ?먯뼱由ъ뼱 ?대??먯꽌 ?쒓컙???ш린 ?꾪븳 蹂?섎뱾
+	// ?�?��?�ъ뼱 ??�??�?�� ??�컙????�??꾪븳 蹂??�뱾
 	clock_t start_time = clock();
 	clock_t end_time;
 	clock_t timee;
 	clock_t minigameStartTime = clock();
 	double duration;
 
-	// NPC ?대땲?쒕씪?댁쭠(理쒖큹 ?꾩튂???붾㈃?곸뿉??蹂댁씠吏 ?딅룄濡?珥덇린??
+	// NPC ??�???�씪??�쭠(理쒖???꾩튂???붾㈃?곸뿉??蹂댁?�吏? ??�룄�??�덇�??
 	//Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
 	std::vector<Bat*> generatedBatList;
 	Bat* bat = new Bat(-48, -48);
@@ -65,26 +65,26 @@ int main() {
 	targetLayer->renderAll(targetLayer);
 
 	while (1) {
-		if (isOnStage) { // PC媛 ?ㅽ뀒?댁? 留듭뿉 議댁옱?섎뒗 寃쎌슦
+		if (isOnStage) { // PC媛 ??��??? 留듭�?議댁???�뒗 寃쎌??
 			generatedBatList.clear();
 			imageArray[ladder->imageidx].isHide = 0;
 			imageArray[button1->imageidx].isHide = 1;
 			imageArray[button2->imageidx].isHide = 1;
 			imageArray[button3->imageidx].isHide = 1;
 
-			updateCharacterStatus(); // PC ?곹깭李쎌쓣 ?낅뜲?댄듃
+			updateCharacterStatus(); // PC ?곹깭李쎌????�뜲??�듃
 			while (_kbhit() != 0) {
 				int key = _getch();
-				// PC ?꾩튂 ?뺣낫瑜??낅뜲?댄듃?섎뒗 蹂?섎뱾(?쎌? ?뺣낫濡?
+				// PC ?꾩튂 ?뺣낫????�뜲??�듃??�뒗 蹂??�뱾(??? ?뺣낫�?
 				int curPosX = stageLayer.images[0].x;
 				int curPosY = stageLayer.images[0].y;
 
 				switch (key) {
 				case S:
 				{
-					// ?쒕뜡 蹂?섎? ?ъ슜?섏뿬 ?대뼡 ?먯뼱由ъ뼱濡?吏꾩엯??吏 ?뺥븯??肄붾뱶
+					// ??�뜡 蹂??? ?????�뿬 ??��??�?��?�ъ뼱�?吏꾩???吏 ?뺥븯???�붾�?
 					int num = rand() % 4;
-					if (currentAreaColIndex == 1 && currentAreaRowIndex == 0) {
+					if (currentAreaColIndex == 0 && currentAreaRowIndex == 0) {
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -101,7 +101,7 @@ int main() {
 							imageArray[Emcee->imageidx + i].isHide = false;
 						}//MaxHP
 					}
-					else if (num == 0) { // ?몃쭚 ?먯뼱由ъ뼱濡?吏꾩엯
+					else if (num == 0) { // ?몃쭚 ?�?��?�ъ뼱�?吏꾩??
 						isNormalArea = true;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -118,7 +118,7 @@ int main() {
 						mineral->getCluster();
 						mineral->getCluster();
 					}
-					else if (num == 1) { // 誘몃땲寃뚯엫 ?먯뼱由ъ뼱濡?吏꾩엯
+					else if (num == 1) { // 誘몃?�寃??�� ?�?��?�ъ뼱�?吏꾩??
 						isNormalArea = false;
 						isMiniGameArea = true;
 						isButtonArea = false;
@@ -128,9 +128,9 @@ int main() {
 						//Emcee->NPCSetPosition(-48, -48);
 						ladder->NPCSetPosition(-48, -48);
 						minigameStartTime = clock();
-						Mineral* mineral = new Mineral(); // stageLevel ???
+						Mineral* mineral = new Mineral(); // stageLevel ????
 					}
-					else if (num == 2) { // 踰꾪듉 ?먯뼱由ъ뼱濡?吏꾩엯
+					else if (num == 2) { // 踰꾪???�?��?�ъ뼱�?吏꾩??
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = true;
@@ -141,7 +141,7 @@ int main() {
 						imageArray[button3->imageidx].isHide = 0;
 
 						isButtonRoomClear = false;
-						int randomNumber = rand() % 6; // 0 ?먯꽌 6 ?ъ씠???쒖닔
+						int randomNumber = rand() % 6; // 0 ?�?�� 6 ???????�닔
 						buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
 						getNewArea();
 
@@ -156,12 +156,12 @@ int main() {
 						mole->NPCSetPosition(molePosX, molePosY);
 
 						imageArray[ladder->imageidx].isHide = 1;
-						Mineral* mineral = new Mineral(); // stageLevel ???
+						Mineral* mineral = new Mineral(); // stageLevel ????
 						setBedrock(3);
 						mineral->getCluster();
 						mineral->getCluster();
 					}
-					else if (num == 3) { // ?뚮옒洹??먯뼱由ъ뼱濡?吏꾩엯
+					else if (num == 3) { // ???���??�?��?�ъ뼱�?吏꾩??
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -182,7 +182,7 @@ int main() {
 						setFlag(3);
 					}
 
-					// ?먯뼱由ъ뼱 留듭뿉???꾩옱 PC ?꾩튂瑜?諛앷쾶 ?쒖떆?섎룄濡??섎뒗 肄붾뱶(?대━??泥섎━)
+					// ?�?��?�ъ뼱 留듭�???꾩옱 PC ?꾩튂??諛앷�???�떆??�룄�???�뒗 ?�붾�???�???泥섎??
 					currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
@@ -218,12 +218,12 @@ int main() {
 				}
 			}
 		}
-		else if (isOnArea) { // PC媛 ?먯뼱由ъ뼱???덈뒗 寃쎌슦
+		else if (isOnArea) { // PC媛 ?�?��?�ъ뼱????�뒗 寃쎌??
 			targetLayer->renderAll(targetLayer);
-			drawUI(); // ?먯뼱由ъ뼱 UI瑜?洹몃━???⑥닔
+			drawUI(); // ?�?��?�ъ뼱 UI??洹몃?????�닔
 			printStoneStatus(pc.getStone());
-			if (isNormalArea) { // PC媛 ?몃? ?먯뼱由ъ뼱???덈뒗 寃쎌슦
-				// QuestionBlock 諛뺤쪖 ?앹꽦 愿??肄붾뱶
+			if (isNormalArea) { // PC媛 ?�? ?�?��?�ъ뼱????�뒗 寃쎌??
+				// QuestionBlock 諛뺤�???�꽦 ?�???�붾�?
 				if (isGenerateMobByQuestionBlock) {
 					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
 					isGenerateMobByQuestionBlock = false;
@@ -233,13 +233,13 @@ int main() {
 						mob->move();
 					}
 				}
-				// NPC???吏곸엫 遺???쒖꽦??
+				// NPC????吏곸???�????�꽦??
 				//mole->move();
 				bat->move();
 				ladder->move();
 				mole->move();
 				//Emcee->move();
-				// ?ㅻ낫???낅젰 ?섑뻾
+				// ??�낫????�젰 ??�뻾
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -298,9 +298,9 @@ int main() {
 					Sleep(5);
 				}
 			}
-			else if (isMiniGameArea) { // PC媛 誘몃땲寃뚯엫 ?먯뼱由ъ뼱???덈뒗 寃쎌슦
-				printMyOriInMiniGameArea(); // 誘몃땲寃뚯엫 ?먯뼱由ъ뼱?먯꽌 information怨??띾뱷??愿묐Ъ ?섎? 異쒕젰?섎뒗 ?⑥닔
-				// ?ㅻ낫???낅젰 ?섑뻾
+			else if (isMiniGameArea) { // PC媛 誘몃?�寃??�� ?�?��?�ъ뼱????�뒗 寃쎌??
+				printMyOriInMiniGameArea(); // 誘몃?�寃??�� ?�?��?�ъ뼱?�?�� information????�뱷???�묐Ъ ??? ?�쒕???�뒗 ??�닔
+				// ??�낫????�젰 ??�뻾
 				for (int i = 0; i < 10; i++) {
 					if (_kbhit() != 0) {
 						int key = _getch();
@@ -360,7 +360,7 @@ int main() {
 					rewardUI();
 				}
 			}
-			else if (isButtonArea) { // PC媛 踰꾪듉 ?먯뼱由ъ뼱???덈뒗 寃쎌슦
+			else if (isButtonArea) { // PC媛 踰꾪???�?��?�ъ뼱????�뒗 寃쎌??
 
 				if (button1->getIsPressed()) {
 					imageArray[button1->imageidx].fileName = bmpButton1PressedName;
@@ -457,7 +457,7 @@ int main() {
 					Sleep(5);
 				}
 			}
-			else if (isFlagArea) { // PC媛 ?뚮옒洹??먯뼱由ъ뼱???덈뒗 寃쎌슦
+			else if (isFlagArea) { // PC媛 ???���??�?��?�ъ뼱????�뒗 寃쎌??
 				printFlagStageStatus(pc.getFlagCnt());
 				//mole->move();
 				bat->move();
@@ -598,8 +598,8 @@ int main() {
 					Sleep(5);
 				}
 			}
-			// 紐⑤뱺 ?먯뼱由ъ뼱??怨듯넻?쇰줈 ?곸슜?섎뒗 肄붾뱶
-			// 3珥덈쭏???곗냼 寃뚯씠吏瑜?1??媛먯냼?쒗궎??肄붾뱶
+			// 紐⑤�??�?��?�ъ뼱???�듯???�줈 ?곸슜??�뒗 ?�붾�?
+			// 3?�덈�???곗냼 寃뚯?�吏???1??媛먯???�궎???�붾�?
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
 			if (duration > 3.0) {

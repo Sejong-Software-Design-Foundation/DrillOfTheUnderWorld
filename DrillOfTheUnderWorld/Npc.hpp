@@ -10,9 +10,9 @@ public:
 
 public:
     int dir[4][2] = { {1,0},{0,1},{-1,0}, {0,-1} };
-    // ?¤ì œ Console x, yì¢Œí‘œê°€ ?¤ì–´ê°?    
+    // ?¤ì œ Console x, yì¢Œí?�œê°€ ?¤ì?�´ê�?    
     int x, y;
-    // image array ???´ë‹¹ ê°ì²´ bmp??idx ë²ˆí˜¸
+    // image array ???´ë?��?ê°ì²´ bmp??idx ë²?í?¸
     int imageidx;
 
     int hp;
@@ -41,8 +41,8 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     this->y = y;
     this->hp = hp;
     this->attack_damage = ad;
-    // defaultê°€ ?¤ë¥¸ìª??€ì§ìž„
     this->curDirection = dir;
+    // defaultê°???¤ë¥¸ìª?????��?��?    this->curDirection = dir;
     // movecnt
     cnt = 0;
 }
@@ -120,13 +120,13 @@ void NPC::NPCTrackingMovement(int speed) {
 
     double angle = atan2(curPosY - y, curPosX - x);
 
-    // ?´ë™??ê±°ë¦¬ë¥?ê³„ì‚°
+    // ?´ë???ê±°ë¦¬ë¥?ê³?�ì‚�?   
     double dx = SPEED * cos(angle);
     double dy = SPEED * sin(angle);
 
     if (collisionCheck(x + dx, y + dy)) { return; }
 
-    // Mole ì¢Œí‘œë¥??…ë°?´íŠ¸
+    // Mole ì¢Œí?�œë�???�ë�?´íŠ¸
     imageLayer.images[imageidx].x += dx;
     imageLayer.images[imageidx].y += dy;
 

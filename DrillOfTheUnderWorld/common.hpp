@@ -110,7 +110,6 @@ extern int index_Area_UI_mapTile_Start;
 extern int index_Area_UI_MiniGame_Start;
 extern int index_RewardImages_Start;
 
-// NULL BMP
 extern char bmpNameNull[];
 
 // STAGE MAP BMP
@@ -125,6 +124,8 @@ extern char bmpCharacterStatusName[];
 // NORMAL NPC
 extern char bmpNameBat[];
 extern char bmpNameMole[];
+extern char bmpNameMoleDigging[];
+// NULL BMP
 
 // BOSS NPC
 extern char bmpNameEmceeTheShyGuy[];

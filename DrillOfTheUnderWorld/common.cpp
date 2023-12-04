@@ -4,11 +4,11 @@ HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
 
 ImageLayer* targetLayer = NULL;
-// stageLayer? ?대떦 ?덉씠?댁뿉???ъ슜?섎뒗 蹂?섎뱾
+// stageLayer?? ??�????�씠??�뿉???????�뒗 蹂??�뱾
 ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image stageImageArray[40];
 int stageInfo[5][5];
-// imageLayer? ?대떦 ?덉씠?댁뿉???ъ슜?섎뒗 蹂?섎뱾
+// imageLayer?? ??�????�씠??�뿉???????�뒗 蹂??�뱾
 ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
 Image imageArray[2000];
 int blockInfo[1200][1200];
@@ -32,11 +32,11 @@ bool isGenerateMobByQuestionBlock = false;
 int questionBlockPosX = 0;
 int questionBlockPosY = 0;
 
-// rewardLayer? ?대떦 ?덉씠?댁뿉???ъ슜?섎뒗 蹂?섎뱾
+// rewardLayer?? ??�????�씠??�뿉???????�뒗 蹂??�뱾
 ImageLayer rewardLayer = DEFAULT_IMAGE_LAYER;
 Image imagesReward[1000];
 
-// PC媛 ?꾩옱 ?대뵒???꾩튂?섎뒗吏 泥댄겕?섍린 ?꾪븳 bool??蹂??
+// PC媛 ?꾩옱 ??��???꾩튂??�뒗吏 泥댄�??�린 ?꾪븳 bool??蹂??
 bool isOnStage = true;
 bool isOnArea = false;
 bool isNormalArea = false;
@@ -45,9 +45,9 @@ bool isButtonArea = false;
 bool isFlagArea = false;
 bool isBossArea = false;
 
-// 媛??덉씠?대쭏???ъ슜?섎뒗 ?대?吏?ㅼ? ?섎굹??諛곗뿴????λ맖 (ex. imageLayer->imageArray, rewardLayer->imageReward)
-// 媛숈? 諛곗뿴????λ릺???대?吏?ㅼ? ?대??먯꽌 紐⑹쟻???곕씪 臾띠뿬????λ맖
-// ?묎렐?섍린 ?명븯?꾨줉 ?섍린 ?꾪빐 ?쒖옉 踰덊샇瑜???ν븯??愿由?
+// �???�씠??��???????�뒗 ??�?吏??? ??�굹??諛곗�?????λ�?(ex. imageLayer->imageArray, rewardLayer->imageReward)
+// 媛숈? 諛곗�?????λ�????�?吏??? ??�??�?�� 紐⑹????곕씪 ?�띠�?????λ�?
+// ?묎렐??�린 ?명븯?꾨줉 ??�린 ?꾪빐 ??�옉 踰덊?�瑜????ν�???�??
 int index_StageImages_Start;
 int index_Area_PC;
 int index_Area_Button_Start;
@@ -60,7 +60,7 @@ int index_Area_UI_mapTile_Start;
 int index_Area_UI_MiniGame_Start;
 int index_RewardImages_Start;
 
-// BMP ?뚯씪 ?쒖옉
+// BMP ???�� ??�옉
 
 // NULL BMP
 char bmpNameNull[] = "";
@@ -165,6 +165,7 @@ char bmpFlagName[] = "flag.bmp";
 // NORMAL NPC BMP
 char bmpNameBat[] = "Bat.bmp";
 char bmpNameMole[] = "Mole.bmp";
+char bmpNameMoleDigging[] = "MoleDigging.bmp";
 
 // BOSS NPC BMP
 char bmpNameEmceeTheShyGuy[] = "EmceeTheShyGuy.bmp";
@@ -192,7 +193,7 @@ char bmpNameNormalAtkSpd[] = "UI_rewardAtkSpd.bmp";
 char bmpNameNormalSpdSelected[] = "UI_rewardSpdSelected.bmp";	
 char bmpNameNormalSpd[] = "UI_rewardSpd.bmp";
 
-// ?⑥닔 ?쒖옉
+// ??�닔 ??�옉
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {
     int requiredSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr, -1, NULL, 0);
@@ -220,7 +221,7 @@ void removeCursor() {
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &c);
 }
 
-void initialize() { // 湲곗큹?곸씤 ?대땲?쒕씪?댁쭠(肄섏넄 ?ъ씠利?吏?? ?ъ씤????젣 ??
+void initialize() { // 湲곗??곸씤 ??�???�씪??�쭠(?�섏?????�利?吏?? ???????????
 
     getHandle();
     resizeConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
@@ -228,7 +229,7 @@ void initialize() { // 湲곗큹?곸씤 ?대땲?쒕씪?댁쭠(肄섏넄 ?ъ씠�
     srand((unsigned)time(NULL));
 }
 
-void initStageImage() { // stageLayer?먯꽌 ?ъ슜?섎뒗 紐⑤뱺 ?대?吏 理쒖큹 ?앹꽦
+void initStageImage() { // stageLayer?�?�� ?????�뒗 紐⑤�???�?吏 理쒖????�꽦
 	stageLayer.images = stageImageArray;
 	stageLayer.imageCount = 0;
 
@@ -247,7 +248,7 @@ void initStageImage() { // stageLayer?먯꽌 ?ъ슜?섎뒗 紐⑤뱺 ?대?吏 
 
 }
 
-void initItemImages() { // ?꾩씠??愿???⑥닔 (媛쒕컻 吏꾪뻾 以?
+void initItemImages() { // ?꾩씠???�????�닔 (媛쒕�?吏꾪�?�?
 	std::vector<int> itemList = pc.getitemList();
 
 	for (int i = 0; i < itemList.size(); i++) {
@@ -263,7 +264,7 @@ void initItemImages() { // ?꾩씠??愿???⑥닔 (媛쒕컻 吏꾪뻾 以?
 	}
 }
 
-void fillBlockImages() { // imageLayer??釉붾줉(25x25) 理쒖큹 ?앹꽦 
+void fillBlockImages() { // imageLayer???�붾�?25x25) 理쒖????�꽦 
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
@@ -272,7 +273,7 @@ void fillBlockImages() { // imageLayer??釉붾줉(25x25) 理쒖큹 ?앹꽦
 	}
 }
 
-void initAreaUI() // imageLayer??UI ?대?吏 理쒖큹 ?앹꽦
+void initAreaUI() // imageLayer??UI ??�?吏 理쒖????�꽦
 {
 	index_Area_UI_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
@@ -326,7 +327,7 @@ void initAreaUI() // imageLayer??UI ?대?吏 理쒖큹 ?앹꽦
 	imageArray[imageLayer.imageCount++] = { bmpNameTimer, 1600, 1450, 1, 1 };
 }
 
-void initRewardImage() { // rewardLayer?먯꽌 ?ъ슜?섎뒗 紐⑤뱺 ?대?吏 理쒖큹 ?앹꽦
+void initRewardImage() { // rewardLayer?�?�� ?????�뒗 紐⑤�???�?吏 理쒖????�꽦
 	rewardLayer.images = imagesReward;
 	rewardLayer.imageCount = 0;
 
@@ -343,7 +344,7 @@ void initRewardImage() { // rewardLayer?먯꽌 ?ъ슜?섎뒗 紐⑤뱺 ?대?吏�
 	imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 
-void updateCharacterStatus() { // PC ?곹깭李쎌쓣 ?낅뜲?댄듃
+void updateCharacterStatus() { // PC ?곹깭李쎌????�뜲??�듃
 	wchar_t playerStone[20];
 	wchar_t playerHp[20];
 	wchar_t playerOz[20];
@@ -369,7 +370,7 @@ void updateCharacterStatus() { // PC ?곹깭李쎌쓣 ?낅뜲?댄듃
 	printText(targetLayer->_consoleDC, 250, 700, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
 
-void setMovableStageInfo(int row, int col) { // ?ㅽ뀒?댁? 留듭뿉???덈∼寃??대룞 媛?ν븳 吏??쓣 ?쒖떆?섍린 ?꾪븳 ?⑥닔
+void setMovableStageInfo(int row, int col) { // ??��??? 留듭�????�∼�???��?媛?ν�?吏??????�떆??�린 ?꾪븳 ??�닔
 	if (row - 1 >= 0) {
 		if (stageInfo[row - 1][col] == 1) {
 			stageLayer.images[(row - 1) * 5 + col + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpMovableAreaName;
@@ -396,11 +397,11 @@ void setMovableStageInfo(int row, int col) { // ?ㅽ뀒?댁? 留듭뿉???덈∼�
 	}
 }
 
-void getNewArea() { // ?몃쭚 ?먯뼱由ъ뼱(25x25)瑜?珥덇린?뷀븯??蹂??
-	// ?먯뼱由ъ뼱 ?곸뿉??NPC媛 ?앹꽦?섎뒗 寃? 怨듦컙???ш린瑜??ㅼ젙?섎뒗 蹂?섎뱾
+void getNewArea() { // ?몃쭚 ?�?��?�ъ뼱(25x25)???�덇�?뷀�??蹂??
+	// ?�?��?�ъ뼱 ?곸뿉??NPC媛 ??�꽦??�뒗 寃?? ?�듦�????린瑜???�젙??�뒗 蹂??�뱾
 	NPCSpaceHeight = getNPCSpaceHeight();
 	NPCSpaceWidth = getNPCSpaceWidth();
-	// 寃? 怨듦컙???꾩튂瑜???ν븯??蹂??
+	// 寃?? ?�듦�???꾩튂?????ν�??蹂??
 	NPCSpacePosX = getNPCSpacePosX();
 	NPCSpacePosY = getNPCSpacePosY();
 
@@ -408,7 +409,7 @@ void getNewArea() { // ?몃쭚 ?먯뼱由ъ뼱(25x25)瑜?珥덇린?뷀븯??蹂
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
 			if (y == AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x == AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
-				//테두리만 용암블록으로 채우기
+				//?�두리만 ?�암블록?�로 채우�?
 				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
@@ -416,7 +417,7 @@ void getNewArea() { // ?몃쭚 ?먯뼱由ъ뼱(25x25)瑜?珥덇린?뷀븯??蹂
 					}
 				}
 			}
-			// 寃? 怨듦컙???ㅼ젣?곸쑝濡?留뚮뱶??諛섎났臾?
+			// 寃?? ?�듦�????�젣?곸쑝�?留뚮�??諛섎?�臾?
 			else if (y != AREA_ORIGIN_Y + BLOCKSIZE * 24 && x != AREA_ORIGIN_X + BLOCKSIZE * 24 &&
 				y >= NPCSpacePosY && y <= NPCSpacePosY + BLOCKSIZE * NPCSpaceHeight &&
 				x >= NPCSpacePosX && x <= NPCSpacePosX + BLOCKSIZE * NPCSpaceWidth) {
@@ -427,7 +428,7 @@ void getNewArea() { // ?몃쭚 ?먯뼱由ъ뼱(25x25)瑜?珥덇린?뷀븯??蹂
 					}
 				}
 			}
-			// ?ㅻⅨ 遺遺꾩? 湲곕낯 ?뚮줈 洹몃━湲?
+			// ??�Ⅸ ?�?�꾩? 湲곕?????�� 洹몃?�湲?
 			else {
 				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
@@ -438,7 +439,7 @@ void getNewArea() { // ?몃쭚 ?먯뼱由ъ뼱(25x25)瑜?珥덇린?뷀븯??蹂
 			}
 		}
 	}
-	// ?먯뼱由ъ뼱?먯꽌 PC媛 ?ㅽ룿?섎뒗 珥덇린 ?꾩튂
+	// ?�?��?�ъ뼱?�?�� PC媛 ??�룿??�뒗 ?�덇�??꾩튂
 	imageArray[0].x = AREA_ORIGIN_X + 576;
 	imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE;
 	for (int y = BLOCKSIZE;y < 2*BLOCKSIZE;y++) {
@@ -446,14 +447,14 @@ void getNewArea() { // ?몃쭚 ?먯뼱由ъ뼱(25x25)瑜?珥덇린?뷀븯??蹂
 			blockInfo[y][576 + x] = 0;
 		}
 	}
-	// ?ㅽ룿?섎뒗 ?꾩튂??釉붾줉 吏?곌린
+	// ??�룿??�뒗 ?꾩튂???�붾�?吏?곌린
 	imageArray[13 + 25].fileName = bmpNameNull;
 
-	// ?꾩옱 罹먮┃???ㅽ룿 ?꾩튂??愿묒꽍???앹꽦?????덈뒗 踰꾧렇媛 議댁옱??
-	// getNewArea() ??Generate~() ?댁꽌 諛쒖깮?섎뒗 ?꾩긽.
+	// ?꾩옱 �?��?????�룿 ?꾩튂???�묒�????�꽦??????�뒗 踰꾧?�媛? 議댁???
+	// getNewArea() ??Generate~() ??�꽌 諛쒖�??�뒗 ?꾩긽.
 }
 
-void getNewMiniGameArea() // 誘몃땲寃뚯엫 ?먯뼱由ъ뼱(25x25)瑜?珥덇린?뷀븯??蹂??
+void getNewMiniGameArea() // 誘몃?�寃??�� ?�?��?�ъ뼱(25x25)???�덇�?뷀�??蹂??
 {
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
@@ -466,7 +467,7 @@ void getNewMiniGameArea() // 誘몃땲寃뚯엫 ?먯뼱由ъ뼱(25x25)瑜?珥덇
 			}
 		}
 	}
-	// ?먯뼱由ъ뼱?먯꽌 PC媛 ?ㅽ룿?섎뒗 珥덇린 ?꾩튂
+	// ?�?��?�ъ뼱?�?�� PC媛 ??�룿??�뒗 ?�덇�??꾩튂
 	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
 	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
 	for (int y = 0;y < BLOCKSIZE;y++) {
@@ -474,21 +475,21 @@ void getNewMiniGameArea() // 誘몃땲寃뚯엫 ?먯뼱由ъ뼱(25x25)瑜?珥덇
 			blockInfo[576 + y][576 + x] = 0;
 		}
 	}
-	// ?ㅽ룿?섎뒗 ?꾩튂??釉붾줉 吏?곌린
+	// ??�룿??�뒗 ?꾩튂???�붾�?吏?곌린
 	imageArray[12 * 25 + 13].fileName = bmpNameNull;
 }
 
-void drawUI() { // ?먯뼱由ъ뼱 UI ?쒖꽦??
-	imageArray[index_Area_UI_Start].isHide = 0; // ?꾩씠??李쎌씠 蹂댁씠?꾨줉
+void drawUI() { // ?�?��?�ъ뼱 UI ??�꽦??
+	imageArray[index_Area_UI_Start].isHide = 0; // ?꾩씠??李쎌??蹂댁??꾨줉
 
-	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP諛붽? 蹂댁씠?꾨줉
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; // HP諛붽? 蹂댁??꾨줉
 	pc.setHP(pc.getHP());
-	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2諛붽? 蹂댁씠?꾨줉
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0; // O2諛붽? 蹂댁??꾨줉
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 留듭씠 蹂댁씠?꾨줉
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++) // 留듭??蹂댁??꾨줉
 		imageArray[i].isHide = 0;
 
-	// ?먯뼱由ъ뼱 X媛 誘멸뎄?꾩씠湲??뚮Ц???꾩떆濡??먯뼱由ъ뼱 吏?꾩뿉??X媛 ?쒖떆?섏? ?딅룄濡?
+	// ?�?��?�ъ뼱 X媛 誘멸??꾩씠�???????꾩떆�??�?��?�ъ뼱 吏?꾩뿉??X媛 ??�떆??? ??�룄�?
 	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
 	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
@@ -546,7 +547,7 @@ int convertPosToInfoY(int y) {
 	return (y - AREA_ORIGIN_Y);
 }
 
-bool collisionCheck(int x, int y, int scale) { //scale 인자 추가해서 오버라이딩
+bool collisionCheck(int x, int y, int scale) { //scale ?�자 추�??�서 ?�버?�이??
 	int startX = convertPosToInfoX(x);
 	int startY = convertPosToInfoY(y);
 
@@ -571,14 +572,14 @@ bool collisionCheck(int x, int y) {
 	return false;
 }
 
-void printTimeInMiniGameArea(float t) { // 誘몃땲寃뚯엫 ?먯뼱由ъ뼱?먯꽌 ?⑥? ?쒓컙??異쒕젰?섎뒗 ?⑥닔
+void printTimeInMiniGameArea(float t) { // 誘몃?�寃??�� ?�?��?�ъ뼱?�?�� ??? ??�컙???�쒕???�뒗 ??�닔
 	wchar_t timeLimit[20];
 	if (t > 0.0) swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%.2f", t);
 	else swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%0.00");
 	printText(targetLayer->_consoleDC, 1750, 1458, 40, 0, RGB(255, 255, 255), TA_CENTER, timeLimit);
 }
 
-void printMyOriInMiniGameArea() { // 誘몃땲寃뚯엫 ?먯뼱由ъ뼱?먯꽌 information怨??띾뱷??愿묐Ъ ?섎? 異쒕젰?섎뒗 ?⑥닔
+void printMyOriInMiniGameArea() { // 誘몃?�寃??�� ?�?��?�ъ뼱?�?�� information????�뱷???�묐Ъ ??? ?�쒕???�뒗 ??�닔
 	wchar_t info1[30] = L"1 Star (5) = 100 Stones";
 	wchar_t info2[30] = L"2 Star(10) = 200 Stones";
 	wchar_t info3[30] = L"3 Star(20) = 300 Stones";
@@ -591,7 +592,7 @@ void printMyOriInMiniGameArea() { // 誘몃땲寃뚯엫 ?먯뼱由ъ뼱?먯꽌 i
 	printText(targetLayer->_consoleDC, 1790, 1358, 40, 0, RGB(255, 255, 255), TA_CENTER, numOrichalcum);
 }
 
-void rewardUI() { // ?먯뼱由ъ뼱 ?대━????蹂댁긽???삳뒗 ?⑥닔
+void rewardUI() { // ?�?��?�ъ뼱 ??�?????蹂댁�????�뒗 ??�닔
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
 
@@ -721,7 +722,7 @@ void rewardUI() { // ?먯뼱由ъ뼱 ?대━????蹂댁긽???삳뒗 ?⑥닔
 		}
 	}
 	targetLayer->fadeOut(targetLayer, NULL);
-	// ?ㅼ쓬 RewardUI() ?몄텧???꾪븳 肄붾뱶
+	// ??�쓬 RewardUI() ?몄텧???꾪븳 ?�붾�?
 	imagesReward[4].isHide = 1;
 	imagesReward[5].isHide = 1;
 	imagesReward[6].isHide = 1;
@@ -864,9 +865,9 @@ void getNewBossArea() {
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			// 寃? 怨듦컙???ㅼ젣?곸쑝濡?留뚮뱶??諛섎났臾?
+			// 寃?? ?�듦�????�젣?곸쑝�?留뚮�??諛섎?�臾?
 			if (y==AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x==AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
-				//테두리만 용암블록으로 채우기
+				//?�두리만 ?�암블록?�로 채우�?
 				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
@@ -874,7 +875,7 @@ void getNewBossArea() {
 					}
 				}
 			}
-			// 나머지는 전부 빈공간
+			// ?�머지???��? 빈공�?
 			else { 
 				imageArray[cnt++] = { bmpNameNull, x,y,1 };
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
