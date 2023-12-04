@@ -14,6 +14,8 @@ extern "C" {
 #include "PC.hpp"
 #include "Stage.hpp"
 #include "Text.hpp"
+#include "Item.hpp"
+#include <vector>
 
 #define NUM1 49  
 #define NUM2 50  
@@ -45,12 +47,19 @@ extern "C" {
 #define UI_ITEM_START_POS_X 1450
 #define UI_ITEM_START_POS_Y 220
 #define UI_ITEM_SIZE 170
+#define BOSS_SCALE 4
+#define EMCEE_SCALE 4
+#define RAWKHAWK_SCALE 3
+#define CHARIZARD_SCALE 3
+#define BOSS_HP_BAR_WIDTH 16
 
 #define REWARD_BRONZE = 10
 #define REWARD_SILVER = 30
 #define REWARD_GLOD = 50
 #define REWARD_DIAMOND = 100
 #define REWARD_POSSION = 50
+
+extern int stageLevel;
 
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
@@ -63,7 +72,7 @@ extern Image stageImageArray[40];
 extern int stageInfo[5][5];
 
 extern ImageLayer imageLayer;
-extern Image imageArray[1000];
+extern Image imageArray[2000];
 extern int blockInfo[1200][1200];
 extern int mapInfo[5][5];
 extern int currentAreaRowIndex;
@@ -73,6 +82,8 @@ extern int NPCSpacePosY;
 extern int NPCSpaceHeight;
 extern int NPCSpaceWidth;
 extern int OrichalcumNum;
+extern int molePosX;
+extern int molePosY;
 
 // BUTTON
 extern std::vector<int> buttonPressedOrderList;
@@ -91,6 +102,7 @@ extern bool isNormalArea;
 extern bool isMiniGameArea;
 extern bool isFlagArea;
 extern bool isButtonArea;
+extern bool isBossArea;
 
 extern int index_StageImages_Start;
 extern int index_Area_PC;
@@ -104,25 +116,38 @@ extern int index_Area_UI_mapTile_Start;
 extern int index_Area_UI_MiniGame_Start;
 extern int index_RewardImages_Start;
 
-// NULL BMP
 extern char bmpNameNull[];
 
 // STAGE MAP BMP
 extern char bmpNamePC[];
-extern char bmpStageLevel[];
+extern char bmpStageLevel1[];
+extern char bmpStageLevel2[];
+extern char bmpStageLevel3[];
 extern char bmpClearedAreaName[];
 extern char bmpNomalAreaName[];
 extern char bmpHiddenAreaName[];
 extern char bmpMovableAreaName[];
+extern char bmpMovableHiddenAreaName[];
 extern char bmpCharacterStatusName[];
 
 // NORMAL NPC
 extern char bmpNameBat[];
+extern char bmpNameMole[];
+extern char bmpNameMoleDigging[];
+// NULL BMP
 
 // BOSS NPC
-extern char bmpNameMole[];
-extern char bmpNameFireball[];
 extern char bmpNameEmceeTheShyGuy[];
+extern char bmpNameFireball[];
+
+extern char bmpNameRawkHawk[];
+extern char bmpNameRawkHawk_ready[];
+extern char bmpNameRawkHawk_digging[];
+
+extern char bmpNameCharizard[];
+extern char bmpNameFireground[];
+
+// LADDER 
 extern char bmpNameLadder[];
 
 // AREA UI BMP
@@ -130,6 +155,7 @@ extern char bmpNameStar0[];
 extern char bmpNameStar1[];
 extern char bmpNameStar2[];
 extern char bmpNameStar3[];
+extern char bmpBossHPName[];
 
 // BLOCK BMP
 extern char bmpStoneBlockName[];
@@ -177,10 +203,35 @@ extern char bmpBedrockName[];
 extern char bmpFlagName[];
 
 // item Image
-extern char bmpItem1Name[];
-extern char bmpItem2Name[];
-extern char bmpItem3Name[];
+extern char bmpUndergroundTicketName[];
+extern char bmpMetalDetectorName[];
+extern char bmpThornCrownName[];
+extern char bmpBeggarDollName[];
+extern char bmpOrichalcumName[];
+extern char bmpTwoHeartsName[];
+extern char bmpLuckyCharmName[];
+extern char bmpDisassemblerName[];
+extern char bmpBatFangName[];
+extern char bmpMoleClawName[];
+extern char bmpDiceName[];
+extern char bmpLuckStoneName[];
+extern char bmpBloodBagName[];
+extern char bmpSupplyOxygenTankName[];
+extern char bmpFreshBrewedCoffeeName[];
+extern char bmpPortableOxygenCanName[];
+extern char bmpEnergyBarName[];
+extern char bmpAttackBoostName[];
+extern char bmpAttackSpeedBoostName[];
+extern char bmpMovementSpeedBoostName[];
+extern char bmpPrisonerShacklesName[];
+extern char bmpCursedTotemName[];
+extern char bmpAncientVirusName[];
+extern char bmpCaveSnakeName[];
 
+// ?�든 ?�어리어 관�?
+extern std::vector<std::vector<int>> hiddenAreaPosList;
+extern std::vector<int> bossAreaPos;
+extern std::vector<int> treasureAreaPos;
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr);
 
@@ -191,6 +242,7 @@ void getHandle();
 void removeCursor();
 void resizeConsole(int w, int h);
 void initialize();
+bool collisionCheck(int x, int y, int scale);
 bool collisionCheck(int x, int y);
 int convertPosToInfoX(int x);
 int convertPosToInfoY(int y);
@@ -207,10 +259,11 @@ void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
-void changeLayer(ImageLayer* currentLayer, ImageLayer* nextLayer);
+//void changeLayer(ImageLayer* currentLayer, ImageLayer* nextLayer);
 void printTimeInMiniGameArea(float t);
 void printMyOriInMiniGameArea();
 void updateCharacterStatus();
+void updateCharacterStatusInArea();
 void initItemImages();
 void fillBlockImages();
 //void getNewArea(int zombieIndex);
@@ -226,4 +279,41 @@ bool printButtonStageStatus();
 void printFlagStageStatus(int curFlagCnt);
 void setBedrock(int max);
 void setFlag(int cnt);
+
+void getNewBossArea();
+void printStoneStatus(int curStone);
+void printWarning(int curHP);
+void getMoleSpace();
+
+// Ãß°¡
+extern ImageLayer lShopLayer;
+extern ImageLayer rShopLayer;
+extern bool isOnSafety;
+void initLShopImage();
+void initRShopImage();
+#define LSHOP_ITEMBOX_ORIGIN_X 850
+#define LSHOP_ITEMBOX_ORIGIN_Y 350
+#define RSHOP_ITEMBOX_ORIGIN_X 50
+#define RSHOP_ITEMBOX_ORIGIN_Y 350
+void visitLShop();
+void printItemTextInLShop();
+void printStatusInLShop(int price1, int price2, int num);
+void visitRShop();
+void printItemTextInRShop();
+void printStatusInRShop(int price1, int price2, int price3, int num);
+
+void stringToWchar(const std::string& input, wchar_t* output, size_t outputSize);
+void generateShopItem();
+char getRandomRank();
+Item* getRandomItem();
+bool isItemExistItemVector(Item* targetItem, std::vector<Item*> itemList);
+
+extern ImageLayer safetyLayer;
+void initSafetyImage();
+void visitSafety();
+extern int index_Safety_Object_Start;
+
+std::vector<int> getRandomHiddenAreaPos();
+void setHiddenAreaPos();
+
 #endif COMMON_HPP

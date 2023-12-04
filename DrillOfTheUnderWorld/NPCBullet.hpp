@@ -1,8 +1,8 @@
 #ifndef __NPCBULLET_
 #define __NPCBULLET_
 
-#include "NPC.hpp"
-
+#include "common.hpp"
+#include <vector>
 /// <summary>
 /// === NPCBULLET INFO ===
 /// HP : 0
@@ -11,7 +11,7 @@
 /// </summary>
 
 class NPCBullet : public NPC {
-private:
+public:
 	double dx, dy;
 
 public:
@@ -31,8 +31,8 @@ NPCBullet::NPCBullet(int x, int y) : NPC(x, y, 0, 10, 1) {
 
 	double angle = atan2(curPosY - y, curPosX - x);
 
-	dx = 100 * cos(angle);
-	dy = 100 * sin(angle);
+	dx = 2 * SPEED * cos(angle);
+	dy = 2 * SPEED * sin(angle);
 
 	this->imageidx = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
@@ -61,5 +61,6 @@ void NPCBullet::move() {
 void NPCBullet::attack() {
 	pc.setHP(pc.getHP() - attack_damage);
 }
+
 
 #endif

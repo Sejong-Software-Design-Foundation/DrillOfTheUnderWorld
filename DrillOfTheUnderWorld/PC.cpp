@@ -1,13 +1,15 @@
 #include "PC.hpp"
-#include "common.hpp"
 #include <string>
+//#include "Item.hpp"
+#include "common.hpp"
 
 using namespace std;
-/*
-PC 능력치 로직
-팅기는 버그 해결
 
-*/
+ char PCBullet::bmpPCBulletLeftName[] = "PCBullet_left.bmp";
+ char PCBullet::bmpPCBulletRightName[] = "PCBullet_right.bmp";
+ char PCBullet::bmpPCBulletUpName[] = "PCBullet_up.bmp";
+ char PCBullet::bmpPCBulletDownName[] = "PCBullet_down.bmp";
+
 PC& PC::getPC() {
 	static PC pc;
 	return pc;
@@ -17,34 +19,46 @@ void PC::vibe() {
 	if (curDirection == 0) {
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].x += 16;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 	}
 	else if (curDirection == 2) {
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].x -= 16;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 	}
 	else if (curDirection == 3) {
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].y -= 16;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 	}
 	else {
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].y += 16;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
+		printStoneStatus(getStone());
 	}
 }
 
@@ -56,16 +70,28 @@ std::vector<int> PC::getitemList() { return itemList; }
 int PC::getStone() { return stone; }
 int PC::getHP() { return HP; }
 int PC::getOxygen() { return O2; }
+int PC::getFatigue() { return FATIGUE; }
 int PC::getMaxHP() { return MAX_HP; }
 int PC::getMaxOxygen() { return MAX_O2; }
+int PC::getMaxFatigue() { return MAX_FATIGUE; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
 void PC::setHP(int hp) {
+	if (hp < HP) hitEffect();
+	else if (hp > HP) getHPEffect();
 
 	int prev_HP = this->HP / 10;
 	if (hp <= 0) {
 		this->HP = 0;
-		exit(0);
+		// item
+		if (this->hasLuckCharm) {
+			this->HP = this->MAX_HP;
+			this->hasLuckCharm = false;
+		}
+		else {
+			// die
+			exit(0);
+		}
 	}
 	else if (hp > MAX_HP) this->HP = MAX_HP;
 	else this->HP = hp;
@@ -75,6 +101,8 @@ void PC::setHP(int hp) {
 }
 
 void PC::setOxygen(int o2) {
+	if (o2 < O2);
+	else if (o2 > O2) getOxygenEffect();
 
 	int prev_O2 = this->O2 / 10;
 	if (o2 <= 0) {
@@ -87,6 +115,12 @@ void PC::setOxygen(int o2) {
 	imageArray[index_Area_UI_O2_Start + prev_O2].isHide = 1;
 	imageArray[index_Area_UI_O2_Start + cur_O2].isHide = 0;
 }
+
+void PC::setFatigue(int ft) {
+	this->FATIGUE = ft;
+	if (this->FATIGUE <= 0) exit(0);
+}
+
 void PC::setATK(int atk) { this->ATK = atk; }
 
 void PC::dig(int x, int y) { 
@@ -195,7 +229,7 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 	int targetPosX = currentPcPosX;
 	int targetPosY = currentPcPosY - BLOCKSIZE;
 
-	//imageArray[targerImageIndex].scale = 2;
+	//imageArray[targerImageIndex].scale = 2;w
 	imageArray[targerImageIndex].x = targetPosX;
 	imageArray[targerImageIndex].y = targetPosY;
 
@@ -279,7 +313,7 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 			applyDigReward(imageIndex, 300);
 		}
 	}
-	// 나중에 매직넘버 처리하기 -> 광물 HP
+	// ??ì¤???ë§¤ì§??ë²??ì²?ë¦¬??ê¸° -> ê´?�ë�??HP
 	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
 			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
@@ -394,4 +428,223 @@ void PC::boom(int digY, int digX, int infoY, int infoX, int imageIndex) {
 		}
 	}
 	//boom
+}
+
+void PC::hitEffect() {
+	char* bmpNameForHitEffect = 0;
+	char* bmpCurName = imageArray[0].fileName;
+	switch (this->curDirection) {
+	case 0: bmpNameForHitEffect = bmpPCHitRightName; break;
+	case 1: bmpNameForHitEffect = bmpPCHitDownName; break;
+	case 2: bmpNameForHitEffect = bmpPCHitLeftName; break;
+	case 3: bmpNameForHitEffect = bmpPCHitUpName; break;
+	}
+	imageArray[0].fileName = bmpNameForHitEffect;
+	targetLayer->renderAll(targetLayer);
+	imageArray[0].fileName = bmpCurName;
+	targetLayer->renderAll(targetLayer);
+}
+
+void PC::getHPEffect() {
+	char* bmpNameForEffect = 0;
+	char* bmpCurName = imageArray[0].fileName;
+	switch (this->curDirection) {
+	case 0: bmpNameForEffect = bmpPCgetHPRightName; break;
+	case 1: bmpNameForEffect = bmpPCgetHPDownName; break;
+	case 2: bmpNameForEffect = bmpPCgetHPLeftName; break;
+	case 3: bmpNameForEffect = bmpPCgetHPUpName; break;
+	}
+	imageArray[0].fileName = bmpNameForEffect;
+	targetLayer->renderAll(targetLayer);
+	imageArray[0].fileName = bmpCurName;
+	targetLayer->renderAll(targetLayer);
+}
+
+void PC::getOxygenEffect() {
+	char* bmpNameForEffect = 0;
+	char* bmpCurName = imageArray[0].fileName;
+	switch (this->curDirection) {
+	case 0: bmpNameForEffect = bmpPCgetOxygenRightName; break;
+	case 1: bmpNameForEffect = bmpPCgetOxygenDownName; break;
+	case 2: bmpNameForEffect = bmpPCgetOxygenLeftName; break;
+	case 3: bmpNameForEffect = bmpPCgetOxygenUpName; break;
+	}
+	imageArray[0].fileName = bmpNameForEffect;
+	targetLayer->renderAll(targetLayer);
+	imageArray[0].fileName = bmpCurName;
+	targetLayer->renderAll(targetLayer);
+}
+
+
+void PC::setMaxHP(int maxHp) {
+	if (maxHp > 0) {
+		this->MAX_HP = maxHp;
+	}
+}
+void PC::setMaxOxygen(int maxOxygen) {
+	if (maxOxygen > 0) {
+		this->MAX_O2 = maxOxygen;
+	}
+}
+void PC::setMaxFatigue(int maxFt) {
+	if (maxFt > 0) {
+		this->MAX_FATIGUE = maxFt;
+	}
+}
+/*
+std::vector<Item*> PC::getOwnedItemList() {
+	return this->ownedItemList;
+}
+*/
+
+void PC::setUsableEnergyBarCount(int count) {
+	if (count > 0) {
+		this->usableEnergyBarCount = count;
+	}
+}
+void PC::setUsablePortableOxygenCanCount(int count) {
+	if (count > 0) {
+		this->usablePortableOxygenCanCount = count;
+	}
+}
+int PC::getUsableEnergyBarCount() {
+	return this->usableEnergyBarCount;
+}
+int PC::getUsablePortableOxygenCanCount() {
+	return this->usablePortableOxygenCanCount;
+}
+
+
+void PC::setHasBatFang(boolean isHas) {
+	this->hasBatFang = isHas;
+}
+
+bool PC::getHasBatFang() {
+	return this->hasBatFang;
+}
+
+void PC::setHashasBeggarDoll(boolean isHas) {
+	this->hasBeggarDoll = isHas;
+}
+bool PC::getHashasBeggarDoll() {
+	return this->hasBeggarDoll;
+}
+void PC::setHasLuckStone(boolean isHas) {
+	this->hasLuckStone = isHas;
+}
+bool PC::getHasLuckStone() {
+	return this->hasLuckStone;
+}
+void PC::setHasLuckCharm(boolean isHas) {
+	this->hasLuckCharm = isHas;
+}
+bool PC::getHasLuckCharm() {
+	return this->hasLuckCharm;
+}
+void PC::setLuckStoneStage(int luckStoneStage) {
+	this->luckStoneStage = luckStoneStage;
+}
+int PC::getLuckStoneStage() {
+	return this->luckStoneStage;
+}
+void PC::setHasMetalDetector(boolean isHas) {
+	this->hasMetalDetector = isHas;
+}
+bool PC::getHasMetalDetector() {
+	return this->hasMetalDetector;
+}
+void PC::setHasMoleClaw(boolean isHas) {
+	this->hasMoleClaw = isHas;
+}
+bool PC::getMoleClaw() {
+	return this->hasMoleClaw;
+}
+void PC::setHasThronCrown(boolean isHas) {
+	this->hasThronCrown = isHas;
+}
+bool PC::getHasThronCrown() {
+	return this->hasThronCrown;
+}
+void PC::setHasTwoHearts(boolean isHas) {
+	this->hasTwoHearts = isHas;
+}
+bool PC::getHasTwoHearts() {
+	return this->hasTwoHearts;
+}
+void PC::setHasUndergroundTicket(boolean isHas) {
+	this->hasUndergroundTicket = isHas;
+}
+bool PC::getHasUndergroundTicket() {
+	return this->hasUndergroundTicket;
+}
+
+void PC::attack(clock_t t) {
+	if ((t - this->lastAttackTime) < 1000/AtkSpdLev) return;
+	pcBullets.push_back(PCBullet(imageArray[0].x, imageArray[0].y, this->curDirection));
+	lastAttackTime = t;
+}
+
+PCBullet::PCBullet() {
+	x = imageArray[0].x;
+	y = imageArray[0].y;
+	dir = pc.getDir();
+	this->imageidx = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
+}
+PCBullet::PCBullet(int x, int y, int dir) {
+	this->x = x;
+	this->y = y;
+	this->dir = dir;
+	this->imageidx = imageLayer.imageCount;
+	switch (dir) {
+	case 0:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletRightName, x, y, 1 }; break;
+	case 1:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletDownName, x, y, 1 }; break;
+	case 2:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletLeftName, x, y, 1 }; break;
+	case 3:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletUpName, x, y, 1 }; break;
+	default :
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletUpName, x, y, 1 }; break;
+	}
+}
+bool PCBullet::move() {
+	if (collisionCheck(x + dx[dir]*speed, y + dy[dir]*speed)) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return false;
+	}
+
+	// update bullet position
+	imageLayer.images[imageidx].x += dx[dir]*speed;
+	imageLayer.images[imageidx].y += dy[dir]*speed;
+
+	x = imageLayer.images[imageidx].x;
+	y = imageLayer.images[imageidx].y;
+	return true;
+}
+
+std::vector<PCBullet>& PC::getBulletList() {
+	return pcBullets;
+}
+
+bool PCBullet::checkBulletHit(int bossX, int bossY) {
+	if (x + BLOCKSIZE >= bossX && x <= bossX + BLOCKSIZE * BOSS_SCALE && y + BLOCKSIZE >= bossY && y < bossY + BLOCKSIZE * BOSS_SCALE) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return true;
+	}
+	/*for (int dy = 0; dy < BLOCKSIZE;dy++) {
+		for (int dx = 0;dx < BLOCKSIZE;dx++) {
+			if (bossX == this->x + dx && bossY == this->y + dy) {
+				imageLayer.images[imageidx].fileName = bmpNameNull;
+				return true;
+			}
+		}
+	}*/
+	return false;
+}
+
+void PC::setLastAttackTime(clock_t t) {
+	lastAttackTime = t;
+
 }
