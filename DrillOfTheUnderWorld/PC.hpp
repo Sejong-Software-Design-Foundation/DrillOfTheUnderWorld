@@ -3,18 +3,40 @@ extern "C" {
 #include <Windows.h>
 }
 #include <vector>
+#include <time.h>
+
+class PCBullet {
+private:
+	int x, y;
+	int dx[4] = { 1,0,-1,0 };
+	int dy[4] = { 0,1,0,-1 };
+	int dir;
+	int speed=48;
+	int imageidx;
+
+	static char bmpPCBulletLeftName[];
+	static char bmpPCBulletRightName[];
+	static char bmpPCBulletUpName[];
+	static char bmpPCBulletDownName[];
+
+public:
+	PCBullet();
+	PCBullet(int x, int y, int dir);
+	bool move();
+	bool checkBulletHit(int bossX, int bossY);
+};
 
 class PC {
 private:
-	bool hasBatFang = false; // "º¸½º °ø°Ý½Ã ³·Àº È®·ü·Î HP¸¦ ÀÏÁ¤·® È¸º¹ÇÑ´Ù.";
-	bool hasBeggarDoll = false; // "PC °ø°Ý¼Óµµ°¡ Áõ°¡ÇÏÁö¸¸, °ø°Ý½Ã¸¶´Ù µ¹ÀÌ ¼Ò¸ðµÈ´Ù."
-	bool hasLuckStone = false; // "¾ÆÀÌÅÛ ±¸¸Å ÈÄ ´ÙÀ½ »óÁ¡ ¹æ¹® ½Ã ±¸¸Å°ªÀÇ 2¹è¸¦ µ¹·ÁÁØ´Ù.";
-	bool hasLuckCharm = false; // "Á×À½ÀÇ ÀÌ¸£´Â °ø°ÝÀ» 1È¸ ¹æ¾îÇÑ´Ù."; - OK
-	bool hasMetalDetector = false; // "±¤¹°ÀÌ ´õ ÀÚÁÖ µîÀåÇÑ´Ù.";
-	bool hasMoleClaw = false; // "±¤¹° ÆÄ±«½Ã ÀçÈ­ È¹µæ·®ÀÌ Áõ°¡ÇÑ´Ù.";
-	bool hasThronCrown = false; // "PC °ø°Ý·ÂÀÌ Áõ°¡ÇÏÁö¸¸, 2¹èÀÇ ÇÇÇØ¸¦ ÀÔ°Ô µÈ´Ù.";
-	bool hasTwoHearts = false; // "»ê¼Ò °ÔÀÌÁö °¨¼Ò·®ÀÌ °¨¼ÒÇÑ´Ù.";
-	bool hasUndergroundTicket = false; //"»óÁ¡¿¡¼­ ÆÇ¸ÅÇÏ´Â ¾ÆÀÌÅÛÀÇ °¡°ÝÀÌ 30%  ÇÒÀÎµÈ´Ù.";
+	bool hasBatFang = false; // "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ HPï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Ñ´ï¿½.";
+	bool hasBeggarDoll = false; // "PC ï¿½ï¿½ï¿½Ý¼Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ý½Ã¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½È´ï¿½."
+	bool hasLuckStone = false; // "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½æ¹® ï¿½ï¿½ ï¿½ï¿½ï¿½Å°ï¿½ï¿½ï¿½ 2ï¿½è¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.";
+	bool hasLuckCharm = false; // "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1È¸ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½."; - OK
+	bool hasMetalDetector = false; // "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.";
+	bool hasMoleClaw = false; // "ï¿½ï¿½ï¿½ï¿½ ï¿½Ä±ï¿½ï¿½ï¿½ ï¿½ï¿½È­ È¹ï¿½æ·®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.";
+	bool hasThronCrown = false; // "PC ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¸ï¿½ ï¿½Ô°ï¿½ ï¿½È´ï¿½.";
+	bool hasTwoHearts = false; // "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.";
+	bool hasUndergroundTicket = false; //"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¸ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 30%  ï¿½ï¿½ï¿½ÎµÈ´ï¿½.";
 	int luckStoneStage = 0;
 
 	//std::vector<Item*> ownedItemList;
@@ -23,13 +45,13 @@ private:
 	int MAX_HP = 100, MAX_O2 = 100;
 	int AtkLev = 1, AtkSpdLev = 1, SpdLev = 1;
 	int flagCnt = 0;
-
+	int lastAttackTime;
 	int HP = 100, O2 = 100, ATK = 1, curDirection = 0;
 	int stone = 1000;
 	int dx[4] = { 1,0,-1,0 };
 	int dy[4] = { 0,1,0,-1 };
-
 	std::vector<int> itemList;
+	std::vector<PCBullet>pcBullets;
 
 	char* bmpPCName;
 	char* bmpPCLeftName;
@@ -48,7 +70,9 @@ private:
 	char* bmpPCgetOxygenRightName;
 	char* bmpPCgetOxygenDownName;
 	char* bmpPCgetOxygenUpName;
+
 	PC() {
+		lastAttackTime = 0;
 		bmpPCName = _strdup("PlayerCharacter.bmp");
 		bmpPCLeftName = _strdup("PC_left.bmp");
 		bmpPCRightName = _strdup("PC_right.bmp");
@@ -120,7 +144,6 @@ public:
 	void getHPEffect();
 	void getOxygenEffect();
 
-	//std::vector<Item*> getOwnedItemList();
 	void setUsablePortableOxygenCanCount(int count);
 	void setUsableEnergyBarCount(int count);
 	int getUsablePortableOxygenCanCount();
@@ -155,4 +178,8 @@ public:
 
 	void setHasUndergroundTicket(boolean isHas);
 	bool getHasUndergroundTicket();
+	void attack(clock_t t);
+	void setLastAttackTime(clock_t t);
+	std::vector<PCBullet>& getBulletList();
+
 };

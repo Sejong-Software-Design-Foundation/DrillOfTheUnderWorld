@@ -1,14 +1,15 @@
 #include "PC.hpp"
-#include "common.hpp"
 #include <string>
 //#include "Item.hpp"
+#include "common.hpp"
 
 using namespace std;
-/*
-PC ?�력�?로직
-?�기??버그 ?�결
 
-*/
+ char PCBullet::bmpPCBulletLeftName[] = "PCBullet_left.bmp";
+ char PCBullet::bmpPCBulletRightName[] = "PCBullet_right.bmp";
+ char PCBullet::bmpPCBulletUpName[] = "PCBullet_up.bmp";
+ char PCBullet::bmpPCBulletDownName[] = "PCBullet_down.bmp";
+
 PC& PC::getPC() {
 	static PC pc;
 	return pc;
@@ -304,7 +305,7 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 			applyDigReward(imageIndex, 300);
 		}
 	}
-	// ?�중??매직?�버 처리?�기 -> 광물 HP
+	// ?˜ì¤‘??ë§¤ì§?˜ë²„ ì²˜ë¦¬?˜ê¸° -> ê´‘ë¬¼ HP
 	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
 			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
@@ -466,6 +467,7 @@ void PC::getOxygenEffect() {
 	targetLayer->renderAll(targetLayer);
 }
 
+
 void PC::setMaxHP(int maxHp) {
 	if (maxHp > 0) {
 		this->MAX_HP = maxHp;
@@ -561,4 +563,74 @@ void PC::setHasUndergroundTicket(boolean isHas) {
 }
 bool PC::getHasUndergroundTicket() {
 	return this->hasUndergroundTicket;
+
+void PC::attack(clock_t t) {
+	if ((t - this->lastAttackTime) < 1000/AtkSpdLev) return;
+	pcBullets.push_back(PCBullet(imageArray[0].x, imageArray[0].y, this->curDirection));
+	lastAttackTime = t;
+}
+
+PCBullet::PCBullet() {
+	x = imageArray[0].x;
+	y = imageArray[0].y;
+	dir = pc.getDir();
+	this->imageidx = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
+}
+PCBullet::PCBullet(int x, int y, int dir) {
+	this->x = x;
+	this->y = y;
+	this->dir = dir;
+	this->imageidx = imageLayer.imageCount;
+	switch (dir) {
+	case 0:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletRightName, x, y, 1 }; break;
+	case 1:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletDownName, x, y, 1 }; break;
+	case 2:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletLeftName, x, y, 1 }; break;
+	case 3:
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletUpName, x, y, 1 }; break;
+	default :
+		imageArray[imageLayer.imageCount++] = { bmpPCBulletUpName, x, y, 1 }; break;
+	}
+}
+bool PCBullet::move() {
+	if (collisionCheck(x + dx[dir]*speed, y + dy[dir]*speed)) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return false;
+	}
+
+	// update bullet position
+	imageLayer.images[imageidx].x += dx[dir]*speed;
+	imageLayer.images[imageidx].y += dy[dir]*speed;
+
+	x = imageLayer.images[imageidx].x;
+	y = imageLayer.images[imageidx].y;
+	return true;
+}
+
+std::vector<PCBullet>& PC::getBulletList() {
+	return pcBullets;
+}
+
+bool PCBullet::checkBulletHit(int bossX, int bossY) {
+	if (x + BLOCKSIZE >= bossX && x <= bossX + BLOCKSIZE * BOSS_SCALE && y + BLOCKSIZE >= bossY && y < bossY + BLOCKSIZE * BOSS_SCALE) {
+		imageLayer.images[imageidx].fileName = bmpNameNull;
+		return true;
+	}
+	/*for (int dy = 0; dy < BLOCKSIZE;dy++) {
+		for (int dx = 0;dx < BLOCKSIZE;dx++) {
+			if (bossX == this->x + dx && bossY == this->y + dy) {
+				imageLayer.images[imageidx].fileName = bmpNameNull;
+				return true;
+			}
+		}
+	}*/
+	return false;
+}
+
+void PC::setLastAttackTime(clock_t t) {
+	lastAttackTime = t;
+
 }

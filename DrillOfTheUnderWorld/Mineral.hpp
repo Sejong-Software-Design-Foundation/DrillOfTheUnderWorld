@@ -21,6 +21,8 @@ public:
 	void GenerateGold(int x, int y);
 	void GenerateDiamond(int x, int y);
 	void getCluster();
+	void setStageLevel(int l);
+	int getStageLevel();
 };
 
 
@@ -338,4 +340,7 @@ void Mineral::getCluster() {
 		}
 	}
 }
+void Mineral::setStageLevel(int l) { this->stagelevel = l; }
+int Mineral::getStageLevel() { return this->stagelevel; }
+
 #endif

@@ -183,6 +183,7 @@
       <Filter>Items</Filter>
     </ClInclude>
     <ClInclude Include="itemCommon.hpp" />
+    <ClInclude Include="PCBullets.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav">
@@ -711,6 +712,45 @@
     </Image>
     <Image Include="lShop_miner.bmp">
       <Filter>Items</Filter>
+    </Image>
+    <Image Include="EmceeTheShyGuyHit.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PCBullet_down.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PCBullet_left.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PCBullet_right.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="PCBullet_up.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="explodes.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="explode1.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="explode2.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="explode3.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="explode4.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="explode5.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="MoleDigging.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="BossHP.bmp">
+      <Filter>images</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
