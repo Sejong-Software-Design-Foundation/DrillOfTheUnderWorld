@@ -29,6 +29,7 @@ public:
 	void NPCHit(int AtkLev);
 	void AfterDead();
 	void updateHPBar();
+	int getMaxHP();
 };
 
 EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 50, 10, 1) {
@@ -39,8 +40,10 @@ EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 50, 10, 1) {
 	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, x, y, BOSS_SCALE };
 	for (int i = 0;i < maxHP;i++) {
 		imageArray[imageLayer.imageCount++] = { bmpBossHPName,AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH*i,AREA_ORIGIN_Y - BLOCKSIZE,1};
+		imageArray[imageLayer.imageCount - 1].isHide = true;
 	}
 	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
+	imageArray[imageLayer.imageCount - 1].isHide = true;
 }
 
 void EmceeTheShyGuy::checkBullets() {
@@ -119,6 +122,9 @@ void EmceeTheShyGuy::updateHPBar() {
 	for (int i = 1;i <= maxHP;i++) {
 		if (hp < i && strcmp(imageArray[imageidx + i].fileName, bmpNameNull) != 0) imageArray[imageidx + i].fileName = bmpNameNull;
 	}
+}
+int EmceeTheShyGuy::getMaxHP() {
+	return maxHP;
 }
 
 #endif

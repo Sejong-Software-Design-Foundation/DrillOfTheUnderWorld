@@ -84,7 +84,7 @@ int main() {
 				{
 					// ?úÎç§ Î≥Ä?òÎ? ?¨Ïö©?òÏó¨ ?¥Îñ§ ?êÏñ¥Î¶¨Ïñ¥Î°?ÏßÑÏûÖ??ÏßÄ ?ïÌïò??ÏΩîÎìú
 					int num = rand() % 4;
-					if (currentAreaColIndex == 0 && currentAreaRowIndex == 0) {
+					if (currentAreaColIndex == 1 && currentAreaRowIndex == 0) {
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -96,6 +96,10 @@ int main() {
 						imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
 						ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
 						bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+
+						for (int i = 1;i <= Emcee->getMaxHP()+1;i++) {
+							imageArray[Emcee->imageidx + i].isHide = false;
+						}//MaxHP
 					}
 					else if (num == 0) { // ?∏Îßê ?êÏñ¥Î¶¨Ïñ¥Î°?ÏßÑÏûÖ
 						isNormalArea = true;
