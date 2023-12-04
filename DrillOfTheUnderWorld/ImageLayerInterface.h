@@ -18,7 +18,6 @@ extern "C" {
 	typedef struct _ImageLayer {
 		Image* images;
 		int imageCount;
-		int NUM;
 		UINT transparentColor;
 
 		HWND _windowHandle;

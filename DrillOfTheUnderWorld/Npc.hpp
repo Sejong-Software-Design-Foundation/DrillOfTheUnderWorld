@@ -2,7 +2,6 @@
 #define __NPC_
 
 #include "common.hpp"
-
 // abstract class
 class NPC {
 public:
@@ -11,15 +10,14 @@ public:
 
 public:
     int dir[4][2] = { {1,0},{0,1},{-1,0}, {0,-1} };
-    // ?�제 Console x, y좌표가 ?�어�?    
     int x, y;
-    // image array ???�당 객체 bmp??idx 번호
     int imageidx;
 
-    int hp;
+    int hp, maxHP;
     int attack_damage;
     int curDirection;
     int cnt;
+     char bmpExplodeName[5][15] = {"explode1.bmp","explode2.bmp" ,"explode3.bmp" ,"explode4.bmp" ,"explode5.bmp"};
 
     NPC(int x, int y, int hp, int ad, int dir);
     //~NPC();
@@ -29,10 +27,12 @@ public:
     bool NPCDead();
     bool PCNear();
 
-    void NPCPatternMovement();
-    void NPCTrackingMovement();
-
-    void NPCBossMovement();
+    void NPCPatternMovement(int speed);
+    void NPCTrackingMovement(int speed);
+    void NPCBossMovement(int speed);
+  
+    void NPCHit(int atkLev);
+    int getMaxHP();
 };
 
 NPC::NPC(int x, int y, int hp, int ad, int dir) {
@@ -40,16 +40,15 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     this->y = y;
     this->hp = hp;
     this->attack_damage = ad;
-    // default가 ?�른�??�직임
-    this->curDirection = 0;
+    this->curDirection = dir;
+    // defaultê°???¤ë¥¸ìª?????��?��?    this->curDirection = dir;
     // movecnt
     cnt = 0;
 }
 
-bool NPC::NPCDead() { return hp < 0 ? true : false; }
+bool NPC::NPCDead() { return hp <= 0 ? true : false; }
 
 bool NPC::PCNear() {
-    // PC 좌표 받기
     int PC_X = convertPosToInfoX(imageLayer.images[0].x);
     int PC_Y = convertPosToInfoY(imageLayer.images[0].y);
 
@@ -71,19 +70,7 @@ bool NPC::PCNear() {
             }
         }
     }
-    return false;/*
-    if (NPC_X - BLOCKSIZE <= PC_X && PC_X <= NPC_X + BLOCKSIZE
-        && NPC_Y - BLOCKSIZE <= PC_Y && PC_Y <= NPC_Y + BLOCKSIZE) return true;
-    return false;*/
-
-    /*return (NPC_X == PC_X && NPC_Y >= PC_Y - BLOCKSIZE && NPC_Y <= PC_Y + BLOCKSIZE) ||
-        (NPC_Y == PC_Y && NPC_X >= PC_X - BLOCKSIZE && NPC_X <= PC_X + BLOCKSIZE);*/
-
-
-        /*return ((NPC_Y - BLOCKSIZE == PC_Y && NPC_X == PC_X) ||
-            (NPC_Y + BLOCKSIZE == PC_Y && NPC_X == PC_X) ||
-            (NPC_Y == PC_Y && NPC_X - BLOCKSIZE == PC_X) ||
-            (NPC_Y == PC_Y && NPC_X + BLOCKSIZE == PC_X));*/
+    return false;
 
 }
 
@@ -94,7 +81,7 @@ void NPC::NPCSetPosition(int posx, int posy) {
     this->y = posy;
 }
 
-void NPC::NPCPatternMovement() {
+void NPC::NPCPatternMovement(int speed) {
     if (PCNear()) {
         attack();
         return;
@@ -109,38 +96,36 @@ void NPC::NPCPatternMovement() {
         cnt = 0;
     }
 
-    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * SPEED, imageLayer.images[imageidx].y + dir[curDirection][1] * SPEED)) {
+    if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * speed, imageLayer.images[imageidx].y + dir[curDirection][1] * speed, imageLayer.images[imageidx].scale)) {
         curDirection = rand() % 4;
         cnt = 0;
         return;
     }
 
-    imageLayer.images[imageidx].x += dir[curDirection][0] * SPEED;
-    imageLayer.images[imageidx].y += dir[curDirection][1] * SPEED;
+    imageLayer.images[imageidx].x += dir[curDirection][0] * speed;
+    imageLayer.images[imageidx].y += dir[curDirection][1] * speed;
 
     x = imageLayer.images[imageidx].x;
     y = imageLayer.images[imageidx].y;
 }
 
-void NPC::NPCTrackingMovement() {
+void NPC::NPCTrackingMovement(int speed) {
     if (PCNear()) {
         attack();
         return;
     }
-
-    // 추적 ?�직임 ?�요 ?�이??    
     int curPosX = imageLayer.images[0].x;
     int curPosY = imageLayer.images[0].y;
 
     double angle = atan2(curPosY - y, curPosX - x);
 
-    // ?�동??거리�?계산
-    double dx = SPEED * cos(angle);
-    double dy = SPEED * sin(angle);
+    // ?´ë???ê±°ë¦¬ë¥?ê³?�ì‚�?   
+    double dx = speed * cos(angle);
+    double dy = speed * sin(angle);
 
     if (collisionCheck(x + dx, y + dy)) { return; }
 
-    // Mole 좌표�??�데?�트
+    // Mole ì¢Œí?�œë�???�ë�?´íŠ¸
     imageLayer.images[imageidx].x += dx;
     imageLayer.images[imageidx].y += dy;
 
@@ -148,15 +133,20 @@ void NPC::NPCTrackingMovement() {
     y = imageLayer.images[imageidx].y;
 }
 
-void NPC::NPCBossMovement() {
+void NPC::NPCBossMovement(int speed) {
     int num = rand() % 5;
 
     if (num < 4) {
-        NPCPatternMovement();
+        NPCPatternMovement(speed);
     }
     else {
-        NPCTrackingMovement();
+        NPCTrackingMovement(speed);
     }
 }
+void NPC::NPCHit(int atkLev) {
+    this->hp -= atkLev;
+}
+
+int NPC::getMaxHP() { return maxHP; }
 
 #endif
