@@ -48,6 +48,9 @@ extern "C" {
 #define UI_ITEM_START_POS_Y 220
 #define UI_ITEM_SIZE 170
 #define BOSS_SCALE 4
+#define EMCEE_SCALE 4
+#define RAWKHAWK_SCALE 3
+#define CHARIZARD_SCALE 3
 #define BOSS_HP_BAR_WIDTH 16
 
 #define REWARD_BRONZE = 10
@@ -117,7 +120,9 @@ extern char bmpNameNull[];
 
 // STAGE MAP BMP
 extern char bmpNamePC[];
-extern char bmpStageLevel[];
+extern char bmpStageLevel1[];
+extern char bmpStageLevel2[];
+extern char bmpStageLevel3[];
 extern char bmpClearedAreaName[];
 extern char bmpNomalAreaName[];
 extern char bmpHiddenAreaName[];
@@ -134,9 +139,9 @@ extern char bmpNameMoleDigging[];
 extern char bmpNameEmceeTheShyGuy[];
 extern char bmpNameFireball[];
 
-extern char bmpNameRawkHawk_pattern[];
+extern char bmpNameRawkHawk[];
 extern char bmpNameRawkHawk_ready[];
-extern char bmpNameRawkHawk_tracking[];
+extern char bmpNameRawkHawk_digging[];
 
 extern char bmpNameCharizard[];
 extern char bmpNameFireground[];

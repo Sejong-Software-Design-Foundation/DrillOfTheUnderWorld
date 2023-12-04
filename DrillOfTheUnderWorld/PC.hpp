@@ -28,15 +28,15 @@ public:
 
 class PC {
 private:
-	bool hasBatFang = false; // "���� ���ݽ� ���� Ȯ���� HP�� ������ ȸ���Ѵ�.";
-	bool hasBeggarDoll = false; // "PC ���ݼӵ��� ����������, ���ݽø��� ���� �Ҹ�ȴ�."
-	bool hasLuckStone = false; // "������ ���� �� ���� ���� �湮 �� ���Ű��� 2�踦 �����ش�.";
-	bool hasLuckCharm = false; // "������ �̸��� ������ 1ȸ ����Ѵ�."; - OK
-	bool hasMetalDetector = false; // "������ �� ���� �����Ѵ�.";
-	bool hasMoleClaw = false; // "���� �ı��� ��ȭ ȹ�淮�� �����Ѵ�.";
-	bool hasThronCrown = false; // "PC ���ݷ��� ����������, 2���� ���ظ� �԰� �ȴ�.";
-	bool hasTwoHearts = false; // "��� ������ ���ҷ��� �����Ѵ�.";
-	bool hasUndergroundTicket = false; //"�������� �Ǹ��ϴ� �������� ������ 30%  ���εȴ�.";
+	bool hasBatFang = false; // "占쏙옙占쏙옙 占쏙옙占쌥쏙옙 占쏙옙占쏙옙 확占쏙옙占쏙옙 HP占쏙옙 占쏙옙占쏙옙占쏙옙 회占쏙옙占싼댐옙.";
+	bool hasBeggarDoll = false; // "PC 占쏙옙占쌥속듸옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙, 占쏙옙占쌥시몌옙占쏙옙 占쏙옙占쏙옙 占쌀몌옙홱占?"
+	bool hasLuckStone = false; // "占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占썸문 占쏙옙 占쏙옙占신곤옙占쏙옙 2占썼를 占쏙옙占쏙옙占쌔댐옙.";
+	bool hasLuckCharm = false; // "占쏙옙占쏙옙占쏙옙 占싱몌옙占쏙옙 占쏙옙占쏙옙占쏙옙 1회 占쏙옙占쏙옙磯占?"; - OK
+	bool hasMetalDetector = false; // "占쏙옙占쏙옙占쏙옙 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占싼댐옙.";
+	bool hasMoleClaw = false; // "占쏙옙占쏙옙 占식깍옙占쏙옙 占쏙옙화 획占썸량占쏙옙 占쏙옙占쏙옙占싼댐옙.";
+	bool hasThronCrown = false; // "PC 占쏙옙占쌥뤄옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙, 2占쏙옙占쏙옙 占쏙옙占쌔몌옙 占쌉곤옙 占싫댐옙.";
+	bool hasTwoHearts = false; // "占쏙옙占?占쏙옙占쏙옙占쏙옙 占쏙옙占쌀뤄옙占쏙옙 占쏙옙占쏙옙占싼댐옙.";
+	bool hasUndergroundTicket = false; //"占쏙옙占쏙옙占쏙옙占쏙옙 占실몌옙占싹댐옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 30%  占쏙옙占싸된댐옙.";
 	int luckStoneStage = 0;
 
 	//std::vector<Item*> ownedItemList;

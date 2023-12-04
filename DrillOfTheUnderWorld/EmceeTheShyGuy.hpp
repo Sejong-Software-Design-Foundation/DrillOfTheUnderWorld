@@ -20,7 +20,7 @@ using namespace std;
 class EmceeTheShyGuy : public NPC {
 public:
 	// if movecnt is 8 shoot bullet
-	int movecnt, maxHP;
+	int movecnt;
 	list<NPCBullet> bullets;
 
 public:
@@ -41,7 +41,7 @@ EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 50, 10, 1) {
 	maxHP = hp;
 
 	this->imageidx = imageLayer.imageCount;
-	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, x, y, BOSS_SCALE };
+	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, x, y, EMCEE_SCALE };
 	for (int i = 0;i < maxHP;i++) {
 		imageArray[imageLayer.imageCount++] = { bmpBossHPName,AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH*i,AREA_ORIGIN_Y - BLOCKSIZE,1};
 		imageArray[imageLayer.imageCount - 1].isHide = true;
@@ -73,8 +73,8 @@ void EmceeTheShyGuy::move() {
 	//printf("%d", movecnt);
 	// if moved 8 times shoot once and reset mvcnt
 	if (movecnt % 5 == 0) {
-    if (rand()%2 == 0) bullets.push_back(NPCBullet(x, y+BLOCKSIZE*BOSS_SCALE/2));
-		else bullets.push_back(NPCBullet(x + BLOCKSIZE*BOSS_SCALE - 16, y + BLOCKSIZE * BOSS_SCALE / 2));
+    if (rand()%2 == 0) bullets.push_back(NPCBullet(x, y+BLOCKSIZE*EMCEE_SCALE/2));
+		else bullets.push_back(NPCBullet(x + BLOCKSIZE*EMCEE_SCALE - 16, y + BLOCKSIZE * EMCEE_SCALE / 2));
 		//bullets.push_back(NPCBullet(x, y));
 	}
 	else if (movecnt == 19) {
@@ -133,7 +133,7 @@ void EmceeTheShyGuy::AfterDead() {
 	Sleep(1000);
 	for (int i = 0;i < 15;i++) {
 		imageArray[imageidx].fileName = bmpExplodeName[i%5];
-		imageArray[imageidx].scale = BOSS_SCALE;
+		imageArray[imageidx].scale = EMCEE_SCALE;
 		imageLayer.renderAll(&imageLayer);
 	}
 	for (int i = imageidx; i <= imageidx + maxHP + 1;i++) {
@@ -147,9 +147,6 @@ void EmceeTheShyGuy::updateHPBar() {
 	for (int i = 1;i <= maxHP;i++) {
 		if (hp < i && strcmp(imageArray[imageidx + i].fileName, bmpNameNull) != 0) imageArray[imageidx + i].fileName = bmpNameNull;
 	}
-}
-int EmceeTheShyGuy::getMaxHP() {
-	return maxHP;
 }
 
 #endif

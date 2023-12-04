@@ -13,7 +13,7 @@ public:
     int x, y;
     int imageidx;
 
-    int hp;
+    int hp, maxHP;
     int attack_damage;
     int curDirection;
     int cnt;
@@ -32,6 +32,7 @@ public:
     void NPCBossMovement(int speed);
   
     void NPCHit(int atkLev);
+    int getMaxHP();
 };
 
 NPC::NPC(int x, int y, int hp, int ad, int dir) {
@@ -145,5 +146,7 @@ void NPC::NPCBossMovement(int speed) {
 void NPC::NPCHit(int atkLev) {
     this->hp -= atkLev;
 }
+
+int NPC::getMaxHP() { return maxHP; }
 
 #endif

@@ -184,6 +184,8 @@
     </ClInclude>
     <ClInclude Include="itemCommon.hpp" />
     <ClInclude Include="PCBullets.h" />
+    <ClInclude Include="Charizard.hpp" />
+    <ClInclude Include="RawkHawk.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav">

@@ -6,6 +6,8 @@
 #include "Bat.hpp"
 #include "Button.hpp"
 #include "itemCommon.hpp"
+#include "RawkHawk.hpp"
+#include "Charizard.hpp"
 
 int main() {
    initialize();
@@ -44,13 +46,13 @@ int main() {
    initAreaUI();         
    initRewardImage();         
 
-   // ?袁⑹뵠??볥궢 ?온??ㅻ쭆 ??λ땾??揶쏆뮆而?筌욊쑵六?餓?
+   // ?熬곣뫗逾??蹂κ땁 ??㉱???살춨 ??貫????띠룇裕녻?嶺뚯쉳?드뀷?繞?
    /*pc.addItem(1);
    pc.addItem(2);
    pc.addItem(3);*/
    initItems();
 
-   // ?癒?선?귐딅선 ????癒?퐣 ??볦퍢????由??袁る립 癰궰??롫굶
+   // ?????洹먮봾?????????????蹂?뜟???????熬곥굥由??곌떠???濡リ독
    clock_t start_time = clock();
    clock_t end_time;
    clock_t timee;
@@ -61,7 +63,11 @@ int main() {
    std::vector<Bat*> generatedBatList;
    Bat* bat = new Bat(-48, -48);
    Ladder* ladder = new Ladder(-48, -48);
-   EmceeTheShyGuy* Emcee = new EmceeTheShyGuy(-BLOCKSIZE*BOSS_SCALE, -BLOCKSIZE * BOSS_SCALE);
+   NPC* Boss;
+   if (stageLevel == 1) Boss = new EmceeTheShyGuy(-BLOCKSIZE * EMCEE_SCALE, -BLOCKSIZE * EMCEE_SCALE);
+   else if (stageLevel == 2) Boss = new RawkHawk(-BLOCKSIZE * RAWKHAWK_SCALE, -BLOCKSIZE * RAWKHAWK_SCALE);
+   else if (stageLevel == 3) Boss = new Charizard(-BLOCKSIZE * CHARIZARD_SCALE, -BLOCKSIZE * CHARIZARD_SCALE);
+   else Boss = new EmceeTheShyGuy(-BLOCKSIZE * EMCEE_SCALE, -BLOCKSIZE * EMCEE_SCALE);
    Mole *mole = new Mole(-48, -48);
 
    targetLayer = &stageLayer;
@@ -69,14 +75,14 @@ int main() {
    targetLayer->renderAll(targetLayer);
 
    while (1) {
-      if (isOnStage) { // PC揶쎛 ??쎈??? 筌띾벊肉?鈺곕똻???롫뮉 野껋럩??
+      if (isOnStage) { // PC?띠럾? ???댟??? 嶺뚮씭踰딂굢??브퀡????濡ル츎 ?롪퍔???
          generatedBatList.clear();
          imageArray[ladder->imageidx].isHide = 0;
          imageArray[button1->imageidx].isHide = 1;
          imageArray[button2->imageidx].isHide = 1;
          imageArray[button3->imageidx].isHide = 1;
 
-         updateCharacterStatus(); // PC ?怨밴묶筌≪럩????낅쑓??꾨뱜
+         updateCharacterStatus(); // PC ??⑤객臾띄춯?る윪?????낆몥??袁⑤콦
          while (_kbhit() != 0) {
             int key = _getch();
             int curPosX = stageLayer.images[0].x;
@@ -85,25 +91,27 @@ int main() {
             switch (key) {
             case S:
             {
+                currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
+                currentAreaColIndex = convertPosToInfoXInStage(curPosX);
                int num = rand() % 4;
-               if (currentAreaColIndex == 1 && currentAreaRowIndex == 0) {
+               if (currentAreaColIndex == 2 && currentAreaRowIndex == 1) {
                   isNormalArea = false;
                   isMiniGameArea = false;
                   isButtonArea = false;
                   isFlagArea = false;
                   isBossArea = true;
                   getNewBossArea();
-                  Emcee->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25 - BLOCKSIZE*BOSS_SCALE/2, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25 - BLOCKSIZE*BOSS_SCALE);
+                  Boss->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25 - BLOCKSIZE*BOSS_SCALE/2, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25 - BLOCKSIZE*BOSS_SCALE);
                   imageArray[0].x = AREA_ORIGIN_X + BLOCKSIZE / 2 * 25;
                   imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
                   ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
                   bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
-                  for (int i = 1;i <= Emcee->getMaxHP()+1;i++) {
-                     imageArray[Emcee->imageidx + i].isHide = false;
+                  mole->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+                  for (int i = 1;i <= Boss->getMaxHP()+1;i++) {
+                     imageArray[Boss->imageidx + i].isHide = false;
                   }//MaxHP
-                  pc.setATK(1000);
                }
-               else if (num == 0) { // ?紐껋춾 ?癒?선?귐딅선嚥?筌욊쑴??
+               else if (num == 0) { // ?榮먭퍔異??????洹먮봾?졾슖?嶺뚯쉳???
                   isNormalArea = true;
                   isMiniGameArea = false;
                   isButtonArea = false;
@@ -120,7 +128,7 @@ int main() {
                   mineral->getCluster();
                   mineral->getCluster();
                }
-               else if (num == 1) { // 沃섎챶?꿨칰??뿫 ?癒?선?귐딅선嚥?筌욊쑴??
+               else if (num == 1) { // 亦껋꼶梨?轅⑥물??肉??????洹먮봾?졾슖?嶺뚯쉳???
                   isNormalArea = false;
                   isMiniGameArea = true;
                   isButtonArea = false;
@@ -132,7 +140,7 @@ int main() {
                   minigameStartTime = clock();
                   Mineral* mineral = new Mineral(); // stageLevel ????
                }
-               else if (num == 2) { // 甕곌쑵???癒?선?귐딅선嚥?筌욊쑴??
+               else if (num == 2) { // ?뺢퀗????????洹먮봾?졾슖?嶺뚯쉳???
                   isNormalArea = false;
                   isMiniGameArea = false;
                   isButtonArea = true;
@@ -143,7 +151,7 @@ int main() {
                   imageArray[button3->imageidx].isHide = 0;
 
                   isButtonRoomClear = false;
-                  int randomNumber = rand() % 6; // 0 ?癒?퐣 6 ???????뽯땾
+                  int randomNumber = rand() % 6; // 0 ?????6 ???????戮?빢
                   buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
                   getNewArea();
 
@@ -163,7 +171,7 @@ int main() {
                   mineral->getCluster();
                   mineral->getCluster();
                }
-               else if (num == 3) { // ???삋域??癒?선?귐딅선嚥?筌욊쑴??
+               else if (num == 3) { // ????뗥윜??????洹먮봾?졾슖?嶺뚯쉳???
                   isNormalArea = false;
                   isMiniGameArea = false;
                   isButtonArea = false;
@@ -184,9 +192,8 @@ int main() {
                   setFlag(3);
                }
 
-               // ?癒?선?귐딅선 筌띾벊肉???袁⑹삺 PC ?袁⑺뒄??獄쏆빓苡???뽯뻻??롫즲嚥???롫뮉 ?꾨뗀諭??????筌ｌ꼶??
-               currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
-               currentAreaColIndex = convertPosToInfoXInStage(curPosX);
+               // ?????洹먮봾??嶺뚮씭踰딂굢???熬곣뫗??PC ?熬곣뫚????꾩룇鍮볢떋???戮?뻣??濡レ┣????濡ル츎 ?袁⑤?獄???????嶺뚳퐣瑗??
+               
                mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
 
                isOnStage = false;
@@ -223,12 +230,12 @@ int main() {
             }
          }
       }
-      else if (isOnArea) { // PC揶쎛 ?癒?선?귐딅선????덈뮉 野껋럩??
+      else if (isOnArea) { // PC?띠럾? ?????洹먮봾??????덈츎 ?롪퍔???
          targetLayer->renderAll(targetLayer);
-         drawUI(); // ?癒?선?귐딅선 UI??域밸챶?????λ땾
+         drawUI(); // ?????洹먮봾??UI???잙갭梨?????貫??
          printStoneStatus(pc.getStone());
-         if (isNormalArea) { // PC揶쎛 ?紐? ?癒?선?귐딅선????덈뮉 野껋럩??
-            // QuestionBlock 獄쏅벡履???밴쉐 ?온???꾨뗀諭?
+         if (isNormalArea) { // PC?띠럾? ?榮? ?????洹먮봾??????덈츎 ?롪퍔???
+            // QuestionBlock ?꾩룆踰▼괘???諛댁뎽 ??㉱???袁⑤?獄?
             if (isGenerateMobByQuestionBlock) {
                generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
                isGenerateMobByQuestionBlock = false;
@@ -238,13 +245,13 @@ int main() {
                   mob->move();
                }
             }
-            // NPC????筌욊낯???봔????뽮쉐??
+            // NPC????嶺뚯쉳????遊붋????戮?뎽??
             //mole->move();
             bat->move();
             ladder->move();
             mole->move();
             //Emcee->move();
-            // ??삳궖????낆젾 ??묐뻬
+            // ???녠텠?????놁졑 ??臾먮뺄
             for (int i = 0; i < 10; i++) {
                if (_kbhit() != 0) {
                   int key = _getch();
@@ -299,17 +306,13 @@ int main() {
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key) {
-                      targetLayer->renderAll(targetLayer);
-                      if (key != S) updateCharacterStatusInArea();
-                  }
                }
                Sleep(5);
             }
          }
-         else if (isMiniGameArea) { // PC揶쎛 沃섎챶?꿨칰??뿫 ?癒?선?귐딅선????덈뮉 野껋럩??
-            printMyOriInMiniGameArea(); // 沃섎챶?꿨칰??뿫 ?癒?선?귐딅선?癒?퐣 information????얜굣???용쵎窺 ??? ?곗뮆???롫뮉 ??λ땾
-            // ??삳궖????낆젾 ??묐뻬
+         else if (isMiniGameArea) { // PC?띠럾? 亦껋꼶梨?轅⑥물??肉??????洹먮봾??????덈츎 ?롪퍔???
+            printMyOriInMiniGameArea(); // 亦껋꼶梨?轅⑥물??肉??????洹먮봾??????information?????쒓덫????⑹탮囹???? ?怨쀫츊???濡ル츎 ??貫??
+            // ???녠텠?????놁졑 ??臾먮뺄
             for (int i = 0; i < 10; i++) {
                if (_kbhit() != 0) {
                   int key = _getch();
@@ -369,7 +372,7 @@ int main() {
                rewardUI();
             }
          }
-         else if (isButtonArea) { // PC揶쎛 甕곌쑵???癒?선?귐딅선????덈뮉 野껋럩??
+         else if (isButtonArea) { // PC?띠럾? ?뺢퀗????????洹먮봾??????덈츎 ?롪퍔???
 
             if (button1->getIsPressed()) {
                imageArray[button1->imageidx].fileName = bmpButton1PressedName;
@@ -466,7 +469,7 @@ int main() {
                Sleep(5);
             }
          }
-         else if (isFlagArea) { // PC揶쎛 ???삋域??癒?선?귐딅선????덈뮉 野껋럩??
+         else if (isFlagArea) { // PC?띠럾? ????뗥윜??????洹먮봾??????덈츎 ?롪퍔???
             printFlagStageStatus(pc.getFlagCnt());
             //mole->move();
             bat->move();
@@ -532,24 +535,26 @@ int main() {
             }
          }
          else if (isBossArea) {
-            if (Emcee->NPCDead() == false) {
-               Emcee->move();
+            if (Boss->NPCDead() == false) {
+               Boss->move();
             }
             else {
-               Emcee->AfterDead();
+                if (stageLevel == 1) ((EmceeTheShyGuy *)Boss)->AfterDead();
+                else if (stageLevel == 2) ((RawkHawk *)Boss)->AfterDead();
+                else if (stageLevel == 3) ((Charizard *)Boss)->AfterDead();
                ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
-               ladder->move();
+               if (ladder->goSafety()) return main();
             }
             //vector<PCBullet>::iterator itr;
             for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end(); ) {
-               if (Emcee->NPCDead() == false && itr->checkBulletHit(Emcee->x, Emcee->y)) {
-                  Emcee->NPCHit(pc.getATK());
+               if (Boss->NPCDead() == false && itr->checkBulletHit(Boss->x, Boss->y)) {
+                  Boss->NPCHit(pc.getATK());
                   itr = pc.getBulletList().erase(itr);
                }
                else if (!(itr->move())) itr = pc.getBulletList().erase(itr);
                else itr++;
             }
-            printWarning(Emcee->hp);
+            printWarning(Boss->hp);
             for (int i = 0; i < 10; i++) {
                if (_kbhit() != 0) {
                   int key = _getch();
@@ -594,7 +599,7 @@ int main() {
                      rewardUI();
                      break;
                   case SPACE:
-                     if (Emcee->NPCDead() == false) pc.attack(clock());
+                     if (Boss->NPCDead() == false) pc.attack(clock());
                      break;
                   case O:
                      pc.setHP(pc.getHP() - 10);
@@ -607,8 +612,8 @@ int main() {
                Sleep(5);
             }
          }
-         // 筌뤴뫀諭??癒?선?귐딅선???⑤벏???곗쨮 ?怨몄뒠??롫뮉 ?꾨뗀諭?
-         // 3?λ뜄彛???怨쀫꺖 野껊슣?좑쭪???1??揶쏅Ŋ???쀪텕???꾨뗀諭?
+         // 嶺뚮ㅄ維獄??????洹먮봾?????ㅻ쾹???怨쀬Ŧ ??⑤챷???濡ル츎 ?袁⑤?獄?
+         // 3?貫?꾢퐲????⑥リ틬 ?롪퍓??醫묒????1???띠룆흮????ろ뀞???袁⑤?獄?
          end_time = clock();
          duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
          if (duration > 3.0) {

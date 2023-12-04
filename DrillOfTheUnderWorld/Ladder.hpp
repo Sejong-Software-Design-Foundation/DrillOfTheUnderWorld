@@ -10,6 +10,7 @@ public:
 
     void move();
     void attack();
+    bool goSafety();
 };
 
 Ladder::Ladder(int x, int y) : NPC(x, y, 0, 0, 1) {
@@ -27,6 +28,20 @@ void Ladder::move() {
 void Ladder::attack() {
     if (isFlagArea && pc.getFlagCnt() < 3) return;
     rewardUI();
+}
+
+bool Ladder::goSafety() {
+    if (PCNear())
+    {
+        stageLevel++;
+        visitSafety();
+        if (stageLevel >= 4) {
+            //TODO
+            return true;
+        }
+        return true;
+    }
+    return false;
 }
 
 #endif
