@@ -171,6 +171,7 @@
     <ClInclude Include="Boss.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="CaveSnake.hpp" />
+    <ClInclude Include="Charizard.hpp" />
     <ClInclude Include="CursedTotem.hpp" />
     <ClInclude Include="Dice.hpp" />
     <ClInclude Include="Disassembler.hpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="PC.hpp" />
     <ClInclude Include="PrisonerShackles.hpp" />
     <ClInclude Include="PCBullets.h" />
+    <ClInclude Include="RawkHawk.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource2.h" />
     <ClInclude Include="SoundPlayer.h" />

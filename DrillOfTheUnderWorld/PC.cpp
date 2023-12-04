@@ -305,7 +305,7 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 			applyDigReward(imageIndex, 300);
 		}
 	}
-	// ?˜ì¤‘??ë§¤ì§?˜ë²„ ì²˜ë¦¬?˜ê¸° -> ê´‘ë¬¼ HP
+	// ??ì¤???ë§¤ì§??ë²??ì²?ë¦¬??ê¸° -> ê´?�ë�??HP
 	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName) == 0) {
 			imageLayer.images[imageIndex].fileName = bmpBrokenStoneBlockName;
