@@ -96,10 +96,10 @@ int main() {
 						imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
 						ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
 						bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
-
 						for (int i = 1;i <= Emcee->getMaxHP()+1;i++) {
 							imageArray[Emcee->imageidx + i].isHide = false;
 						}//MaxHP
+						pc.setATK(1000);
 					}
 					else if (num == 0) { // ?ëªƒì­š ?ë¨?¼±?±ÑŠë¼±æ¿?ï§žê¾©??
 						isNormalArea = true;

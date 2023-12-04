@@ -136,6 +136,9 @@ void EmceeTheShyGuy::AfterDead() {
 		imageArray[imageidx].scale = BOSS_SCALE;
 		imageLayer.renderAll(&imageLayer);
 	}
+	for (int i = imageidx; i <= imageidx + maxHP + 1;i++) {
+		imageArray[i].isHide = true;
+	}
 	imageArray[imageidx].fileName = bmpNameNull;
 	imageLayer.renderAll(&imageLayer);
 }
