@@ -70,8 +70,10 @@ std::vector<int> PC::getitemList() { return itemList; }
 int PC::getStone() { return stone; }
 int PC::getHP() { return HP; }
 int PC::getOxygen() { return O2; }
+int PC::getFatigue() { return FATIGUE; }
 int PC::getMaxHP() { return MAX_HP; }
 int PC::getMaxOxygen() { return MAX_O2; }
+int PC::getMaxFatigue() { return MAX_FATIGUE; }
 int PC::getATK() { return ATK; }
 void PC::setStone(int stone) { this->stone = stone; }
 void PC::setHP(int hp) {
@@ -113,6 +115,12 @@ void PC::setOxygen(int o2) {
 	imageArray[index_Area_UI_O2_Start + prev_O2].isHide = 1;
 	imageArray[index_Area_UI_O2_Start + cur_O2].isHide = 0;
 }
+
+void PC::setFatigue(int ft) {
+	this->FATIGUE = ft;
+	if (this->FATIGUE <= 0) exit(0);
+}
+
 void PC::setATK(int atk) { this->ATK = atk; }
 
 void PC::dig(int x, int y) { 
@@ -221,7 +229,7 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 	int targetPosX = currentPcPosX;
 	int targetPosY = currentPcPosY - BLOCKSIZE;
 
-	//imageArray[targerImageIndex].scale = 2;
+	//imageArray[targerImageIndex].scale = 2;w
 	imageArray[targerImageIndex].x = targetPosX;
 	imageArray[targerImageIndex].y = targetPosY;
 
@@ -476,6 +484,11 @@ void PC::setMaxHP(int maxHp) {
 void PC::setMaxOxygen(int maxOxygen) {
 	if (maxOxygen > 0) {
 		this->MAX_O2 = maxOxygen;
+	}
+}
+void PC::setMaxFatigue(int maxFt) {
+	if (maxFt > 0) {
+		this->MAX_FATIGUE = maxFt;
 	}
 }
 /*

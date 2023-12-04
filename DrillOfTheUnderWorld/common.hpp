@@ -257,6 +257,7 @@ void initArea();
 void printTimeInMiniGameArea(float t);
 void printMyOriInMiniGameArea();
 void updateCharacterStatus();
+void updateCharacterStatusInArea();
 void initItemImages();
 void fillBlockImages();
 //void getNewArea(int zombieIndex);

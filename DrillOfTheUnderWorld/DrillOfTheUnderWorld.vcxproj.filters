@@ -589,6 +589,20 @@
     <Image Include="lava_block.bmp">
       <Filter>images</Filter>
     </Image>
+<<<<<<< HEAD
+    <Image Include="lShop_Balloon.bmp" />
+    <Image Include="lShop_miner.bmp" />
+    <Image Include="rShop_Balloon.bmp" />
+    <Image Include="rShop_miner.bmp" />
+    <Image Include="rShop_spearkBalloon.bmp" />
+    <Image Include="Shop_ItemBox.bmp" />
+    <Image Include="Shop_ItemBox_disable.bmp" />
+    <Image Include="Shop_ItemBox_selected.bmp" />
+    <Image Include="Shop_StoneBox.bmp" />
+    <Image Include="testImage1.bmp" />
+    <Image Include="testImage2.bmp" />
+=======
+>>>>>>> ad9c66985de3f6f7c6e51bf3522d088ad053c0e7
     <Image Include="safety_bg.bmp">
       <Filter>images</Filter>
     </Image>
@@ -610,6 +624,8 @@
     <Image Include="safety_arrow.bmp">
       <Filter>images</Filter>
     </Image>
+<<<<<<< HEAD
+=======
     <Image Include="item_AncientVirus.bmp">
       <Filter>images</Filter>
     </Image>
@@ -619,6 +635,7 @@
     <Image Include="item_AttackSpeedBoost.bmp">
       <Filter>images</Filter>
     </Image>
+>>>>>>> ad9c66985de3f6f7c6e51bf3522d088ad053c0e7
     <Image Include="item_BatFang.bmp">
       <Filter>images</Filter>
     </Image>
@@ -682,6 +699,15 @@
     <Image Include="item_UndergroundTicket.bmp">
       <Filter>images</Filter>
     </Image>
+<<<<<<< HEAD
+    <Image Include="item_AncientVirus.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_AttackBoost.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_AttackSpeedBoost.bmp">
+=======
     <Image Include="rShop_Balloon.bmp">
       <Filter>images</Filter>
     </Image>
@@ -752,6 +778,7 @@
       <Filter>images</Filter>
     </Image>
     <Image Include="BossHP.bmp">
+>>>>>>> ad9c66985de3f6f7c6e51bf3522d088ad053c0e7
       <Filter>images</Filter>
     </Image>
   </ItemGroup>

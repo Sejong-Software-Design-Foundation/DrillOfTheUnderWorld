@@ -2,12 +2,12 @@
 
 #pragma once
 
-// 각도가 있는 경우를 처리하는 함수
+// 각도가 ?�는 경우�?처리?�는 ?�수
 inline void printTextWithAngle(HDC hdc, int x, int y, int size, int weight, int angle, COLORREF textColor, int align, wchar_t* text, int maxWidth) {
     if (weight == 0) weight = 900;
     size = (int)(size * RESOLUTION_MULTIPLIER);
     const HFONT font = CreateFont(size, 0, angle, 0, weight, 0, 0, 0, HANGEUL_CHARSET,
-        0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("둥근모꼴"));
+        0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("�ձٸ��")); 
 
     SelectObject(hdc, font);
     SetBkMode(hdc, TRANSPARENT);
@@ -27,19 +27,19 @@ inline void printTextWithAngle(HDC hdc, int x, int y, int size, int weight, int 
         int charLength = 1;
         SIZE charSize;
 
-        // 현재 글자의 크기 계산
+        // ?�재 글?�의 ?�기 계산
         GetTextExtentPoint32(hdc, &text[i], charLength, &charSize);
 
-        // 현재 위치에 글자를 그렸을 때 maxWidth를 초과하면 줄 바꿈
+        // ?�재 ?�치??글?��? 그렸????maxWidth�?초과?�면 �?바꿈
         if (currentX + charSize.cx > x + maxWidth) {
             currentX = x;
             currentY += charSize.cy;
         }
 
-        // 현재 글자 출력
+        // ?�재 글??출력
         TextOut(hdc, currentX, currentY, &text[i], charLength);
 
-        // 다음 글자로 이동
+        // ?�음 글?�로 ?�동
         currentX += charSize.cx;
         i += charLength;
     }
@@ -50,7 +50,7 @@ inline void printTextWithAngle(HDC hdc, int x, int y, int size, int weight, int 
     DeleteObject(font);
 }
 
-// 각도가 없는 경우를 처리하는 함수
+// 각도가 ?�는 경우�?처리?�는 ?�수
 inline void printText(HDC hdc, int x, int y, int size, int weight, COLORREF textColor, int align, wchar_t* text, int maxWidth = 1000) {
     printTextWithAngle(hdc, x, y, size, weight, 0, textColor, align, text, maxWidth);
 }
