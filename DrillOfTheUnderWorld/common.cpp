@@ -341,8 +341,8 @@ void initLShopImage() {
 	lShopLayer.imageCount = 0;
 
 	lShopImageArray[lShopLayer.imageCount++] = { bmpShopStoneBox, 50, 50, 1 };
-	lShopImageArray[lShopLayer.imageCount++] = { bmpUndergroundTicketName, LSHOP_ITEMBOX_ORIGIN_X + 200 - 75, 550, 1 };
-	lShopImageArray[lShopLayer.imageCount++] = { bmpBatFangName, LSHOP_ITEMBOX_ORIGIN_X + 200 - 75 + 450, 550, 1 };
+	lShopImageArray[lShopLayer.imageCount++] = { bmpAttackBoostName, LSHOP_ITEMBOX_ORIGIN_X + 200 - 75, 550, 1 };
+	lShopImageArray[lShopLayer.imageCount++] = { bmpAttackSpeedBoostName, LSHOP_ITEMBOX_ORIGIN_X + 200 - 75 + 450, 550, 1 };
 	lShopImageArray[lShopLayer.imageCount++] = { bmpShopItemBox, LSHOP_ITEMBOX_ORIGIN_X, LSHOP_ITEMBOX_ORIGIN_Y, 1 };
 	lShopImageArray[lShopLayer.imageCount++] = { bmpShopItemBox, LSHOP_ITEMBOX_ORIGIN_X + 450, LSHOP_ITEMBOX_ORIGIN_Y, 1 };
 	lShopImageArray[lShopLayer.imageCount++] = { bmpLShopMiner, -50, 750, 3 };
@@ -354,9 +354,9 @@ void initRShopImage() {
 	rShopLayer.imageCount = 0;
 
 	rShopImageArray[rShopLayer.imageCount++] = { bmpShopStoneBox, 50, 50, 1 };
-	rShopImageArray[rShopLayer.imageCount++] = { bmpUndergroundTicketName, 200 + 50 - 75, 550, 1 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpPrisonerShacklesName, 200 + 50 - 75, 550, 1 };
 	rShopImageArray[rShopLayer.imageCount++] = { bmpBatFangName, 200 + 50 - 75 + 450, 550, 1 };
-	rShopImageArray[rShopLayer.imageCount++] = { bmpBloodBagName, 200 + 50 - 75 + 900, 550, 1 };
+	rShopImageArray[rShopLayer.imageCount++] = { bmpTwoHeartsName, 200 + 50 - 75 + 900, 550, 1 };
 	rShopImageArray[rShopLayer.imageCount++] = { bmpShopItemBox, RSHOP_ITEMBOX_ORIGIN_X, RSHOP_ITEMBOX_ORIGIN_Y, 1 };
 	rShopImageArray[rShopLayer.imageCount++] = { bmpShopItemBox, RSHOP_ITEMBOX_ORIGIN_X + 450, RSHOP_ITEMBOX_ORIGIN_Y, 1 };
 	rShopImageArray[rShopLayer.imageCount++] = { bmpShopItemBox, RSHOP_ITEMBOX_ORIGIN_X + 900, RSHOP_ITEMBOX_ORIGIN_Y, 1 };

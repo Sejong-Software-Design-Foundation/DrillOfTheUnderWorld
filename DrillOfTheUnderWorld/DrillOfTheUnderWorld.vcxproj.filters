@@ -434,30 +434,6 @@
     <Image Include="lava_block.bmp">
       <Filter>images</Filter>
     </Image>
-    <Image Include="item_AncientVirus.bmp" />
-    <Image Include="item_AttackBoost.bmp" />
-    <Image Include="item_AttackSpeedBoost.bmp" />
-    <Image Include="item_BatFang.bmp" />
-    <Image Include="item_BeggarDoll.bmp" />
-    <Image Include="item_BloodBag.bmp" />
-    <Image Include="item_CaveSnake.bmp" />
-    <Image Include="item_CursedTotem.bmp" />
-    <Image Include="item_Dice.bmp" />
-    <Image Include="item_Disasemmbler.bmp" />
-    <Image Include="item_EnergyBar.bmp" />
-    <Image Include="item_FreshBrewedCoffee.bmp" />
-    <Image Include="item_LuckStone.bmp" />
-    <Image Include="item_LuckyCharm.bmp" />
-    <Image Include="item_MetalDetector.bmp" />
-    <Image Include="item_MoleClaw.bmp" />
-    <Image Include="item_MovementSpeedBoost.bmp" />
-    <Image Include="item_Orichalcum.bmp" />
-    <Image Include="item_PortableOxygenCan.bmp" />
-    <Image Include="item_PrisonerShackles.bmp" />
-    <Image Include="item_SupplyOxygenTank.bmp" />
-    <Image Include="item_ThornCrown.bmp" />
-    <Image Include="item_TwoHearts.bmp" />
-    <Image Include="item_UndergroundTicket.bmp" />
     <Image Include="lShop_Balloon.bmp" />
     <Image Include="lShop_miner.bmp" />
     <Image Include="rShop_Balloon.bmp" />
@@ -488,6 +464,78 @@
       <Filter>images</Filter>
     </Image>
     <Image Include="safety_arrow.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_BatFang.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_BeggarDoll.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_BloodBag.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_CaveSnake.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_CursedTotem.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_Dice.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_Disasemmbler.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_EnergyBar.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_FreshBrewedCoffee.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_LuckStone.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_LuckyCharm.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_MetalDetector.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_MoleClaw.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_MovementSpeedBoost.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_Orichalcum.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_PortableOxygenCan.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_PrisonerShackles.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_SupplyOxygenTank.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_ThornCrown.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_TwoHearts.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_UndergroundTicket.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_AncientVirus.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_AttackBoost.bmp">
+      <Filter>images</Filter>
+    </Image>
+    <Image Include="item_AttackSpeedBoost.bmp">
       <Filter>images</Filter>
     </Image>
   </ItemGroup>
