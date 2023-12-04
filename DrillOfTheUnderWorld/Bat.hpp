@@ -1,6 +1,8 @@
 #ifndef __BAT_
 #define __BAT_
 
+#define BAT_SPEED 48
+
 #include "NPC.hpp"
 
 /// <summary>
@@ -26,7 +28,7 @@ Bat::Bat(int x, int y) : NPC(x, y, 10, 5, 1) {
 }
 
 void Bat::move() {
-    NPCPatternMovement();
+    NPCPatternMovement(BAT_SPEED);
 }
 
 void Bat::attack() {

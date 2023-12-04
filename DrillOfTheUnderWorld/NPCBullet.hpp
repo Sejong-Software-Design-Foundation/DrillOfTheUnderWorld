@@ -11,7 +11,7 @@
 /// </summary>
 
 class NPCBullet : public NPC {
-private:
+public:
 	double dx, dy;
 
 public:

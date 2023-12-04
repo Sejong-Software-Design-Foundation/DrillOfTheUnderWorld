@@ -1,6 +1,9 @@
 #ifndef __EMCEE_THE_SHY_GUY_
 #define __EMCEE_THE_SHY_GUY_
 
+#define EMCEE_THESHYGUY_SPEED 48
+#define ULTIMATE_BULLET_NUM 10
+
 #include "NPC.hpp"
 #include "NPCBullet.hpp"
 #include <list>
@@ -26,6 +29,7 @@ public:
 	void checkBullets();
 	void move();
 	void attack();
+	void ultimate();
 	void NPCHit(int AtkLev);
 	void AfterDead();
 	void updateHPBar();
@@ -68,15 +72,17 @@ void EmceeTheShyGuy::move() {
 
 	//printf("%d", movecnt);
 	// if moved 8 times shoot once and reset mvcnt
-	if (movecnt == 8) {
-		if (rand()%2 == 0) bullets.push_back(NPCBullet(x, y+BLOCKSIZE*BOSS_SCALE/2));
+	if (movecnt % 5 == 0) {
+    if (rand()%2 == 0) bullets.push_back(NPCBullet(x, y+BLOCKSIZE*BOSS_SCALE/2));
 		else bullets.push_back(NPCBullet(x + BLOCKSIZE*BOSS_SCALE - 16, y + BLOCKSIZE * BOSS_SCALE / 2));
+		//bullets.push_back(NPCBullet(x, y));
+	}
+	else if (movecnt == 19) {
+		ultimate();
 		movecnt = 0;
 	}
 	else {
-		NPCBossMovement();
-		//NPCTrackingMovement();
-		//NPCPatternMovement();
+		NPCBossMovement(EMCEE_THESHYGUY_SPEED);
 	}
 }
 
@@ -87,6 +93,22 @@ void EmceeTheShyGuy::attack() {
 	for (it = bullets.begin(); it != bullets.end(); it++) { (*it).move(); }
 }
 
+void EmceeTheShyGuy::ultimate() {
+	int curPosX = imageLayer.images[0].x;
+	int curPosY = imageLayer.images[0].y;
+
+	double angle = 360 / ULTIMATE_BULLET_NUM;
+	double magnitude = 100;
+	double new_angle = atan2(curPosY - y, curPosX - x);
+
+	for (int i = 0; i < ULTIMATE_BULLET_NUM; i++) {
+		bullets.push_back(NPCBullet(x, y));
+		bullets.back().dx = magnitude * cos(new_angle);
+		bullets.back().dy = magnitude * sin(new_angle);
+
+		new_angle += angle;
+	}
+}
 void EmceeTheShyGuy::NPCHit(int AtkLev) {
 	NPC::NPCHit(AtkLev);
 	updateHPBar();

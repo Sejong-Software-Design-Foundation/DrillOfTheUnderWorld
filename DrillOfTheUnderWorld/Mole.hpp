@@ -1,13 +1,15 @@
 #ifndef __MOLE_
 #define __MOLE_
 
+#define MOLE_SPEED 48
+
 #include "NPC.hpp"
 
 /// <summary>
 /// === MOLE INFO ===
 /// HP : 50
 /// AD : 15
-/// MOVEMENT : NPCTRACKINGMOVEMENT
+/// MOVEMENT : NPCPATTERNMOVEMENT
 /// </summary>
 
 class Mole : public NPC {
@@ -34,7 +36,7 @@ void Mole::move() {
 			this->dig(x + dx[curDirection] * BLOCKSIZE, y + dy[curDirection] * BLOCKSIZE);
 		}
 	}
-    NPCBossMovement();
+    NPCBossMovement(MOLE_SPEED);
 	moveCnt = (moveCnt + 1) % 10;
 }
 

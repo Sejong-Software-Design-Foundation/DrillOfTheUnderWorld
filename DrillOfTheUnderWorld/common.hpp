@@ -124,12 +124,20 @@ extern char bmpCharacterStatusName[];
 
 // NORMAL NPC
 extern char bmpNameBat[];
+extern char bmpNameMole[];
 
 // BOSS NPC
-extern char bmpNameMole[];
-extern char bmpNameMoleDigging[];
-extern char bmpNameFireball[];
 extern char bmpNameEmceeTheShyGuy[];
+extern char bmpNameFireball[];
+
+extern char bmpNameRawkHawk_pattern[];
+extern char bmpNameRawkHawk_ready[];
+extern char bmpNameRawkHawk_tracking[];
+
+extern char bmpNameCharizard[];
+extern char bmpNameFireground[];
+
+// LADDER 
 extern char bmpNameLadder[];
 
 // AREA UI BMP
