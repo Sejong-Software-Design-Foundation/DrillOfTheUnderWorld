@@ -158,24 +158,24 @@ extern char bmpNameStar3[];
 extern char bmpBossHPName[];
 
 // BLOCK BMP
-extern char bmpStoneBlockName[];
-extern char bmpBrokenStoneBlockName[];
+extern char bmpStoneBlockName[3][40];
+extern char bmpBrokenStoneBlockName[3][40];
 
 // ORE BMP
-extern char bmpNameBronzeOre1[];
-extern char bmpNameBronzeOre2[];
-extern char bmpNameSilverOre1[];
-extern char bmpNameSilverOre2[];
-extern char bmpNameGoldOre1[];
-extern char bmpNameGoldOre2[];
-extern char bmpNameDiamondOre1[];
-extern char bmpNameDiamondOre2[];
-extern char bmpNameOrichalcumOre1[];
-extern char bmpNameOrichalcumOre2[];
-extern char bmpNameBrokenBronzeOre[];
-extern char bmpNameBrokenSilverOre[];
-extern char bmpNameBrokenGoldOre[];
-extern char bmpNameBrokenDiamondOre[];
+extern char bmpNameBronzeOre1[3][40];
+extern char bmpNameBronzeOre2[3][40];
+extern char bmpNameSilverOre1[3][40];
+extern char bmpNameSilverOre2[3][40];
+extern char bmpNameGoldOre1[3][40];
+extern char bmpNameGoldOre2[3][40];
+extern char bmpNameDiamondOre1[3][40];
+extern char bmpNameDiamondOre2[3][40];
+extern char bmpNameOrichalcumOre1[3][40];
+extern char bmpNameOrichalcumOre2[3][40];
+extern char bmpNameBrokenBronzeOre[3][40];
+extern char bmpNameBrokenSilverOre[3][40];
+extern char bmpNameBrokenGoldOre[3][40];
+extern char bmpNameBrokenDiamondOre[3][40];
 
 // MINERAL BMP
 extern char bmpNameBronzeMineral[];
