@@ -144,24 +144,24 @@ char bmpNameStar3[] = "UI_Star3.bmp";
 char bmpBossHPName[] = "BossHP.bmp";
 
 // AREA BLOCK BMP
-char bmpStoneBlockName[] = "block_Stage1_Normal.bmp";
-char bmpBrokenStoneBlockName[] = "block_Stage1_Broken.bmp";
+char bmpStoneBlockName[3][40] = { "block_Stage1_Normal.bmp","block_Stage2_Normal.bmp","block_Stage3_Normal.bmp"};
+char bmpBrokenStoneBlockName[3][40] = { "block_Stage1_Broken.bmp","block_Stage2_Broken.bmp","block_Stage3_Broken.bmp" };
 
 // ORE BMP
-char bmpNameBronzeOre1[] = "block_Stage1_BronzeOre1.bmp";
-char bmpNameBronzeOre2[] = "block_Stage1_BronzeOre2.bmp";
-char bmpNameSilverOre1[] = "block_Stage1_SilverOre1.bmp";
-char bmpNameSilverOre2[] = "block_Stage1_SilverOre2.bmp";
-char bmpNameGoldOre1[] = "block_Stage1_GoldOre1.bmp";
-char bmpNameGoldOre2[] = "block_Stage1_GoldOre2.bmp";
-char bmpNameDiamondOre1[] = "block_Stage1_DiamondOre1.bmp";
-char bmpNameDiamondOre2[] = "block_Stage1_DiamondOre2.bmp";
-char bmpNameOrichalcumOre1[] = "block_Stage1_OrichalcumOre1.bmp";
-char bmpNameOrichalcumOre2[] = "block_Stage1_OrichalcumOre2.bmp";
-char bmpNameBrokenBronzeOre[] = "block_Stage1_Broken_BronzeOre1.bmp";
-char bmpNameBrokenSilverOre[] = "block_Stage1_Broken_SilverOre1.bmp";
-char bmpNameBrokenGoldOre[] = "block_Stage1_Broken_GoldOre1.bmp";
-char bmpNameBrokenDiamondOre[] = "block_Stage1_Broken_DiamondOre1.bmp";
+char bmpNameBronzeOre1[3][40] = { "block_Stage1_BronzeOre1.bmp", "block_Stage2_BronzeOre1.bmp", "block_Stage3_BronzeOre1.bmp" };
+char bmpNameBronzeOre2[3][40] = { "block_Stage1_BronzeOre2.bmp" ,"block_Stage2_BronzeOre2.bmp" ,"block_Stage3_BronzeOre2.bmp" };
+char bmpNameSilverOre1[3][40] = { "block_Stage1_SilverOre1.bmp" ,"block_Stage2_SilverOre1.bmp" ,"block_Stage3_SilverOre1.bmp" };
+char bmpNameSilverOre2[3][40] = { "block_Stage1_SilverOre2.bmp","block_Stage2_SilverOre2.bmp" ,"block_Stage3_SilverOre2.bmp" };
+char bmpNameGoldOre1[3][40] = { "block_Stage1_GoldOre1.bmp" ,"block_Stage2_GoldOre1.bmp" ,"block_Stage3_GoldOre1.bmp" };
+char bmpNameGoldOre2[3][40] = { "block_Stage1_GoldOre2.bmp" ,"block_Stage2_GoldOre2.bmp" ,"block_Stage3_GoldOre2.bmp" };
+char bmpNameDiamondOre1[3][40] = {"block_Stage1_DiamondOre1.bmp" ,"block_Stage2_DiamondOre1.bmp" ,"block_Stage3_DiamondOre1.bmp"};
+char bmpNameDiamondOre2[3][40] = {"block_Stage1_DiamondOre2.bmp" ,"block_Stage2_DiamondOre2.bmp" ,"block_Stage3_DiamondOre2.bmp"};
+char bmpNameOrichalcumOre1[3][40] = { "block_Stage1_OrichalcumOre1.bmp" ,"block_Stage2_OrichalcumOre1.bmp", "block_Stage3_OrichalcumOre1.bmp" };
+char bmpNameOrichalcumOre2[3][40] = { "block_Stage1_OrichalcumOre2.bmp" ,"block_Stage2_OrichalcumOre2.bmp", "block_Stage3_OrichalcumOre2.bmp" };
+char bmpNameBrokenBronzeOre[3][40] = { "block_Stage1_Broken_BronzeOre1.bmp","block_Stage2_Broken_BronzeOre1.bmp","block_Stage3_Broken_BronzeOre1.bmp" };
+char bmpNameBrokenSilverOre[3][40] = { "block_Stage1_Broken_SilverOre1.bmp","block_Stage2_Broken_SilverOre1.bmp","block_Stage3_Broken_SilverOre1.bmp" };
+char bmpNameBrokenGoldOre[3][40] = {"block_Stage1_Broken_GoldOre1.bmp" ,"block_Stage2_Broken_GoldOre1.bmp" ,"block_Stage3_Broken_GoldOre1.bmp"};
+char bmpNameBrokenDiamondOre[3][40] = { "block_Stage1_Broken_DiamondOre1.bmp" ,"block_Stage2_Broken_DiamondOre1.bmp","block_Stage3_Broken_DiamondOre1.bmp" };
 
 // MINERAL BMP
 char bmpNameBronzeMineral[] = "block_MineralBronze.bmp";
@@ -866,7 +866,7 @@ void initItemImages() {
 void fillBlockImages() { 
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
+			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName[stageLevel-1], x,y,1};
 			blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
 		}
 	}
@@ -1056,7 +1056,7 @@ void getNewArea() {
 			}
 
 			else {
-				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
+				imageArray[cnt++] = { bmpStoneBlockName[stageLevel-1], x,y,1};
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
 						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
@@ -1082,7 +1082,7 @@ void getNewMiniGameArea()
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
+			imageArray[cnt++] = { bmpStoneBlockName[stageLevel-1], x,y,1};
 			for (int dy = 0;dy < BLOCKSIZE;dy++) {
 				for (int dx = 0;dx < BLOCKSIZE;dx++) {
 					blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
@@ -1596,3 +1596,9 @@ void setHiddenAreaPos() {
 	}
 }
 
+void renderImageLayer() {
+	imageLayer.renderAll(&imageLayer);
+}
+void renderTargetLayer() {
+	targetLayer->renderAll(targetLayer);
+}

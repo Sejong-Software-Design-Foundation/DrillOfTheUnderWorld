@@ -63,7 +63,7 @@ void Mole::dig(int x, int y) {
 	}
 	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
 	imageArray[imageidx].fileName = bmpNameMoleDigging;
-	imageArray[imageIndex].fileName = bmpBrokenStoneBlockName;
+	imageArray[imageIndex].fileName = bmpBrokenStoneBlockName[stageLevel - 1];
 	imageLayer.renderAll(&imageLayer);
 	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
 		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
