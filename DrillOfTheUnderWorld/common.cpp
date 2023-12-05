@@ -1,7 +1,7 @@
 #include "common.hpp"
 #include "itemCommon.hpp"
 
-int stageLevel = 3;
+int stageLevel = 1;
 
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
