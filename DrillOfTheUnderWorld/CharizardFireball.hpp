@@ -22,7 +22,7 @@ public:
 	int fireground[3][3];
 
 	// vector for fireground image indexs
-	vector<int> fireground_indexs;
+	vector<int> fireground_indexes;
 
 public:
 	// starting pos(x,y)
@@ -37,6 +37,8 @@ public:
 	void initFireground();
 	void makeFireground();
 	void eraseFireground();
+
+	int getDistance(int x1, int x2, int y1, int y2);
 };
 
 CharizardFireball::CharizardFireball(int x, int y) : NPC(x, y, 0, 20, 1) {
@@ -58,32 +60,24 @@ CharizardFireball::CharizardFireball(int x, int y) : NPC(x, y, 0, 20, 1) {
 	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
 }
 
+int CharizardFireball::getDistance(int x1, int y1, int x2, int y2) {
+	return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+}
+
 // check if PC is on Fireground of each Fireball
 bool CharizardFireball::PCNear() {
-	int PC_X = convertPosToInfoX(imageLayer.images[0].x);
-	int PC_Y = convertPosToInfoY(imageLayer.images[0].y);
+	int PC_X = imageLayer.images[0].x;
+	int PC_Y = imageLayer.images[0].y;
 
-	int FIREGROUND_Y = y - BLOCKSIZE;
-	int FIREGROUND_X = x - BLOCKSIZE;
+	// if two circles contact each other 
+	for (int i = 0; i < fireground_indexes.size(); i++) {
+		Image curground = imageArray[fireground_indexes[i]];
+		// circle's center point
+		int CENTER_X = curground.x - BLOCKSIZE / 2;
+		int CENTER_Y = curground.y - BLOCKSIZE / 2;
 
-	// first fireground index from 9 square area
-	int startX = convertPosToInfoX(FIREGROUND_X);
-	int startY = convertPosToInfoY(FIREGROUND_Y);
-
-	for (int i = 0; i < 3; i++) {
-		for (int k = 0; k < 3; k++) {
-			if (fireground[i][k] == 1) {
-				for (int curY = startY + BLOCKSIZE * i; curY < startY + BLOCKSIZE; curY++) {
-					for (int curX = startX + BLOCKSIZE * k; curX < startX + BLOCKSIZE; curX++) {
-						for (int dy = 0; dy < BLOCKSIZE; dy++) {
-							for (int dx = 0; dx < BLOCKSIZE; dx++) {
-								if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
-								if (curX == PC_X + dx && curY == PC_Y + dy) return true;
-							}
-						}
-					}
-				}
-			}
+		if (getDistance(PC_X, CENTER_X, PC_Y, CENTER_Y) < BLOCKSIZE) {
+			return true;
 		}
 	}
 	return false;
@@ -92,23 +86,26 @@ bool CharizardFireball::PCNear() {
 // this lives until eraseFireground
 void CharizardFireball::move() {
 
+	// check the 9 blocks of fireground area
 	if (PCNear()) {
 		attack();
 	}
 
-	if (collisionCheck(x + dx, y + dy)) {
-		cnt = movingtime;
-	}
-
 	if (cnt < movingtime) {
-		// update bullet position
-		imageLayer.images[imageidx].x += dx;
-		imageLayer.images[imageidx].y += dy;
+		if (collisionCheck(x + dx, y + dy)) {
+			cnt = movingtime;
+		}
+		else {
+			// constant direction moving
+			imageLayer.images[imageidx].x += dx;
+			imageLayer.images[imageidx].y += dy;
 
-		x = imageLayer.images[imageidx].x;
-		y = imageLayer.images[imageidx].y;
+			x = imageLayer.images[imageidx].x;
+			y = imageLayer.images[imageidx].y;
+		}
 	}
-	else if (cnt == movingtime) {
+
+	if (cnt == movingtime) {
 		makeFireground();
 	}
 	else if (cnt > movingtime + FIREGROUND_SEC) {
@@ -128,6 +125,7 @@ void CharizardFireball::initFireground() {
 			fireground[i][k] = rand() % 2;
 		}
 	}
+	// center is always 1
 	fireground[1][1] = 1;
 }
 
@@ -136,35 +134,52 @@ void CharizardFireball::makeFireground() {
 	int startX = x - BLOCKSIZE;
 	int startY = y - BLOCKSIZE;
 
-	int infoX = convertPosToInfoX(startX);
-	int infoY = convertPosToInfoY(startY);
+	//int infoX = convertPosToInfoX(startX);
+	//int infoY = convertPosToInfoY(startY);
 
+	int curX, curY;
+
+	// i is y and k is x
 	for (int i = 0; i < 3; i++) {
 		for (int k = 0; k < 3; k++) {
-			if (blockInfo[startY + BLOCKSIZE * i][startX + BLOCKSIZE * k] == 0)
-				if (fireground[i][k]) {
-					fireground_indexs.push_back(imageLayer.imageCount);
-					imageArray[imageLayer.imageCount++] = { bmpNameFireground, startX + BLOCKSIZE * i, startY + BLOCKSIZE * k, 1 };
+
+			if (fireground[i][k] == 0) continue;
+			curY = startY + BLOCKSIZE * i;
+			curX = startX + BLOCKSIZE * k;
+
+			// check range for outofbounds
+			if (curX < BLOCKSIZE || curX > 1200 - BLOCKSIZE || curY < BLOCKSIZE || curY > 1200 - BLOCKSIZE) continue;
+
+			for (int dy = 0; dy < BLOCKSIZE; dy++) {
+				for (int dx = 0; dx < BLOCKSIZE; dx++) {
+					if (blockInfo[convertPosToInfoY(curY + dy)][convertPosToInfoX(curX + dx)] != 0) {
+						fireground[i][k] = 0;
+						goto skip;
+					}
 				}
+			}
+
+		skip:
+			if (fireground[i][k]) {
+				fireground_indexes.push_back(imageLayer.imageCount);
+				imageArray[imageLayer.imageCount++] = { bmpNameFireground, curX, curY, 1 };
+			}
 		}
 	}
+
 	// always change the ceneter image to fireground image
+	// else fireball image is left
 	imageArray[imageidx].fileName = bmpNameFireground;
 }
 
 void CharizardFireball::eraseFireground() {
 
-	for (int i = 0; i < fireground_indexs.size(); i++) {
-		imageArray[fireground_indexs[i]].fileName = bmpNameNull;
+	// make all the firegrounds images NULL
+	for (int i = 0; i < fireground_indexes.size(); i++) {
+		imageArray[fireground_indexes[i]].fileName = bmpNameNull;
 	}
 
-	// this code is for Charizard checkBullets erase finished fireground
-	for (int i = 0; i < 3; i++) {
-		for (int k = 0; k < 3; k++) {
-			fireground[i][k] = 0;
-		}
-	}
-
+	// make the fireball images NULL
 	imageArray[imageidx].fileName = bmpNameNull;
 }
 
