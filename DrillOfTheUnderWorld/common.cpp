@@ -1596,3 +1596,9 @@ void setHiddenAreaPos() {
 	}
 }
 
+void renderImageLayer() {
+	imageLayer.renderAll(&imageLayer);
+}
+void renderTargetLayer() {
+	targetLayer->renderAll(targetLayer);
+}

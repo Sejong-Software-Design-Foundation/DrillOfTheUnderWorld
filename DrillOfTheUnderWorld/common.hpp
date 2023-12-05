@@ -316,4 +316,7 @@ extern int index_Safety_Object_Start;
 std::vector<int> getRandomHiddenAreaPos();
 void setHiddenAreaPos();
 
+void renderImageLayer();
+void renderTargetLayer();
+
 #endif COMMON_HPP

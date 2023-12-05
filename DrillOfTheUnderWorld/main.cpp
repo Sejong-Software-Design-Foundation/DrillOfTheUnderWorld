@@ -8,6 +8,7 @@
 #include "itemCommon.hpp"
 #include "RawkHawk.hpp"
 #include "Charizard.hpp"
+#include <thread>
 
 int main()
 {
@@ -250,9 +251,10 @@ int main()
       }
       else if (isOnArea)
       { // PC??�럾? ?????洹먮�???????�츎 ?롪퍔???
-         targetLayer->renderAll(targetLayer);
-         drawUI(); // ?????洹먮�??UI????�갭�?????�??
-         printStoneStatus(pc.getStone());
+         //targetLayer->renderAll(targetLayer);
+         thread renderThread(&renderTargetLayer);
+         renderThread.join();
+         drawUI();
          if (isNormalArea)
          { // PC??�럾? ?�? ?????洹먮�???????�츎 ?롪퍔???
             // QuestionBlock ?꾩룆踰▼�???諛댁?????�???袁⑤???
@@ -326,8 +328,12 @@ int main()
                      rewardUI();
                      break;
                   case SPACE:
-                     COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                     pc.dig(targetPos.X, targetPos.Y);
+                  {
+                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+                      digThread.detach();
+                      //pc.dig(targetPos.X, targetPos.Y);
+                  }
                      break;
                   case O:
                      pc.setHP(pc.getHP() - 10);
@@ -397,9 +403,13 @@ int main()
                      rewardUI();
                      break;
                   case SPACE:
-                     COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                     pc.dig(targetPos.X, targetPos.Y);
-                     break;
+                  {
+                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+                      digThread.detach();
+                      //pc.dig(targetPos.X, targetPos.Y);
+                  }
+                  break;
                   }
                   if (key)
                      updateCharacterStatusInArea();
@@ -514,9 +524,13 @@ int main()
                      rewardUI();
                      break;
                   case SPACE:
-                     COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                     pc.dig(targetPos.X, targetPos.Y);
-                     break;
+                  {
+                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+                      digThread.detach();
+                      //pc.dig(targetPos.X, targetPos.Y);
+                  }
+                  break;
                   case O:
                      pc.setHP(pc.getHP() - 10);
                      break;
@@ -589,9 +603,13 @@ int main()
                      rewardUI();
                      break;
                   case SPACE:
-                     COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                     pc.dig(targetPos.X, targetPos.Y);
-                     break;
+                  {
+                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+                      digThread.detach();
+                      //pc.dig(targetPos.X, targetPos.Y);
+                  }
+                  break;
                   case O:
                      pc.setHP(pc.getHP() - 10);
                      break;

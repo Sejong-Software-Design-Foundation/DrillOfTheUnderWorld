@@ -2,6 +2,7 @@
 #include <string>
 //#include "Item.hpp"
 #include "common.hpp"
+#include <thread>
 
 using namespace std;
 
@@ -19,46 +20,46 @@ void PC::vibe() {
 	if (curDirection == 0) {
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 		imageLayer.images[0].x += 16;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 	}
 	else if (curDirection == 2) {
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 		imageLayer.images[0].x -= 16;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 	}
 	else if (curDirection == 3) {
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 		imageLayer.images[0].y -= 16;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 	}
 	else {
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 		imageLayer.images[0].y += 16;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
-		printStoneStatus(getStone());
+		updateCharacterStatusInArea();
 	}
 }
 
