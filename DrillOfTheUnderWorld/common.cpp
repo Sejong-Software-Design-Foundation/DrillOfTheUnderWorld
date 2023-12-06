@@ -1364,7 +1364,7 @@ void rewardUI() {
 	targetLayer->renderAll(targetLayer);
 
 	int num = 0;
-	if (index1 == 0) num = rand() % 3;
+	if (index1 == 0) num = rand() % 2 + 1;
 	else if (index1 == 1) num = rand() % 11 + (-5);
 	if (index2 == 0) pc.setAtkLev(pc.getAtkLev() + num);
 	else if (index2 == 1) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
@@ -1529,12 +1529,20 @@ void printWarning(int curHP) {
 }
 
 void getMoleSpace() {
-	molePosX = ((rand() % 23 + 1) * BLOCKSIZE + AREA_ORIGIN_X);
-	molePosY = ((rand() % 23 + 1) * BLOCKSIZE + AREA_ORIGIN_Y);
+	molePosX = ((rand() % 22 + 1) * BLOCKSIZE + AREA_ORIGIN_X);
+	molePosY = ((rand() % 21 + 3) * BLOCKSIZE + AREA_ORIGIN_Y);
 	int infoX = convertPosToInfoX(molePosX);
 	int infoY = convertPosToInfoY(molePosY);
 	if (blockInfo[infoY][infoX] != 2) getMoleSpace();
 	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
+	imageArray[imageIndex].fileName = bmpNameNull;
+	for (int y = infoY; y < infoY + BLOCKSIZE; y++) {
+		for (int x = infoX; x < infoX + BLOCKSIZE; x++) {
+			blockInfo[y][x] = 0;
+		}
+	}
+	infoX += BLOCKSIZE;
+	imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
 	imageArray[imageIndex].fileName = bmpNameNull;
 	for (int y = infoY; y < infoY + BLOCKSIZE; y++) {
 		for (int x = infoX; x < infoX + BLOCKSIZE; x++) {

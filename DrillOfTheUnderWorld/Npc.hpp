@@ -31,7 +31,7 @@ public:
     void NPCTrackingMovement(int speed);
     void NPCBossMovement(int speed);
   
-    void NPCHit(int atkLev);
+    virtual void NPCHit(int atkLev);
     int getMaxHP();
 };
 

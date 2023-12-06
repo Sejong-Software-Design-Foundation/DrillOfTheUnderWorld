@@ -326,14 +326,24 @@ void Mineral::getCluster() {
 	}
 	for (int i = 0;i < 3;i++) {
 		for (int j = 0;j < 3;j++) {
-			int r = rand() % 4;
+			int r = rand() % 100;
 			int x = clusterX + j * BLOCKSIZE;
 			int y = clusterY + i * BLOCKSIZE;
-			switch (r) {
-			case 0: GenerateBronze(x, y); break;
-			case 1: GenerateSilver(x, y); break;
-			case 2: GenerateGold(x, y); break;
-			case 3: GenerateDiamond(x, y); break;
+			if (stageLevel == 1) {
+				if (0<=r && r<=40) GenerateBronze(x, y);
+				else if (r <= 70) GenerateSilver(x, y);
+				else GenerateGold(x, y);
+			}
+			else if (stageLevel == 2) {
+				if (0 <= r && r <= 20) GenerateBronze(x, y);
+				else if (r <= 50) GenerateSilver(x, y);
+				else if (r <= 80) GenerateGold(x, y);
+				else GenerateDiamond(x, y);
+			}
+			else if (stageLevel == 3) {
+				if (r <= 30) GenerateSilver(x, y);
+				else if (r <= 60) GenerateGold(x, y);
+				else GenerateDiamond(x, y);
 			}
 		}
 	}
