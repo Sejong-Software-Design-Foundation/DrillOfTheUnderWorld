@@ -30,7 +30,7 @@ public:
 	void move();
 	void attack() ;
 	void ultimate();
-	void NPCHit(int AtkLev);
+	void NPCHit(int atkLev);
 	void AfterDead();
 	void updateHPBar();
 	int getMaxHP();
@@ -109,8 +109,8 @@ void EmceeTheShyGuy::ultimate() {
 		new_angle += angle;
 	}
 }
-void EmceeTheShyGuy::NPCHit(int AtkLev) {
-	NPC::NPCHit(AtkLev);
+void EmceeTheShyGuy::NPCHit(int atkLev) {
+	NPC::NPCHit(atkLev);
 	updateHPBar();
 	char bmpNameHit[] = "EmceeTheShyGuyHit.bmp";
 	imageArray[imageidx].fileName = bmpNameHit;

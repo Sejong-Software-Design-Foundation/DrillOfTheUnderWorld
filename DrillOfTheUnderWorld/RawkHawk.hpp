@@ -23,7 +23,7 @@ public:
     void move();
     void attack();
 
-    void NPCHit(int AtkLev);
+    void NPCHit(int atkLev);
     void AfterDead();
     void updateHPBar();
 };
@@ -78,12 +78,12 @@ void RawkHawk::attack() {
     pc.setHP(pc.getHP() - attack_damage);
 }
 
-void RawkHawk::NPCHit(int AtkLev) {
+void RawkHawk::NPCHit(int atkLev) {
     // if RawkHawk is digging he's not attackable
     if (imageArray[imageidx].fileName == bmpNameRawkHawk_digging) return;
 
-    NPC::NPCHit(AtkLev);
-    updateHPBar();
+    NPC::NPCHit(atkLev);
+    this->updateHPBar();
     char bmpNameHit[] = "RawkHawkHit.bmp";
     imageArray[imageidx].fileName = bmpNameHit;
     imageLayer.renderAll(&imageLayer);

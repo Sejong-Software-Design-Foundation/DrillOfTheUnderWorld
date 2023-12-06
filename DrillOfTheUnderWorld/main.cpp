@@ -84,6 +84,9 @@ int main()
    {
       if (isOnStage)
       { // PC??�럾? ????�??? 嶺뚮??��?�굢??브�????濡ル�??롪퍔???
+          for (int i = 0;i < generatedBatList.size();i++) {
+              imageArray[generatedBatList[i]->imageidx].fileName = bmpNameNull;
+         }
          generatedBatList.clear();
          imageArray[ladder->imageidx].isHide = 0;
          imageArray[button1->imageidx].isHide = 1;
@@ -134,8 +137,10 @@ int main()
                   // Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  getMoleSpace();
-                  mole->NPCSetPosition(molePosX, molePosY);
+                  if (stageLevel > 1) {
+                      getMoleSpace();
+                      mole->NPCSetPosition(molePosX, molePosY);
+                  }
                   Mineral *mineral = new Mineral();
                   setBedrock(3);
                   mineral->getCluster();
@@ -177,9 +182,10 @@ int main()
                   // Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  getMoleSpace();
-                  mole->NPCSetPosition(molePosX, molePosY);
-
+                  if (stageLevel > 1) {
+                      getMoleSpace();
+                      mole->NPCSetPosition(molePosX, molePosY);
+                  }
                   imageArray[ladder->imageidx].isHide = 1;
                   Mineral *mineral = new Mineral(); // stageLevel ????
                   setBedrock(3);
@@ -200,8 +206,10 @@ int main()
                   // Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  getMoleSpace();
-                  mole->NPCSetPosition(molePosX, molePosY);
+                  if (stageLevel > 1) {
+                      getMoleSpace();
+                      mole->NPCSetPosition(molePosX, molePosY);
+                  }
                   setBedrock(3);
                   mineral->getCluster();
                   mineral->getCluster();
@@ -274,7 +282,7 @@ int main()
             // mole->move();
             bat->move();
             ladder->move();
-            mole->move();
+            if (stageLevel > 1) mole->move();
             // Emcee->move();
             //  ????�텠??????�졑 ???�먮�?
             for (int i = 0; i < 10; i++)
@@ -467,7 +475,7 @@ int main()
                ladder->move();
             }
             bat->move();
-            mole->move();
+            if (stageLevel > 1) mole->move();
             // Emcee->move();
             button1->move();
             button2->move();
@@ -550,7 +558,7 @@ int main()
             // mole->move();
             bat->move();
             ladder->move();
-            mole->move();
+            if (stageLevel > 1) mole->move();
             // Emcee->move();
             for (int i = 0; i < 10; i++)
             {

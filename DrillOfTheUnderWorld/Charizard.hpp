@@ -29,7 +29,7 @@ public:
     void move();
     void attack();
 
-    void NPCHit(int AtkLev);
+    void NPCHit(int atkLev);
     void AfterDead();
     void updateHPBar();
 };
@@ -90,8 +90,8 @@ void Charizard::attack() {
     }
 }
 
-void Charizard::NPCHit(int AtkLev) {
-    NPC::NPCHit(AtkLev);
+void Charizard::NPCHit(int atkLev) {
+    NPC::NPCHit(atkLev);
     updateHPBar();
 
     char bmpNameHit[] = "CharizardHit.bmp";
