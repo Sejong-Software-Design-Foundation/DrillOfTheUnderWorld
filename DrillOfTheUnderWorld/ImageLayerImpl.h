@@ -75,7 +75,7 @@ extern "C" {
 
 	//목표DC에 소스DC를 복사함
 	inline void applyToDC(ImageLayer* self, HDC dstDC, HDC srcDC) {
-		BitBlt(dstDC, self->startPosX, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+		BitBlt(dstDC, self->startPosX, 0, self->width, self->height,
 			srcDC, 0, 0, SRCCOPY);
 	}
 

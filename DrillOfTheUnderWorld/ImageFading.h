@@ -22,8 +22,8 @@ extern "C" {
 	inline void _fade(ImageLayer* self, HDC consoleDC, HDC backDC, BLENDFUNCTION bf, int alpha) {
 		HDC alphaDC = createNewBackDC(self);
 		bf.SourceConstantAlpha = alpha;
-		AlphaBlend(alphaDC, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-			backDC, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, bf);
+		AlphaBlend(alphaDC, 0, 0, self->width, self->height,
+			backDC, 0, 0, self->width, self->height, bf);
 		applyToDC(self, consoleDC, alphaDC);
 		DeleteDC(alphaDC);
 		Sleep(FADING_DELAY);
