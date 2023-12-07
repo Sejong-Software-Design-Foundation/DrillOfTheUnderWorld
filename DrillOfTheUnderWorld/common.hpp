@@ -40,7 +40,7 @@ extern "C" {
 #define AREA_ORIGIN_Y 336
 #define AREA_WIDTH 25
 #define AREA_HEIGHT 25
-#define STAGE_ORIGIN_X 600
+#define STAGE_ORIGIN_X 480
 #define STAGE_ORIGIN_Y 240
 #define AREA_BLOCK_SIZE 144
 #define STAGE_EXTRA_IMAGE_COUNT 3
@@ -59,7 +59,19 @@ extern "C" {
 #define REWARD_DIAMOND = 100
 #define REWARD_POSSION = 50
 
+#define DEFAULT_LAYER_MARGIN_X 640 //5:8∫Ò¿≤ π›øµ : 400 -> 640
+
 extern int stageLevel;
+
+extern char bgmName[];
+extern char bgmArea[];
+extern char bgmBoss[];
+extern char bgmStage[];
+extern char bgmSafety[];
+
+extern char bgmExplosion[];
+extern char bgmClear[];
+extern char bgmBuy[];
 
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
@@ -158,24 +170,24 @@ extern char bmpNameStar3[];
 extern char bmpBossHPName[];
 
 // BLOCK BMP
-extern char bmpStoneBlockName[];
-extern char bmpBrokenStoneBlockName[];
+extern char bmpStoneBlockName[3][40];
+extern char bmpBrokenStoneBlockName[3][40];
 
 // ORE BMP
-extern char bmpNameBronzeOre1[];
-extern char bmpNameBronzeOre2[];
-extern char bmpNameSilverOre1[];
-extern char bmpNameSilverOre2[];
-extern char bmpNameGoldOre1[];
-extern char bmpNameGoldOre2[];
-extern char bmpNameDiamondOre1[];
-extern char bmpNameDiamondOre2[];
-extern char bmpNameOrichalcumOre1[];
-extern char bmpNameOrichalcumOre2[];
-extern char bmpNameBrokenBronzeOre[];
-extern char bmpNameBrokenSilverOre[];
-extern char bmpNameBrokenGoldOre[];
-extern char bmpNameBrokenDiamondOre[];
+extern char bmpNameBronzeOre1[3][40];
+extern char bmpNameBronzeOre2[3][40];
+extern char bmpNameSilverOre1[3][40];
+extern char bmpNameSilverOre2[3][40];
+extern char bmpNameGoldOre1[3][40];
+extern char bmpNameGoldOre2[3][40];
+extern char bmpNameDiamondOre1[3][40];
+extern char bmpNameDiamondOre2[3][40];
+extern char bmpNameOrichalcumOre1[3][40];
+extern char bmpNameOrichalcumOre2[3][40];
+extern char bmpNameBrokenBronzeOre[3][40];
+extern char bmpNameBrokenSilverOre[3][40];
+extern char bmpNameBrokenGoldOre[3][40];
+extern char bmpNameBrokenDiamondOre[3][40];
 
 // MINERAL BMP
 extern char bmpNameBronzeMineral[];
@@ -227,6 +239,8 @@ extern char bmpPrisonerShacklesName[];
 extern char bmpCursedTotemName[];
 extern char bmpAncientVirusName[];
 extern char bmpCaveSnakeName[];
+
+extern char bmpBackgroundTestName[];
 
 // ?àÎì† ?êÏñ¥Î¶¨Ïñ¥ Í¥ÄÎ¶?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
@@ -315,5 +329,14 @@ extern int index_Safety_Object_Start;
 
 std::vector<int> getRandomHiddenAreaPos();
 void setHiddenAreaPos();
+
+void renderImageLayer();
+void renderTargetLayer();
+
+extern ImageLayer gameStartLayer;
+extern ImageLayer gameOverLayer;
+
+void printGameStart();
+void printGameOver();
 
 #endif COMMON_HPP

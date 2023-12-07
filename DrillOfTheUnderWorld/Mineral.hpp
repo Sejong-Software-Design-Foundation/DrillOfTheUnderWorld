@@ -21,8 +21,6 @@ public:
 	void GenerateGold(int x, int y);
 	void GenerateDiamond(int x, int y);
 	void getCluster();
-	void setStageLevel(int l);
-	int getStageLevel();
 };
 
 
@@ -57,8 +55,8 @@ void Mineral::GenerateBronze() {
 						blockInfo[curY][curX] = BRONZE;
 					}
 				}
-				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre1;
-				else imageLayer.images[imageIndex].fileName = bmpNameBronzeOre2;
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre1[stageLevel - 1];
+				else imageLayer.images[imageIndex].fileName = bmpNameBronzeOre2[stageLevel - 1];
 				break;
 			}
 		}
@@ -96,8 +94,8 @@ void Mineral::GenerateSilver() {
 						blockInfo[curY][curX] = SILVER;
 					}
 				}
-				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameSilverOre1;
-				else imageLayer.images[imageIndex].fileName = bmpNameSilverOre2;
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameSilverOre1[stageLevel - 1];
+				else imageLayer.images[imageIndex].fileName = bmpNameSilverOre2[stageLevel - 1];
 
 				break;
 			}
@@ -135,8 +133,8 @@ void Mineral::GenerateGold() {
 						blockInfo[curY][curX] = GOLD;
 					}
 				}
-				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameGoldOre1;
-				else imageLayer.images[imageIndex].fileName = bmpNameGoldOre2;
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameGoldOre1[stageLevel - 1];
+				else imageLayer.images[imageIndex].fileName = bmpNameGoldOre2[stageLevel - 1];
 				break;
 			}
 		}
@@ -174,8 +172,8 @@ void Mineral::GenerateDiamond() {
 						blockInfo[curY][curX] = DIAMOND;
 					}
 				}
-				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre1;
-				else imageLayer.images[imageIndex].fileName = bmpNameDiamondOre2;
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre1[stageLevel - 1];
+				else imageLayer.images[imageIndex].fileName = bmpNameDiamondOre2[stageLevel - 1];
 				break;
 			}
 		}
@@ -206,8 +204,8 @@ void Mineral::GenerateOrichalcum() {
 						blockInfo[curY][curX] = ORICHALCUM;
 					}
 				}
-				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameOrichalcumOre1;
-				else imageLayer.images[imageIndex].fileName = bmpNameOrichalcumOre2;
+				if (i % 2)	imageLayer.images[imageIndex].fileName = bmpNameOrichalcumOre1[stageLevel - 1];
+				else imageLayer.images[imageIndex].fileName = bmpNameOrichalcumOre2[stageLevel - 1];
 				break;
 			}
 		}
@@ -266,7 +264,7 @@ void Mineral::GenerateBronze(int x, int y) {
 	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre1;
+	imageLayer.images[imageIndex].fileName = bmpNameBronzeOre2[stageLevel - 1];
 }
 
 void Mineral::GenerateSilver(int x, int y) {
@@ -279,7 +277,7 @@ void Mineral::GenerateSilver(int x, int y) {
 	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-	imageLayer.images[imageIndex].fileName = bmpNameSilverOre1;
+	imageLayer.images[imageIndex].fileName = bmpNameSilverOre1[stageLevel - 1];
 }
 void Mineral::GenerateGold(int x, int y) {
 	int infoX = convertPosToInfoX(x);
@@ -291,7 +289,7 @@ void Mineral::GenerateGold(int x, int y) {
 	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-	imageLayer.images[imageIndex].fileName = bmpNameGoldOre1;
+	imageLayer.images[imageIndex].fileName = bmpNameGoldOre2[stageLevel - 1];
 }
 
 void Mineral::GenerateDiamond(int x, int y) {
@@ -304,7 +302,7 @@ void Mineral::GenerateDiamond(int x, int y) {
 	}
 
 	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
-	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre1;
+	imageLayer.images[imageIndex].fileName = bmpNameDiamondOre1[stageLevel - 1];
 }
 void Mineral::getCluster() {
 	int clusterX;
@@ -328,14 +326,24 @@ void Mineral::getCluster() {
 	}
 	for (int i = 0;i < 3;i++) {
 		for (int j = 0;j < 3;j++) {
-			int r = rand() % 4;
+			int r = rand() % 100;
 			int x = clusterX + j * BLOCKSIZE;
 			int y = clusterY + i * BLOCKSIZE;
-			switch (r) {
-			case 0: GenerateBronze(x, y); break;
-			case 1: GenerateSilver(x, y); break;
-			case 2: GenerateGold(x, y); break;
-			case 3: GenerateDiamond(x, y); break;
+			if (stageLevel == 1) {
+				if (0<=r && r<=40) GenerateBronze(x, y);
+				else if (r <= 70) GenerateSilver(x, y);
+				else GenerateGold(x, y);
+			}
+			else if (stageLevel == 2) {
+				if (0 <= r && r <= 20) GenerateBronze(x, y);
+				else if (r <= 50) GenerateSilver(x, y);
+				else if (r <= 80) GenerateGold(x, y);
+				else GenerateDiamond(x, y);
+			}
+			else if (stageLevel == 3) {
+				if (r <= 30) GenerateSilver(x, y);
+				else if (r <= 60) GenerateGold(x, y);
+				else GenerateDiamond(x, y);
 			}
 		}
 	}

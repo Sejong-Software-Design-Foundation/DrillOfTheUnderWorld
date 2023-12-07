@@ -8,20 +8,20 @@
 #include "itemCommon.hpp"
 #include "RawkHawk.hpp"
 #include "Charizard.hpp"
+#include <thread>
 
 int main()
 {
    initialize();
 
+   gameStartLayer.initialize(&gameStartLayer);
+   gameOverLayer.initialize(&gameOverLayer);
    stageLayer.initialize(&stageLayer);
    imageLayer.initialize(&imageLayer);
    rewardLayer.initialize(&rewardLayer);
    safetyLayer.initialize(&safetyLayer);
    rShopLayer.initialize(&rShopLayer);
    lShopLayer.initialize(&lShopLayer);
-
-   char bgmName[] = "start_bgm.wav";
-   playBGM(bgmName);
 
    imageArray[0] = {bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1};
    imageLayer.images = imageArray;
@@ -75,21 +75,37 @@ int main()
       Boss = new EmceeTheShyGuy(-BLOCKSIZE * EMCEE_SCALE, -BLOCKSIZE * EMCEE_SCALE);
    Mole *mole = new Mole(-48, -48);
 
+   
+   /*
+   
    targetLayer = &stageLayer;
    targetLayer->fadeIn(targetLayer, NULL);
    targetLayer->renderAll(targetLayer);
+   
+   */
 
+   //while (1) { printf("1"); }
+   if (stageLevel == 1) printGameStart();
+   else {
+       targetLayer = &stageLayer;
+       targetLayer->fadeIn(targetLayer, NULL);
+       targetLayer->renderAll(targetLayer);
+   }
+   playBGM(bgmStage);
    while (1)
    {
       if (isOnStage)
       { // PC??�럾? ????�??? 嶺뚮??��?�굢??브�????濡ル�??롪퍔???
+          for (int i = 0;i < generatedBatList.size();i++) {
+              imageArray[generatedBatList[i]->imageidx].fileName = bmpNameNull;
+         }
          generatedBatList.clear();
          imageArray[ladder->imageidx].isHide = 0;
          imageArray[button1->imageidx].isHide = 1;
          imageArray[button2->imageidx].isHide = 1;
          imageArray[button3->imageidx].isHide = 1;
 
-         updateCharacterStatus(); // PC ???�객?�띄�??�윪??????�몥??袁⑤�?
+         //updateCharacterStatus(); // PC ???�객?�띄�??�윪??????�몥??袁⑤�?
          while (_kbhit() != 0)
          {
             int key = _getch();
@@ -133,8 +149,10 @@ int main()
                   // Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  getMoleSpace();
-                  mole->NPCSetPosition(molePosX, molePosY);
+                  if (stageLevel > 1) {
+                      getMoleSpace();
+                      mole->NPCSetPosition(molePosX, molePosY);
+                  }
                   Mineral *mineral = new Mineral();
                   setBedrock(3);
                   mineral->getCluster();
@@ -176,9 +194,10 @@ int main()
                   // Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  getMoleSpace();
-                  mole->NPCSetPosition(molePosX, molePosY);
-
+                  if (stageLevel > 1) {
+                      getMoleSpace();
+                      mole->NPCSetPosition(molePosX, molePosY);
+                  }
                   imageArray[ladder->imageidx].isHide = 1;
                   Mineral *mineral = new Mineral(); // stageLevel ????
                   setBedrock(3);
@@ -199,8 +218,10 @@ int main()
                   // Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
                   bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  getMoleSpace();
-                  mole->NPCSetPosition(molePosX, molePosY);
+                  if (stageLevel > 1) {
+                      getMoleSpace();
+                      mole->NPCSetPosition(molePosX, molePosY);
+                  }
                   setBedrock(3);
                   mineral->getCluster();
                   mineral->getCluster();
@@ -212,8 +233,11 @@ int main()
                isOnArea = true;
                targetLayer->fadeOut(targetLayer, NULL);
                targetLayer = &imageLayer;
+               stopBGM();
                targetLayer->fadeIn(targetLayer, NULL);
                targetLayer->renderAll(targetLayer);
+               if (isBossArea) playBGM(bgmBoss);
+               else playBGM(bgmArea);
             }
             break;
             case LEFT:
@@ -250,9 +274,10 @@ int main()
       }
       else if (isOnArea)
       { // PC??�럾? ?????洹먮�???????�츎 ?롪퍔???
-         targetLayer->renderAll(targetLayer);
-         drawUI(); // ?????洹먮�??UI????�갭�?????�??
-         printStoneStatus(pc.getStone());
+         //targetLayer->renderAll(targetLayer);
+         thread renderThread(&renderTargetLayer);
+         renderThread.join();
+         drawUI();
          if (isNormalArea)
          { // PC??�럾? ?�? ?????洹먮�???????�츎 ?롪퍔???
             // QuestionBlock ?꾩룆踰▼�???諛댁?????�???袁⑤???
@@ -272,7 +297,7 @@ int main()
             // mole->move();
             bat->move();
             ladder->move();
-            mole->move();
+            if (stageLevel > 1) mole->move();
             // Emcee->move();
             //  ????�텠??????�졑 ???�먮�?
             for (int i = 0; i < 10; i++)
@@ -287,6 +312,8 @@ int main()
                   switch (key)
                   {
                   case S:
+                      stopBGM();
+                      playBGM(bgmStage);
                      isOnStage = true;
                      isOnArea = false;
                      isNormalArea = false;
@@ -323,11 +350,16 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:
-                     COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                     pc.dig(targetPos.X, targetPos.Y);
+                  {
+                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+                      digThread.detach();
+                      //pc.dig(targetPos.X, targetPos.Y);
+                  }
                      break;
                   case O:
                      pc.setHP(pc.getHP() - 10);
@@ -336,7 +368,7 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key)
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);
@@ -358,6 +390,8 @@ int main()
                   switch (key)
                   {
                   case S:
+                      stopBGM();
+                      playBGM(bgmStage);
                      isOnStage = true;
                      isOnArea = false;
                      isMiniGameArea = false;
@@ -394,14 +428,19 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:
-                     COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                     pc.dig(targetPos.X, targetPos.Y);
-                     break;
+                  {
+                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+                      digThread.detach();
+                      //pc.dig(targetPos.X, targetPos.Y);
                   }
-                  if (key)
+                  break;
+                  }
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);
@@ -457,7 +496,7 @@ int main()
                ladder->move();
             }
             bat->move();
-            mole->move();
+            if (stageLevel > 1) mole->move();
             // Emcee->move();
             button1->move();
             button2->move();
@@ -475,6 +514,8 @@ int main()
                   switch (key)
                   {
                   case S:
+                      stopBGM();
+                      playBGM(bgmStage);
                      isOnStage = true;
                      isOnArea = false;
                      isBossArea = false;
@@ -511,12 +552,17 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:
-                     COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                     pc.dig(targetPos.X, targetPos.Y);
-                     break;
+                  {
+                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+                      digThread.detach();
+                      //pc.dig(targetPos.X, targetPos.Y);
+                  }
+                  break;
                   case O:
                      pc.setHP(pc.getHP() - 10);
                      break;
@@ -524,7 +570,7 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key)
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);
@@ -536,7 +582,7 @@ int main()
             // mole->move();
             bat->move();
             ladder->move();
-            mole->move();
+            if (stageLevel > 1) mole->move();
             // Emcee->move();
             for (int i = 0; i < 10; i++)
             {
@@ -550,6 +596,8 @@ int main()
                   switch (key)
                   {
                   case S:
+                      stopBGM();
+                      playBGM(bgmStage);
                      isOnStage = true;
                      isOnArea = false;
                      isFlagArea = false;
@@ -586,12 +634,17 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:
-                     COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                     pc.dig(targetPos.X, targetPos.Y);
-                     break;
+                  {
+                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+                      digThread.detach();
+                      //pc.dig(targetPos.X, targetPos.Y);
+                  }
+                  break;
                   case O:
                      pc.setHP(pc.getHP() - 10);
                      break;
@@ -599,7 +652,7 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key)
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);
@@ -685,6 +738,7 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:
@@ -698,7 +752,7 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key)
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);

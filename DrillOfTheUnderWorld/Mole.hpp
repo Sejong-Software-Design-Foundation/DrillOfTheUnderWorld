@@ -1,7 +1,7 @@
 #ifndef __MOLE_
 #define __MOLE_
 
-#define MOLE_SPEED 48
+#define MOLE_SPEED 24
 
 #include "NPC.hpp"
 
@@ -31,10 +31,19 @@ Mole::Mole(int x, int y) : NPC(x, y, 50, 15, rand() % 4) {
 }
 
 void Mole::move() {
-	if (collisionCheck(x + dx[curDirection] * BLOCKSIZE, y + dy[curDirection] * BLOCKSIZE)) {
+	int nx = x + dx[curDirection] * BLOCKSIZE;
+	int ny = y + dy[curDirection] * BLOCKSIZE;
+	if (NPCSpacePosX <= nx && nx <= NPCSpacePosX + NPCSpaceWidth && NPCSpacePosY <= ny && ny <= NPCSpacePosY + NPCSpaceHeight) {
+		curDirection = (curDirection + 2) % 4;
+		nx = x + dx[curDirection] * BLOCKSIZE;
+		ny = y + dy[curDirection] * BLOCKSIZE;
+	}
+	if (collisionCheck(nx, ny)) {
 		if (moveCnt == 0) {
-			this->dig(x + dx[curDirection] * BLOCKSIZE, y + dy[curDirection] * BLOCKSIZE);
+			this->dig(nx, ny);
+			//this->NPCSetPosition(nx, ny);
 		}
+		else curDirection = rand() % 4;
 	}
     NPCBossMovement(MOLE_SPEED);
 	moveCnt = (moveCnt + 1) % 10;
@@ -63,7 +72,7 @@ void Mole::dig(int x, int y) {
 	}
 	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
 	imageArray[imageidx].fileName = bmpNameMoleDigging;
-	imageArray[imageIndex].fileName = bmpBrokenStoneBlockName;
+	imageArray[imageIndex].fileName = bmpBrokenStoneBlockName[stageLevel - 1];
 	imageLayer.renderAll(&imageLayer);
 	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
 		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {

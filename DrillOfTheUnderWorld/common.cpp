@@ -3,6 +3,16 @@
 
 int stageLevel = 1;
 
+char bgmGameStart[] = "gameStart.wav";
+char bgmName[] = "start_bgm.wav";
+char bgmExplosion[] = "explosion.wav";
+char bgmClear[] = "clear.wav";
+char bgmBuy[] = "buy.wav";
+char bgmArea[] = "areaBGM.wav";
+char bgmBoss[] = "bossBGM.wav";
+char bgmStage[] = "stageBGM.wav";
+char bgmSafety[] = "safetyBGM.wav";
+
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
@@ -144,24 +154,24 @@ char bmpNameStar3[] = "UI_Star3.bmp";
 char bmpBossHPName[] = "BossHP.bmp";
 
 // AREA BLOCK BMP
-char bmpStoneBlockName[] = "block_Stage1_Normal.bmp";
-char bmpBrokenStoneBlockName[] = "block_Stage1_Broken.bmp";
+char bmpStoneBlockName[3][40] = { "block_Stage1_Normal.bmp","block_Stage2_Normal.bmp","block_Stage3_Normal.bmp"};
+char bmpBrokenStoneBlockName[3][40] = { "block_Stage1_Broken.bmp","block_Stage2_Broken.bmp","block_Stage3_Broken.bmp" };
 
 // ORE BMP
-char bmpNameBronzeOre1[] = "block_Stage1_BronzeOre1.bmp";
-char bmpNameBronzeOre2[] = "block_Stage1_BronzeOre2.bmp";
-char bmpNameSilverOre1[] = "block_Stage1_SilverOre1.bmp";
-char bmpNameSilverOre2[] = "block_Stage1_SilverOre2.bmp";
-char bmpNameGoldOre1[] = "block_Stage1_GoldOre1.bmp";
-char bmpNameGoldOre2[] = "block_Stage1_GoldOre2.bmp";
-char bmpNameDiamondOre1[] = "block_Stage1_DiamondOre1.bmp";
-char bmpNameDiamondOre2[] = "block_Stage1_DiamondOre2.bmp";
-char bmpNameOrichalcumOre1[] = "block_Stage1_OrichalcumOre1.bmp";
-char bmpNameOrichalcumOre2[] = "block_Stage1_OrichalcumOre2.bmp";
-char bmpNameBrokenBronzeOre[] = "block_Stage1_Broken_BronzeOre1.bmp";
-char bmpNameBrokenSilverOre[] = "block_Stage1_Broken_SilverOre1.bmp";
-char bmpNameBrokenGoldOre[] = "block_Stage1_Broken_GoldOre1.bmp";
-char bmpNameBrokenDiamondOre[] = "block_Stage1_Broken_DiamondOre1.bmp";
+char bmpNameBronzeOre1[3][40] = { "block_Stage1_BronzeOre1.bmp", "block_Stage2_BronzeOre1.bmp", "block_Stage3_BronzeOre1.bmp" };
+char bmpNameBronzeOre2[3][40] = { "block_Stage1_BronzeOre2.bmp" ,"block_Stage2_BronzeOre2.bmp" ,"block_Stage3_BronzeOre2.bmp" };
+char bmpNameSilverOre1[3][40] = { "block_Stage1_SilverOre1.bmp" ,"block_Stage2_SilverOre1.bmp" ,"block_Stage3_SilverOre1.bmp" };
+char bmpNameSilverOre2[3][40] = { "block_Stage1_SilverOre2.bmp","block_Stage2_SilverOre2.bmp" ,"block_Stage3_SilverOre2.bmp" };
+char bmpNameGoldOre1[3][40] = { "block_Stage1_GoldOre1.bmp" ,"block_Stage2_GoldOre1.bmp" ,"block_Stage3_GoldOre1.bmp" };
+char bmpNameGoldOre2[3][40] = { "block_Stage1_GoldOre2.bmp" ,"block_Stage2_GoldOre2.bmp" ,"block_Stage3_GoldOre2.bmp" };
+char bmpNameDiamondOre1[3][40] = {"block_Stage1_DiamondOre1.bmp" ,"block_Stage2_DiamondOre1.bmp" ,"block_Stage3_DiamondOre1.bmp"};
+char bmpNameDiamondOre2[3][40] = {"block_Stage1_DiamondOre2.bmp" ,"block_Stage2_DiamondOre2.bmp" ,"block_Stage3_DiamondOre2.bmp"};
+char bmpNameOrichalcumOre1[3][40] = { "block_Stage1_OrichalcumOre1.bmp" ,"block_Stage2_OrichalcumOre1.bmp", "block_Stage3_OrichalcumOre1.bmp" };
+char bmpNameOrichalcumOre2[3][40] = { "block_Stage1_OrichalcumOre2.bmp" ,"block_Stage2_OrichalcumOre2.bmp", "block_Stage3_OrichalcumOre2.bmp" };
+char bmpNameBrokenBronzeOre[3][40] = { "block_Stage1_Broken_BronzeOre1.bmp","block_Stage2_Broken_BronzeOre1.bmp","block_Stage3_Broken_BronzeOre1.bmp" };
+char bmpNameBrokenSilverOre[3][40] = { "block_Stage1_Broken_SilverOre1.bmp","block_Stage2_Broken_SilverOre1.bmp","block_Stage3_Broken_SilverOre1.bmp" };
+char bmpNameBrokenGoldOre[3][40] = {"block_Stage1_Broken_GoldOre1.bmp" ,"block_Stage2_Broken_GoldOre1.bmp" ,"block_Stage3_Broken_GoldOre1.bmp"};
+char bmpNameBrokenDiamondOre[3][40] = { "block_Stage1_Broken_DiamondOre1.bmp" ,"block_Stage2_Broken_DiamondOre1.bmp","block_Stage3_Broken_DiamondOre1.bmp" };
 
 // MINERAL BMP
 char bmpNameBronzeMineral[] = "block_MineralBronze.bmp";
@@ -246,6 +256,127 @@ char bmpCursedTotemName[] = "item_CursedTotem.bmp";
 char bmpAncientVirusName[] = "item_AncientVirus.bmp";
 char bmpCaveSnakeName[] = "item_CaveSnake.bmp";
 
+char bmpStart0[] = "st0.bmp";
+char bmpStart1[] = "st1.bmp";
+char bmpStart2[] = "st2.bmp";
+char bmpStart3[] = "st3.bmp";
+char bmpStart4[] = "st4.bmp";
+
+char bmpBackgroundTestName[] = "backgroundTest.bmp";
+
+ImageLayer gameStartLayer = DEFAULT_IMAGE_LAYER;
+Image gameStartArray[10];
+
+ImageLayer gameOverLayer = DEFAULT_IMAGE_LAYER;
+Image gameOverArray[10];
+
+void printGameStart() {
+	gameStartLayer.images = gameStartArray;
+	gameStartLayer.imageCount = 0;
+
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart0, 0, 0, 1};
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart4, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart3, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart2, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart1, 0, 0, 1 };
+
+	targetLayer = &gameStartLayer;
+	targetLayer->fadeIn(targetLayer, NULL);
+	playBGM(bgmGameStart);
+
+	
+	int flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+			if (key) {
+				flags = 0;
+				targetLayer->fadeOut(targetLayer, NULL);
+				gameStartArray[0].fileName = bmpNameNull;
+				gameStartArray[1].fileName = bmpNameNull;
+			}
+		}
+	}
+
+	clock_t start_time = clock();
+	clock_t end_time;
+	double duration;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+
+	flags = 1;
+	int i = 2;
+	while (i < gameStartLayer.imageCount && flags != 0) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+
+			switch (key) {
+			case ESC:
+				flags = 0;
+				break;
+			}
+		}
+		end_time = clock();
+		duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+		if (duration > 3.0)
+		{
+			targetLayer->fadeOut(targetLayer, NULL);
+			gameStartArray[i++].fileName = bmpNameNull;
+			targetLayer->fadeIn(targetLayer, NULL);
+			start_time = end_time;
+		}
+	}
+
+	targetLayer = &stageLayer;
+	targetLayer->fadeIn(targetLayer, NULL);
+	stopBGM();
+}
+
+void printGameOver() {
+	Sleep(1000);
+
+	gameOverLayer.images = gameOverArray;
+	gameOverLayer.imageCount = 0;
+
+	gameOverArray[0] = { bmpStart1, 0, 0, 1 };
+
+	targetLayer = &gameOverLayer;
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+
+
+	int flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+			if (key) {
+				flags = 0;
+				targetLayer->fadeOut(targetLayer, NULL);
+			}
+		}
+	}
+
+
+	isOnStage = true;
+	isOnArea = false;
+	
+	stageLevel = 1;
+	pc.setHP(100);
+	pc.setMaxHP(100);
+	pc.setOxygen(100);
+	pc.setMaxOxygen(100);
+	pc.setFatigue(10);
+	pc.setMaxFatigue(10);
+	pc.setAtkLev(1);
+	pc.setAtkSpdLev(1);
+	pc.setSpdLev(1);
+	pc.setStone(0);
+
+
+	targetLayer = &stageLayer;
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+}
 
 //char bmpSafetyBG[] = "safety_bg.bmp";
 char bmpSafetyBG[] = "bg.bmp";
@@ -282,7 +413,8 @@ void initSafetyImage() {
 void visitSafety() {
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &safetyLayer;
-
+	stopBGM();
+	playBGM(bgmSafety);
 	safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
 	safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
 	safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
@@ -358,10 +490,9 @@ void visitSafety() {
 
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &stageLayer;
-
 	isBossArea = false;
 	isOnStage = true;
-
+	stopBGM();
 	/*targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);*/
 }
@@ -440,11 +571,13 @@ void visitLShop() {
 			case SPACE:
 				if (index == -1) break;
 				else if (index == 0) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item1_price);
 					lShopImageArray[3].fileName = bmpShopItemBoxDisable;
 					if (item2_price > pc.getStone()) lShopImageArray[4].fileName = bmpShopItemBoxDisable;
 				}
 				else if (index == 1) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item2_price);
 					lShopImageArray[4].fileName = bmpShopItemBoxDisable;
 					if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
@@ -484,15 +617,15 @@ void printStatusInLShop(int price1, int price2, int num) {
 	swprintf(numPrice1, sizeof(numPrice1) / sizeof(numPrice1[0]), L"%d", price1);
 	swprintf(numPrice2, sizeof(numPrice2) / sizeof(numPrice2[0]), L"%d", price2);
 
-	printText(targetLayer->_consoleDC, 320, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
-	printText(targetLayer->_consoleDC, 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
-	printText(targetLayer->_consoleDC, 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 240, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 
 	wchar_t info1[100] = L"1, 2 ?´Ïûê ?§Î? ?åÎü¨ ?†ÌÉù, Spaebar?§Î? ?åÎü¨ Íµ¨Îß§?????àÏäµ?àÎã§. ESC?§Î? ?µÌï¥ ?ÅÏ†ê???òÍ∞à ???àÏäµ?àÎã§.";
 	wchar_t info2[100] = L"?åÎ????†ÌÉù?ÖÎãà??";
 
-	if (num == 0) printText(targetLayer->_consoleDC, 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 520);
-	else if (num == 1)  printText(targetLayer->_consoleDC, 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 520);
+	if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 520);
+	else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 520);
 }
 
 void printItemTextInLShop() { 
@@ -501,10 +634,10 @@ void printItemTextInLShop() {
 	wchar_t itemInfo1[100] = L"PC??Ï≤¥Î†•??Î™®Îëê ?åÎ≥µ?úÎã§.";
 	wchar_t itemInfo2[100] = L"PC???∞ÏÜåÍ≤åÏù¥ÏßÄÎ•?Î™®Îëê ?åÎ≥µ?úÎã§.";
 
-	printText(targetLayer->_consoleDC, 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
-	printText(targetLayer->_consoleDC, 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
-	printText(targetLayer->_consoleDC, 1450, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
-	printText(targetLayer->_consoleDC, 1350, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+ + 1450, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 1350, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
 }
 
 void visitRShop() {
@@ -573,18 +706,21 @@ void visitRShop() {
 			case SPACE:
 				if (index == -1) break;
 				else if (index == 0) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item1_price);
 					rShopImageArray[4].fileName = bmpShopItemBoxDisable;
 					if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
 					if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
 				}
 				else if (index == 1) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item2_price);
 					rShopImageArray[5].fileName = bmpShopItemBoxDisable;
 					if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
 					if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
 				}
 				else if (index == 2) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item3_price);
 					rShopImageArray[6].fileName = bmpShopItemBoxDisable;
 					if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
@@ -638,16 +774,16 @@ void printStatusInRShop(int price1, int price2, int price3, int num) {
 	swprintf(numPrice2, sizeof(numPrice2) / sizeof(numPrice2[0]), L"%d", price2);
 	swprintf(numPrice3, sizeof(numPrice3) / sizeof(numPrice3[0]), L"%d", price3);
 
-	printText(targetLayer->_consoleDC, 320, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
-	printText(targetLayer->_consoleDC, 280, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
-	printText(targetLayer->_consoleDC, 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
-	printText(targetLayer->_consoleDC, 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 240, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 280, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
 	wchar_t info1[100] = L"1, 2, 3 ?´Ïûê ?§Î? ?åÎü¨ ?†ÌÉù, Spaebar?§Î? ?åÎü¨ Íµ¨Îß§?????àÏäµ?àÎã§. ESC?§Î? ?µÌï¥ ?ÅÏ†ê???òÍ∞à ???àÏäµ?àÎã§.";
 	wchar_t info2[100] = L"?åÎ????†ÌÉù?ÖÎãà??";
 
-	if (num == 0) printText(targetLayer->_consoleDC, 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
-	else if (num == 1)  printText(targetLayer->_consoleDC, 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
+	if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
+	else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
 }
 
 void printItemTextInRShop() 
@@ -667,14 +803,14 @@ void printItemTextInRShop()
 	stringToWchar(shopItems[1]->getInfo(), itemInfo2, sizeof(itemInfo2) / sizeof(itemInfo2[0]));
 	stringToWchar(shopItems[2]->getInfo(), itemInfo3, sizeof(itemInfo3) / sizeof(itemInfo3[0]));
 
-	printText(targetLayer->_consoleDC, 180, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
-	printText(targetLayer->_consoleDC, 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 180, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
 
-	printText(targetLayer->_consoleDC, 630, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
-	printText(targetLayer->_consoleDC, 550, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 630, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 550, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
 
-	printText(targetLayer->_consoleDC, 1080, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName3);
-	printText(targetLayer->_consoleDC, 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1080, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName3);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
 }
 
 // Î¨∏Ïûê?¥ÏùÑ wchar_t Î∞∞Ïó¥Î°?Î≥Ä?òÌïò???®Ïàò
@@ -826,7 +962,7 @@ void initStageImage() {
 
 	index_StageImages_Start = stageLayer.imageCount;
 	stageImageArray[stageLayer.imageCount++] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
-	stageImageArray[stageLayer.imageCount++] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
+	stageImageArray[stageLayer.imageCount++] = { bmpNameNull, 0 , 0, 1 };
 	if (stageLevel==1) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel1, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 	else if (stageLevel == 2) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel2, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 	else if (stageLevel == 3) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel3, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
@@ -866,7 +1002,7 @@ void initItemImages() {
 void fillBlockImages() { 
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName, x,y,1 };
+			imageArray[imageLayer.imageCount++] = { bmpStoneBlockName[stageLevel-1], x,y,1};
 			blockInfo[convertPosToInfoY(y)][convertPosToInfoX(x)] = 2;
 		}
 	}
@@ -1056,7 +1192,7 @@ void getNewArea() {
 			}
 
 			else {
-				imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
+				imageArray[cnt++] = { bmpStoneBlockName[stageLevel-1], x,y,1};
 				for (int dy = 0;dy < BLOCKSIZE;dy++) {
 					for (int dx = 0;dx < BLOCKSIZE;dx++) {
 						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
@@ -1082,7 +1218,7 @@ void getNewMiniGameArea()
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			imageArray[cnt++] = { bmpStoneBlockName, x,y,1 };
+			imageArray[cnt++] = { bmpStoneBlockName[stageLevel-1], x,y,1};
 			for (int dy = 0;dy < BLOCKSIZE;dy++) {
 				for (int dx = 0;dx < BLOCKSIZE;dx++) {
 					blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
@@ -1364,7 +1500,7 @@ void rewardUI() {
 	targetLayer->renderAll(targetLayer);
 
 	int num = 0;
-	if (index1 == 0) num = rand() % 3;
+	if (index1 == 0) num = rand() % 2 + 1;
 	else if (index1 == 1) num = rand() % 11 + (-5);
 	if (index2 == 0) pc.setAtkLev(pc.getAtkLev() + num);
 	else if (index2 == 1) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
@@ -1378,6 +1514,7 @@ void rewardUI() {
 	}
 	OrichalcumNum = 0;
 	pc.setFatigue(pc.getFatigue() - 1);
+	playBGM(bgmStage);
 }
 
 bool printButtonStageStatus() {
@@ -1529,12 +1666,20 @@ void printWarning(int curHP) {
 }
 
 void getMoleSpace() {
-	molePosX = ((rand() % 23 + 1) * BLOCKSIZE + AREA_ORIGIN_X);
-	molePosY = ((rand() % 23 + 1) * BLOCKSIZE + AREA_ORIGIN_Y);
+	molePosX = ((rand() % 22 + 1) * BLOCKSIZE + AREA_ORIGIN_X);
+	molePosY = ((rand() % 21 + 3) * BLOCKSIZE + AREA_ORIGIN_Y);
 	int infoX = convertPosToInfoX(molePosX);
 	int infoY = convertPosToInfoY(molePosY);
 	if (blockInfo[infoY][infoX] != 2) getMoleSpace();
 	int imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
+	imageArray[imageIndex].fileName = bmpNameNull;
+	for (int y = infoY; y < infoY + BLOCKSIZE; y++) {
+		for (int x = infoX; x < infoX + BLOCKSIZE; x++) {
+			blockInfo[y][x] = 0;
+		}
+	}
+	infoX += BLOCKSIZE;
+	imageIndex = (infoY / BLOCKSIZE) * AREA_WIDTH + (infoX / BLOCKSIZE) + 1;
 	imageArray[imageIndex].fileName = bmpNameNull;
 	for (int y = infoY; y < infoY + BLOCKSIZE; y++) {
 		for (int x = infoX; x < infoX + BLOCKSIZE; x++) {
@@ -1596,3 +1741,9 @@ void setHiddenAreaPos() {
 	}
 }
 
+void renderImageLayer() {
+	imageLayer.renderAll(&imageLayer);
+}
+void renderTargetLayer() {
+	targetLayer->renderAll(targetLayer);
+}
