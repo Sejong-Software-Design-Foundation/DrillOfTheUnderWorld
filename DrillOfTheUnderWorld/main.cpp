@@ -85,7 +85,12 @@ int main()
    */
 
    //while (1) { printf("1"); }
-   printGameStart();
+   if (stageLevel == 1) printGameStart();
+   else {
+       targetLayer = &stageLayer;
+       targetLayer->fadeIn(targetLayer, NULL);
+       targetLayer->renderAll(targetLayer);
+   }
    playBGM(bgmStage);
    while (1)
    {
