@@ -130,6 +130,7 @@ void EmceeTheShyGuy::AfterDead() {
 	char bmpNameHit[] = "EmceeTheShyGuyHit.bmp";
 	imageArray[imageidx].fileName = bmpNameHit;
 	imageLayer.renderAll(&imageLayer);
+	playSound(bgmExplosion);
 	Sleep(1000);
 	for (int i = 0;i < 15;i++) {
 		imageArray[imageidx].fileName = bmpExplodeName[i%5];

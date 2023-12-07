@@ -27,6 +27,7 @@ void Ladder::move() {
 
 void Ladder::attack() {
     if (isFlagArea && pc.getFlagCnt() < 3) return;
+    playSound(bgmClear);
     rewardUI();
 }
 

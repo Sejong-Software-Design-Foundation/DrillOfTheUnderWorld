@@ -14,15 +14,14 @@ int main()
 {
    initialize();
 
+   gameStartLayer.initialize(&gameStartLayer);
+   gameOverLayer.initialize(&gameOverLayer);
    stageLayer.initialize(&stageLayer);
    imageLayer.initialize(&imageLayer);
    rewardLayer.initialize(&rewardLayer);
    safetyLayer.initialize(&safetyLayer);
    rShopLayer.initialize(&rShopLayer);
    lShopLayer.initialize(&lShopLayer);
-
-   char bgmName[] = "start_bgm.wav";
-   playBGM(bgmName);
 
    imageArray[0] = {bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1};
    imageLayer.images = imageArray;
@@ -76,10 +75,18 @@ int main()
       Boss = new EmceeTheShyGuy(-BLOCKSIZE * EMCEE_SCALE, -BLOCKSIZE * EMCEE_SCALE);
    Mole *mole = new Mole(-48, -48);
 
+   
+   /*
+   
    targetLayer = &stageLayer;
    targetLayer->fadeIn(targetLayer, NULL);
    targetLayer->renderAll(targetLayer);
+   
+   */
 
+   //while (1) { printf("1"); }
+   printGameStart();
+   playBGM(bgmStage);
    while (1)
    {
       if (isOnStage)
@@ -213,8 +220,11 @@ int main()
                isOnArea = true;
                targetLayer->fadeOut(targetLayer, NULL);
                targetLayer = &imageLayer;
+               stopBGM();
                targetLayer->fadeIn(targetLayer, NULL);
                targetLayer->renderAll(targetLayer);
+               if (isBossArea) playBGM(bgmBoss);
+               else playBGM(bgmArea);
             }
             break;
             case LEFT:
@@ -289,6 +299,8 @@ int main()
                   switch (key)
                   {
                   case S:
+                      stopBGM();
+                      playBGM(bgmStage);
                      isOnStage = true;
                      isOnArea = false;
                      isNormalArea = false;
@@ -325,6 +337,7 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:
@@ -364,6 +377,8 @@ int main()
                   switch (key)
                   {
                   case S:
+                      stopBGM();
+                      playBGM(bgmStage);
                      isOnStage = true;
                      isOnArea = false;
                      isMiniGameArea = false;
@@ -400,6 +415,7 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:
@@ -485,6 +501,8 @@ int main()
                   switch (key)
                   {
                   case S:
+                      stopBGM();
+                      playBGM(bgmStage);
                      isOnStage = true;
                      isOnArea = false;
                      isBossArea = false;
@@ -521,6 +539,7 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:
@@ -564,6 +583,8 @@ int main()
                   switch (key)
                   {
                   case S:
+                      stopBGM();
+                      playBGM(bgmStage);
                      isOnStage = true;
                      isOnArea = false;
                      isFlagArea = false;
@@ -600,6 +621,7 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:
@@ -703,6 +725,7 @@ int main()
                         pc.move();
                      break;
                   case ESC:
+                      stopBGM();
                      rewardUI();
                      break;
                   case SPACE:

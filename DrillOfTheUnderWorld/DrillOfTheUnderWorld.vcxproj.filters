@@ -409,6 +409,21 @@
     <Image Include="block_Stage2_OrichalcumOre2.bmp">
       <Filter>image</Filter>
     </Image>
+    <Image Include="st0.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="st1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="st2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="st3.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="st4.bmp">
+      <Filter>image</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="image">

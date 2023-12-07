@@ -3,6 +3,16 @@
 
 int stageLevel = 1;
 
+char bgmGameStart[] = "gameStart.wav";
+char bgmName[] = "start_bgm.wav";
+char bgmExplosion[] = "explosion.wav";
+char bgmClear[] = "clear.wav";
+char bgmBuy[] = "buy.wav";
+char bgmArea[] = "areaBGM.wav";
+char bgmBoss[] = "bossBGM.wav";
+char bgmStage[] = "stageBGM.wav";
+char bgmSafety[] = "safetyBGM.wav";
+
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
@@ -246,6 +256,125 @@ char bmpCursedTotemName[] = "item_CursedTotem.bmp";
 char bmpAncientVirusName[] = "item_AncientVirus.bmp";
 char bmpCaveSnakeName[] = "item_CaveSnake.bmp";
 
+char bmpStart0[] = "st0.bmp";
+char bmpStart1[] = "st1.bmp";
+char bmpStart2[] = "st2.bmp";
+char bmpStart3[] = "st3.bmp";
+char bmpStart4[] = "st4.bmp";
+
+ImageLayer gameStartLayer = DEFAULT_IMAGE_LAYER;
+Image gameStartArray[10];
+
+ImageLayer gameOverLayer = DEFAULT_IMAGE_LAYER;
+Image gameOverArray[10];
+
+void printGameStart() {
+	gameStartLayer.images = gameStartArray;
+	gameStartLayer.imageCount = 0;
+
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart0, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart4, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart1, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart2, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart3, 0, 0, 1 };
+
+	targetLayer = &gameStartLayer;
+	targetLayer->fadeIn(targetLayer, NULL);
+	playBGM(bgmGameStart);
+
+	
+	int flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+			if (key) {
+				flags = 0;
+				targetLayer->fadeOut(targetLayer, NULL);
+				gameStartArray[0].fileName = bmpNameNull;
+				gameStartArray[1].fileName = bmpNameNull;
+			}
+		}
+	}
+
+	clock_t start_time = clock();
+	clock_t end_time;
+	double duration;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+
+	flags = 1;
+	int i = 2;
+	while (i < gameStartLayer.imageCount && flags != 0) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+
+			switch (key) {
+			case ESC:
+				flags = 0;
+				break;
+			}
+		}
+		end_time = clock();
+		duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+		if (duration > 3.0)
+		{
+			targetLayer->fadeOut(targetLayer, NULL);
+			gameStartArray[i++].fileName = bmpNameNull;
+			targetLayer->fadeIn(targetLayer, NULL);
+			start_time = end_time;
+		}
+	}
+
+	targetLayer = &stageLayer;
+	targetLayer->fadeIn(targetLayer, NULL);
+	stopBGM();
+}
+
+void printGameOver() {
+	Sleep(1000);
+
+	gameOverLayer.images = gameOverArray;
+	gameOverLayer.imageCount = 0;
+
+	gameOverArray[0] = { bmpStart1, 0, 0, 1 };
+
+	targetLayer = &gameOverLayer;
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+
+
+	int flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+			if (key) {
+				flags = 0;
+				targetLayer->fadeOut(targetLayer, NULL);
+			}
+		}
+	}
+
+
+	isOnStage = true;
+	isOnArea = false;
+	
+	stageLevel = 1;
+	pc.setHP(100);
+	pc.setMaxHP(100);
+	pc.setOxygen(100);
+	pc.setMaxOxygen(100);
+	pc.setFatigue(10);
+	pc.setMaxFatigue(10);
+	pc.setAtkLev(1);
+	pc.setAtkSpdLev(1);
+	pc.setSpdLev(1);
+	pc.setStone(0);
+
+
+	targetLayer = &stageLayer;
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
+}
 
 //char bmpSafetyBG[] = "safety_bg.bmp";
 char bmpSafetyBG[] = "bg.bmp";
@@ -282,7 +411,8 @@ void initSafetyImage() {
 void visitSafety() {
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &safetyLayer;
-
+	stopBGM();
+	playBGM(bgmSafety);
 	safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
 	safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
 	safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
@@ -358,10 +488,9 @@ void visitSafety() {
 
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &stageLayer;
-
 	isBossArea = false;
 	isOnStage = true;
-
+	stopBGM();
 	/*targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);*/
 }
@@ -440,11 +569,13 @@ void visitLShop() {
 			case SPACE:
 				if (index == -1) break;
 				else if (index == 0) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item1_price);
 					lShopImageArray[3].fileName = bmpShopItemBoxDisable;
 					if (item2_price > pc.getStone()) lShopImageArray[4].fileName = bmpShopItemBoxDisable;
 				}
 				else if (index == 1) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item2_price);
 					lShopImageArray[4].fileName = bmpShopItemBoxDisable;
 					if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
@@ -573,18 +704,21 @@ void visitRShop() {
 			case SPACE:
 				if (index == -1) break;
 				else if (index == 0) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item1_price);
 					rShopImageArray[4].fileName = bmpShopItemBoxDisable;
 					if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
 					if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
 				}
 				else if (index == 1) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item2_price);
 					rShopImageArray[5].fileName = bmpShopItemBoxDisable;
 					if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
 					if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
 				}
 				else if (index == 2) {
+					playSound(bgmBuy);
 					pc.setStone(pc.getStone() - item3_price);
 					rShopImageArray[6].fileName = bmpShopItemBoxDisable;
 					if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
@@ -1378,6 +1512,7 @@ void rewardUI() {
 	}
 	OrichalcumNum = 0;
 	pc.setFatigue(pc.getFatigue() - 1);
+	playBGM(bgmStage);
 }
 
 bool printButtonStageStatus() {
