@@ -431,6 +431,11 @@
     <Image Include="Shop_ItemBox_disable.bmp" />
     <Image Include="Shop_ItemBox_selected.bmp" />
     <Image Include="Shop_StoneBox.bmp" />
+    <Image Include="st0.bmp" />
+    <Image Include="st1.bmp" />
+    <Image Include="st2.bmp" />
+    <Image Include="st3.bmp" />
+    <Image Include="st4.bmp" />
     <Image Include="stoneBlock.bmp" />
     <Image Include="empty.bmp" />
     <Image Include="emptyTile.bmp" />

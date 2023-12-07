@@ -61,6 +61,16 @@ extern "C" {
 
 extern int stageLevel;
 
+extern char bgmName[];
+extern char bgmArea[];
+extern char bgmBoss[];
+extern char bgmStage[];
+extern char bgmSafety[];
+
+extern char bgmExplosion[];
+extern char bgmClear[];
+extern char bgmBuy[];
+
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 extern HWND WINDOW_HANDLE;
@@ -318,5 +328,11 @@ void setHiddenAreaPos();
 
 void renderImageLayer();
 void renderTargetLayer();
+
+extern ImageLayer gameStartLayer;
+extern ImageLayer gameOverLayer;
+
+void printGameStart();
+void printGameOver();
 
 #endif COMMON_HPP

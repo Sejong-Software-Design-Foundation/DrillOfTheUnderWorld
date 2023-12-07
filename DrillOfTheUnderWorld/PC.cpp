@@ -91,7 +91,7 @@ void PC::setHP(int hp) {
 		}
 		else {
 			// die
-			exit(0);
+			printGameOver();
 		}
 	}
 	else if (hp > MAX_HP) this->HP = MAX_HP;
@@ -119,7 +119,7 @@ void PC::setOxygen(int o2) {
 
 void PC::setFatigue(int ft) {
 	this->FATIGUE = ft;
-	if (this->FATIGUE <= 0) exit(0);
+	if (this->FATIGUE <= 0) printGameOver();
 }
 
 void PC::setATK(int atk) { this->ATK = atk; }
