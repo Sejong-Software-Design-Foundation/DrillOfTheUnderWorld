@@ -40,7 +40,7 @@ extern "C" {
 #define AREA_ORIGIN_Y 336
 #define AREA_WIDTH 25
 #define AREA_HEIGHT 25
-#define STAGE_ORIGIN_X 600
+#define STAGE_ORIGIN_X 480
 #define STAGE_ORIGIN_Y 240
 #define AREA_BLOCK_SIZE 144
 #define STAGE_EXTRA_IMAGE_COUNT 3
@@ -58,6 +58,8 @@ extern "C" {
 #define REWARD_GLOD = 50
 #define REWARD_DIAMOND = 100
 #define REWARD_POSSION = 50
+
+#define DEFAULT_LAYER_MARGIN_X 640 //5:8ºñÀ² ¹İ¿µ : 400 -> 640
 
 extern int stageLevel;
 
@@ -237,6 +239,8 @@ extern char bmpPrisonerShacklesName[];
 extern char bmpCursedTotemName[];
 extern char bmpAncientVirusName[];
 extern char bmpCaveSnakeName[];
+
+extern char bmpBackgroundTestName[];
 
 // ?ˆë“  ?ì–´ë¦¬ì–´ ê´€ë¦?
 extern std::vector<std::vector<int>> hiddenAreaPosList;

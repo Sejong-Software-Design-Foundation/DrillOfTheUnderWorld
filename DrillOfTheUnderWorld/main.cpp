@@ -105,7 +105,7 @@ int main()
          imageArray[button2->imageidx].isHide = 1;
          imageArray[button3->imageidx].isHide = 1;
 
-         updateCharacterStatus(); // PC ???�객?�띄�??�윪??????�몥??袁⑤�?
+         //updateCharacterStatus(); // PC ???�객?�띄�??�윪??????�몥??袁⑤�?
          while (_kbhit() != 0)
          {
             int key = _getch();
@@ -368,7 +368,7 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key)
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);
@@ -440,7 +440,7 @@ int main()
                   }
                   break;
                   }
-                  if (key)
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);
@@ -570,7 +570,7 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key)
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);
@@ -652,7 +652,7 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key)
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);
@@ -752,7 +752,7 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key)
+                  if (key && key != S)
                      updateCharacterStatusInArea();
                }
                Sleep(5);

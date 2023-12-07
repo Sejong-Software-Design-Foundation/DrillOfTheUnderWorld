@@ -262,6 +262,8 @@ char bmpStart2[] = "st2.bmp";
 char bmpStart3[] = "st3.bmp";
 char bmpStart4[] = "st4.bmp";
 
+char bmpBackgroundTestName[] = "backgroundTest.bmp";
+
 ImageLayer gameStartLayer = DEFAULT_IMAGE_LAYER;
 Image gameStartArray[10];
 
@@ -272,11 +274,11 @@ void printGameStart() {
 	gameStartLayer.images = gameStartArray;
 	gameStartLayer.imageCount = 0;
 
-	gameStartArray[gameStartLayer.imageCount++] = { bmpStart0, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart0, 0, 0, 1};
 	gameStartArray[gameStartLayer.imageCount++] = { bmpStart4, 0, 0, 1 };
-	gameStartArray[gameStartLayer.imageCount++] = { bmpStart1, 0, 0, 1 };
-	gameStartArray[gameStartLayer.imageCount++] = { bmpStart2, 0, 0, 1 };
 	gameStartArray[gameStartLayer.imageCount++] = { bmpStart3, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart2, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart1, 0, 0, 1 };
 
 	targetLayer = &gameStartLayer;
 	targetLayer->fadeIn(targetLayer, NULL);
@@ -615,15 +617,15 @@ void printStatusInLShop(int price1, int price2, int num) {
 	swprintf(numPrice1, sizeof(numPrice1) / sizeof(numPrice1[0]), L"%d", price1);
 	swprintf(numPrice2, sizeof(numPrice2) / sizeof(numPrice2[0]), L"%d", price2);
 
-	printText(targetLayer->_consoleDC, 320, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
-	printText(targetLayer->_consoleDC, 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
-	printText(targetLayer->_consoleDC, 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 240, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 
 	wchar_t info1[100] = L"1, 2 ?´Ïûê ?§Î? ?åÎü¨ ?†ÌÉù, Spaebar?§Î? ?åÎü¨ Íµ¨Îß§?????àÏäµ?àÎã§. ESC?§Î? ?µÌï¥ ?ÅÏ†ê???òÍ∞à ???àÏäµ?àÎã§.";
 	wchar_t info2[100] = L"?åÎ????†ÌÉù?ÖÎãà??";
 
-	if (num == 0) printText(targetLayer->_consoleDC, 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 520);
-	else if (num == 1)  printText(targetLayer->_consoleDC, 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 520);
+	if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 520);
+	else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 520);
 }
 
 void printItemTextInLShop() { 
@@ -632,10 +634,10 @@ void printItemTextInLShop() {
 	wchar_t itemInfo1[100] = L"PC??Ï≤¥Î†•??Î™®Îëê ?åÎ≥µ?úÎã§.";
 	wchar_t itemInfo2[100] = L"PC???∞ÏÜåÍ≤åÏù¥ÏßÄÎ•?Î™®Îëê ?åÎ≥µ?úÎã§.";
 
-	printText(targetLayer->_consoleDC, 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
-	printText(targetLayer->_consoleDC, 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
-	printText(targetLayer->_consoleDC, 1450, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
-	printText(targetLayer->_consoleDC, 1350, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+ + 1450, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 1350, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
 }
 
 void visitRShop() {
@@ -772,16 +774,16 @@ void printStatusInRShop(int price1, int price2, int price3, int num) {
 	swprintf(numPrice2, sizeof(numPrice2) / sizeof(numPrice2[0]), L"%d", price2);
 	swprintf(numPrice3, sizeof(numPrice3) / sizeof(numPrice3[0]), L"%d", price3);
 
-	printText(targetLayer->_consoleDC, 320, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
-	printText(targetLayer->_consoleDC, 280, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
-	printText(targetLayer->_consoleDC, 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
-	printText(targetLayer->_consoleDC, 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 240, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 280, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
 	wchar_t info1[100] = L"1, 2, 3 ?´Ïûê ?§Î? ?åÎü¨ ?†ÌÉù, Spaebar?§Î? ?åÎü¨ Íµ¨Îß§?????àÏäµ?àÎã§. ESC?§Î? ?µÌï¥ ?ÅÏ†ê???òÍ∞à ???àÏäµ?àÎã§.";
 	wchar_t info2[100] = L"?åÎ????†ÌÉù?ÖÎãà??";
 
-	if (num == 0) printText(targetLayer->_consoleDC, 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
-	else if (num == 1)  printText(targetLayer->_consoleDC, 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
+	if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
+	else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
 }
 
 void printItemTextInRShop() 
@@ -801,14 +803,14 @@ void printItemTextInRShop()
 	stringToWchar(shopItems[1]->getInfo(), itemInfo2, sizeof(itemInfo2) / sizeof(itemInfo2[0]));
 	stringToWchar(shopItems[2]->getInfo(), itemInfo3, sizeof(itemInfo3) / sizeof(itemInfo3[0]));
 
-	printText(targetLayer->_consoleDC, 180, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
-	printText(targetLayer->_consoleDC, 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 180, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
 
-	printText(targetLayer->_consoleDC, 630, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
-	printText(targetLayer->_consoleDC, 550, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 630, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 550, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
 
-	printText(targetLayer->_consoleDC, 1080, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName3);
-	printText(targetLayer->_consoleDC, 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1080, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName3);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
 }
 
 // Î¨∏Ïûê?¥ÏùÑ wchar_t Î∞∞Ïó¥Î°?Î≥Ä?òÌïò???®Ïàò
@@ -960,7 +962,7 @@ void initStageImage() {
 
 	index_StageImages_Start = stageLayer.imageCount;
 	stageImageArray[stageLayer.imageCount++] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
-	stageImageArray[stageLayer.imageCount++] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
+	stageImageArray[stageLayer.imageCount++] = { bmpNameNull, 0 , 0, 1 };
 	if (stageLevel==1) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel1, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 	else if (stageLevel == 2) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel2, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 	else if (stageLevel == 3) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel3, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
