@@ -19,5 +19,5 @@ public:
     void setLevel(int level);
     //Area& getArea(int row, int col);
 };
-
+z
 #endif // STAGE_HPP

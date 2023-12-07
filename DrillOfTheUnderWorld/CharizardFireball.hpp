@@ -1,7 +1,7 @@
 #ifndef __CHARIZARD_FIREBALL_
 #define __CHARIZARD_FIREBALL_
 
-#define FIREGROUND_SEC 6
+#define FIREGROUND_SEC 30
 
 #include "NPC.hpp"
 #include <vector>

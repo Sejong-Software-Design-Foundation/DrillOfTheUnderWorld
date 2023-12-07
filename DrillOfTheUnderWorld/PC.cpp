@@ -91,7 +91,7 @@ void PC::setHP(int hp) {
 		}
 		else {
 			// die
-			printGameOver();
+			zprintGameOver();
 		}
 	}
 	else if (hp > MAX_HP) this->HP = MAX_HP;
