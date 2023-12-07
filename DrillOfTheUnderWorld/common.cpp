@@ -262,6 +262,8 @@ char bmpStart2[] = "st2.bmp";
 char bmpStart3[] = "st3.bmp";
 char bmpStart4[] = "st4.bmp";
 
+char bmpBackgroundTestName[] = "backgroundTest.bmp";
+
 ImageLayer gameStartLayer = DEFAULT_IMAGE_LAYER;
 Image gameStartArray[10];
 
@@ -272,11 +274,11 @@ void printGameStart() {
 	gameStartLayer.images = gameStartArray;
 	gameStartLayer.imageCount = 0;
 
-	gameStartArray[gameStartLayer.imageCount++] = { bmpStart0, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart0, 0, 0, 1};
 	gameStartArray[gameStartLayer.imageCount++] = { bmpStart4, 0, 0, 1 };
-	gameStartArray[gameStartLayer.imageCount++] = { bmpStart1, 0, 0, 1 };
-	gameStartArray[gameStartLayer.imageCount++] = { bmpStart2, 0, 0, 1 };
 	gameStartArray[gameStartLayer.imageCount++] = { bmpStart3, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart2, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart1, 0, 0, 1 };
 
 	targetLayer = &gameStartLayer;
 	targetLayer->fadeIn(targetLayer, NULL);
@@ -960,7 +962,7 @@ void initStageImage() {
 
 	index_StageImages_Start = stageLayer.imageCount;
 	stageImageArray[stageLayer.imageCount++] = { bmpNamePC, STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 2 + 48, STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 2 + 48, 1 };
-	stageImageArray[stageLayer.imageCount++] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
+	stageImageArray[stageLayer.imageCount++] = { bmpNameNull, 0 , 0, 1 };
 	if (stageLevel==1) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel1, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 	else if (stageLevel == 2) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel2, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 	else if (stageLevel == 3) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel3, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };

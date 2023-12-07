@@ -424,6 +424,9 @@
     <Image Include="st4.bmp">
       <Filter>image</Filter>
     </Image>
+    <Image Include="backgroundTest.bmp">
+      <Filter>image</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="image">

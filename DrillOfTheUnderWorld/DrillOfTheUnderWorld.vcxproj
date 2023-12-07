@@ -266,6 +266,7 @@
     <Image Include="..\..\Stage2.bmp" />
     <Image Include="..\..\Stage3.bmp" />
     <Image Include="arrow.bmp" />
+    <Image Include="backgroundTest.bmp" />
     <Image Include="bedrock.bmp" />
     <Image Include="bg.bmp" />
     <Image Include="block_MineralBronze.bmp" />
