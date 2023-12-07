@@ -59,6 +59,8 @@ extern "C" {
 #define REWARD_DIAMOND = 100
 #define REWARD_POSSION = 50
 
+#define DEFAULT_LAYER_MARGIN_X 640 //5:8비율 반영 : 400 -> 640
+
 extern int stageLevel;
 
 extern char bgmName[];

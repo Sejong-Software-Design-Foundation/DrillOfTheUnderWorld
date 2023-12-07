@@ -617,15 +617,15 @@ void printStatusInLShop(int price1, int price2, int num) {
 	swprintf(numPrice1, sizeof(numPrice1) / sizeof(numPrice1[0]), L"%d", price1);
 	swprintf(numPrice2, sizeof(numPrice2) / sizeof(numPrice2[0]), L"%d", price2);
 
-	printText(targetLayer->_consoleDC, 320, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
-	printText(targetLayer->_consoleDC, 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
-	printText(targetLayer->_consoleDC, 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 240, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 
 	wchar_t info1[100] = L"1, 2 ?瀽 ?る? ?岆煬 ?犿儩, Spaebar?る? ?岆煬 甑Г?????堨姷?堧嫟. ESC?る? ?淀暣 ?侅爯???橁皥 ???堨姷?堧嫟.";
 	wchar_t info2[100] = L"?岆????犿儩?呺媹??";
 
-	if (num == 0) printText(targetLayer->_consoleDC, 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 520);
-	else if (num == 1)  printText(targetLayer->_consoleDC, 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 520);
+	if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 520);
+	else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 520);
 }
 
 void printItemTextInLShop() { 
@@ -634,10 +634,10 @@ void printItemTextInLShop() {
 	wchar_t itemInfo1[100] = L"PC??觳措牓??氇憪 ?岆车?滊嫟.";
 	wchar_t itemInfo2[100] = L"PC???办唽瓴岇澊歆�毳?氇憪 ?岆车?滊嫟.";
 
-	printText(targetLayer->_consoleDC, 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
-	printText(targetLayer->_consoleDC, 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
-	printText(targetLayer->_consoleDC, 1450, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
-	printText(targetLayer->_consoleDC, 1350, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+ + 1450, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 1350, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
 }
 
 void visitRShop() {
@@ -774,16 +774,16 @@ void printStatusInRShop(int price1, int price2, int price3, int num) {
 	swprintf(numPrice2, sizeof(numPrice2) / sizeof(numPrice2[0]), L"%d", price2);
 	swprintf(numPrice3, sizeof(numPrice3) / sizeof(numPrice3[0]), L"%d", price3);
 
-	printText(targetLayer->_consoleDC, 320, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
-	printText(targetLayer->_consoleDC, 280, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
-	printText(targetLayer->_consoleDC, 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
-	printText(targetLayer->_consoleDC, 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 240, 110, 80, 0, RGB(255, 255, 255), TA_CENTER, numStone);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 280, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
 	wchar_t info1[100] = L"1, 2, 3 ?瀽 ?る? ?岆煬 ?犿儩, Spaebar?る? ?岆煬 甑Г?????堨姷?堧嫟. ESC?る? ?淀暣 ?侅爯???橁皥 ???堨姷?堧嫟.";
 	wchar_t info2[100] = L"?岆????犿儩?呺媹??";
 
-	if (num == 0) printText(targetLayer->_consoleDC, 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
-	else if (num == 1)  printText(targetLayer->_consoleDC, 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
+	if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
+	else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
 }
 
 void printItemTextInRShop() 
@@ -803,14 +803,14 @@ void printItemTextInRShop()
 	stringToWchar(shopItems[1]->getInfo(), itemInfo2, sizeof(itemInfo2) / sizeof(itemInfo2[0]));
 	stringToWchar(shopItems[2]->getInfo(), itemInfo3, sizeof(itemInfo3) / sizeof(itemInfo3[0]));
 
-	printText(targetLayer->_consoleDC, 180, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
-	printText(targetLayer->_consoleDC, 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 180, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 100, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
 
-	printText(targetLayer->_consoleDC, 630, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
-	printText(targetLayer->_consoleDC, 550, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 630, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName2);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 550, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo2, 150);
 
-	printText(targetLayer->_consoleDC, 1080, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName3);
-	printText(targetLayer->_consoleDC, 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1080, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName3);
+	printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X+20 + 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
 }
 
 // 氍胳瀽?挫潉 wchar_t 氚办棿搿?氤�?橅晿???垬
