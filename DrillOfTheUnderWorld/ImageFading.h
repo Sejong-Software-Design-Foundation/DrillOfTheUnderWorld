@@ -19,12 +19,12 @@ extern "C" {
 		return bf;
 	}
 
-	inline void _fade(HDC consoleDC, HDC backDC, BLENDFUNCTION bf, int alpha) {
-		HDC alphaDC = createNewBackDC(consoleDC);
+	inline void _fade(ImageLayer* self, HDC consoleDC, HDC backDC, BLENDFUNCTION bf, int alpha) {
+		HDC alphaDC = createNewBackDC(self);
 		bf.SourceConstantAlpha = alpha;
 		AlphaBlend(alphaDC, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
 			backDC, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, bf);
-		applyToDC(consoleDC, alphaDC);
+		applyToDC(self, consoleDC, alphaDC);
 		DeleteDC(alphaDC);
 		Sleep(FADING_DELAY);
 	}
@@ -37,11 +37,11 @@ extern "C" {
 
 		if (isFadeIn) {
 			for (int alpha = 0; alpha <= 255; alpha += 17)
-				_fade(consoleDC, backDC, bf, alpha);
+				_fade(self, consoleDC, backDC, bf, alpha);
 		}
 		else {
 			for (int alpha = 255; alpha >= 0; alpha -= 17)
-				_fade(consoleDC, backDC, bf, alpha);
+				_fade(self, consoleDC, backDC, bf, alpha);
 		}
 
 		DeleteDC(backDC);
