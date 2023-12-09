@@ -273,11 +273,7 @@ void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
-//void changeLayer(ImageLayer* currentLayer, ImageLayer* nextLayer);
-void printTimeInMiniGameArea(float t);
-void printMyOriInMiniGameArea();
 void updateCharacterStatus();
-void updateCharacterStatusInArea();
 void initItemImages();
 void fillBlockImages();
 //void getNewArea(int zombieIndex);
@@ -339,4 +335,10 @@ extern ImageLayer gameOverLayer;
 void printGameStart();
 void printGameOver();
 
+extern ImageLayer progressLayer;
+extern Image progressImageArray[100];
+void initProgressImage();
+void drawProgress();
+extern int index_Timer_Start;
+extern int timerIndex;
 #endif COMMON_HPP

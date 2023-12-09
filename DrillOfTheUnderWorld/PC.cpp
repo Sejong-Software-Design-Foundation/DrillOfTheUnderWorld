@@ -20,46 +20,34 @@ void PC::vibe() {
 	if (curDirection == 0) {
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].x += 16;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 	}
 	else if (curDirection == 2) {
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].x -= 16;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 	}
 	else if (curDirection == 3) {
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].y -= 16;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 	}
 	else {
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].y += 16;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 	}
 }
 
@@ -264,6 +252,8 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 
 void PC::increaseFlagCnt() {
 	flagCnt++;
+	drawProgress();
+	printFlagStageStatus(pc.getFlagCnt());
 
 	//imageArray[imageLayer.imageCount++] = { bmpFlagName, AREA_ORIGIN_X + BLOCKSIZE * 25 + 100 + flagCnt * BLOCKSIZE * 2,BLOCKSIZE * 13,2 };
 }
@@ -299,9 +289,10 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 		}
 		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameOrichalcumOre1[stageLevel - 1]) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameOrichalcumOre2[stageLevel - 1]) == 0)) {
 			OrichalcumNum++;
-			if (OrichalcumNum >= 5) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar1;
-			if (OrichalcumNum >= 10) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar2;
-			if (OrichalcumNum >= 20) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar3;
+			drawProgress();
+			if (OrichalcumNum >= 3) progressImageArray[29].fileName = bmpNameStar1;
+			if (OrichalcumNum >= 6) progressImageArray[29].fileName = bmpNameStar2;
+			if (OrichalcumNum >= 10) progressImageArray[29].fileName = bmpNameStar3;
 			imageLayer.images[imageIndex].fileName = bmpNameOrichalcumMineral;
 			applyDigReward(imageIndex, 300);
 		}

@@ -59,6 +59,7 @@ ImageLayer rShopLayer = DEFAULT_IMAGE_LAYER;
 Image rShopImageArray[100];
 
 bool isOnSafety = false;
+bool isOnReward = false;
 char bmpShopItemBox[] = "Shop_ItemBox.bmp";
 char bmpShopItemBoxDisable[] = "Shop_ItemBox_disable.bmp";
 char bmpShopItemBoxSelected[] = "Shop_ItemBox_selected.bmp";
@@ -92,6 +93,7 @@ int index_Area_UI_blockInfo_Start;
 int index_Area_UI_mapTile_Start;
 int index_Area_UI_MiniGame_Start;
 int index_RewardImages_Start;
+int index_Timer_Start;
 
 // BMP 
 
@@ -146,7 +148,20 @@ char bmpNameO2_90pct[] = "UI_O2_90pct.bmp";
 char bmpNameO2_100pct[] = "UI_O2_100pct.bmp";
 char bmpNameMaxO2[] = "UI_maxO2.bmp";
 
-char bmpNameTimer[] = "UI_Timer.bmp";
+char bmpNameTimer[] = "Timer.bmp";
+char bmpNameTimer_0pct[] = "Timer_0pct.bmp";
+char bmpNameTimer_10pct[] = "Timer_10pct.bmp";
+char bmpNameTimer_20pct[] = "Timer_20pct.bmp";
+char bmpNameTimer_30pct[] = "Timer_30pct.bmp";
+char bmpNameTimer_40pct[] = "Timer_40pct.bmp";
+char bmpNameTimer_50pct[] = "Timer_50pct.bmp";
+char bmpNameTimer_60pct[] = "Timer_60pct.bmp";
+char bmpNameTimer_70pct[] = "Timer_70pct.bmp";
+char bmpNameTimer_80pct[] = "Timer_80pct.bmp";
+char bmpNameTimer_90pct[] = "Timer_90pct.bmp";
+char bmpNameTimer_100pct[] = "Timer_100pct.bmp";
+char bmpNameTimer_Bar[] = "Timer_Bar.bmp";
+
 char bmpNameStar0[] = "UI_Star0.bmp";
 char bmpNameStar1[] = "UI_Star1.bmp";
 char bmpNameStar2[] = "UI_Star2.bmp";
@@ -263,6 +278,182 @@ char bmpStart3[] = "st3.bmp";
 char bmpStart4[] = "st4.bmp";
 
 char bmpBackgroundTestName[] = "backgroundTest.bmp";
+
+ImageLayer progressLayer = PROGRESS_IMAGE_LAYER;
+Image progressImageArray[100];
+
+char bmpProgressBackGround[] = "progressBackGround.bmp";
+char bmpProgressMiddle[] = "progressMiddle.bmp";
+char bmpProgressBottom[] = "progressBottom.bmp";
+
+int timerIndex = 11;
+
+void initProgressImage() {
+	progressLayer.images = progressImageArray;
+	progressLayer.imageCount = 0;
+
+	index_Area_UI_blockInfo_Start = progressLayer.imageCount;
+	index_Area_UI_Map_Start = progressLayer.imageCount;
+
+	progressImageArray[progressLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameMapX, 0, 0, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameMapX, 0, 0, 1 };
+
+	index_Area_UI_mapTile_Start = progressLayer.imageCount;
+	int startX = 196, startY = 125;
+	for (int y = startY; y < startY + (BLOCKSIZE * 5) + 10; y += (BLOCKSIZE + 2)) {
+		for (int x = startX; x < startX + (BLOCKSIZE * 5) + 10; x += (BLOCKSIZE + 2)) {
+			progressImageArray[progressLayer.imageCount++] = { bmpNameMapTile, x, y, 1 };
+			mapInfo[(y - startY) / BLOCKSIZE][(x - startX) / BLOCKSIZE] = 0;
+		}
+	}
+
+	progressImageArray[progressLayer.imageCount++] = { bmpNameMapBox, 114, 26, 1 };
+
+	progressImageArray[progressLayer.imageCount++] = { bmpNameStar0, 200, 950, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpProgressMiddle, 10, 482, 1 };
+
+	index_Area_UI_MiniGame_Start = progressLayer.imageCount;
+
+	index_Timer_Start = progressLayer.imageCount;
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_0pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_10pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_20pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_30pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_40pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_50pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_60pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_70pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_80pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_90pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_100pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameNull, 0, 0, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_Bar, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameOrichalcumMineral, 62, 1300, 2, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer, 80, 1420, 1, 1 };
+
+	progressImageArray[progressLayer.imageCount++] = { bmpProgressBottom, 10, 1228, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpProgressBackGround, 0, 0, 1 };
+}
+
+void drawProgress() {
+	int count = 0;
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 5; x++) {
+			if (mapInfo[y][x] == 1) {
+				progressImageArray[index_Area_UI_mapTile_Start + count].fileName = bmpNameMapTileCleared;
+				if (x == treasureAreaPos[1] && y == treasureAreaPos[0]) progressImageArray[2].isHide = 1;
+			}
+			count++;
+		}
+	}
+	progressImageArray[index_Area_UI_Map_Start].x = 196 + (BLOCKSIZE + 2) * currentAreaColIndex;
+	progressImageArray[index_Area_UI_Map_Start].y = 125 + (BLOCKSIZE + 2) * currentAreaRowIndex;
+
+	progressImageArray[index_Timer_Start + timerIndex].isHide = 1;
+
+	targetLayer = &progressLayer;
+	targetLayer->renderAll(targetLayer);
+	
+	wchar_t numOrichalcum[20];
+	swprintf(numOrichalcum, sizeof(numOrichalcum) / sizeof(numOrichalcum[0]), L"%d", OrichalcumNum);
+
+	wchar_t stageInfo1[100] = L"스테이지 맵";
+	wchar_t stageInfo2[100] = L"방향키를 눌러 이동, 'S'키를 눌러 진입할 수 있습니다.";
+
+	wchar_t normalInfo1[100] = L"노말 에어리어";
+	wchar_t normalInfo2[100] = L"방향키를 눌러 이동, 'SPACEBAR'키를 눌러 땅을 팔 수 있습니다.";
+
+	wchar_t minigameInfo1[100] = L"미니게임 에어리어";
+	wchar_t minigameInfo2[100] = L"제한시간 내에 최대한 많은 오리할콘을 캐고 보상을 획득하세요!";
+
+	wchar_t starInfo1[100] = L"1 Star (3) = 100G";
+	wchar_t starInfo2[100] = L"1 Star (6) = 200G";
+	wchar_t starInfo3[100] = L"1 Star(10) = 300G";
+
+	wchar_t buttonInfo1[100] = L"버튼 에어리어";
+	wchar_t buttonInfo2[100] = L"버튼을 작동시키면 무슨 일이?";
+
+	wchar_t flagInfo1[100] = L"깃발 에어리어";
+	wchar_t flagInfo2[100] = L"모든 깃발을 획득하고 탈출하세요!";
+
+	wchar_t stage1BossInfo1[100] = L"\"부끄럼 마법사 엠씨\"";
+	wchar_t stage1BossInfo2[100] = L"레드문 종족에서 아다만티움을 찾기 위해 파견된 마법사. 하지만 계속해서 임무 수행을 실패한 엠씨는 그의 종족한테서 버려지고 만다.";
+	wchar_t stage1BossInfo3[100] = L"TIP : 소심하고 부끄러워 하는 그의 성격과 다르게 그의 능력을 얕보면 안됩니다!";
+
+	wchar_t stage2BossInfo1[100] = L"\"지진대장\"";
+	wchar_t stage2BossInfo2[100] = L"인간 형태를 꿈꾸는 두더지 보스. 이미 여러 인간을 먹어 인간 형태에 가까워졌다.";
+	wchar_t stage2BossInfo3[100] = L"TIP : 두더지는 땅을 제일 잘 파는 동물입니다!";
+
+	wchar_t stage3BossInfo1[100] = L"\"마그마 용\"";
+	wchar_t stage3BossInfo2[100] = L"대대로 내려오는 아다만티움을 지키는게 1순위인 리자몽가문. 그는 일평생 지구의 중심 내핵에서 아다만티움을 지켜왔다.";
+	wchar_t stage3BossInfo3[100] = L"TIP : 최고의 방어가 최고의 공격입니다!";
+
+	wchar_t safetyInfo1[100] = L"안전구역";
+	wchar_t safetyInfo2[100] = L"이곳은 쉼터입니다. 다음 스테이지로 가기 전 아이템을 구매할 수 있습니다.";
+
+	wchar_t rewardInfo1[100] = L"보상 선택";
+	wchar_t rewardInfo2[100] = L"방향키 또는 숫자키를 통해 이동하고, 'SPACEBAR'키를 통해 선택을 완료합니다.";
+
+	if (isOnSafety) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, safetyInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, safetyInfo2, 280);
+		targetLayer = &safetyLayer;
+		return;
+	}
+
+	if (isOnReward) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, rewardInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, rewardInfo2, 280);
+		targetLayer = &rewardLayer;
+		return;
+	}
+
+	if (isOnStage) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, stageInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stageInfo2, 280);
+	}
+	else if (isNormalArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, normalInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, normalInfo2, 280);
+	}
+	else if (isMiniGameArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, minigameInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, minigameInfo2, 280);
+		printText(targetLayer->_consoleDC, 2615, 1020, 30, 0, RGB(255, 255, 255), TA_LEFT, starInfo1, 280);
+		printText(targetLayer->_consoleDC, 2615, 1060, 30, 0, RGB(255, 255, 255), TA_LEFT, starInfo2, 280);
+		printText(targetLayer->_consoleDC, 2610, 1100, 30, 0, RGB(255, 255, 255), TA_LEFT, starInfo3, 280);
+		printText(targetLayer->_consoleDC, 2950, 1330, 40, 0, RGB(255, 255, 255), TA_LEFT, numOrichalcum, 280);
+	}
+	else if (isButtonArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, buttonInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, buttonInfo2, 280);
+	}
+	else if (isFlagArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, flagInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, flagInfo2, 280);
+	}
+	else if (isBossArea) {
+		if (stageLevel == 1) {
+			printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, stage1BossInfo1, 280);
+			printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stage1BossInfo2, 280);
+			printText(targetLayer->_consoleDC, 2520, 1040, 30, 0, RGB(255, 0, 0), TA_LEFT, stage1BossInfo3, 280);
+		}
+		else if (stageLevel == 2) {
+			printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, stage2BossInfo1, 280);
+			printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stage2BossInfo2, 280);
+			printText(targetLayer->_consoleDC, 2520, 1040, 30, 0, RGB(255, 0, 0), TA_LEFT, stage2BossInfo3, 280);
+		}
+		else if (stageLevel == 3) {
+			printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, stage3BossInfo1, 280);
+			printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stage3BossInfo2, 280);
+			printText(targetLayer->_consoleDC, 2520, 1040, 30, 0, RGB(255, 0, 0), TA_LEFT, stage3BossInfo3, 280);
+		}
+	}
+
+	if (isOnStage) targetLayer = &stageLayer;
+	else targetLayer = &imageLayer;
+}
 
 ImageLayer gameStartLayer = DEFAULT_IMAGE_LAYER;
 Image gameStartArray[10];
@@ -407,7 +598,7 @@ void initSafetyImage() {
 	safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyArrow, 1000, 1130, 0.5 };
 	safetyImageArray[safetyLayer.imageCount++] = { bmpRShopMiner, 1200, 1210, 0.5 };
 
-	safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 }; 
+	//safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 }; 
 }
 
 void visitSafety() {
@@ -415,6 +606,11 @@ void visitSafety() {
 	targetLayer = &safetyLayer;
 	stopBGM();
 	playBGM(bgmSafety);
+	
+	isOnSafety = true;
+	drawProgress();
+	isOnSafety = false;
+
 	safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
 	safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
 	safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
@@ -495,6 +691,7 @@ void visitSafety() {
 	stopBGM();
 	/*targetLayer->fadeIn(targetLayer, NULL);
 	targetLayer->renderAll(targetLayer);*/
+	drawProgress();
 }
 
 void initLShopImage() {
@@ -967,6 +1164,7 @@ void initStageImage() {
 	else if (stageLevel == 2) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel2, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 	else if (stageLevel == 3) stageImageArray[stageLayer.imageCount++] = { bmpStageLevel3, STAGE_ORIGIN_X + AREA_BLOCK_SIZE + 48, 48, 0.2 };
 
+
 	for (int y = STAGE_ORIGIN_Y; y < STAGE_ORIGIN_Y + AREA_BLOCK_SIZE * 5; y += AREA_BLOCK_SIZE) {
 		for (int x = STAGE_ORIGIN_X; x < STAGE_ORIGIN_X + AREA_BLOCK_SIZE * 5; x += AREA_BLOCK_SIZE) {
 			stageImageArray[stageLayer.imageCount++] = { bmpNomalAreaName, x, y, 1 };
@@ -996,7 +1194,7 @@ void initItemImages() {
 	for (int i = 0; i < itemList.size(); i++) {
 		safetyImageArray[safetyLayer.imageCount++] = { imageArray[itemList[i]->getImageIndex()].fileName, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
 	}
-	safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 };
+	//safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 };
 }
 
 void fillBlockImages() { 
@@ -1039,29 +1237,6 @@ void initAreaUI()
 	imageArray[imageLayer.imageCount++] = { bmpNameO2_90pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
 	imageArray[imageLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
 	imageArray[imageLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1, 1 };
-
-	index_Area_UI_blockInfo_Start = imageLayer.imageCount;
-	index_Area_UI_Map_Start = imageLayer.imageCount;
-	imageArray[imageLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 };
-
-	index_Area_UI_mapTile_Start = imageLayer.imageCount;
-	for (int y = 100; y < 100 + (BLOCKSIZE * 5) + 10; y += (BLOCKSIZE + 2)) {
-		int index = AREA_ORIGIN_X + 27 * BLOCKSIZE + 30 + 82;
-		for (int x = index; x < index + (BLOCKSIZE * 5) + 10; x += (BLOCKSIZE + 2)) {
-			imageArray[imageLayer.imageCount++] = { bmpNameMapTile, x, y, 1, 1 };
-			mapInfo[(y - 100) / BLOCKSIZE][(x - index) / BLOCKSIZE] = 0;
-		}
-	}
-
-	imageArray[imageLayer.imageCount++] = { bmpNameMapBox, AREA_ORIGIN_X + 27 * BLOCKSIZE + 30, 0, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpCharacterStatusName, AREA_ORIGIN_X + 27 * BLOCKSIZE , AREA_ORIGIN_Y + BLOCKSIZE * 2, 1 };
-
-	index_Area_UI_MiniGame_Start = imageLayer.imageCount;
-	imageArray[imageLayer.imageCount++] = { bmpNameStar0, 1500, 550, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameOrichalcumMineral, 1580, 1330, 2, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameTimer, 1600, 1450, 1, 1 };
 }
 
 void initRewardImage() {
@@ -1218,10 +1393,21 @@ void getNewMiniGameArea()
 	int cnt = 1;
 	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
 		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
-			imageArray[cnt++] = { bmpStoneBlockName[stageLevel-1], x,y,1};
-			for (int dy = 0;dy < BLOCKSIZE;dy++) {
-				for (int dx = 0;dx < BLOCKSIZE;dx++) {
-					blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+			if (y == AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x == AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
+
+				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 99999999;
+					}
+				}
+			}
+			else {
+				imageArray[cnt++] = { bmpStoneBlockName[stageLevel - 1], x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+					}
 				}
 			}
 		}
@@ -1245,34 +1431,6 @@ void drawUI() {
 	pc.setHP(pc.getHP());
 	imageArray[index_Area_UI_O2_Start + 11].isHide = 0;
 	pc.setOxygen(pc.getOxygen());
-	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++)
-		imageArray[i].isHide = 0;
-
-	
-	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
-	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
-
-	int count = 0;
-	for (int y = 0; y < 5; y++) {
-		for (int x = 0; x < 5; x++) {
-			if (mapInfo[y][x] == 1) imageArray[index_Area_UI_mapTile_Start + count].fileName = bmpNameMapTileCleared;
-			count++;
-		}
-	}
-	imageArray[index_Area_UI_Map_Start].x = AREA_ORIGIN_X + 27 * BLOCKSIZE + 30 + 82 + (BLOCKSIZE + 2) * currentAreaColIndex;
-	imageArray[index_Area_UI_Map_Start].y = 100 + (BLOCKSIZE + 2) * currentAreaRowIndex;
-	
-	if (isMiniGameArea) {
-		for (int i = 0; i < 3; i++) {
-			imageArray[index_Area_UI_MiniGame_Start + i].isHide = 0;
-		}
-	}
-	else {
-		for (int i = 0; i < 3; i++) {
-			imageArray[index_Area_UI_MiniGame_Start + i].isHide = 1;
-		}
-	}
-	updateCharacterStatusInArea();
 }
 
 int convertPosToInfoXInStage(int x) {
@@ -1333,29 +1491,19 @@ bool collisionCheck(int x, int y) {
 	return false;
 }
 
-void printTimeInMiniGameArea(float t) {
-	wchar_t timeLimit[20];
-	if (t > 0.0) swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%.2f", t);
-	else swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%0.00");
-	printText(targetLayer->_consoleDC, 1750, 1458, 40, 0, RGB(255, 255, 255), TA_CENTER, timeLimit);
-}
-
-void printMyOriInMiniGameArea() { 
-	wchar_t info1[30] = L"1 Star (5) = 100 Stones";
-	wchar_t info2[30] = L"2 Star(10) = 200 Stones";
-	wchar_t info3[30] = L"3 Star(20) = 300 Stones";
-	wchar_t numOrichalcum[20];
-
-	printText(targetLayer->_consoleDC, 1610, 670, 40, 0, RGB(255, 255, 255), TA_CENTER, info1);
-	printText(targetLayer->_consoleDC, 1610, 730, 40, 0, RGB(255, 255, 255), TA_CENTER, info2);
-	printText(targetLayer->_consoleDC, 1610, 790, 40, 0, RGB(255, 255, 255), TA_CENTER, info3);
-	swprintf(numOrichalcum, sizeof(numOrichalcum) / sizeof(numOrichalcum[0]), L"%d", OrichalcumNum);
-	printText(targetLayer->_consoleDC, 1790, 1358, 40, 0, RGB(255, 255, 255), TA_CENTER, numOrichalcum);
-}
-
 void rewardUI() {
+	OrichalcumNum = 0;
+	timerIndex = 11;
+	progressImageArray[29].isHide = 1;
+	for (int i = index_Timer_Start; i < index_Timer_Start + 15; i++)
+		progressImageArray[i].isHide = 1;
+
 	targetLayer->fadeOut(targetLayer, NULL);
 	targetLayer = &rewardLayer;
+
+	isOnReward = true;
+	drawProgress();
+	isOnReward = false;
 
 	imagesReward[0].isHide = 0;
 	imagesReward[2].isHide = 0;
@@ -1507,18 +1655,18 @@ void rewardUI() {
 	else if (index2 == 2) pc.setSpdLev(pc.getSpdLev() + num);
 	pc.setStone(pc.getStone() + 100);
 
-	imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar0;
+	//imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar0;
+	progressImageArray[29].fileName = bmpNameStar0;
 	if (isMiniGameArea) {
-		if (OrichalcumNum >= 2) pc.setStone(pc.getStone() + 200);
-		else if (OrichalcumNum >= 1) pc.setStone(pc.getStone() + 100);
+		if (OrichalcumNum >= 10) pc.setStone(pc.getStone() + 200);
+		else if (OrichalcumNum >= 6) pc.setStone(pc.getStone() + 100);
 	}
-	OrichalcumNum = 0;
 	pc.setFatigue(pc.getFatigue() - 1);
 	playBGM(bgmStage);
+	drawProgress();
 }
 
 bool printButtonStageStatus() {
-	wchar_t playerStone[100] = L"Pessed Button List";
 	wchar_t pressed_button_info[20] = L"";
 	wchar_t pressed_button_status[20] = L"";
 	bool isClear = true;
@@ -1542,37 +1690,35 @@ bool printButtonStageStatus() {
 		if (isClear) {
 			isButtonRoomClear = true;
 			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Correct Answer!");
-			printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-			printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
-			printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+			printText(targetLayer->_consoleDC, 2650, 1320, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+			printText(targetLayer->_consoleDC, 2600, 1420, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+			Sleep(300);
 		}
 		else {
 			imageArray[0].y = imageArray[0].y + 96;
 			isButtonReset = true;
 			buttonPressedOrderList.clear();
 			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Not Correct Answer!");
-			printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-			printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
-			printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+			printText(targetLayer->_consoleDC, 2650, 1320, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+			printText(targetLayer->_consoleDC, 2600, 1420, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
 			Sleep(300);
 		}
 		
 		swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"");
 	}
-
-	printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-	printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
-	printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+	drawProgress();
+	printText(targetLayer->_consoleDC, 2650, 1320, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+	printText(targetLayer->_consoleDC, 2600, 1420, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
 
 	return isButtonReset;
  }
 
 void printFlagStageStatus(int curFlagCnt) {
-	wchar_t playerFlagInfo[100] = L"Your Current Flag Count : ";
+	wchar_t playerFlagInfo[100] = L"획득한 깃발의 수 : ";
 	wchar_t playerFlagCount[20] = L"";
-	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curFlagCnt);
-	printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
-	printText(targetLayer->_consoleDC, 1800, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
+	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", pc.getFlagCnt());
+	printText(targetLayer->_consoleDC, 2560, 1370, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
+	printText(targetLayer->_consoleDC, 2940, 1370, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
 }
 
 void setBedrock(int max) {
@@ -1688,38 +1834,6 @@ void getMoleSpace() {
 	}
 }
 
-void updateCharacterStatusInArea() {
-	wchar_t playerStone[20];
-	wchar_t playerHp[20];
-	wchar_t playerOz[20];
-	wchar_t playerFatigue[20];
-	wchar_t playerAttackPower[20];
-	wchar_t playerAttackSpeed[20];
-	wchar_t playerMoveSpeed[20];
-
-	swprintf(playerStone, sizeof(playerStone) / sizeof(playerStone[0]), L"%d", pc.getStone());
-	swprintf(playerHp, sizeof(playerHp) / sizeof(playerHp[0]), L"%d / %d", pc.getHP(), pc.getMaxHP());
-	swprintf(playerOz, sizeof(playerOz) / sizeof(playerOz[0]), L"%d / %d", pc.getOxygen(), pc.getMaxOxygen());
-	swprintf(playerFatigue, sizeof(playerFatigue) / sizeof(playerFatigue[0]), L"%d / %d", pc.getFatigue(), pc.getMaxFatigue());
-	if (pc.getAtkLev() == 11) swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.MAX");
-	else swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.%d", pc.getAtkLev());
-	if (pc.getAtkSpdLev() == 11) swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.MAX");
-	else swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.%d", pc.getAtkSpdLev());
-	if (pc.getSpdLev() == 11) swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.MAX");
-	else swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
-
-	int X = AREA_ORIGIN_X + 27 * BLOCKSIZE, Y = AREA_ORIGIN_Y + BLOCKSIZE * 2;
-	X += 170;
-
-	printText(targetLayer->_consoleDC, X + 160, Y + 90, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-	printText(targetLayer->_consoleDC, X, Y + 190, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
-	printText(targetLayer->_consoleDC, X, Y + 245, 40, 0, RGB(255, 255, 255), TA_LEFT, playerOz);
-	printText(targetLayer->_consoleDC, X, Y + 300, 40, 0, RGB(255, 255, 255), TA_LEFT, playerFatigue);
-	printText(targetLayer->_consoleDC, X, Y + 355, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
-	printText(targetLayer->_consoleDC, X, Y + 410, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
-	printText(targetLayer->_consoleDC, X, Y + 465, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
-}
-
 std::vector<int> getRandomHiddenAreaPos() {
 	int randomIndex = rand() % hiddenAreaPosList.size();
 	return hiddenAreaPosList[randomIndex];
@@ -1730,12 +1844,21 @@ void setHiddenAreaPos() {
 	srand((unsigned)time(NULL));
 
 	bossAreaPos = getRandomHiddenAreaPos();
+	//progressImageArray[1].x = bossAreaPos[0];
+	//progressImageArray[1].y = bossAreaPos[1];
+
+	progressImageArray[1].x = 196 + (BLOCKSIZE + 2) * bossAreaPos[1];
+	progressImageArray[1].y = 125 + (BLOCKSIZE + 2) * bossAreaPos[0];
+	//bossAreaPos[1];
+	//currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0];
 
 	while (true) {
 		treasureAreaPos = getRandomHiddenAreaPos();
 
 		int distance = abs(treasureAreaPos[0] - bossAreaPos[0]) + abs(treasureAreaPos[1] - bossAreaPos[1]);
 		if (distance > 4) {
+			progressImageArray[2].x = 196 + (BLOCKSIZE + 2) * treasureAreaPos[1];
+			progressImageArray[2].y = 125 + (BLOCKSIZE + 2) * treasureAreaPos[0];
 			break;
 		}
 	}

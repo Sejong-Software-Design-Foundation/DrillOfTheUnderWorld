@@ -276,7 +276,6 @@
     <Image Include="UI_Star1.bmp" />
     <Image Include="UI_Star2.bmp" />
     <Image Include="UI_Star3.bmp" />
-    <Image Include="UI_Timer.bmp" />
     <Image Include="block_Stage2_SilverOre1.bmp">
       <Filter>image</Filter>
     </Image>
@@ -427,6 +426,28 @@
     <Image Include="backgroundTest.bmp">
       <Filter>image</Filter>
     </Image>
+    <Image Include="progressBackGround.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="progressBottom.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="progressMiddle.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer.bmp" />
+    <Image Include="Timer_0pct.bmp" />
+    <Image Include="Timer_Bar.bmp" />
+    <Image Include="Timer_100pct.bmp" />
+    <Image Include="Timer_90pct.bmp" />
+    <Image Include="Timer_80pct.bmp" />
+    <Image Include="Timer_70pct.bmp" />
+    <Image Include="Timer_60pct.bmp" />
+    <Image Include="Timer_50pct.bmp" />
+    <Image Include="Timer_40pct.bmp" />
+    <Image Include="Timer_30pct.bmp" />
+    <Image Include="Timer_20pct.bmp" />
+    <Image Include="Timer_10pct.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="image">
