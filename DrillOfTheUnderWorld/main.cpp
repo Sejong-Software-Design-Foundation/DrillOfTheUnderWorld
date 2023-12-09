@@ -13,6 +13,7 @@
 int main()
 {
    initialize();
+   uiLayer.initialize(&uiLayer);
 
    gameStartLayer.initialize(&gameStartLayer);
    gameOverLayer.initialize(&gameOverLayer);
@@ -27,6 +28,7 @@ int main()
    imageLayer.images = imageArray;
    imageLayer.imageCount = 1;
 
+   initUIImage();
    initStageImage();
    fillBlockImages();
    initSafetyImage();
@@ -92,6 +94,11 @@ int main()
        targetLayer->renderAll(targetLayer);
    }
    playBGM(bgmStage);
+
+   updateCharacterStatus();
+   pc.setFatigue(pc.getMaxFatigue());
+   pc.setHP(pc.getHP());
+   pc.setOxygen(pc.getOxygen());
    while (1)
    {
       if (isOnStage)
@@ -267,8 +274,8 @@ int main()
             if (key)
             {
                targetLayer->renderAll(targetLayer);
-               if (key != S)
-                  updateCharacterStatus();
+               //if (key != S)
+                //  updateCharacterStatus();
             }
          }
       }
@@ -368,8 +375,8 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key && key != S)
-                     updateCharacterStatusInArea();
+                  //if (key && key != S)
+                     //updateCharacterStatusInArea();
                }
                Sleep(5);
             }
@@ -440,8 +447,8 @@ int main()
                   }
                   break;
                   }
-                  if (key && key != S)
-                     updateCharacterStatusInArea();
+                  //if (key && key != S)
+                     //updateCharacterStatusInArea();
                }
                Sleep(5);
             }
@@ -570,8 +577,8 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key && key != S)
-                     updateCharacterStatusInArea();
+                  //if (key && key != S)
+                     //updateCharacterStatusInArea();
                }
                Sleep(5);
             }
@@ -652,8 +659,8 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key && key != S)
-                     updateCharacterStatusInArea();
+                  //if (key && key != S)
+                    // updateCharacterStatusInArea();
                }
                Sleep(5);
             }
@@ -752,8 +759,8 @@ int main()
                      pc.setHP(pc.getHP() + 10);
                      break;
                   }
-                  if (key && key != S)
-                     updateCharacterStatusInArea();
+                  //if (key && key != S)
+                    // updateCharacterStatusInArea();
                }
                Sleep(5);
             }
