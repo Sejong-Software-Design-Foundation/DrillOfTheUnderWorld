@@ -77,7 +77,7 @@ extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 extern HWND WINDOW_HANDLE;
 
-extern ImageLayer* targetLayer;
+extern ImageLayer* targetLayer; // used in renderAll
 
 extern ImageLayer stageLayer;
 extern Image stageImageArray[40];
@@ -338,5 +338,8 @@ extern ImageLayer gameOverLayer;
 
 void printGameStart();
 void printGameOver();
+
+// define my areaImageLayer
+extern ImageLayer areaLayer;
 
 #endif COMMON_HPP

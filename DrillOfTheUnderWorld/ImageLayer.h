@@ -2,7 +2,6 @@
 extern "C" {
 #endif
 
-
 #pragma once
 #include "ImageLayerInterface.h"
 #include "ImageLayerImpl.h"
@@ -11,10 +10,12 @@ extern "C" {
 #ifndef IMAGE_LAYER_H
 #define IMAGE_LAYER_H
 
-	static const ImageLayer DEFAULT_IMAGE_LAYER = { 400, 0, 1200, 1200, NULL, 0, RGB(0,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
-	static const ImageLayer UI_IMAGE_LAYER = { 0, 0, 400, 800, NULL, 0, RGB(255,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
+	static const ImageLayer DEFAULT_IMAGE_LAYER = { 400, 0, 1120, 990, NULL, 0, RGB(0,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
+	static const ImageLayer UI_IMAGE_LAYER = { 0, 0, 400, 990, NULL, 0, RGB(255,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
 	//static const ImageLayer STAGE_IMAGE_LAYER = { 0, 0, 400, 800, NULL, 0, RGB(255,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL};
 
+	// my imageLayer
+	static const ImageLayer AREA_IMAGE_LAYER = { 600, 0, 920, 990, NULL, 0, RGB(0,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
 #endif
 
 #ifdef __cplusplus
