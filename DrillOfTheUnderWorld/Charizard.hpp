@@ -119,6 +119,7 @@ void Charizard::AfterDead() {
         imageArray[imageidx].fileName = bmpExplodeName[i % 5];
         imageArray[imageidx].scale = CHARIZARD_SCALE;
         imageLayer.renderAll(&imageLayer);
+        Sleep(20);
     }
     imageArray[imageidx].fileName = bmpNameNull;
     imageLayer.renderAll(&imageLayer);

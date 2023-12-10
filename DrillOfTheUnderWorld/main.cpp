@@ -669,38 +669,38 @@ int main()
 			}
 			else if (isBossArea)
 			{
-				if (Boss->NPCDead() == false)
-				{
-					Boss->move();
-				}
-				else
-				{
-					if (stageLevel == 1)
-						((EmceeTheShyGuy*)Boss)->AfterDead();
-					else if (stageLevel == 2)
-						((RawkHawk*)Boss)->AfterDead();
-					else if (stageLevel == 3)
-						((Charizard*)Boss)->AfterDead();
-					ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
-					if (ladder->goSafety())
-						return main();
-				}
-				// vector<PCBullet>::iterator itr;
-				for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end();)
-				{
-					if (Boss->NPCDead() == false && itr->checkBulletHit(Boss->x, Boss->y))
-					{
-						Boss->NPCHit(pc.getATK());
-						itr = pc.getBulletList().erase(itr);
-					}
-					else if (!(itr->move()))
-						itr = pc.getBulletList().erase(itr);
-					else
-						itr++;
-				}
-				printWarning(Boss->hp);
 				for (int i = 0; i < 5; i++)
 				{
+					printWarning(Boss->hp);
+					if (Boss->NPCDead() == false)
+					{
+						Boss->move();
+					}
+					else
+					{
+						if (stageLevel == 1)
+							((EmceeTheShyGuy*)Boss)->AfterDead();
+						else if (stageLevel == 2)
+							((RawkHawk*)Boss)->AfterDead();
+						else if (stageLevel == 3)
+							((Charizard*)Boss)->AfterDead();
+						ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
+						if (ladder->goSafety())
+							return main();
+					}
+					// vector<PCBullet>::iterator itr;
+					for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end();)
+					{
+						if (Boss->NPCDead() == false && itr->checkBulletHit(Boss->x, Boss->y))
+						{
+							Boss->NPCHit(pc.getATK());
+							itr = pc.getBulletList().erase(itr);
+						}
+						else if (!(itr->move()))
+							itr = pc.getBulletList().erase(itr);
+						else
+							itr++;
+					}
 					int curPosX = imageLayer.images[0].x;
 					int curPosY = imageLayer.images[0].y;
 					COORD afterMovedPos;
@@ -725,27 +725,27 @@ int main()
 							break;
 						case LEFT:
 							pc.setDirLeft();
-							/*afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-								pc.move();*/
+								pc.move();
 							break;
 						case RIGHT:
 							pc.setDirRight();
-							/*afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-								pc.move();*/
+								pc.move();
 							break;
 						case UP:
 							pc.setDirUp();
-							/*afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-								pc.move();*/
+								pc.move();
 							break;
 						case DOWN:
 							pc.setDirDown();
-							/*afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-								pc.move();*/
+								pc.move();
 							break;
 						case ESC:
 							stopBGM();
@@ -763,7 +763,8 @@ int main()
 							break;
 						}
 					}
-					if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(VK_RIGHT) < 0 || GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(VK_DOWN) < 0) {
+					isMoving = false;
+					if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(VK_RIGHT) < 0 || GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(VK_DOWN) < 0 && !isMoving) {
 						isMoving = true;
 					}
 					else isMoving = false;
@@ -771,7 +772,8 @@ int main()
 						afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
 						if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
 					}
-					Sleep(10);
+					if (i%2) targetLayer->renderAll(targetLayer);
+					Sleep(20);
 				}
 			}
 			// 嶺뚮?�維????????洹먮�??????�쾹????��?????�챷???濡ル�??袁⑤???

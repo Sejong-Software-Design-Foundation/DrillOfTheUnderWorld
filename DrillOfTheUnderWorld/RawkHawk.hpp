@@ -103,6 +103,7 @@ void RawkHawk::AfterDead() {
         imageArray[imageidx].fileName = bmpExplodeName[i % 5];
         imageArray[imageidx].scale = RAWKHAWK_SCALE;
         imageLayer.renderAll(&imageLayer);
+        Sleep(20);
     }
     imageArray[imageidx].fileName = bmpNameNull;
     imageLayer.renderAll(&imageLayer);

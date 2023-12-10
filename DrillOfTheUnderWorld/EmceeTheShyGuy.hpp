@@ -1,7 +1,7 @@
 #ifndef __EMCEE_THE_SHY_GUY_
 #define __EMCEE_THE_SHY_GUY_
 
-#define EMCEE_THESHYGUY_SPEED 48
+#define EMCEE_THESHYGUY_SPEED 16
 #define ULTIMATE_BULLET_NUM 10
 
 #include "NPC.hpp"
@@ -136,6 +136,7 @@ void EmceeTheShyGuy::AfterDead() {
 		imageArray[imageidx].fileName = bmpExplodeName[i%5];
 		imageArray[imageidx].scale = EMCEE_SCALE;
 		imageLayer.renderAll(&imageLayer);
+		Sleep(20);
 	}
 	for (int i = imageidx; i <= imageidx + maxHP + 1;i++) {
 		imageArray[i].isHide = true;
