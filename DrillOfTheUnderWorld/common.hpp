@@ -243,7 +243,7 @@ extern char bmpCaveSnakeName[];
 
 extern char bmpBackgroundTestName[];
 
-// ?�든 ?�어리어 관�?
+// ?�든 ?�어리어 관�?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
 extern std::vector<int> bossAreaPos;
 extern std::vector<int> treasureAreaPos;
@@ -275,11 +275,7 @@ void drawUI();
 void drawMapUI();
 void rewardUI();
 void initArea();
-//void changeLayer(ImageLayer* currentLayer, ImageLayer* nextLayer);
-void printTimeInMiniGameArea(float t);
-void printMyOriInMiniGameArea();
 void updateCharacterStatus();
-void updateCharacterStatusInArea();
 void initItemImages();
 void fillBlockImages();
 //void getNewArea(int zombieIndex);
@@ -343,5 +339,10 @@ void printGameOver();
 
 // define my areaImageLayer
 extern ImageLayer areaLayer;
-
+extern ImageLayer progressLayer;
+extern Image progressImageArray[100];
+void initProgressImage();
+void drawProgress();
+extern int index_Timer_Start;
+extern int timerIndex;
 #endif COMMON_HPP

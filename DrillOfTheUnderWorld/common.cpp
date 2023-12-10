@@ -63,6 +63,7 @@ ImageLayer rShopLayer = DEFAULT_IMAGE_LAYER;
 Image rShopImageArray[100];
 
 bool isOnSafety = false;
+bool isOnReward = false;
 char bmpShopItemBox[] = "Shop_ItemBox.bmp";
 char bmpShopItemBoxDisable[] = "Shop_ItemBox_disable.bmp";
 char bmpShopItemBoxSelected[] = "Shop_ItemBox_selected.bmp";
@@ -96,6 +97,7 @@ int index_Area_UI_blockInfo_Start;
 int index_Area_UI_mapTile_Start;
 int index_Area_UI_MiniGame_Start;
 int index_RewardImages_Start;
+int index_Timer_Start;
 
 // my areaImageLayer used in main.c
 ImageLayer areaLayer = AREA_IMAGE_LAYER;
@@ -153,7 +155,20 @@ char bmpNameO2_90pct[] = "UI_O2_90pct.bmp";
 char bmpNameO2_100pct[] = "UI_O2_100pct.bmp";
 char bmpNameMaxO2[] = "UI_maxO2.bmp";
 
-char bmpNameTimer[] = "UI_Timer.bmp";
+char bmpNameTimer[] = "Timer.bmp";
+char bmpNameTimer_0pct[] = "Timer_0pct.bmp";
+char bmpNameTimer_10pct[] = "Timer_10pct.bmp";
+char bmpNameTimer_20pct[] = "Timer_20pct.bmp";
+char bmpNameTimer_30pct[] = "Timer_30pct.bmp";
+char bmpNameTimer_40pct[] = "Timer_40pct.bmp";
+char bmpNameTimer_50pct[] = "Timer_50pct.bmp";
+char bmpNameTimer_60pct[] = "Timer_60pct.bmp";
+char bmpNameTimer_70pct[] = "Timer_70pct.bmp";
+char bmpNameTimer_80pct[] = "Timer_80pct.bmp";
+char bmpNameTimer_90pct[] = "Timer_90pct.bmp";
+char bmpNameTimer_100pct[] = "Timer_100pct.bmp";
+char bmpNameTimer_Bar[] = "Timer_Bar.bmp";
+
 char bmpNameStar0[] = "UI_Star0.bmp";
 char bmpNameStar1[] = "UI_Star1.bmp";
 char bmpNameStar2[] = "UI_Star2.bmp";
@@ -270,6 +285,182 @@ char bmpStart3[] = "st3.bmp";
 char bmpStart4[] = "st4.bmp";
 
 char bmpBackgroundTestName[] = "backgroundTest.bmp";
+
+ImageLayer progressLayer = PROGRESS_IMAGE_LAYER;
+Image progressImageArray[100];
+
+char bmpProgressBackGround[] = "progressBackGround.bmp";
+char bmpProgressMiddle[] = "progressMiddle.bmp";
+char bmpProgressBottom[] = "progressBottom.bmp";
+
+int timerIndex = 11;
+
+void initProgressImage() {
+	progressLayer.images = progressImageArray;
+	progressLayer.imageCount = 0;
+
+	index_Area_UI_blockInfo_Start = progressLayer.imageCount;
+	index_Area_UI_Map_Start = progressLayer.imageCount;
+
+	progressImageArray[progressLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameMapX, 0, 0, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameMapX, 0, 0, 1 };
+
+	index_Area_UI_mapTile_Start = progressLayer.imageCount;
+	int startX = 196, startY = 125;
+	for (int y = startY; y < startY + (BLOCKSIZE * 5) + 10; y += (BLOCKSIZE + 2)) {
+		for (int x = startX; x < startX + (BLOCKSIZE * 5) + 10; x += (BLOCKSIZE + 2)) {
+			progressImageArray[progressLayer.imageCount++] = { bmpNameMapTile, x, y, 1 };
+			mapInfo[(y - startY) / BLOCKSIZE][(x - startX) / BLOCKSIZE] = 0;
+		}
+	}
+
+	progressImageArray[progressLayer.imageCount++] = { bmpNameMapBox, 114, 26, 1 };
+
+	progressImageArray[progressLayer.imageCount++] = { bmpNameStar0, 200, 950, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpProgressMiddle, 10, 482, 1 };
+
+	index_Area_UI_MiniGame_Start = progressLayer.imageCount;
+
+	index_Timer_Start = progressLayer.imageCount;
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_0pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_10pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_20pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_30pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_40pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_50pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_60pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_70pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_80pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_90pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_100pct, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameNull, 0, 0, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer_Bar, 250, 1425, 1, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameOrichalcumMineral, 62, 1300, 2, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer, 80, 1420, 1, 1 };
+
+	progressImageArray[progressLayer.imageCount++] = { bmpProgressBottom, 10, 1228, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpProgressBackGround, 0, 0, 1 };
+}
+
+void drawProgress() {
+	int count = 0;
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 5; x++) {
+			if (mapInfo[y][x] == 1) {
+				progressImageArray[index_Area_UI_mapTile_Start + count].fileName = bmpNameMapTileCleared;
+				if (x == treasureAreaPos[1] && y == treasureAreaPos[0]) progressImageArray[2].isHide = 1;
+			}
+			count++;
+		}
+	}
+	progressImageArray[index_Area_UI_Map_Start].x = 196 + (BLOCKSIZE + 2) * currentAreaColIndex;
+	progressImageArray[index_Area_UI_Map_Start].y = 125 + (BLOCKSIZE + 2) * currentAreaRowIndex;
+
+	progressImageArray[index_Timer_Start + timerIndex].isHide = 1;
+
+	targetLayer = &progressLayer;
+	targetLayer->renderAll(targetLayer);
+	
+	wchar_t numOrichalcum[20];
+	swprintf(numOrichalcum, sizeof(numOrichalcum) / sizeof(numOrichalcum[0]), L"%d", OrichalcumNum);
+
+	wchar_t stageInfo1[100] = L"�������� ��";
+	wchar_t stageInfo2[100] = L"����Ű�� ���� �̵�, 'S'Ű�� ���� ������ �� �ֽ��ϴ�.";
+
+	wchar_t normalInfo1[100] = L"�븻 �����";
+	wchar_t normalInfo2[100] = L"����Ű�� ���� �̵�, 'SPACEBAR'Ű�� ���� ���� �� �� �ֽ��ϴ�.";
+
+	wchar_t minigameInfo1[100] = L"�̴ϰ��� �����";
+	wchar_t minigameInfo2[100] = L"���ѽð� ���� �ִ��� ���� ���������� ĳ�� ������ ȹ���ϼ���!";
+
+	wchar_t starInfo1[100] = L"1 Star (3) = 100G";
+	wchar_t starInfo2[100] = L"1 Star (6) = 200G";
+	wchar_t starInfo3[100] = L"1 Star(10) = 300G";
+
+	wchar_t buttonInfo1[100] = L"��ư �����";
+	wchar_t buttonInfo2[100] = L"��ư�� �۵���Ű�� ���� ����?";
+
+	wchar_t flagInfo1[100] = L"��� �����";
+	wchar_t flagInfo2[100] = L"��� ����� ȹ���ϰ� Ż���ϼ���!";
+
+	wchar_t stage1BossInfo1[100] = L"\"�β��� ������ ����\"";
+	wchar_t stage1BossInfo2[100] = L"���幮 �������� �ƴٸ�Ƽ���� ã�� ���� �İߵ� ������. ������ ����ؼ� �ӹ� ������ ������ ������ ���� �������׼� �������� ����.";
+	wchar_t stage1BossInfo3[100] = L"TIP : �ҽ��ϰ� �β����� �ϴ� ���� ���ݰ� �ٸ��� ���� �ɷ��� �躸�� �ȵ˴ϴ�!";
+
+	wchar_t stage2BossInfo1[100] = L"\"��������\"";
+	wchar_t stage2BossInfo2[100] = L"�ΰ� ���¸� �޲ٴ� �δ��� ����. �̹� ���� �ΰ��� �Ծ� �ΰ� ���¿� ���������.";
+	wchar_t stage2BossInfo3[100] = L"TIP : �δ����� ���� ���� �� �Ĵ� �����Դϴ�!";
+
+	wchar_t stage3BossInfo1[100] = L"\"���׸� ��\"";
+	wchar_t stage3BossInfo2[100] = L"���� �������� �ƴٸ�Ƽ���� ��Ű�°� 1������ ���ڸ�����. �״� ����� ������ �߽� ���ٿ��� �ƴٸ�Ƽ���� ���ѿԴ�.";
+	wchar_t stage3BossInfo3[100] = L"TIP : �ְ��� �� �ְ��� �����Դϴ�!";
+
+	wchar_t safetyInfo1[100] = L"��������";
+	wchar_t safetyInfo2[100] = L"�̰��� �����Դϴ�. ���� ���������� ���� �� �������� ������ �� �ֽ��ϴ�.";
+
+	wchar_t rewardInfo1[100] = L"���� ����";
+	wchar_t rewardInfo2[100] = L"����Ű �Ǵ� ����Ű�� ���� �̵��ϰ�, 'SPACEBAR'Ű�� ���� ������ �Ϸ��մϴ�.";
+
+	if (isOnSafety) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, safetyInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, safetyInfo2, 280);
+		targetLayer = &safetyLayer;
+		return;
+	}
+
+	if (isOnReward) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, rewardInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, rewardInfo2, 280);
+		targetLayer = &rewardLayer;
+		return;
+	}
+
+	if (isOnStage) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, stageInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stageInfo2, 280);
+	}
+	else if (isNormalArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, normalInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, normalInfo2, 280);
+	}
+	else if (isMiniGameArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, minigameInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, minigameInfo2, 280);
+		printText(targetLayer->_consoleDC, 2615, 1020, 30, 0, RGB(255, 255, 255), TA_LEFT, starInfo1, 280);
+		printText(targetLayer->_consoleDC, 2615, 1060, 30, 0, RGB(255, 255, 255), TA_LEFT, starInfo2, 280);
+		printText(targetLayer->_consoleDC, 2610, 1100, 30, 0, RGB(255, 255, 255), TA_LEFT, starInfo3, 280);
+		printText(targetLayer->_consoleDC, 2950, 1330, 40, 0, RGB(255, 255, 255), TA_LEFT, numOrichalcum, 280);
+	}
+	else if (isButtonArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, buttonInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, buttonInfo2, 280);
+	}
+	else if (isFlagArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, flagInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, flagInfo2, 280);
+	}
+	else if (isBossArea) {
+		if (stageLevel == 1) {
+			printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, stage1BossInfo1, 280);
+			printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stage1BossInfo2, 280);
+			printText(targetLayer->_consoleDC, 2520, 1040, 30, 0, RGB(255, 0, 0), TA_LEFT, stage1BossInfo3, 280);
+		}
+		else if (stageLevel == 2) {
+			printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, stage2BossInfo1, 280);
+			printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stage2BossInfo2, 280);
+			printText(targetLayer->_consoleDC, 2520, 1040, 30, 0, RGB(255, 0, 0), TA_LEFT, stage2BossInfo3, 280);
+		}
+		else if (stageLevel == 3) {
+			printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, stage3BossInfo1, 280);
+			printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stage3BossInfo2, 280);
+			printText(targetLayer->_consoleDC, 2520, 1040, 30, 0, RGB(255, 0, 0), TA_LEFT, stage3BossInfo3, 280);
+		}
+	}
+
+	if (isOnStage) targetLayer = &stageLayer;
+	else targetLayer = &imageLayer;
+}
 
 ImageLayer gameStartLayer = DEFAULT_IMAGE_LAYER;
 Image gameStartArray[10];
@@ -414,94 +605,100 @@ void initSafetyImage() {
     safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyArrow, 1000, 1130, 0.5 };
     safetyImageArray[safetyLayer.imageCount++] = { bmpRShopMiner, 1200, 1210, 0.5 };
 
-    safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 };
+	//safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 }; 
 }
 
 void visitSafety() {
-    targetLayer->fadeOut(targetLayer, NULL);
-    targetLayer = &safetyLayer;
-    stopBGM();
-    playBGM(bgmSafety);
-    safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
-    safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
-    safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &safetyLayer;
+	stopBGM();
+	playBGM(bgmSafety);
+	
+	isOnSafety = true;
+	drawProgress();
+	isOnSafety = false;
 
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
+	safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
+	safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
 
-    updateCharacterStatus();
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
-    int index = -1;
-    int flags = 1;
-    while (flags) {
-        while (_kbhit() != 0) {
-            int key = _getch();
+	updateCharacterStatus();
 
-            switch (key) {
-            case NUM1:
-                index = 0;
-                break;
-            case NUM2:
-                index = 1;
-                break;
-            case NUM3:
-                index = 2;
-                break;
-            case LEFT:
-                if (index == -1) index = 0;
-                else if (index != 0) index--;
-                break;
-            case RIGHT:
-                if (index == -1) index = 2;
-                else if (index != 2) index++;
-                break;
-            case SPACE:
-                if (index == -1) break;
-                else if (index == 0) {
-                    visitLShop();
-                }
-                else if (index == 1) {
-                    //visitLShop();
-                    initItemImages();
-                    flags = 0;
-                }
-                else if (index == 2) {
-                    visitRShop();
-                }
-                break;
-            }
+	int index = -1;
+	int flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
 
-            if (index != -1) index %= 3;
+			switch (key) {
+			case NUM1:
+				index = 0;
+				break;
+			case NUM2:
+				index = 1;
+				break;
+			case NUM3:
+				index = 2;
+				break;
+			case LEFT:
+				if (index == -1) index = 0;
+				else if (index != 0) index--;
+				break;
+			case RIGHT:
+				if (index == -1) index = 2;
+				else if (index != 2) index++;
+				break;
+			case SPACE:
+				if (index == -1) break;
+				else if (index == 0) {
+					visitLShop();
+				}
+				else if (index == 1) {
+					//visitLShop();
+					initItemImages();
+					flags = 0;
+				}
+				else if (index == 2) {
+					visitRShop();
+				}
+				break;
+			}
 
-            if (index == 0) {
-                safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMinerSelected;
-                safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
-                safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
-            }
-            else if (index == 1) {
-                safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
-                safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrowSelected;
-                safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
-            }
-            else if (index == 2) {
-                safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
-                safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
-                safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMinerSelected;
-            }
-            if (key) {
-                targetLayer->renderAll(targetLayer);
-                updateCharacterStatus();
-            }
-        }
-    }
+			if (index != -1) index %= 3;
 
-    targetLayer->fadeOut(targetLayer, NULL);
-    targetLayer = &stageLayer;
-    isBossArea = false;
-    isOnStage = true;
-    stopBGM();
-    /*targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);*/
+			if (index == 0) {
+				safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMinerSelected;
+				safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
+				safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
+			}
+			else if (index == 1) {
+				safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
+				safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrowSelected;
+				safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMiner;
+			}
+			else if (index == 2) {
+				safetyImageArray[index_Safety_Object_Start].fileName = bmpLShopMiner;
+				safetyImageArray[index_Safety_Object_Start + 1].fileName = bmpSafetyArrow;
+				safetyImageArray[index_Safety_Object_Start + 2].fileName = bmpRShopMinerSelected;
+			}
+			if (key) {
+				targetLayer->renderAll(targetLayer);
+				updateCharacterStatus();
+			}
+		}
+	}
+
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &stageLayer;
+	isBossArea = false;
+	isOnStage = true;
+	stopBGM();
+	/*targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);*/
+	drawProgress();
 }
 
 void initLShopImage() {
@@ -640,7 +837,7 @@ void printItemTextInLShop() {
     wchar_t itemName1[10] = L"HP ?�션";
     wchar_t itemName2[10] = L"O2 ?�션";
     wchar_t itemInfo1[100] = L"PC??체력??모두 ?�복?�다.";
-    wchar_t itemInfo2[100] = L"PC???�소게이지�?모두 ?�복?�다.";
+    wchar_t itemInfo2[100] = L"PC???�소게이지�?모두 ?�복?�다.";
 
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 20 + 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
@@ -822,7 +1019,7 @@ void printItemTextInRShop()
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 20 + 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
 }
 
-// 문자?�을 wchar_t 배열�?변?�하???�수
+// 문자?�을 wchar_t 배열�?변?�하???�수
 void stringToWchar(const std::string& input, wchar_t* output, size_t outputSize) {
     // 로캘 ?�정
     std::locale loc("");
@@ -999,6 +1196,7 @@ void initItemImages() {
 	for (int i = 0; i < itemList.size(); i++) {
 		uiImageArray[uiLayer.imageCount++] = { imageArray[itemList[i]->getImageIndex()].fileName, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1};
 	}
+	//safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 };
 }
 
 void fillBlockImages() {
@@ -1220,27 +1418,38 @@ void getNewArea() {
 
 void getNewMiniGameArea()
 {
-    int cnt = 1;
-    for (int y = AREA_ORIGIN_Y; y < AREA_ORIGIN_Y + BLOCKSIZE * 25; y += BLOCKSIZE) {
-        for (int x = AREA_ORIGIN_X; x < AREA_ORIGIN_X + BLOCKSIZE * 25; x += BLOCKSIZE) {
-            imageArray[cnt++] = { bmpStoneBlockName[stageLevel - 1], x,y,1 };
-            for (int dy = 0; dy < BLOCKSIZE; dy++) {
-                for (int dx = 0; dx < BLOCKSIZE; dx++) {
-                    blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
-                }
-            }
-        }
-    }
+	int cnt = 1;
+	for (int y = AREA_ORIGIN_Y;y < AREA_ORIGIN_Y + BLOCKSIZE * 25;y += BLOCKSIZE) {
+		for (int x = AREA_ORIGIN_X;x < AREA_ORIGIN_X + BLOCKSIZE * 25;x += BLOCKSIZE) {
+			if (y == AREA_ORIGIN_Y || y == AREA_ORIGIN_Y + BLOCKSIZE * 24 || x == AREA_ORIGIN_X || x == AREA_ORIGIN_X + BLOCKSIZE * 24) {
 
-    imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
-    imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
-    for (int y = 0; y < BLOCKSIZE; y++) {
-        for (int x = 0; x < BLOCKSIZE; x++) {
-            blockInfo[576 + y][576 + x] = 0;
-        }
-    }
+				imageArray[cnt++] = { bmpBedrockName, x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 99999999;
+					}
+				}
+			}
+			else {
+				imageArray[cnt++] = { bmpStoneBlockName[stageLevel - 1], x,y,1 };
+				for (int dy = 0;dy < BLOCKSIZE;dy++) {
+					for (int dx = 0;dx < BLOCKSIZE;dx++) {
+						blockInfo[convertPosToInfoY(y + dy)][convertPosToInfoX(x + dx)] = 2;
+					}
+				}
+			}
+		}
+	}
 
-    imageArray[12 * 25 + 13].fileName = bmpNameNull;
+	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
+	imageArray[0].y = AREA_ORIGIN_Y + 48 * 12;
+	for (int y = 0;y < BLOCKSIZE;y++) {
+		for (int x = 0;x < BLOCKSIZE;x++) {
+			blockInfo[576 + y][576 + x] = 0;
+		}
+	}
+
+	imageArray[12 * 25 + 13].fileName = bmpNameNull;
 }
 
 void drawUI() { 
@@ -1339,246 +1548,234 @@ bool collisionCheck(int x, int y) {
     return false;
 }
 
-void printTimeInMiniGameArea(float t) {
-    wchar_t timeLimit[20];
-    if (t > 0.0) swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%.2f", t);
-    else swprintf(timeLimit, sizeof(timeLimit) / sizeof(timeLimit[0]), L"%0.00");
-    printText(targetLayer->_consoleDC, 1750, 1458, 40, 0, RGB(255, 255, 255), TA_CENTER, timeLimit);
-}
-
-void printMyOriInMiniGameArea() {
-    wchar_t info1[30] = L"1 Star (5) = 100 Stones";
-    wchar_t info2[30] = L"2 Star(10) = 200 Stones";
-    wchar_t info3[30] = L"3 Star(20) = 300 Stones";
-    wchar_t numOrichalcum[20];
-
-    printText(targetLayer->_consoleDC, 1610, 670, 40, 0, RGB(255, 255, 255), TA_CENTER, info1);
-    printText(targetLayer->_consoleDC, 1610, 730, 40, 0, RGB(255, 255, 255), TA_CENTER, info2);
-    printText(targetLayer->_consoleDC, 1610, 790, 40, 0, RGB(255, 255, 255), TA_CENTER, info3);
-    swprintf(numOrichalcum, sizeof(numOrichalcum) / sizeof(numOrichalcum[0]), L"%d", OrichalcumNum);
-    printText(targetLayer->_consoleDC, 1790, 1358, 40, 0, RGB(255, 255, 255), TA_CENTER, numOrichalcum);
-}
-
 void rewardUI() {
-    targetLayer->fadeOut(targetLayer, NULL);
-    targetLayer = &rewardLayer;
+	OrichalcumNum = 0;
+	timerIndex = 11;
+	progressImageArray[29].isHide = 1;
+	for (int i = index_Timer_Start; i < index_Timer_Start + 15; i++)
+		progressImageArray[i].isHide = 1;
 
-    imagesReward[0].isHide = 0;
-    imagesReward[2].isHide = 0;
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &rewardLayer;
 
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	isOnReward = true;
+	drawProgress();
+	isOnReward = false;
+
+	imagesReward[0].isHide = 0;
+	imagesReward[2].isHide = 0;
+
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
 
-    int index1 = -1;
-    int flags = 1;
-    while (flags) {
-        while (_kbhit() != 0) {
-            int key = _getch();
+	int index1 = -1;
+	int flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
 
-            switch (key) {
-            case NUM1:
-                index1 = 0;
-                break;
-            case NUM2:
-                index1 = 1;
-                break;
-            case LEFT:
-                if (index1 == -1) index1 = 0;
-                else if (index1 != 0) index1--;
-                break;
-            case RIGHT:
-                if (index1 == -1) index1 = 1;
-                else if (index1 != 1) index1++;
-                break;
-            case SPACE:
-                if (index1 == -1) break;
-                flags = 0;
-                break;
-            }
-            if (index1 != -1) index1 %= 2;
+			switch (key) {
+			case NUM1:
+				index1 = 0;
+				break;
+			case NUM2:
+				index1 = 1;
+				break;
+			case LEFT:
+				if (index1 == -1) index1 = 0;
+				else if (index1 != 0) index1--;
+				break;
+			case RIGHT:
+				if (index1 == -1) index1 = 1;
+				else if (index1 != 1) index1++;
+				break;
+			case SPACE:
+				if (index1 == -1) break;
+				flags = 0;
+				break;
+			}
+			if (index1 != -1) index1 %= 2;
 
-            if (index1 == 0) {
-                imagesReward[0].isHide = 0;
-                imagesReward[1].isHide = 1;
-                imagesReward[2].isHide = 1;
-                imagesReward[3].isHide = 0;
-            }
-            else if (index1 == 1) {
-                imagesReward[0].isHide = 1;
-                imagesReward[1].isHide = 0;
-                imagesReward[2].isHide = 0;
-                imagesReward[3].isHide = 1;
-            }
+			if (index1 == 0) {
+				imagesReward[0].isHide = 0;
+				imagesReward[1].isHide = 1;
+				imagesReward[2].isHide = 1;
+				imagesReward[3].isHide = 0;
+			}
+			else if (index1 == 1) {
+				imagesReward[0].isHide = 1;
+				imagesReward[1].isHide = 0;
+				imagesReward[2].isHide = 0;
+				imagesReward[3].isHide = 1;
+			}
 
-            if (key) targetLayer->renderAll(targetLayer);
-        }
-    }
+			if (key) targetLayer->renderAll(targetLayer);
+		}
+	}
 
-    targetLayer->fadeOut(targetLayer, NULL);
-    imagesReward[0].isHide = 1;
-    imagesReward[1].isHide = 1;
-    imagesReward[2].isHide = 1;
-    imagesReward[3].isHide = 1;
-    imagesReward[4].isHide = 0;
-    imagesReward[5].isHide = 1;
-    imagesReward[6].isHide = 0;
-    imagesReward[7].isHide = 1;
-    imagesReward[8].isHide = 0;
-    imagesReward[9].isHide = 1;
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	targetLayer->fadeOut(targetLayer, NULL);
+	imagesReward[0].isHide = 1;
+	imagesReward[1].isHide = 1;
+	imagesReward[2].isHide = 1;
+	imagesReward[3].isHide = 1;
+	imagesReward[4].isHide = 0;
+	imagesReward[5].isHide = 1;
+	imagesReward[6].isHide = 0;
+	imagesReward[7].isHide = 1;
+	imagesReward[8].isHide = 0;
+	imagesReward[9].isHide = 1;
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
-    int index2 = -1;
-    flags = 1;
-    while (flags) {
-        while (_kbhit() != 0) {
-            int key = _getch();
+	int index2 = -1;
+	flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
 
-            switch (key) {
-            case NUM1:
-                index2 = 0;
-                break;
-            case NUM2:
-                index2 = 1;
-                break;
-            case NUM3:
-                index2 = 2;
-                break;
-            case LEFT:
-                if (index2 == -1) index2 = 0;
-                else if (index2 != 0) index2--;
-                break;
-            case RIGHT:
-                if (index2 == -1) index2 = 2;
-                else if (index2 != 2) index2++;
-                break;
-            case SPACE:
-                if (index2 == -1) break;
-                flags = 0;
-                break;
-            }
+			switch (key) {
+			case NUM1:
+				index2 = 0;
+				break;
+			case NUM2:
+				index2 = 1;
+				break;
+			case NUM3:
+				index2 = 2;
+				break;
+			case LEFT:
+				if (index2 == -1) index2 = 0;
+				else if (index2 != 0) index2--;
+				break;
+			case RIGHT:
+				if (index2 == -1) index2 = 2;
+				else if (index2 != 2) index2++;
+				break;
+			case SPACE:
+				if (index2 == -1) break;
+				flags = 0;
+				break;
+			}
 
-            if (index2 != -1) index2 %= 3;
+			if (index2 != -1) index2 %= 3;
 
-            if (index2 == 0) {
-                imagesReward[4].isHide = 0;
-                imagesReward[5].isHide = 1;
-                imagesReward[6].isHide = 1;
-                imagesReward[7].isHide = 0;
-                imagesReward[8].isHide = 1;
-                imagesReward[9].isHide = 0;
-            }
-            else if (index2 == 1) {
-                imagesReward[4].isHide = 1;
-                imagesReward[5].isHide = 0;
-                imagesReward[6].isHide = 0;
-                imagesReward[7].isHide = 1;
-                imagesReward[8].isHide = 1;
-                imagesReward[9].isHide = 0;
-            }
-            else if (index2 == 2) {
-                imagesReward[4].isHide = 1;
-                imagesReward[5].isHide = 0;
-                imagesReward[6].isHide = 1;
-                imagesReward[7].isHide = 0;
-                imagesReward[8].isHide = 0;
-                imagesReward[9].isHide = 1;
-            }
-            if (key) targetLayer->renderAll(targetLayer);
-        }
-    }
-    targetLayer->fadeOut(targetLayer, NULL);
-    imagesReward[4].isHide = 1;
-    imagesReward[5].isHide = 1;
-    imagesReward[6].isHide = 1;
-    imagesReward[7].isHide = 1;
-    imagesReward[8].isHide = 1;
-    imagesReward[9].isHide = 1;
+			if (index2 == 0) {
+				imagesReward[4].isHide = 0;
+				imagesReward[5].isHide = 1;
+				imagesReward[6].isHide = 1;
+				imagesReward[7].isHide = 0;
+				imagesReward[8].isHide = 1;
+				imagesReward[9].isHide = 0;
+			}
+			else if (index2 == 1) {
+				imagesReward[4].isHide = 1;
+				imagesReward[5].isHide = 0;
+				imagesReward[6].isHide = 0;
+				imagesReward[7].isHide = 1;
+				imagesReward[8].isHide = 1;
+				imagesReward[9].isHide = 0;
+			}
+			else if (index2 == 2) {
+				imagesReward[4].isHide = 1;
+				imagesReward[5].isHide = 0;
+				imagesReward[6].isHide = 1;
+				imagesReward[7].isHide = 0;
+				imagesReward[8].isHide = 0;
+				imagesReward[9].isHide = 1;
+			}
+			if (key) targetLayer->renderAll(targetLayer);
+		}
+	}
+	targetLayer->fadeOut(targetLayer, NULL);
+	imagesReward[4].isHide = 1;
+	imagesReward[5].isHide = 1;
+	imagesReward[6].isHide = 1;
+	imagesReward[7].isHide = 1;
+	imagesReward[8].isHide = 1;
+	imagesReward[9].isHide = 1;
 
-    targetLayer = &stageLayer;
-    isOnStage = true;
-    targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-    stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-    setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+	targetLayer = &stageLayer;
+	isOnStage = true;
+	targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+	stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+	setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
 
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
-    int num = 0;
-    if (index1 == 0) num = rand() % 2 + 1;
-    else if (index1 == 1) num = rand() % 11 + (-5);
-    if (index2 == 0) pc.setAtkLev(pc.getAtkLev() + num);
-    else if (index2 == 1) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
-    else if (index2 == 2) pc.setSpdLev(pc.getSpdLev() + num);
-    pc.setStone(pc.getStone() + 100);
+	int num = 0;
+	if (index1 == 0) num = rand() % 2 + 1;
+	else if (index1 == 1) num = rand() % 11 + (-5);
+	if (index2 == 0) pc.setAtkLev(pc.getAtkLev() + num);
+	else if (index2 == 1) pc.setAtkSpdLev(pc.getAtkSpdLev() + num);
+	else if (index2 == 2) pc.setSpdLev(pc.getSpdLev() + num);
+	pc.setStone(pc.getStone() + 100);
 
-    imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar0;
-    if (isMiniGameArea) {
-        if (OrichalcumNum >= 2) pc.setStone(pc.getStone() + 200);
-        else if (OrichalcumNum >= 1) pc.setStone(pc.getStone() + 100);
-    }
-    OrichalcumNum = 0;
-    pc.setFatigue(pc.getFatigue() - 1);
-    playBGM(bgmStage);
+	//imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar0;
+	progressImageArray[29].fileName = bmpNameStar0;
+	if (isMiniGameArea) {
+		if (OrichalcumNum >= 10) pc.setStone(pc.getStone() + 200);
+		else if (OrichalcumNum >= 6) pc.setStone(pc.getStone() + 100);
+	}
+	pc.setFatigue(pc.getFatigue() - 1);
+	playBGM(bgmStage);
+	drawProgress();
 }
 
 bool printButtonStageStatus() {
-    wchar_t playerStone[100] = L"Pessed Button List";
-    wchar_t pressed_button_info[20] = L"";
-    wchar_t pressed_button_status[20] = L"";
-    bool isClear = true;
-    bool isButtonReset = false;
+	wchar_t pressed_button_info[20] = L"";
+	wchar_t pressed_button_status[20] = L"";
+	bool isClear = true;
+	bool isButtonReset = false;
 
-    if (buttonPressedOrderList.size() == 1) {
-        swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d", buttonPressedOrderList[0]);
-    }
-    else if (buttonPressedOrderList.size() == 2) {
-        swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d -> %d", buttonPressedOrderList[0], buttonPressedOrderList[1]);
-    }
-    else if (buttonPressedOrderList.size() == 3) {
-        swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d -> %d -> %d", buttonPressedOrderList[0], buttonPressedOrderList[1], buttonPressedOrderList[2]);
+	if (buttonPressedOrderList.size() == 1) {
+		swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d", buttonPressedOrderList[0]);
+	}
+	else if (buttonPressedOrderList.size() == 2) {
+		swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d -> %d", buttonPressedOrderList[0], buttonPressedOrderList[1]);
+	}
+	else if (buttonPressedOrderList.size() == 3) {
+		swprintf(pressed_button_info, sizeof(pressed_button_info) / sizeof(pressed_button_info[0]), L"%d -> %d -> %d", buttonPressedOrderList[0], buttonPressedOrderList[1], buttonPressedOrderList[2]);
 
-        for (int i = 0; i < 3; i++) {
-            if (buttonPressedOrderList[i] != buttonPressedOrderAnswerList[i]) {
-                isClear = false;
-                break;
-            }
-        }
-        if (isClear) {
-            isButtonRoomClear = true;
-            swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Correct Answer!");
-            printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-            printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
-            printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
-        }
-        else {
-            imageArray[0].y = imageArray[0].y + 96;
-            isButtonReset = true;
-            buttonPressedOrderList.clear();
-            swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Not Correct Answer!");
-            printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-            printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
-            printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
-            Sleep(300);
-        }
+		for (int i = 0; i < 3; i++) {
+			if (buttonPressedOrderList[i] != buttonPressedOrderAnswerList[i]) {
+				isClear = false;
+				break;
+			}
+		}
+		if (isClear) {
+			isButtonRoomClear = true;
+			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Correct Answer!");
+			printText(targetLayer->_consoleDC, 2650, 1320, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+			printText(targetLayer->_consoleDC, 2600, 1420, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+			Sleep(300);
+		}
+		else {
+			imageArray[0].y = imageArray[0].y + 96;
+			isButtonReset = true;
+			buttonPressedOrderList.clear();
+			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Not Correct Answer!");
+			printText(targetLayer->_consoleDC, 2650, 1320, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+			printText(targetLayer->_consoleDC, 2600, 1420, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+			Sleep(300);
+		}
+		
+		swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"");
+	}
+	drawProgress();
+	printText(targetLayer->_consoleDC, 2650, 1320, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
+	printText(targetLayer->_consoleDC, 2600, 1420, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
 
-        swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"");
-    }
-
-    printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-    printText(targetLayer->_consoleDC, 1600, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
-    printText(targetLayer->_consoleDC, 1600, 800, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
-
-    return isButtonReset;
-}
+	return isButtonReset;
+ }
 
 void printFlagStageStatus(int curFlagCnt) {
-    wchar_t playerFlagInfo[100] = L"Your Current Flag Count : ";
-    wchar_t playerFlagCount[20] = L"";
-    swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curFlagCnt);
-    printText(targetLayer->_consoleDC, 1600, 600, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
-    printText(targetLayer->_consoleDC, 1800, 700, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
+	wchar_t playerFlagInfo[100] = L"ȹ���� ����� �� : ";
+	wchar_t playerFlagCount[20] = L"";
+	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", pc.getFlagCnt());
+	printText(targetLayer->_consoleDC, 2560, 1370, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
+	printText(targetLayer->_consoleDC, 2940, 1370, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagCount);
 }
 
 void setBedrock(int max) {
@@ -1694,7 +1891,7 @@ void getMoleSpace() {
     }
 }
 
-void updateCharacterStatusInArea() {
+/*void updateCharacterStatusInArea() {
     wchar_t playerStone[20];
     wchar_t playerHp[20];
     wchar_t playerOz[20];
@@ -1724,7 +1921,7 @@ void updateCharacterStatusInArea() {
     printText(targetLayer->_consoleDC, X, Y + 355, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
     printText(targetLayer->_consoleDC, X, Y + 410, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
     printText(targetLayer->_consoleDC, X, Y + 465, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
-}
+}*/
 
 std::vector<int> getRandomHiddenAreaPos() {
     int randomIndex = rand() % hiddenAreaPosList.size();
@@ -1735,16 +1932,25 @@ void setHiddenAreaPos() {
 
     srand((unsigned)time(NULL));
 
-    bossAreaPos = getRandomHiddenAreaPos();
+	bossAreaPos = getRandomHiddenAreaPos();
+	//progressImageArray[1].x = bossAreaPos[0];
+	//progressImageArray[1].y = bossAreaPos[1];
+
+	progressImageArray[1].x = 196 + (BLOCKSIZE + 2) * bossAreaPos[1];
+	progressImageArray[1].y = 125 + (BLOCKSIZE + 2) * bossAreaPos[0];
+	//bossAreaPos[1];
+	//currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0];
 
     while (true) {
         treasureAreaPos = getRandomHiddenAreaPos();
 
-        int distance = abs(treasureAreaPos[0] - bossAreaPos[0]) + abs(treasureAreaPos[1] - bossAreaPos[1]);
-        if (distance > 4) {
-            break;
-        }
-    }
+		int distance = abs(treasureAreaPos[0] - bossAreaPos[0]) + abs(treasureAreaPos[1] - bossAreaPos[1]);
+		if (distance > 4) {
+			progressImageArray[2].x = 196 + (BLOCKSIZE + 2) * treasureAreaPos[1];
+			progressImageArray[2].y = 125 + (BLOCKSIZE + 2) * treasureAreaPos[0];
+			break;
+		}
+	}
 }
 
 void renderImageLayer() {

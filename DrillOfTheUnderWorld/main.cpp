@@ -15,14 +15,15 @@ int main()
    initialize();
    uiLayer.initialize(&uiLayer);
 
-   gameStartLayer.initialize(&gameStartLayer);
-   gameOverLayer.initialize(&gameOverLayer);
-   stageLayer.initialize(&stageLayer);
-   imageLayer.initialize(&imageLayer);
-   rewardLayer.initialize(&rewardLayer);
-   safetyLayer.initialize(&safetyLayer);
-   rShopLayer.initialize(&rShopLayer);
-   lShopLayer.initialize(&lShopLayer);
+	gameStartLayer.initialize(&gameStartLayer);
+	gameOverLayer.initialize(&gameOverLayer);
+	stageLayer.initialize(&stageLayer);
+	imageLayer.initialize(&imageLayer);
+	rewardLayer.initialize(&rewardLayer);
+	safetyLayer.initialize(&safetyLayer);
+	rShopLayer.initialize(&rShopLayer);
+	lShopLayer.initialize(&lShopLayer);
+	progressLayer.initialize(&progressLayer);
 
        // initialize my areaLayer
     areaLayer.initialize(&areaLayer);
@@ -32,752 +33,751 @@ int main()
    imageLayer.imageCount = 1;
 
    initUIImage();
+	initProgressImage();
    initStageImage();
    fillBlockImages();
    initSafetyImage();
    initRShopImage();
    initLShopImage();
 
-   Button *button1 = new Button(1);
-   Button *button2 = new Button(2);
-   Button *button3 = new Button(3);
-   imageArray[button1->imageidx].fileName = bmpButton1Name;
-   imageArray[button2->imageidx].fileName = bmpButton2Name;
-   imageArray[button3->imageidx].fileName = bmpButton3Name;
-   imageArray[button1->imageidx].isHide = 1;
-   imageArray[button2->imageidx].isHide = 1;
-   imageArray[button3->imageidx].isHide = 1;
-   index_Area_Button_Start = button1->imageidx;
+	Button* button1 = new Button(1);
+	Button* button2 = new Button(2);
+	Button* button3 = new Button(3);
+	imageArray[button1->imageidx].fileName = bmpButton1Name;
+	imageArray[button2->imageidx].fileName = bmpButton2Name;
+	imageArray[button3->imageidx].fileName = bmpButton3Name;
+	imageArray[button1->imageidx].isHide = 1;
+	imageArray[button2->imageidx].isHide = 1;
+	imageArray[button3->imageidx].isHide = 1;
+	index_Area_Button_Start = button1->imageidx;
 
-   initAreaUI();
-   initRewardImage();
+	initAreaUI();
+	initRewardImage();
 
-   // ???™èµ­?½è«î¤£è•­???©î¿ç²¾ï¿½ ????™è“??????™è¶£???????????™è¶Ÿï¿½é‹†?¥ï†…??éµ€?¨îªº????™è¸????
-   /*pc.addItem(1);
-   pc.addItem(2);
-   pc.addItem(3);*/
-   initItems();
+	// ??ï¿½ê³£ë«—ï¿½??è¹‚Îºë• ???ï¿½Â€????ï¿½ì¶¨ ??ï¿½?????ï¿½ë£‡è£•ë…»??ï¦«ëš¯???ï¿½ï¿½?ï¿½?
+	/*pc.addItem(1);
+	pc.addItem(2);
+	pc.addItem(3);*/
+	initItems();
 
-   // ??????£å?è»Šåš™?????????????????????????™èµ­?çª±äº?œ??çª¸ï?ï¿????ˆï½???
-   clock_t start_time = clock();
-   clock_t end_time;
-   clock_t timee;
-   clock_t minigameStartTime = clock();
-   double duration;
+	// ?????æ´¹ë¨®ï¿½?????????????ï¿½??????????ï¿½ê³¥êµ¥ç”±??ê³Œë– ???æ¿¡ãƒª??
+	clock_t start_time = clock();
+	clock_t end_time;
+	double duration;
 
-   // Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
-   std::vector<Bat *> generatedBatList;
-   Bat *bat = new Bat(-48, -48);
-   Ladder *ladder = new Ladder(-48, -48);
-   NPC *Boss;
-   if (stageLevel == 1)
-      Boss = new EmceeTheShyGuy(-BLOCKSIZE * EMCEE_SCALE, -BLOCKSIZE * EMCEE_SCALE);
-   else if (stageLevel == 2)
-      Boss = new RawkHawk(-BLOCKSIZE * RAWKHAWK_SCALE, -BLOCKSIZE * RAWKHAWK_SCALE);
-   else if (stageLevel == 3)
-      Boss = new Charizard(-BLOCKSIZE * CHARIZARD_SCALE, -BLOCKSIZE * CHARIZARD_SCALE);
-   else
-      Boss = new EmceeTheShyGuy(-BLOCKSIZE * EMCEE_SCALE, -BLOCKSIZE * EMCEE_SCALE);
-   Mole *mole = new Mole(-48, -48);
+	// Mole* mole = new Mole(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
+	std::vector<Bat*> generatedBatList;
+	Bat* bat = new Bat(-48, -48);
+	Ladder* ladder = new Ladder(-48, -48);
+	NPC* Boss;
+	if (stageLevel == 1)
+		Boss = new EmceeTheShyGuy(-BLOCKSIZE * EMCEE_SCALE, -BLOCKSIZE * EMCEE_SCALE);
+	else if (stageLevel == 2)
+		Boss = new RawkHawk(-BLOCKSIZE * RAWKHAWK_SCALE, -BLOCKSIZE * RAWKHAWK_SCALE);
+	else if (stageLevel == 3)
+		Boss = new Charizard(-BLOCKSIZE * CHARIZARD_SCALE, -BLOCKSIZE * CHARIZARD_SCALE);
+	else
+		Boss = new EmceeTheShyGuy(-BLOCKSIZE * EMCEE_SCALE, -BLOCKSIZE * EMCEE_SCALE);
+	Mole* mole = new Mole(-48, -48);
 
-   
-   /*
-   
-   targetLayer = &stageLayer;
-   targetLayer->fadeIn(targetLayer, NULL);
-   targetLayer->renderAll(targetLayer);
-   
-   */
 
-   //while (1) { printf("1"); }
-   if (stageLevel == 1) printGameStart();
-   else {
-       targetLayer = &stageLayer;
-       targetLayer->fadeIn(targetLayer, NULL);
-       targetLayer->renderAll(targetLayer);
-   }
-   playBGM(bgmStage);
+	/*
 
-   updateCharacterStatus();
-   pc.setFatigue(pc.getMaxFatigue());
-   pc.setHP(pc.getHP());
-   pc.setOxygen(pc.getOxygen());
-   while (1)
-   {
-      if (isOnStage)
-      { // PC???™è¶Ÿî·? ?????™è“???? éµ€?¨îª¹???™è¸???™èµ­çª??è³³ï˜„??????ˆï½?»åš™??è«?¡¨ï¿???
-          for (int i = 0;i < generatedBatList.size();i++) {
-              imageArray[generatedBatList[i]->imageidx].fileName = bmpNameNull;
-         }
-         generatedBatList.clear();
-         imageArray[ladder->imageidx].isHide = 0;
-         imageArray[button1->imageidx].isHide = 1;
-         imageArray[button2->imageidx].isHide = 1;
-         imageArray[button3->imageidx].isHide = 1;
+	targetLayer = &stageLayer;
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
-         //updateCharacterStatus(); // PC ????™èµ­ï¿??™è¶Ÿï¿½åš™???™è¶£î¯???????™è¶Ÿ????¡î¼¸?ªåš™?
-         while (_kbhit() != 0)
-         {
-            int key = _getch();
-            int curPosX = stageLayer.images[0].x;
-            int curPosY = stageLayer.images[0].y;
+	*/
+	//drawProgress();
+	//while (1) { printf("1"); }
+	if (stageLevel == 1) printGameStart();
+	else {
+		targetLayer = &stageLayer;
+		targetLayer->fadeIn(targetLayer, NULL);
+		targetLayer->renderAll(targetLayer);
+	}
+	drawProgress();
+	//targetLayer = &stageLayer;
+	playBGM(bgmStage);
+	while (1)
+	{
+		//drawProgress();
+		if (isOnStage)
+		{ // PC??ï¿½ëŸ¾? ????ï¿½Â€??? ï¦«ëš®??ï¿½ï¿½?ï¿½êµ¢??ë¸Œï¿½????æ¿¡ãƒ«ï¿½??ë¡ªí”???
+			for (int i = 0;i < generatedBatList.size();i++) {
+				imageArray[generatedBatList[i]->imageidx].fileName = bmpNameNull;
+			}
+			generatedBatList.clear();
+			imageArray[ladder->imageidx].isHide = 0;
+			imageArray[button1->imageidx].isHide = 1;
+			imageArray[button2->imageidx].isHide = 1;
+			imageArray[button3->imageidx].isHide = 1;
 
-            switch (key)
-            {
-            case S:
-            {
-               currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
-               currentAreaColIndex = convertPosToInfoXInStage(curPosX);
-               int num = rand() % 4;
-               if (currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
-               {
-                  isNormalArea = false;
-                  isMiniGameArea = false;
-                  isButtonArea = false;
-                  isFlagArea = false;
-                  isBossArea = true;
-                  getNewBossArea();
-                  Boss->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25 - BLOCKSIZE * BOSS_SCALE / 2, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25 - BLOCKSIZE * BOSS_SCALE);
-                  imageArray[0].x = AREA_ORIGIN_X + BLOCKSIZE / 2 * 25;
-                  imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
-                  ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
-                  bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
-                  mole->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
-                  for (int i = 1; i <= Boss->getMaxHP() + 1; i++)
-                  {
-                     imageArray[Boss->imageidx + i].isHide = false;
-                  } // MaxHP
-               }
-               else if (num == 0)
-               { // ????™è¸???™è³œ????????£å?è»Šåš™?é­½æ¨ºï¿?éµ€?¨îªº????
-                  isNormalArea = true;
-                  isMiniGameArea = false;
-                  isButtonArea = false;
-                  isFlagArea = false;
-                  isBossArea = false;
-                  getNewArea();
-                  // Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  if (stageLevel > 1) {
-                      getMoleSpace();
-                      mole->NPCSetPosition(molePosX, molePosY);
-                  }
-                  Mineral *mineral = new Mineral();
-                  setBedrock(3);
-                  mineral->getCluster();
-                  mineral->getCluster();
-               }
-               else if (num == 1)
-               { // ???™è¸???å¡šå??§ï†¬?«åš™??????????£å?è»Šåš™?é­½æ¨ºï¿?éµ€?¨îªº????
-                  isNormalArea = false;
-                  isMiniGameArea = true;
-                  isButtonArea = false;
-                  isFlagArea = false;
-                  isBossArea = false;
-                  getNewMiniGameArea();
-                  // Emcee->NPCSetPosition(-48, -48);
-                  ladder->NPCSetPosition(-48, -48);
-                  minigameStartTime = clock();
-                  Mineral *mineral = new Mineral(); // stageLevel ????
-               }
-               else if (num == 2)
-               { // ?????????????£å?è»Šåš™?é­½æ¨ºï¿?éµ€?¨îªº????
-                  isNormalArea = false;
-                  isMiniGameArea = false;
-                  isButtonArea = true;
-                  isFlagArea = false;
+			//updateCharacterStatus(); // PC ???ï¿½ê°?ï¿½ë„ï¿½??ï¿½ìœª??????ï¿½ëª¥??è¢â‘¤ï¿½?
+			while (_kbhit() != 0)
+			{
+				int key = _getch();
+				int curPosX = stageLayer.images[0].x;
+				int curPosY = stageLayer.images[0].y;
 
-                  imageArray[button1->imageidx].isHide = 0;
-                  imageArray[button2->imageidx].isHide = 0;
-                  imageArray[button3->imageidx].isHide = 0;
+				switch (key)
+				{
+				case S:
+				{
+					currentAreaRowIndex = convertPosToInfoYInStage(curPosY);
+					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
+					int num = rand() % 4;
+					//num = 1;
+					if (currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
+					{
+						isNormalArea = false;
+						isMiniGameArea = false;
+						isButtonArea = false;
+						isFlagArea = false;
+						isBossArea = true;
+						getNewBossArea();
+						Boss->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25 - BLOCKSIZE * BOSS_SCALE / 2, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25 - BLOCKSIZE * BOSS_SCALE);
+						imageArray[0].x = AREA_ORIGIN_X + BLOCKSIZE / 2 * 25;
+						imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
+						ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+						bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+						mole->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+						for (int i = 1; i <= Boss->getMaxHP() + 1; i++)
+						{
+							imageArray[Boss->imageidx + i].isHide = false;
+						} // MaxHP
+					}
+					else if (num == 0)
+					{ // ?ï¿½?ï¿½ï¿½?ï¿½ç•°??????æ´¹ë¨®ï¿½?ì¡¾ìŠ–?ï¦«ëš¯????
+						isNormalArea = true;
+						isMiniGameArea = false;
+						isButtonArea = false;
+						isFlagArea = false;
+						isBossArea = false;
+						getNewArea();
+						// Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						if (stageLevel > 1) {
+							getMoleSpace();
+							mole->NPCSetPosition(molePosX, molePosY);
+						}
+						Mineral* mineral = new Mineral();
+						setBedrock(3);
+						mineral->getCluster();
+						mineral->getCluster();
+					}
+					else if (num == 1)
+					{ // ï¿½?ï¿½ï¿½ê¼¶ï§¢?è½…â‘¥ï¿½?????????æ´¹ë¨®ï¿½?ì¡¾ìŠ–?ï¦«ëš¯????
+						isNormalArea = false;
+						isMiniGameArea = true;
+						isButtonArea = false;
+						isFlagArea = false;
+						isBossArea = false;
+						getNewMiniGameArea();
+						// Emcee->NPCSetPosition(-48, -48);
+						ladder->NPCSetPosition(-48, -48);
+						Mineral* mineral = new Mineral(); // stageLevel ????
+						progressImageArray[29].isHide = 0;
+						for (int i = index_Timer_Start; i < index_Timer_Start + 15; i++)
+							progressImageArray[i].isHide = 0;
+					}
+					else if (num == 2)
+					{ // ?ï¿½?ï¿½????????æ´¹ë¨®ï¿½?ì¡¾ìŠ–?ï¦«ëš¯????
+						isNormalArea = false;
+						isMiniGameArea = false;
+						isButtonArea = true;
+						isFlagArea = false;
 
-                  isButtonRoomClear = false;
-                  int randomNumber = rand() % 6; // 0 ?????6 ???????????
-                  buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
-                  getNewArea();
+						imageArray[button1->imageidx].isHide = 0;
+						imageArray[button2->imageidx].isHide = 0;
+						imageArray[button3->imageidx].isHide = 0;
 
-                  button1->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 - BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
-                  button2->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
-                  button3->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 + BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
+						isButtonRoomClear = false;
+						int randomNumber = rand() % 6; // 0 ?????6 ???????ï¿½?ï¿½?
+						buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
+						getNewArea();
 
-                  // Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  if (stageLevel > 1) {
-                      getMoleSpace();
-                      mole->NPCSetPosition(molePosX, molePosY);
-                  }
-                  imageArray[ladder->imageidx].isHide = 1;
-                  Mineral *mineral = new Mineral(); // stageLevel ????
-                  setBedrock(3);
-                  mineral->getCluster();
-                  mineral->getCluster();
-               }
-               else if (num == 3)
-               { // ??????™è¶£ï¿???????£å?è»Šåš™?é­½æ¨ºï¿?éµ€?¨îªº????
-                  isNormalArea = false;
-                  isMiniGameArea = false;
-                  isButtonArea = false;
-                  isFlagArea = true;
-                  isBossArea = false;
+						button1->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 - BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
+						button2->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
+						button3->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2 + BLOCKSIZE * 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2 - BLOCKSIZE * 2);
 
-                  pc.initFlagCnt();
-                  getNewArea();
-                  Mineral *mineral = new Mineral();
-                  // Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
-                  if (stageLevel > 1) {
-                      getMoleSpace();
-                      mole->NPCSetPosition(molePosX, molePosY);
-                  }
-                  setBedrock(3);
-                  mineral->getCluster();
-                  mineral->getCluster();
-                  setFlag(3);
-               }
-               mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
+						// Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						if (stageLevel > 1) {
+							getMoleSpace();
+							mole->NPCSetPosition(molePosX, molePosY);
+						}
+						imageArray[ladder->imageidx].isHide = 1;
+						Mineral* mineral = new Mineral(); // stageLevel ????
+						setBedrock(3);
+						mineral->getCluster();
+						mineral->getCluster();
+					}
+					else if (num == 3)
+					{ // ?????ï¿½ìœœ??????æ´¹ë¨®ï¿½?ì¡¾ìŠ–?ï¦«ëš¯????
+						isNormalArea = false;
+						isMiniGameArea = false;
+						isButtonArea = false;
+						isFlagArea = true;
+						isBossArea = false;
 
-               isOnStage = false;
-               isOnArea = true;
-               targetLayer->fadeOut(targetLayer, NULL);
-               targetLayer = &imageLayer;
-               stopBGM();
-               targetLayer->fadeIn(targetLayer, NULL);
-               targetLayer->renderAll(targetLayer);
-               if (isBossArea) playBGM(bgmBoss);
-               else playBGM(bgmArea);
-            }
-            break;
-            case LEFT:
-               pc.setDirLeft();
-               if (!collisionCheckInStage(curPosX - AREA_BLOCK_SIZE, curPosY))
-                  pc.moveInStage();
-               break;
-            case RIGHT:
-               pc.setDirRight();
-               if (!collisionCheckInStage(curPosX + AREA_BLOCK_SIZE, curPosY))
-                  pc.moveInStage();
-               break;
-            case UP:
-               pc.setDirUp();
-               if (!collisionCheckInStage(curPosX, curPosY - AREA_BLOCK_SIZE))
-                  pc.moveInStage();
-               break;
-            case DOWN:
-               pc.setDirDown();
-               if (!collisionCheckInStage(curPosX, curPosY + AREA_BLOCK_SIZE))
-                  pc.moveInStage();
-               break;
-            case ESC:
-               visitSafety();
-               break;
-            }
-            if (key)
-            {
-               targetLayer->renderAll(targetLayer);
-               //if (key != S)
-                //  updateCharacterStatus();
-            }
-         }
-      }
-      else if (isOnArea)
-      { // PC???™è¶Ÿî·? ??????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
-         //targetLayer->renderAll(targetLayer);
-         thread renderThread(&renderTargetLayer);
-         renderThread.join();
-         drawUI();
-         if (isNormalArea)
-         { // PC???™è¶Ÿî·? ??? ??????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
-            // QuestionBlock ?ç¯¨æ‹˜ï¿½é ¦??¡“??????®“ï¿??????™è“?????¡î¼¸????
-            if (isGenerateMobByQuestionBlock)
-            {
-               generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
-               isGenerateMobByQuestionBlock = false;
-            }
-            if (!generatedBatList.empty())
-            {
-               for (Bat *mob : generatedBatList)
-               {
-                  mob->move();
-               }
-            }
-            // NPC????éµ€?¨îªº???????™è¶Ÿï¿??????????
-            // mole->move();
-            bat->move();
-            ladder->move();
-            if (stageLevel > 1) mole->move();
-            // Emcee->move();
-            //  ?????™è¸«ï¿???????™è¶£ï¿?????™è¶Ÿè»Šåš™?
-            for (int i = 0; i < 10; i++)
-            {
-               if (_kbhit() != 0)
-               {
-                  int key = _getch();
-                  int curPosX = imageLayer.images[0].x;
-                  int curPosY = imageLayer.images[0].y;
-                  COORD afterMovedPos;
+						pc.initFlagCnt();
+						getNewArea();
+						Mineral* mineral = new Mineral();
+						// Emcee->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						ladder->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						bat->NPCSetPosition(NPCSpacePosX + NPCSpaceWidth * BLOCKSIZE / 2, NPCSpacePosY + NPCSpaceHeight * BLOCKSIZE / 2);
+						if (stageLevel > 1) {
+							getMoleSpace();
+							mole->NPCSetPosition(molePosX, molePosY);
+						}
+						setBedrock(3);
+						mineral->getCluster();
+						mineral->getCluster();
+						setFlag(3);
+					}
+					mapInfo[currentAreaRowIndex][currentAreaColIndex] = 1;
 
-                  switch (key)
-                  {
-                  case S:
-                      stopBGM();
-                      playBGM(bgmStage);
-                     isOnStage = true;
-                     isOnArea = false;
-                     isNormalArea = false;
-                     isBossArea = false;
-                     targetLayer->fadeOut(targetLayer, NULL);
-                     targetLayer = &stageLayer;
-                     targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-                     stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-                     setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-                     targetLayer->fadeIn(targetLayer, NULL);
-                     break;
-                  case LEFT:
-                     pc.setDirLeft();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case RIGHT:
-                     pc.setDirRight();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case UP:
-                     pc.setDirUp();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case DOWN:
-                     pc.setDirDown();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case ESC:
-                      stopBGM();
-                     rewardUI();
-                     break;
-                  case SPACE:
-                  {
-                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
-                      digThread.detach();
-                      //pc.dig(targetPos.X, targetPos.Y);
-                  }
-                     break;
-                  case O:
-                     pc.setHP(pc.getHP() - 10);
-                     break;
-                  case P:
-                     pc.setHP(pc.getHP() + 10);
-                     break;
-                  }
-                  //if (key && key != S)
-                     //updateCharacterStatusInArea();
-               }
-               Sleep(5);
-            }
-         }
-         else if (isMiniGameArea)
-         {                              // PC???™è¶Ÿî·? ???™è¸???å¡šå??§ï†¬?«åš™??????????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
-            printMyOriInMiniGameArea(); // ???™è¸???å¡šå??§ï†¬?«åš™??????????£å?è»Šåš™??????information???????™è¶Ÿ???????™è¸«?¾åš™???? ???™è¶£???¿½????ˆï½?»åš™??????
-            // ?????™è¸«ï¿???????™è¶£ï¿?????™è¶Ÿè»Šåš™?
-            for (int i = 0; i < 10; i++)
-            {
-               if (_kbhit() != 0)
-               {
-                  int key = _getch();
-                  int curPosX = imageLayer.images[0].x;
-                  int curPosY = imageLayer.images[0].y;
-                  COORD afterMovedPos;
+					isOnStage = false;
+					isOnArea = true;
+					targetLayer->fadeOut(targetLayer, NULL);
+					targetLayer = &imageLayer;
+					stopBGM();
+					targetLayer->fadeIn(targetLayer, NULL);
+					targetLayer->renderAll(targetLayer);
+					drawProgress();
+					if(isFlagArea) printFlagStageStatus(pc.getFlagCnt());
+					if (isBossArea) playBGM(bgmBoss);
+					else playBGM(bgmArea);
+				}
+				break;
+				case LEFT:
+					pc.setDirLeft();
+					if (!collisionCheckInStage(curPosX - AREA_BLOCK_SIZE, curPosY))
+						pc.moveInStage();
+					break;
+				case RIGHT:
+					pc.setDirRight();
+					if (!collisionCheckInStage(curPosX + AREA_BLOCK_SIZE, curPosY))
+						pc.moveInStage();
+					break;
+				case UP:
+					pc.setDirUp();
+					if (!collisionCheckInStage(curPosX, curPosY - AREA_BLOCK_SIZE))
+						pc.moveInStage();
+					break;
+				case DOWN:
+					pc.setDirDown();
+					if (!collisionCheckInStage(curPosX, curPosY + AREA_BLOCK_SIZE))
+						pc.moveInStage();
+					break;
+				case ESC:
+					visitSafety();
+					break;
+				}
+				if (key)
+				{
+					targetLayer->renderAll(targetLayer);
+					if (key != S)
+						updateCharacterStatus();
+				}
+			}
+		}
+		else if (isOnArea)
+		{ // PC??ï¿½ëŸ¾? ?????æ´¹ë¨®ï¿½???????ï¿½ì¸ ?ë¡ªí”???
+		   //targetLayer->renderAll(targetLayer);
+			thread renderThread(&renderTargetLayer);
+			renderThread.join();
+			drawUI();
+			if (isNormalArea)
+			{ // PC??ï¿½ëŸ¾? ?ï¿½? ?????æ´¹ë¨®ï¿½???????ï¿½ì¸ ?ë¡ªí”???
+			   // QuestionBlock ?ê¾©ë£†è¸°â–¼ï¿½???è«›ëŒ?????ï¿½Â€???è¢â‘¤???
+				if (isGenerateMobByQuestionBlock)
+				{
+					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
+					isGenerateMobByQuestionBlock = false;
+				}
+				if (!generatedBatList.empty())
+				{
+					for (Bat* mob : generatedBatList)
+					{
+						mob->move();
+					}
+				}
+				// NPC????ï¦«ëš¯??????ï¿½ë¶‹?????ï¿½????
+				// mole->move();
+				bat->move();
+				ladder->move();
+				if (stageLevel > 1) mole->move();
+				// Emcee->move();
+				//  ????ï¿½í… ??????ï¿½ì¡‘ ???ï¿½ë¨®ï¿½?
+				for (int i = 0; i < 10; i++)
+				{
+					if (_kbhit() != 0)
+					{
+						int key = _getch();
+						int curPosX = imageLayer.images[0].x;
+						int curPosY = imageLayer.images[0].y;
+						COORD afterMovedPos;
 
-                  switch (key)
-                  {
-                  case S:
-                      stopBGM();
-                      playBGM(bgmStage);
-                     isOnStage = true;
-                     isOnArea = false;
-                     isMiniGameArea = false;
-                     isBossArea = false;
-                     targetLayer->fadeOut(targetLayer, NULL);
-                     targetLayer = &stageLayer;
-                     targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-                     stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-                     setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-                     targetLayer->fadeIn(targetLayer, NULL);
-                     break;
-                  case LEFT:
-                     pc.setDirLeft();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case RIGHT:
-                     pc.setDirRight();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case UP:
-                     pc.setDirUp();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case DOWN:
-                     pc.setDirDown();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case ESC:
-                      stopBGM();
-                     rewardUI();
-                     break;
-                  case SPACE:
-                  {
-                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
-                      digThread.detach();
-                      //pc.dig(targetPos.X, targetPos.Y);
-                  }
-                  break;
-                  }
-                  //if (key && key != S)
-                     //updateCharacterStatusInArea();
-               }
-               Sleep(5);
-            }
-            timee = clock();
-            float remain_time = 31.0 - (double)(timee - minigameStartTime) / CLOCKS_PER_SEC;
-            printTimeInMiniGameArea(remain_time);
-            if (remain_time < 0.0)
-            {
-               Sleep(3000);
-               rewardUI();
-            }
-         }
-         else if (isButtonArea)
-         { // PC???™è¶Ÿî·? ?????????????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
+						switch (key)
+						{
+						case S:
+							stopBGM();
+							playBGM(bgmStage);
+							isOnStage = true;
+							isOnArea = false;
+							isNormalArea = false;
+							isBossArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
+							drawProgress();
+							break;
+						case LEFT:
+							pc.setDirLeft();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case RIGHT:
+							pc.setDirRight();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case UP:
+							pc.setDirUp();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case DOWN:
+							pc.setDirDown();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case ESC:
+							stopBGM();
+							rewardUI();
+							break;
+						case SPACE:
+						{
+							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+							thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+							digThread.detach();
+							//pc.dig(targetPos.X, targetPos.Y);
+						}
+						break;
+						case O:
+							pc.setHP(pc.getHP() - 10);
+							break;
+						case P:
+							pc.setHP(pc.getHP() + 10);
+							break;
+						}
+					}
+					Sleep(5);
+				}
+			}
+			else if (isMiniGameArea)
+			{                              // PC??ï¿½ëŸ¾? ï¿½?ï¿½ï¿½ê¼¶ï§¢?è½…â‘¥ï¿½?????????æ´¹ë¨®ï¿½???????ï¿½ì¸ ?ë¡ªí”???
+				//printMyOriInMiniGameArea(); // ï¿½?ï¿½ï¿½ê¼¶ï§¢?è½…â‘¥ï¿½?????????æ´¹ë¨®ï¿½??????information??????ï¿½ë«?????ï¿½íƒ®ï¿½???? ??ï¿½ì€«ì¸Š???æ¿¡ãƒ«ï¿½???ï¿½??
+				// ????ï¿½í… ??????ï¿½ì¡‘ ???ï¿½ë¨®ï¿½?
+				for (int i = 0; i < 10; i++)
+				{
+					if (_kbhit() != 0)
+					{
+						int key = _getch();
+						int curPosX = imageLayer.images[0].x;
+						int curPosY = imageLayer.images[0].y;
+						COORD afterMovedPos;
 
-            if (button1->getIsPressed())
-            {
-               imageArray[button1->imageidx].fileName = bmpButton1PressedName;
-            }
-            if (button2->getIsPressed())
-            {
-               imageArray[button2->imageidx].fileName = bmpButton2PressedName;
-            }
-            if (button3->getIsPressed())
-            {
-               imageArray[button3->imageidx].fileName = bmpButton3PressedName;
-            }
-            if (printButtonStageStatus())
-            {
-               button1->setIsPressed(false);
-               imageArray[button1->imageidx].fileName = bmpButton1Name;
-               button2->setIsPressed(false);
-               imageArray[button2->imageidx].fileName = bmpButton2Name;
-               button3->setIsPressed(false);
-               imageArray[button3->imageidx].fileName = bmpButton3Name;
-            }
-            if (isGenerateMobByQuestionBlock)
-            {
-               generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
-               isGenerateMobByQuestionBlock = false;
-            }
-            if (!generatedBatList.empty())
-            {
-               for (Bat *mob : generatedBatList)
-               {
-                  mob->move();
-               }
-            }
-            if (isButtonRoomClear)
-            {
-               imageArray[ladder->imageidx].isHide = 0;
-               ladder->move();
-            }
-            bat->move();
-            if (stageLevel > 1) mole->move();
-            // Emcee->move();
-            button1->move();
-            button2->move();
-            button3->move();
+						switch (key)
+						{
+						case S:
+							stopBGM();
+							playBGM(bgmStage);
+							isOnStage = true;
+							isOnArea = false;
+							isMiniGameArea = false;
+							isBossArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
+							OrichalcumNum = 0;
+							progressImageArray[29].fileName = bmpNameStar0;
+							timerIndex = 11;
+							progressImageArray[29].isHide = 1;
+							for (int i = index_Timer_Start; i < index_Timer_Start + 15; i++)
+								progressImageArray[i].isHide = 1;
+							drawProgress();
+							break;
+						case LEFT:
+							pc.setDirLeft();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case RIGHT:
+							pc.setDirRight();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case UP:
+							pc.setDirUp();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case DOWN:
+							pc.setDirDown();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case ESC:
+							stopBGM();
+							rewardUI();
+							break;
+						case SPACE:
+						{
+							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+							thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+							digThread.detach();
+							//pc.dig(targetPos.X, targetPos.Y);
+						}
+						break;
+						}
+					}
+					Sleep(5);
+				}
+			}
+			else if (isButtonArea)
+			{ // PC??ï¿½ëŸ¾? ?ï¿½?ï¿½????????æ´¹ë¨®ï¿½???????ï¿½ì¸ ?ë¡ªí”???
 
-            for (int i = 0; i < 10; i++)
-            {
-               if (_kbhit() != 0)
-               {
-                  int key = _getch();
-                  int curPosX = imageLayer.images[0].x;
-                  int curPosY = imageLayer.images[0].y;
-                  COORD afterMovedPos;
+				if (button1->getIsPressed())
+				{
+					imageArray[button1->imageidx].fileName = bmpButton1PressedName;
+				}
+				if (button2->getIsPressed())
+				{
+					imageArray[button2->imageidx].fileName = bmpButton2PressedName;
+				}
+				if (button3->getIsPressed())
+				{
+					imageArray[button3->imageidx].fileName = bmpButton3PressedName;
+				}
+				if (printButtonStageStatus())
+				{
+					button1->setIsPressed(false);
+					imageArray[button1->imageidx].fileName = bmpButton1Name;
+					button2->setIsPressed(false);
+					imageArray[button2->imageidx].fileName = bmpButton2Name;
+					button3->setIsPressed(false);
+					imageArray[button3->imageidx].fileName = bmpButton3Name;
+				}
+				if (isGenerateMobByQuestionBlock)
+				{
+					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
+					isGenerateMobByQuestionBlock = false;
+				}
+				if (!generatedBatList.empty())
+				{
+					for (Bat* mob : generatedBatList)
+					{
+						mob->move();
+					}
+				}
+				if (isButtonRoomClear)
+				{
+					imageArray[ladder->imageidx].isHide = 0;
+					ladder->move();
+				}
+				bat->move();
+				if (stageLevel > 1) mole->move();
+				// Emcee->move();
+				button1->move();
+				button2->move();
+				button3->move();
 
-                  switch (key)
-                  {
-                  case S:
-                      stopBGM();
-                      playBGM(bgmStage);
-                     isOnStage = true;
-                     isOnArea = false;
-                     isBossArea = false;
-                     isButtonArea = false;
-                     targetLayer->fadeOut(targetLayer, NULL);
-                     targetLayer = &stageLayer;
-                     targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-                     stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-                     setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-                     targetLayer->fadeIn(targetLayer, NULL);
-                     break;
-                  case LEFT:
-                     pc.setDirLeft();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case RIGHT:
-                     pc.setDirRight();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case UP:
-                     pc.setDirUp();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case DOWN:
-                     pc.setDirDown();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case ESC:
-                      stopBGM();
-                     rewardUI();
-                     break;
-                  case SPACE:
-                  {
-                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
-                      digThread.detach();
-                      //pc.dig(targetPos.X, targetPos.Y);
-                  }
-                  break;
-                  case O:
-                     pc.setHP(pc.getHP() - 10);
-                     break;
-                  case P:
-                     pc.setHP(pc.getHP() + 10);
-                     break;
-                  }
-                  //if (key && key != S)
-                     //updateCharacterStatusInArea();
-               }
-               Sleep(5);
-            }
-         }
-         else if (isFlagArea)
-         { // PC???™è¶Ÿî·? ??????™è¶£ï¿???????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
-            printFlagStageStatus(pc.getFlagCnt());
-            // mole->move();
-            bat->move();
-            ladder->move();
-            if (stageLevel > 1) mole->move();
-            // Emcee->move();
-            for (int i = 0; i < 10; i++)
-            {
-               if (_kbhit() != 0)
-               {
-                  int key = _getch();
-                  int curPosX = imageLayer.images[0].x;
-                  int curPosY = imageLayer.images[0].y;
-                  COORD afterMovedPos;
+				for (int i = 0; i < 10; i++)
+				{
+					if (_kbhit() != 0)
+					{
+						int key = _getch();
+						int curPosX = imageLayer.images[0].x;
+						int curPosY = imageLayer.images[0].y;
+						COORD afterMovedPos;
 
-                  switch (key)
-                  {
-                  case S:
-                      stopBGM();
-                      playBGM(bgmStage);
-                     isOnStage = true;
-                     isOnArea = false;
-                     isFlagArea = false;
-                     isBossArea = false;
-                     targetLayer->fadeOut(targetLayer, NULL);
-                     targetLayer = &stageLayer;
-                     targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-                     stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-                     setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-                     targetLayer->fadeIn(targetLayer, NULL);
-                     break;
-                  case LEFT:
-                     pc.setDirLeft();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case RIGHT:
-                     pc.setDirRight();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case UP:
-                     pc.setDirUp();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case DOWN:
-                     pc.setDirDown();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case ESC:
-                      stopBGM();
-                     rewardUI();
-                     break;
-                  case SPACE:
-                  {
-                      COORD targetPos = pc.getTargetPos(curPosX, curPosY);
-                      thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
-                      digThread.detach();
-                      //pc.dig(targetPos.X, targetPos.Y);
-                  }
-                  break;
-                  case O:
-                     pc.setHP(pc.getHP() - 10);
-                     break;
-                  case P:
-                     pc.setHP(pc.getHP() + 10);
-                     break;
-                  }
-                  //if (key && key != S)
-                    // updateCharacterStatusInArea();
-               }
-               Sleep(5);
-            }
-         }
-         else if (isBossArea)
-         {
-            if (Boss->NPCDead() == false)
-            {
-               Boss->move();
-            }
-            else
-            {
-               if (stageLevel == 1)
-                  ((EmceeTheShyGuy *)Boss)->AfterDead();
-               else if (stageLevel == 2)
-                  ((RawkHawk *)Boss)->AfterDead();
-               else if (stageLevel == 3)
-                  ((Charizard *)Boss)->AfterDead();
-               ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
-               if (ladder->goSafety())
-                  return main();
-            }
-            // vector<PCBullet>::iterator itr;
-            for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end();)
-            {
-               if (Boss->NPCDead() == false && itr->checkBulletHit(Boss->x, Boss->y))
-               {
-                  Boss->NPCHit(pc.getATK());
-                  itr = pc.getBulletList().erase(itr);
-               }
-               else if (!(itr->move()))
-                  itr = pc.getBulletList().erase(itr);
-               else
-                  itr++;
-            }
-            printWarning(Boss->hp);
-            for (int i = 0; i < 10; i++)
-            {
-               if (_kbhit() != 0)
-               {
-                  int key = _getch();
-                  int curPosX = imageLayer.images[0].x;
-                  int curPosY = imageLayer.images[0].y;
-                  COORD afterMovedPos;
+						switch (key)
+						{
+						case S:
+							stopBGM();
+							playBGM(bgmStage);
+							isOnStage = true;
+							isOnArea = false;
+							isBossArea = false;
+							isButtonArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
+							drawProgress();
+							break;
+						case LEFT:
+							pc.setDirLeft();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case RIGHT:
+							pc.setDirRight();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case UP:
+							pc.setDirUp();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case DOWN:
+							pc.setDirDown();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case ESC:
+							stopBGM();
+							rewardUI();
+							break;
+						case SPACE:
+						{
+							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+							thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+							digThread.detach();
+							//pc.dig(targetPos.X, targetPos.Y);
+						}
+						break;
+						case O:
+							pc.setHP(pc.getHP() - 10);
+							break;
+						case P:
+							pc.setHP(pc.getHP() + 10);
+							break;
+						}
+					}
+					Sleep(5);
+				}
+			}
+			else if (isFlagArea)
+			{ // PC??ï¿½ëŸ¾? ?????ï¿½ìœœ??????æ´¹ë¨®ï¿½???????ï¿½ì¸ ?ë¡ªí”???
+				// mole->move();
+				bat->move();
+				ladder->move();
+				if (stageLevel > 1) mole->move();
+				// Emcee->move();
+				for (int i = 0; i < 10; i++)
+				{
+					if (_kbhit() != 0)
+					{
+						int key = _getch();
+						int curPosX = imageLayer.images[0].x;
+						int curPosY = imageLayer.images[0].y;
+						COORD afterMovedPos;
 
-                  switch (key)
-                  {
-                  case S:
-                     isOnStage = true;
-                     isOnArea = false;
-                     isFlagArea = false;
-                     isBossArea = false;
-                     targetLayer->fadeOut(targetLayer, NULL);
-                     targetLayer = &stageLayer;
-                     targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
-                     stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
-                     setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
-                     targetLayer->fadeIn(targetLayer, NULL);
-                     break;
-                  case LEFT:
-                     pc.setDirLeft();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case RIGHT:
-                     pc.setDirRight();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case UP:
-                     pc.setDirUp();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case DOWN:
-                     pc.setDirDown();
-                     afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
-                     if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-                        pc.move();
-                     break;
-                  case ESC:
-                      stopBGM();
-                     rewardUI();
-                     break;
-                  case SPACE:
-                     if (Boss->NPCDead() == false)
-                        pc.attack(clock());
-                     break;
-                  case O:
-                     pc.setHP(pc.getHP() - 10);
-                     break;
-                  case P:
-                     pc.setHP(pc.getHP() + 10);
-                     break;
-                  }
-                  //if (key && key != S)
-                    // updateCharacterStatusInArea();
-               }
-               Sleep(5);
-            }
-         }
-         // éµ€?¨îª¹??™è³œ??????????£å?è»Šåš™???????™è¶£??????™è¸???????™è¶£?????ˆï½?»åš™???¡î¼¸????
-         // 3??????™è¸???????™è“???™è¸«???è«?¡¨ï¿????™è¶Ÿï¿????1?????™è¶Ÿï¿???????™è¸?????¡î¼¸????
-         end_time = clock();
-         duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-         if (duration > 3.0)
-         {
-            pc.setOxygen(pc.getOxygen() - 1);
-            start_time = end_time;
-         }
-      }
-   }
-   return 0;
+						switch (key)
+						{
+						case S:
+							stopBGM();
+							playBGM(bgmStage);
+							isOnStage = true;
+							isOnArea = false;
+							isFlagArea = false;
+							isBossArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
+							drawProgress();
+							break;
+						case LEFT:
+							pc.setDirLeft();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case RIGHT:
+							pc.setDirRight();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case UP:
+							pc.setDirUp();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case DOWN:
+							pc.setDirDown();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case ESC:
+							stopBGM();
+							rewardUI();
+							break;
+						case SPACE:
+						{
+							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+							thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+							digThread.detach();
+							//pc.dig(targetPos.X, targetPos.Y);
+						}
+						break;
+						case O:
+							pc.setHP(pc.getHP() - 10);
+							break;
+						case P:
+							pc.setHP(pc.getHP() + 10);
+							break;
+						}
+					}
+					Sleep(5);
+				}
+			}
+			else if (isBossArea)
+			{
+				if (Boss->NPCDead() == false)
+				{
+					Boss->move();
+				}
+				else
+				{
+					if (stageLevel == 1)
+						((EmceeTheShyGuy*)Boss)->AfterDead();
+					else if (stageLevel == 2)
+						((RawkHawk*)Boss)->AfterDead();
+					else if (stageLevel == 3)
+						((Charizard*)Boss)->AfterDead();
+					ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
+					if (ladder->goSafety())
+						return main();
+				}
+				// vector<PCBullet>::iterator itr;
+				for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end();)
+				{
+					if (Boss->NPCDead() == false && itr->checkBulletHit(Boss->x, Boss->y))
+					{
+						Boss->NPCHit(pc.getATK());
+						itr = pc.getBulletList().erase(itr);
+					}
+					else if (!(itr->move()))
+						itr = pc.getBulletList().erase(itr);
+					else
+						itr++;
+				}
+				printWarning(Boss->hp);
+				for (int i = 0; i < 10; i++)
+				{
+					if (_kbhit() != 0)
+					{
+						int key = _getch();
+						int curPosX = imageLayer.images[0].x;
+						int curPosY = imageLayer.images[0].y;
+						COORD afterMovedPos;
+
+						switch (key)
+						{
+						case S:
+							isOnStage = true;
+							isOnArea = false;
+							isFlagArea = false;
+							isBossArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
+							drawProgress();
+							break;
+						case LEFT:
+							pc.setDirLeft();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case RIGHT:
+							pc.setDirRight();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case UP:
+							pc.setDirUp();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case DOWN:
+							pc.setDirDown();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case ESC:
+							stopBGM();
+							rewardUI();
+							break;
+						case SPACE:
+							if (Boss->NPCDead() == false)
+								pc.attack(clock());
+							break;
+						case O:
+							pc.setHP(pc.getHP() - 10);
+							break;
+						case P:
+							pc.setHP(pc.getHP() + 10);
+							break;
+						}
+					}
+					Sleep(5);
+				}
+			}
+			// ï¦«ëš®?ï¿½ç¶­????????æ´¹ë¨®ï¿½??????ï¿½ì¾¹????ï¿½ï¿½?????ï¿½ì±·???æ¿¡ãƒ«ï¿½??è¢â‘¤???
+			// 3?ï¿½?ï¿½?ï¿½ï¿½?????ï¿½Â€?ï¿½í‹¬ ?ë¡ªí“???ï¿½ë¬’????1????ï¿½ë£†??????ï¿½ï¿½???è¢â‘¤???
+			end_time = clock();
+			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+			if (duration > 3.0)
+			{
+				pc.setOxygen(pc.getOxygen() - 1);
+				if (isMiniGameArea) {
+					timerIndex--;
+					drawProgress();
+					if (!timerIndex) rewardUI();
+				}
+				start_time = end_time;
+			}
+		}
+	}
+	return 0;
 }

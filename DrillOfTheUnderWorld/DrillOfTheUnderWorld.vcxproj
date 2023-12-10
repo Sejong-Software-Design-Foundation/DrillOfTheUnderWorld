@@ -420,6 +420,9 @@
     <Image Include="PC_up_getHP.bmp" />
     <Image Include="PC_up_getOxygen.bmp" />
     <Image Include="PC_up_hit.bmp" />
+    <Image Include="progressBackGround.bmp" />
+    <Image Include="progressBottom.bmp" />
+    <Image Include="progressMiddle.bmp" />
     <Image Include="questionMark.bmp" />
     <Image Include="rShop_Balloon.bmp" />
     <Image Include="rShop_miner.bmp" />
@@ -443,6 +446,19 @@
     <Image Include="PlayerCharacter.bmp" />
     <Image Include="testImage1.bmp" />
     <Image Include="testImage2.bmp" />
+    <Image Include="Timer.bmp" />
+    <Image Include="Timer_0pct.bmp" />
+    <Image Include="Timer_100pct.bmp" />
+    <Image Include="Timer_10pct.bmp" />
+    <Image Include="Timer_20pct.bmp" />
+    <Image Include="Timer_30pct.bmp" />
+    <Image Include="Timer_40pct.bmp" />
+    <Image Include="Timer_50pct.bmp" />
+    <Image Include="Timer_60pct.bmp" />
+    <Image Include="Timer_70pct.bmp" />
+    <Image Include="Timer_80pct.bmp" />
+    <Image Include="Timer_90pct.bmp" />
+    <Image Include="Timer_Bar.bmp" />
     <Image Include="UI_character_status.bmp" />
     <Image Include="UI_dynamicEnforce.bmp" />
     <Image Include="UI_dynamicEnforceSelected.bmp" />
@@ -452,7 +468,6 @@
     <Image Include="UI_Star1.bmp" />
     <Image Include="UI_Star2.bmp" />
     <Image Include="UI_Star3.bmp" />
-    <Image Include="UI_Timer.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
