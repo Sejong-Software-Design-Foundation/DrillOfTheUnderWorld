@@ -640,7 +640,7 @@ void printItemTextInLShop() {
     wchar_t itemName1[10] = L"HP ?�션";
     wchar_t itemName2[10] = L"O2 ?�션";
     wchar_t itemInfo1[100] = L"PC??체력??모두 ?�복?�다.";
-    wchar_t itemInfo2[100] = L"PC???�소게이지�?모두 ?�복?�다.";
+    wchar_t itemInfo2[100] = L"PC???�소게이지�?모두 ?�복?�다.";
 
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 20 + 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
@@ -788,7 +788,7 @@ void printStatusInRShop(int price1, int price2, int price3, int num) {
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
-    wchar_t info1[100] = L"1, 2, 3 ?�자 ?��? ?�러 ?�택, Spaebar?��? ?�러 구매?????�습?�다. ESC?��? ?�해 ?�점???�갈 ???�습?�다.";
+    wchar_t info1[200] = L"1, 2, 3 ?�자 ?��? ?�러 ?�택, Spaebar?��? ?�러 구매?????�습?�다. ESC?��? ?�해 ?�점???�갈 ???�습?�다.";
     wchar_t info2[100] = L"?��????�택?�니??";
 
     if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
@@ -822,7 +822,7 @@ void printItemTextInRShop()
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 20 + 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
 }
 
-// 문자?�을 wchar_t 배열�?변?�하???�수
+// 문자?�을 wchar_t 배열�?변?�하???�수
 void stringToWchar(const std::string& input, wchar_t* output, size_t outputSize) {
     // 로캘 ?�정
     std::locale loc("");
