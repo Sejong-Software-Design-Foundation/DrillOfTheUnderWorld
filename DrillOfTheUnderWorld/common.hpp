@@ -22,7 +22,7 @@ extern "C" {
 #define NUM3 51
 #define O 111
 #define P 112
-#define UI_HP_ORIGIN_X 400
+#define UI_HP_ORIGIN_X 300
 #define UI_HP_ORIGIN_Y 60
 #define UI_O2_ORIGIN_Y 120
 #define LEFT 75
@@ -44,8 +44,8 @@ extern "C" {
 #define STAGE_ORIGIN_Y 240
 #define AREA_BLOCK_SIZE 144
 #define STAGE_EXTRA_IMAGE_COUNT 3
-#define UI_ITEM_START_POS_X 1450
-#define UI_ITEM_START_POS_Y 220
+#define UI_ITEM_START_POS_X 250
+#define UI_ITEM_START_POS_Y 900
 #define UI_ITEM_SIZE 170
 #define BOSS_SCALE 4
 #define EMCEE_SCALE 4
@@ -59,7 +59,7 @@ extern "C" {
 #define REWARD_DIAMOND = 100
 #define REWARD_POSSION = 50
 
-#define DEFAULT_LAYER_MARGIN_X 640 //5:8∫Ò¿≤ π›øµ : 400 -> 640
+#define DEFAULT_LAYER_MARGIN_X 640 //5:8ÔøΩÔøΩÔøΩÔøΩ ÔøΩ›øÔøΩ : 400 -> 640
 
 extern int stageLevel;
 
@@ -76,8 +76,9 @@ extern char bgmBuy[];
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 extern HWND WINDOW_HANDLE;
-
-extern ImageLayer* targetLayer; // used in renderAll
+extern ImageLayer uiLayer;
+extern Image uiImageArray[50];
+extern ImageLayer* targetLayer;
 
 extern ImageLayer stageLayer;
 extern Image stageImageArray[40];
@@ -242,7 +243,7 @@ extern char bmpCaveSnakeName[];
 
 extern char bmpBackgroundTestName[];
 
-// ?àÎì† ?êÏñ¥Î¶¨Ïñ¥ Í¥ÄÎ¶?
+// ?ÔøΩÎì† ?ÔøΩÏñ¥Î¶¨Ïñ¥ Í¥ÄÔøΩ?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
 extern std::vector<int> bossAreaPos;
 extern std::vector<int> treasureAreaPos;
@@ -268,6 +269,7 @@ void initAreaUI();
 void initStageImage();
 void initStageImages();
 void initRewardImage();
+void initUIImage();
 void setMovableStageInfo(int row, int col);
 void drawUI();
 void drawMapUI();

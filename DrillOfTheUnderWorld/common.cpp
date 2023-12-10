@@ -17,13 +17,16 @@ PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 HWND WINDOW_HANDLE;
 
+ImageLayer uiLayer = UI_IMAGE_LAYER;
+Image uiImageArray[50];
+
 ImageLayer* targetLayer = NULL;
 
 ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image stageImageArray[40];
 int stageInfo[5][5];
 
-// ±‚¡∏ imageArray∞° areaImageArray
+// ÔøΩÔøΩÔøΩÔøΩ imageArrayÔøΩÔøΩ areaImageArray
 ImageLayer imageLayer = AREA_IMAGE_LAYER;
 Image imageArray[2000];
 int blockInfo[1200][1200];
@@ -388,7 +391,7 @@ char bmpSafetyArrow[] = "safety_arrow.bmp";
 char bmpSafetyArrowSelected[] = "safety_arrowSelected.bmp";
 int index_Safety_Object_Start;
 
-// »˜µÁ ø°æÓ∏ÆæÓ ∞¸∏Æ
+// ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÓ∏ÆÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ
 std::vector<int> bossAreaPos;
 std::vector<int> treasureAreaPos;
 std::vector<std::vector<int>> hiddenAreaPosList = { {0,0,3}, {0,1,4}, {0,2,5}, {0,3,6}, {0,4,7},
@@ -530,84 +533,85 @@ void initRShopImage() {
 }
 
 void visitLShop() {
-    targetLayer->fadeOut(targetLayer, NULL);
-    targetLayer = &lShopLayer;
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &lShopLayer;
 
-    int item1_price = eRankItems[0]->getPrice();
-    int item2_price = eRankItems[1]->getPrice();
+	int item1_price = eRankItems[0]->getPrice();
+	int item2_price = eRankItems[1]->getPrice();
 
-    if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
-    else lShopImageArray[3].fileName = bmpShopItemBox;
-    if (item2_price > pc.getStone()) lShopImageArray[4].fileName = bmpShopItemBoxDisable;
-    else lShopImageArray[4].fileName = bmpShopItemBox;
+	if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
+	else lShopImageArray[3].fileName = bmpShopItemBox;
+	if (item2_price > pc.getStone()) lShopImageArray[4].fileName = bmpShopItemBoxDisable;
+	else lShopImageArray[4].fileName = bmpShopItemBox;
 
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
-    printStatusInLShop(item1_price, item2_price, 0);
+	printStatusInLShop(item1_price, item2_price, 0);
 
-    int index = -1;
-    int flags = 1;
-    int lastInputKey = 0;
-    while (flags) {
-        while (_kbhit() != 0) {
-            int key = _getch();
+	int index = -1;
+	int flags = 1;
+	int lastInputKey = 0;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
 
-            switch (key) {
+			switch (key) {
+			
+			case NUM1:
+				if (strcmp(lShopImageArray[3].fileName, bmpShopItemBoxDisable) == 0) break;
+				lShopImageArray[3].fileName = bmpShopItemBoxSelected;
+				if (strcmp(lShopImageArray[4].fileName, bmpShopItemBoxSelected) == 0)
+					lShopImageArray[4].fileName = bmpShopItemBox;
+				index = 0;
+				lastInputKey = 0;
+				break;
+			case NUM2:
+				if (strcmp(lShopImageArray[4].fileName, bmpShopItemBoxDisable) == 0) break;
+				lShopImageArray[4].fileName = bmpShopItemBoxSelected;
+				if (strcmp(lShopImageArray[3].fileName, bmpShopItemBoxSelected) == 0)
+					lShopImageArray[3].fileName = bmpShopItemBox;
+				index = 1;
+				lastInputKey = 0;
+				break;
+		
+			case SPACE:
+				if (index == -1) break;
+				else if (index == 0) {
+					playSound(bgmBuy);
+					pc.setStone(pc.getStone() - item1_price);
+					lShopImageArray[3].fileName = bmpShopItemBoxDisable;
+					if (item2_price > pc.getStone()) lShopImageArray[4].fileName = bmpShopItemBoxDisable;
+				}
+				else if (index == 1) {
+					playSound(bgmBuy);
+					pc.setStone(pc.getStone() - item2_price);
+					lShopImageArray[4].fileName = bmpShopItemBoxDisable;
+					if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
+				}
 
-            case NUM1:
-                if (strcmp(lShopImageArray[3].fileName, bmpShopItemBoxDisable) == 0) break;
-                lShopImageArray[3].fileName = bmpShopItemBoxSelected;
-                if (strcmp(lShopImageArray[4].fileName, bmpShopItemBoxSelected) == 0)
-                    lShopImageArray[4].fileName = bmpShopItemBox;
-                index = 0;
-                lastInputKey = 0;
-                break;
-            case NUM2:
-                if (strcmp(lShopImageArray[4].fileName, bmpShopItemBoxDisable) == 0) break;
-                lShopImageArray[4].fileName = bmpShopItemBoxSelected;
-                if (strcmp(lShopImageArray[3].fileName, bmpShopItemBoxSelected) == 0)
-                    lShopImageArray[3].fileName = bmpShopItemBox;
-                index = 1;
-                lastInputKey = 0;
-                break;
+				eRankItems[index]->use();
 
-            case SPACE:
-                if (index == -1) break;
-                else if (index == 0) {
-                    playSound(bgmBuy);
-                    pc.setStone(pc.getStone() - item1_price);
-                    lShopImageArray[3].fileName = bmpShopItemBoxDisable;
-                    if (item2_price > pc.getStone()) lShopImageArray[4].fileName = bmpShopItemBoxDisable;
-                }
-                else if (index == 1) {
-                    playSound(bgmBuy);
-                    pc.setStone(pc.getStone() - item2_price);
-                    lShopImageArray[4].fileName = bmpShopItemBoxDisable;
-                    if (item1_price > pc.getStone()) lShopImageArray[3].fileName = bmpShopItemBoxDisable;
-                }
+				index = -1;
+				lastInputKey = 1;
+				updateCharacterStatus();
+				break;
+			case ESC:
+				flags = 0;
+				break;
+			}
+			if (key) {
+				targetLayer->renderAll(targetLayer);
+				printStatusInLShop(item1_price, item2_price, lastInputKey);
+			}
+		}
+	}
 
-                eRankItems[index]->use();
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &safetyLayer;
 
-                index = -1;
-                lastInputKey = 1;
-                break;
-            case ESC:
-                flags = 0;
-                break;
-            }
-            if (key) {
-                targetLayer->renderAll(targetLayer);
-                printStatusInLShop(item1_price, item2_price, lastInputKey);
-            }
-        }
-    }
-
-    targetLayer->fadeOut(targetLayer, NULL);
-    targetLayer = &safetyLayer;
-
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 }
 
 void printStatusInLShop(int price1, int price2, int num) {
@@ -625,18 +629,18 @@ void printStatusInLShop(int price1, int price2, int num) {
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 
-    wchar_t info1[100] = L"1, 2 ?´Ïûê ?§Î? ?åÎü¨ ?†ÌÉù, Spaebar?§Î? ?åÎü¨ Íµ¨Îß§?????àÏäµ?àÎã§. ESC?§Î? ?µÌï¥ ?ÅÏ†ê???òÍ∞à ???àÏäµ?àÎã§.";
-    wchar_t info2[100] = L"?åÎ????†ÌÉù?ÖÎãà??";
+    wchar_t info1[100] = L"1, 2 ?ÔøΩÏûê ?ÔøΩÔøΩ? ?ÔøΩÎü¨ ?ÔøΩÌÉù, Spaebar?ÔøΩÔøΩ? ?ÔøΩÎü¨ Íµ¨Îß§?????ÔøΩÏäµ?ÔøΩÎã§. ESC?ÔøΩÔøΩ? ?ÔøΩÌï¥ ?ÔøΩÏ†ê???ÔøΩÍ∞à ???ÔøΩÏäµ?ÔøΩÎã§.";
+    wchar_t info2[100] = L"?ÔøΩÔøΩ????ÔøΩÌÉù?ÔøΩÎãà??";
 
     if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 520);
     else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 520);
 }
 
 void printItemTextInLShop() {
-    wchar_t itemName1[10] = L"HP ?¨ÏÖò";
-    wchar_t itemName2[10] = L"O2 ?¨ÏÖò";
-    wchar_t itemInfo1[100] = L"PC??Ï≤¥Î†•??Î™®Îëê ?åÎ≥µ?úÎã§.";
-    wchar_t itemInfo2[100] = L"PC???∞ÏÜåÍ≤åÏù¥ÏßÄÎ•?Î™®Îëê ?åÎ≥µ?úÎã§.";
+    wchar_t itemName1[10] = L"HP ?ÔøΩÏÖò";
+    wchar_t itemName2[10] = L"O2 ?ÔøΩÏÖò";
+    wchar_t itemInfo1[100] = L"PC??Ï≤¥Î†•??Î™®Îëê ?ÔøΩÎ≥µ?ÔøΩÎã§.";
+    wchar_t itemInfo2[100] = L"PC???ÔøΩÏÜåÍ≤åÏù¥ÏßÄÔøΩ?Î™®Îëê ?ÔøΩÎ≥µ?ÔøΩÎã§.";
 
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 20 + 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
@@ -645,124 +649,125 @@ void printItemTextInLShop() {
 }
 
 void visitRShop() {
-    targetLayer->fadeOut(targetLayer, NULL);
-    targetLayer = &rShopLayer;
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &rShopLayer;
 
-    generateShopItem();
-    rShopImageArray[1].fileName = imageArray[shopItems[0]->getImageIndex()].fileName;
-    rShopImageArray[2].fileName = imageArray[shopItems[1]->getImageIndex()].fileName;
-    rShopImageArray[3].fileName = imageArray[shopItems[2]->getImageIndex()].fileName;
+	generateShopItem();
+	rShopImageArray[1].fileName = imageArray[shopItems[0]->getImageIndex()].fileName;
+	rShopImageArray[2].fileName = imageArray[shopItems[1]->getImageIndex()].fileName;
+	rShopImageArray[3].fileName = imageArray[shopItems[2]->getImageIndex()].fileName;
 
-    int item1_price = shopItems[0]->getPrice();
-    int item2_price = shopItems[1]->getPrice();
-    int item3_price = shopItems[2]->getPrice();
+	int item1_price = shopItems[0]->getPrice();
+	int item2_price = shopItems[1]->getPrice();
+	int item3_price = shopItems[2]->getPrice();
 
-    if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
-    else rShopImageArray[4].fileName = bmpShopItemBox;
-    if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
-    else rShopImageArray[5].fileName = bmpShopItemBox;
-    if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
-    else rShopImageArray[6].fileName = bmpShopItemBox;
+	if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
+	else rShopImageArray[4].fileName = bmpShopItemBox;
+	if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
+	else rShopImageArray[5].fileName = bmpShopItemBox;
+	if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
+	else rShopImageArray[6].fileName = bmpShopItemBox;
 
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 
-    printStatusInRShop(item1_price, item2_price, item3_price, 0);
+	printStatusInRShop(item1_price, item2_price, item3_price, 0);
 
-    int index = -1;
-    int flags = 1;
-    int lastInputKey = 0;
-    while (flags) {
-        while (_kbhit() != 0) {
-            int key = _getch();
+	int index = -1;
+	int flags = 1;
+	int lastInputKey = 0;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
 
-            switch (key) {
-            case NUM1:
-                if (strcmp(rShopImageArray[4].fileName, bmpShopItemBoxDisable) == 0) break;
-                rShopImageArray[4].fileName = bmpShopItemBoxSelected;
-                if (strcmp(rShopImageArray[5].fileName, bmpShopItemBoxSelected) == 0)
-                    rShopImageArray[5].fileName = bmpShopItemBox;
-                if (strcmp(rShopImageArray[6].fileName, bmpShopItemBoxSelected) == 0)
-                    rShopImageArray[6].fileName = bmpShopItemBox;
-                index = 0;
-                lastInputKey = 0;
-                break;
-            case NUM2:
-                if (strcmp(rShopImageArray[5].fileName, bmpShopItemBoxDisable) == 0) break;
-                rShopImageArray[5].fileName = bmpShopItemBoxSelected;
-                if (strcmp(rShopImageArray[4].fileName, bmpShopItemBoxSelected) == 0)
-                    rShopImageArray[4].fileName = bmpShopItemBox;
-                if (strcmp(rShopImageArray[6].fileName, bmpShopItemBoxSelected) == 0)
-                    rShopImageArray[6].fileName = bmpShopItemBox;
-                index = 1;
-                lastInputKey = 0;
-                break;
-            case NUM3:
-                if (strcmp(rShopImageArray[6].fileName, bmpShopItemBoxDisable) == 0) break;
-                rShopImageArray[6].fileName = bmpShopItemBoxSelected;
-                if (strcmp(rShopImageArray[4].fileName, bmpShopItemBoxSelected) == 0)
-                    rShopImageArray[4].fileName = bmpShopItemBox;
-                if (strcmp(rShopImageArray[5].fileName, bmpShopItemBoxSelected) == 0)
-                    rShopImageArray[5].fileName = bmpShopItemBox;
-                index = 2;
-                lastInputKey = 0;
-                break;
-            case SPACE:
-                if (index == -1) break;
-                else if (index == 0) {
-                    playSound(bgmBuy);
-                    pc.setStone(pc.getStone() - item1_price);
-                    rShopImageArray[4].fileName = bmpShopItemBoxDisable;
-                    if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
-                    if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
-                }
-                else if (index == 1) {
-                    playSound(bgmBuy);
-                    pc.setStone(pc.getStone() - item2_price);
-                    rShopImageArray[5].fileName = bmpShopItemBoxDisable;
-                    if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
-                    if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
-                }
-                else if (index == 2) {
-                    playSound(bgmBuy);
-                    pc.setStone(pc.getStone() - item3_price);
-                    rShopImageArray[6].fileName = bmpShopItemBoxDisable;
-                    if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
-                    if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
-                }
-                if (shopItems[index]->getIsUniqueHoldableItem()) {
-                    ownedItems.push_back(shopItems[index]);
-                }
+			switch (key) {
+			case NUM1:
+				if (strcmp(rShopImageArray[4].fileName, bmpShopItemBoxDisable) == 0) break;
+				rShopImageArray[4].fileName = bmpShopItemBoxSelected;
+				if (strcmp(rShopImageArray[5].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[5].fileName = bmpShopItemBox;
+				if (strcmp(rShopImageArray[6].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[6].fileName = bmpShopItemBox;
+				index = 0;
+				lastInputKey = 0;
+				break;
+			case NUM2:
+				if (strcmp(rShopImageArray[5].fileName, bmpShopItemBoxDisable) == 0) break;
+				rShopImageArray[5].fileName = bmpShopItemBoxSelected;
+				if (strcmp(rShopImageArray[4].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[4].fileName = bmpShopItemBox;
+				if (strcmp(rShopImageArray[6].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[6].fileName = bmpShopItemBox;
+				index = 1;
+				lastInputKey = 0;
+				break;
+			case NUM3:
+				if (strcmp(rShopImageArray[6].fileName, bmpShopItemBoxDisable) == 0) break;
+				rShopImageArray[6].fileName = bmpShopItemBoxSelected;
+				if (strcmp(rShopImageArray[4].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[4].fileName = bmpShopItemBox;
+				if (strcmp(rShopImageArray[5].fileName, bmpShopItemBoxSelected) == 0)
+					rShopImageArray[5].fileName = bmpShopItemBox;
+				index = 2;
+				lastInputKey = 0;
+				break;
+			case SPACE:
+				if (index == -1) break;
+				else if (index == 0) {
+					playSound(bgmBuy);
+					pc.setStone(pc.getStone() - item1_price);
+					rShopImageArray[4].fileName = bmpShopItemBoxDisable;
+					if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
+					if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
+				}
+				else if (index == 1) {
+					playSound(bgmBuy);
+					pc.setStone(pc.getStone() - item2_price);
+					rShopImageArray[5].fileName = bmpShopItemBoxDisable;
+					if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
+					if (item3_price > pc.getStone()) rShopImageArray[6].fileName = bmpShopItemBoxDisable;
+				}
+				else if (index == 2) {
+					playSound(bgmBuy);
+					pc.setStone(pc.getStone() - item3_price);
+					rShopImageArray[6].fileName = bmpShopItemBoxDisable;
+					if (item1_price > pc.getStone()) rShopImageArray[4].fileName = bmpShopItemBoxDisable;
+					if (item2_price > pc.getStone()) rShopImageArray[5].fileName = bmpShopItemBoxDisable;
+				}
+				if (shopItems[index]->getIsUniqueHoldableItem()) {
+					ownedItems.push_back(shopItems[index]);
+				}
+				
+				if (typeid(*shopItems[index]) == typeid(Disassembler)) {
+					ownedItems = ((Disassembler*)shopItems[index])->useItem(ownedItems);
+				}
+				else {
+					shopItems[index]->use();
+				}
+				
+				//shopItems[index]->use();
 
-                if (typeid(*shopItems[index]) == typeid(Disassembler)) {
-                    ownedItems = ((Disassembler*)shopItems[index])->useItem(ownedItems);
-                }
-                else {
-                    shopItems[index]->use();
-                }
+				index = -1;
+				lastInputKey = 1;
+				updateCharacterStatus();
+				break;
+			case ESC:
+				initItemImages();
+				flags = 0;
+				break;
+			}
+			if (key) {
+				targetLayer->renderAll(targetLayer);
+				printStatusInRShop(item1_price, item2_price, item3_price, lastInputKey);
+			}
+		}
+	}
 
-                //shopItems[index]->use();
+	targetLayer->fadeOut(targetLayer, NULL);
+	targetLayer = &safetyLayer;
 
-                index = -1;
-                lastInputKey = 1;
-                break;
-            case ESC:
-                initItemImages();
-                flags = 0;
-                break;
-            }
-            if (key) {
-                targetLayer->renderAll(targetLayer);
-                printStatusInRShop(item1_price, item2_price, item3_price, lastInputKey);
-            }
-        }
-    }
-
-    targetLayer->fadeOut(targetLayer, NULL);
-    targetLayer = &safetyLayer;
-
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
+	targetLayer->fadeIn(targetLayer, NULL);
+	targetLayer->renderAll(targetLayer);
 }
 
 void printStatusInRShop(int price1, int price2, int price3, int num) {
@@ -783,8 +788,8 @@ void printStatusInRShop(int price1, int price2, int price3, int num) {
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
-    wchar_t info1[100] = L"1, 2, 3 ?´Ïûê ?§Î? ?åÎü¨ ?†ÌÉù, Spaebar?§Î? ?åÎü¨ Íµ¨Îß§?????àÏäµ?àÎã§. ESC?§Î? ?µÌï¥ ?ÅÏ†ê???òÍ∞à ???àÏäµ?àÎã§.";
-    wchar_t info2[100] = L"?åÎ????†ÌÉù?ÖÎãà??";
+    wchar_t info1[100] = L"1, 2, 3 ?ÔøΩÏûê ?ÔøΩÔøΩ? ?ÔøΩÎü¨ ?ÔøΩÌÉù, Spaebar?ÔøΩÔøΩ? ?ÔøΩÎü¨ Íµ¨Îß§?????ÔøΩÏäµ?ÔøΩÎã§. ESC?ÔøΩÔøΩ? ?ÔøΩÌï¥ ?ÔøΩÏ†ê???ÔøΩÍ∞à ???ÔøΩÏäµ?ÔøΩÎã§.";
+    wchar_t info2[100] = L"?ÔøΩÔøΩ????ÔøΩÌÉù?ÔøΩÎãà??";
 
     if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
     else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
@@ -817,21 +822,21 @@ void printItemTextInRShop()
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 20 + 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
 }
 
-// Î¨∏Ïûê?¥ÏùÑ wchar_t Î∞∞Ïó¥Î°?Î≥Ä?òÌïò???®Ïàò
+// Î¨∏Ïûê?ÔøΩÏùÑ wchar_t Î∞∞Ïó¥ÔøΩ?Î≥Ä?ÔøΩÌïò???ÔøΩÏàò
 void stringToWchar(const std::string& input, wchar_t* output, size_t outputSize) {
-    // Î°úÏ∫ò ?§Ï†ï
+    // Î°úÏ∫ò ?ÔøΩÏ†ï
     std::locale loc("");
     const std::codecvt<wchar_t, char, std::mbstate_t>& codecvt_facet = std::use_facet<std::codecvt<wchar_t, char, std::mbstate_t>>(loc);
     std::mbstate_t mbstate = std::mbstate_t();
 
-    // Î≥Ä??Î≤ÑÌçº ?†Îãπ
+    // Î≥Ä??Î≤ÑÌçº ?ÔøΩÎãπ
     const char* inputCStr = input.c_str();
     wchar_t* outputEnd;
 
-    // Î≥Ä???òÌñâ
+    // Î≥Ä???ÔøΩÌñâ
     codecvt_facet.in(mbstate, inputCStr, inputCStr + input.size(), inputCStr, output, output + outputSize, outputEnd);
 
-    // ??Ï¢ÖÎ£å Î¨∏Ïûê Ï∂îÍ?
+    // ??Ï¢ÖÎ£å Î¨∏Ïûê Ï∂îÔøΩ?
     *outputEnd = L'\0';
 }
 
@@ -983,23 +988,17 @@ void initStageImage() {
     stageImageArray[treasureAreaPos[2]].fileName = bmpHiddenAreaName;
 }
 
-void initItemImages() {
-    std::vector<Item*> itemList = ownedItems;
+void initItemImages() { 
+	std::vector<Item*> itemList = ownedItems;
 
-    stageLayer.imageCount = 29; // stageLayer default image count
-    for (int i = 0; i < 6; i++) {
-        stageImageArray[stageLayer.imageCount++] = { bmpNameNull, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1, 1 };
-    }
-    stageLayer.imageCount = 29;
-    for (int i = 0; i < itemList.size(); i++) {
-        stageImageArray[stageLayer.imageCount++] = { imageArray[itemList[i]->getImageIndex()].fileName, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
-    }
-
-    safetyLayer.imageCount = 6;
-    for (int i = 0; i < itemList.size(); i++) {
-        safetyImageArray[safetyLayer.imageCount++] = { imageArray[itemList[i]->getImageIndex()].fileName, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1 };
-    }
-    safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 };
+	uiLayer.imageCount = 26; // stageLayer default image count
+	for (int i = 0; i < 6; i++) {
+		uiImageArray[uiLayer.imageCount++] = { bmpNameNull, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1, 1 };
+	}
+	uiLayer.imageCount = 26;
+	for (int i = 0; i < itemList.size(); i++) {
+		uiImageArray[uiLayer.imageCount++] = { imageArray[itemList[i]->getImageIndex()].fileName, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1};
+	}
 }
 
 void fillBlockImages() {
@@ -1013,58 +1012,59 @@ void fillBlockImages() {
 
 void initAreaUI()
 {
-    index_Area_UI_Start = imageLayer.imageCount;
-    imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
-    index_Area_UI_HP_Start = imageLayer.imageCount;
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_0pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_10pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_20pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_30pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_40pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_50pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_60pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_70pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_80pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_90pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameHP_100pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameMaxHP, UI_HP_ORIGIN_X - 120, UI_HP_ORIGIN_Y, 1, 1 };
+	/*
+	index_Area_UI_Start = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
+	index_Area_UI_HP_Start = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_0pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_10pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_20pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_30pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_40pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_50pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_60pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_70pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_80pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_90pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameHP_100pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameMaxHP, UI_HP_ORIGIN_X - 120, UI_HP_ORIGIN_Y, 1, 1 };
 
-    index_Area_UI_O2_Start = imageLayer.imageCount;
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_0pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_10pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_20pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_30pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_40pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_50pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_60pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_70pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_80pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_90pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1, 1 };
+	index_Area_UI_O2_Start = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_0pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_10pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_20pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_30pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_40pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_50pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_60pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_70pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_80pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_90pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1, 1 };
+	*/
+	index_Area_UI_blockInfo_Start = imageLayer.imageCount;
+	index_Area_UI_Map_Start = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 };
 
-    index_Area_UI_blockInfo_Start = imageLayer.imageCount;
-    index_Area_UI_Map_Start = imageLayer.imageCount;
-    imageArray[imageLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameMapX, 0, 0, 1, 1 };
+	index_Area_UI_mapTile_Start = imageLayer.imageCount;
+	for (int y = 100; y < 100 + (BLOCKSIZE * 5) + 10; y += (BLOCKSIZE + 2)) {
+		int index = AREA_ORIGIN_X + 27 * BLOCKSIZE + 30 + 82;
+		for (int x = index; x < index + (BLOCKSIZE * 5) + 10; x += (BLOCKSIZE + 2)) {
+			imageArray[imageLayer.imageCount++] = { bmpNameMapTile, x, y, 1, 1 };
+			mapInfo[(y - 100) / BLOCKSIZE][(x - index) / BLOCKSIZE] = 0;
+		}
+	}
 
-    index_Area_UI_mapTile_Start = imageLayer.imageCount;
-    for (int y = 100; y < 100 + (BLOCKSIZE * 5) + 10; y += (BLOCKSIZE + 2)) {
-        int index = AREA_ORIGIN_X + 27 * BLOCKSIZE + 30 + 82;
-        for (int x = index; x < index + (BLOCKSIZE * 5) + 10; x += (BLOCKSIZE + 2)) {
-            imageArray[imageLayer.imageCount++] = { bmpNameMapTile, x, y, 1, 1 };
-            mapInfo[(y - 100) / BLOCKSIZE][(x - index) / BLOCKSIZE] = 0;
-        }
-    }
+	imageArray[imageLayer.imageCount++] = { bmpNameMapBox, AREA_ORIGIN_X + 27 * BLOCKSIZE + 30, 0, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpCharacterStatusName, AREA_ORIGIN_X + 27 * BLOCKSIZE , AREA_ORIGIN_Y + BLOCKSIZE * 2, 1 };
 
-    imageArray[imageLayer.imageCount++] = { bmpNameMapBox, AREA_ORIGIN_X + 27 * BLOCKSIZE + 30, 0, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpCharacterStatusName, AREA_ORIGIN_X + 27 * BLOCKSIZE , AREA_ORIGIN_Y + BLOCKSIZE * 2, 1 };
-
-    index_Area_UI_MiniGame_Start = imageLayer.imageCount;
-    imageArray[imageLayer.imageCount++] = { bmpNameStar0, 1500, 550, 1, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameOrichalcumMineral, 1580, 1330, 2, 1 };
-    imageArray[imageLayer.imageCount++] = { bmpNameTimer, 1600, 1450, 1, 1 };
+	index_Area_UI_MiniGame_Start = imageLayer.imageCount;
+	imageArray[imageLayer.imageCount++] = { bmpNameStar0, 1500, 550, 1, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameOrichalcumMineral, 1580, 1330, 2, 1 };
+	imageArray[imageLayer.imageCount++] = { bmpNameTimer, 1600, 1450, 1, 1 };
 }
 
 void initRewardImage() {
@@ -1084,35 +1084,37 @@ void initRewardImage() {
     imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
 }
 void updateCharacterStatus() {
-    wchar_t playerStone[20];
-    wchar_t playerHp[20];
-    wchar_t playerOz[20];
-    wchar_t playerFatigue[20];
-    wchar_t playerAttackPower[20];
-    wchar_t playerAttackSpeed[20];
-    wchar_t playerMoveSpeed[20];
+	initItemImages(); // ownesItemlist updates
+	uiLayer.renderAll(&uiLayer); // images render
+	wchar_t playerStone[20];
+	wchar_t playerHp[20];
+	wchar_t playerOz[20];
+	wchar_t playerFatigue[20];
+	wchar_t playerAttackPower[20];
+	wchar_t playerAttackSpeed[20];
+	wchar_t playerMoveSpeed[20];
 
-    swprintf(playerStone, sizeof(playerStone) / sizeof(playerStone[0]), L"%d", pc.getStone());
-    swprintf(playerHp, sizeof(playerHp) / sizeof(playerHp[0]), L"%d / %d", pc.getHP(), pc.getMaxHP());
-    swprintf(playerOz, sizeof(playerOz) / sizeof(playerOz[0]), L"%d / %d", pc.getOxygen(), pc.getMaxOxygen());
-    swprintf(playerFatigue, sizeof(playerFatigue) / sizeof(playerFatigue[0]), L"%d / %d", pc.getFatigue(), pc.getMaxFatigue());
-    if (pc.getAtkLev() == 11) swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.MAX");
-    else swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.%d", pc.getAtkLev());
-    if (pc.getAtkSpdLev() == 11) swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.MAX");
-    else swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.%d", pc.getAtkSpdLev());
-    if (pc.getSpdLev() == 11) swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.MAX");
-    else swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
+	swprintf(playerStone, sizeof(playerStone) / sizeof(playerStone[0]), L"%d", pc.getStone());
+	swprintf(playerHp, sizeof(playerHp) / sizeof(playerHp[0]), L"%d / %d", pc.getHP(), pc.getMaxHP());
+	swprintf(playerOz, sizeof(playerOz) / sizeof(playerOz[0]), L"%d / %d", pc.getOxygen(), pc.getMaxOxygen());
+	swprintf(playerFatigue, sizeof(playerFatigue) / sizeof(playerFatigue[0]), L"%d / %d", pc.getFatigue(), pc.getMaxFatigue());
+	if (pc.getAtkLev() == 11) swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.MAX");
+	else swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.%d", pc.getAtkLev());
+	if (pc.getAtkSpdLev() == 11) swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.MAX");
+	else swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.%d", pc.getAtkSpdLev());
+	if (pc.getSpdLev() == 11) swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.MAX");
+	else swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
 
-    int X = 60, Y = 240;
-    X += 170;
+	int X = 160, Y = 240;
+	X += 170;
 
-    printText(targetLayer->_consoleDC, X + 160, Y + 90, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-    printText(targetLayer->_consoleDC, X, Y + 190, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
-    printText(targetLayer->_consoleDC, X, Y + 245, 40, 0, RGB(255, 255, 255), TA_LEFT, playerOz);
-    printText(targetLayer->_consoleDC, X, Y + 300, 40, 0, RGB(255, 255, 255), TA_LEFT, playerFatigue);
-    printText(targetLayer->_consoleDC, X, Y + 355, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
-    printText(targetLayer->_consoleDC, X, Y + 410, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
-    printText(targetLayer->_consoleDC, X, Y + 465, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
+	printText(targetLayer->_consoleDC, X + 120, Y + 90, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
+	printText(targetLayer->_consoleDC, X, Y + 190, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
+	printText(targetLayer->_consoleDC, X, Y + 245, 40, 0, RGB(255, 255, 255), TA_LEFT, playerOz);
+	printText(targetLayer->_consoleDC, X, Y + 300, 40, 0, RGB(255, 255, 255), TA_LEFT, playerFatigue);
+	printText(targetLayer->_consoleDC, X, Y + 355, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
+	printText(targetLayer->_consoleDC, X, Y + 410, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
+	printText(targetLayer->_consoleDC, X, Y + 465, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
 }
 
 void setMovableStageInfo(int row, int col) {
@@ -1241,42 +1243,42 @@ void getNewMiniGameArea()
     imageArray[12 * 25 + 13].fileName = bmpNameNull;
 }
 
-void drawUI() {
-    imageArray[index_Area_UI_Start].isHide = 0;
+void drawUI() { 
+	imageArray[index_Area_UI_Start].isHide = 0;
+	/*
+	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; 
+	pc.setHP(pc.getHP());
+	imageArray[index_Area_UI_O2_Start + 11].isHide = 0;
+	pc.setOxygen(pc.getOxygen());
+	*/
+	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++)
+		imageArray[i].isHide = 0;
 
-    imageArray[index_Area_UI_HP_Start + 11].isHide = 0;
-    pc.setHP(pc.getHP());
-    imageArray[index_Area_UI_O2_Start + 11].isHide = 0;
-    pc.setOxygen(pc.getOxygen());
-    for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++)
-        imageArray[i].isHide = 0;
+	
+	imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
+	imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
 
-    /*
-    imageArray[index_Area_UI_Map_Start + 1].isHide = 1;
-    imageArray[index_Area_UI_Map_Start + 2].isHide = 1;
-
-    int count = 0;
-    for (int y = 0; y < 5; y++) {
-    for (int x = 0; x < 5; x++) {
-    if (mapInfo[y][x] == 1) imageArray[index_Area_UI_mapTile_Start + count].fileName = bmpNameMapTileCleared;
-    count++;
-    }
-    }
-    imageArray[index_Area_UI_Map_Start].x = AREA_ORIGIN_X + 27 * BLOCKSIZE + 30 + 82 + (BLOCKSIZE + 2) * currentAreaColIndex;
-    imageArray[index_Area_UI_Map_Start].y = 100 + (BLOCKSIZE + 2) * currentAreaRowIndex;
-    */
-
-    if (isMiniGameArea) {
-        for (int i = 0; i < 3; i++) {
-            imageArray[index_Area_UI_MiniGame_Start + i].isHide = 0;
-        }
-    }
-    else {
-        for (int i = 0; i < 3; i++) {
-            imageArray[index_Area_UI_MiniGame_Start + i].isHide = 1;
-        }
-    }
-    updateCharacterStatusInArea();
+	int count = 0;
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 5; x++) {
+			if (mapInfo[y][x] == 1) imageArray[index_Area_UI_mapTile_Start + count].fileName = bmpNameMapTileCleared;
+			count++;
+		}
+	}
+	imageArray[index_Area_UI_Map_Start].x = AREA_ORIGIN_X + 27 * BLOCKSIZE + 30 + 82 + (BLOCKSIZE + 2) * currentAreaColIndex;
+	imageArray[index_Area_UI_Map_Start].y = 100 + (BLOCKSIZE + 2) * currentAreaRowIndex;
+	
+	if (isMiniGameArea) {
+		for (int i = 0; i < 3; i++) {
+			imageArray[index_Area_UI_MiniGame_Start + i].isHide = 0;
+		}
+	}
+	else {
+		for (int i = 0; i < 3; i++) {
+			imageArray[index_Area_UI_MiniGame_Start + i].isHide = 1;
+		}
+	}
+	//updateCharacterStatusInArea();
 }
 
 int convertPosToInfoXInStage(int x) {
@@ -1311,7 +1313,7 @@ int convertPosToInfoY(int y) {
     return (y - AREA_ORIGIN_Y);
 }
 
-bool collisionCheck(int x, int y, int scale) { //scale ?Î™ÑÏòÑ ?∞Î∂Ω???ÅÍΩå ??ªÏæ≠??±Ïî†??
+bool collisionCheck(int x, int y, int scale) { //scale ?Î™ÑÏòÑ ?ÔøΩÎ∂Ω???ÔøΩÍΩå ??ÔøΩÏæ≠??ÔøΩÏî†??
     int startX = convertPosToInfoX(x);
     int startY = convertPosToInfoY(y);
 
@@ -1749,5 +1751,40 @@ void renderImageLayer() {
     imageLayer.renderAll(&imageLayer);
 }
 void renderTargetLayer() {
-    targetLayer->renderAll(targetLayer);
+	targetLayer->renderAll(targetLayer);
+}
+
+void initUIImage() {
+	uiLayer.images = uiImageArray;
+	uiLayer.imageCount = 0;
+
+	index_Area_UI_HP_Start = uiLayer.imageCount;
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_0pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_10pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_20pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_30pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_40pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_50pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_60pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_70pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_80pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_90pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_100pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameMaxHP, UI_HP_ORIGIN_X - 120, UI_HP_ORIGIN_Y, 1, 0 };
+
+	index_Area_UI_O2_Start = uiLayer.imageCount;
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_0pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_10pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_20pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_30pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_40pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_50pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_60pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_70pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_80pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_90pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1, 0 };
+
+	uiImageArray[uiLayer.imageCount++] = { bmpCharacterStatusName, 170 , STAGE_ORIGIN_Y, 1 };
 }
