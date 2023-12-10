@@ -85,6 +85,7 @@ bool isMiniGameArea = false;
 bool isButtonArea = false;
 bool isFlagArea = false;
 bool isBossArea = false;
+bool isMoving = false;
 
 int index_StageImages_Start;
 int index_Area_PC;
@@ -1862,9 +1863,9 @@ void printStoneStatus(int curStone) {
 
 void printWarning(int curHP) {
     wchar_t warningText[100] = L"WARNING!";
-    for (int i = 0; i < curHP; i++) {
+    for (int i = 0; i < 100; i++) {
         if (i % 10 == 1 && curHP - i >= 9)
-            printText(targetLayer->_consoleDC, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE * 3 / 4, 20, 0, RGB(255, 255, 255), TA_LEFT, warningText);
+            printText(targetLayer->_consoleDC, 960 + AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE * 3 / 4, 20, 0, RGB(255, 255, 255), TA_LEFT, warningText);
     }
 }
 

@@ -38,12 +38,12 @@ RawkHawk::RawkHawk(int x, int y) : NPC(x, y, 100, 30, 1) {
 
     // RawkHawk HP BAR image save
     for (int i = 0; i < maxHP; i++) {
-        imageArray[imageLayer.imageCount++] = { bmpBossHPName, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
+        imageArray[imageLayer.imageCount++] = { bmpBossHPName, DEFAULT_LAYER_MARGIN_X + AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
         imageArray[imageLayer.imageCount - 1].isHide = true;
     }
 
     // RawkHawk HP BAR ICON save
-    imageArray[imageLayer.imageCount++] = { bmpNameRawkHawk, AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
+    imageArray[imageLayer.imageCount++] = { bmpNameRawkHawk, DEFAULT_LAYER_MARGIN_X + AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
     imageArray[imageLayer.imageCount - 1].isHide = true;
 }
 

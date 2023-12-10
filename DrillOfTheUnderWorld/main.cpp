@@ -131,7 +131,7 @@ int main()
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					int num = rand() % 4;
 					//num = 1;
-					if (currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
+					if (true || currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
 					{
 						isNormalArea = false;
 						isMiniGameArea = false;
@@ -699,14 +699,14 @@ int main()
 						itr++;
 				}
 				printWarning(Boss->hp);
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 5; i++)
 				{
+					int curPosX = imageLayer.images[0].x;
+					int curPosY = imageLayer.images[0].y;
+					COORD afterMovedPos;
 					if (_kbhit() != 0)
 					{
 						int key = _getch();
-						int curPosX = imageLayer.images[0].x;
-						int curPosY = imageLayer.images[0].y;
-						COORD afterMovedPos;
 
 						switch (key)
 						{
@@ -725,27 +725,27 @@ int main()
 							break;
 						case LEFT:
 							pc.setDirLeft();
-							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							/*afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-								pc.move();
+								pc.move();*/
 							break;
 						case RIGHT:
 							pc.setDirRight();
-							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							/*afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-								pc.move();
+								pc.move();*/
 							break;
 						case UP:
 							pc.setDirUp();
-							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							/*afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-								pc.move();
+								pc.move();*/
 							break;
 						case DOWN:
 							pc.setDirDown();
-							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							/*afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
 							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
-								pc.move();
+								pc.move();*/
 							break;
 						case ESC:
 							stopBGM();
@@ -763,7 +763,15 @@ int main()
 							break;
 						}
 					}
-					Sleep(5);
+					if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(VK_RIGHT) < 0 || GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(VK_DOWN) < 0) {
+						isMoving = true;
+					}
+					else isMoving = false;
+					if (isMoving) {
+						afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+						if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+					}
+					Sleep(10);
 				}
 			}
 			// 嶺뚮?�維????????洹먮�??????�쾹????��?????�챷???濡ル�??袁⑤???

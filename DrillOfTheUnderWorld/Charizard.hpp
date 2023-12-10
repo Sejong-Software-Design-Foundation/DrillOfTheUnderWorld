@@ -43,12 +43,12 @@ Charizard::Charizard(int x, int y) : NPC(x, y, 100, 0, 1) {
 
     // Charizard HP BAR image save
     for (int i = 0; i < maxHP; i++) {
-        imageArray[imageLayer.imageCount++] = { bmpBossHPName,AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i,AREA_ORIGIN_Y - BLOCKSIZE,1 };
+        imageArray[imageLayer.imageCount++] = { bmpBossHPName, DEFAULT_LAYER_MARGIN_X + AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i,AREA_ORIGIN_Y - BLOCKSIZE,1 };
         imageArray[imageLayer.imageCount - 1].isHide = true;
     }
 
     // Charizard HP BAR ICON save
-    imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
+    imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, DEFAULT_LAYER_MARGIN_X + AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
     imageArray[imageLayer.imageCount - 1].isHide = true;
 }
 

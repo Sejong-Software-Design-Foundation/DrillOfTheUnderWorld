@@ -34,7 +34,7 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 48
+#define SPEED 16
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 336
@@ -116,6 +116,7 @@ extern bool isMiniGameArea;
 extern bool isFlagArea;
 extern bool isButtonArea;
 extern bool isBossArea;
+extern bool isMoving;
 
 extern int index_StageImages_Start;
 extern int index_Area_PC;
@@ -243,7 +244,7 @@ extern char bmpCaveSnakeName[];
 
 extern char bmpBackgroundTestName[];
 
-// ?�든 ?�어리어 관�?
+// ?�든 ?�어리어 관�?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
 extern std::vector<int> bossAreaPos;
 extern std::vector<int> treasureAreaPos;
