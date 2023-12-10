@@ -451,6 +451,9 @@
     <Image Include="BossHP_2.bmp">
       <Filter>image</Filter>
     </Image>
+    <Image Include="quake.bmp">
+      <Filter>image</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="image">

@@ -424,6 +424,7 @@
     <Image Include="progressBackGround.bmp" />
     <Image Include="progressBottom.bmp" />
     <Image Include="progressMiddle.bmp" />
+    <Image Include="quake.bmp" />
     <Image Include="questionMark.bmp" />
     <Image Include="rShop_Balloon.bmp" />
     <Image Include="rShop_miner.bmp" />

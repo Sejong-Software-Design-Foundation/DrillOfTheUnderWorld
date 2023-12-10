@@ -48,9 +48,9 @@ extern "C" {
 #define UI_ITEM_START_POS_Y 900
 #define UI_ITEM_SIZE 170
 #define BOSS_SCALE 4
-#define EMCEE_SCALE 4
-#define RAWKHAWK_SCALE 3
-#define CHARIZARD_SCALE 3
+#define EMCEE_SCALE 3
+#define RAWKHAWK_SCALE 4
+#define CHARIZARD_SCALE 5
 #define BOSS_HP_BAR_WIDTH 16
 
 #define REWARD_BRONZE = 10
@@ -160,6 +160,7 @@ extern char bmpNameRawkHawk_digging[];
 
 extern char bmpNameCharizard[];
 extern char bmpNameFireground[];
+extern char bmpNameQuake[];
 
 // LADDER 
 extern char bmpNameLadder[];

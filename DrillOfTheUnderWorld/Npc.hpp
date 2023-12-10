@@ -124,7 +124,7 @@ void NPC::NPCTrackingMovement(int speed) {
     double dx = speed * cos(angle);
     double dy = speed * sin(angle);
 
-    if (collisionCheck(x + dx, y + dy)) { return; }
+    if (collisionCheck(x + dx, y + dy, RAWKHAWK_SCALE)) { return; }
 
     // Mole ì¢Œí?�œë�???�ë�?´íŠ¸
     imageLayer.images[imageidx].x += dx;

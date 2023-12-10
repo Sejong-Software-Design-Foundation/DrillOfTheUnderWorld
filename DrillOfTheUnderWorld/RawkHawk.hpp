@@ -49,29 +49,27 @@ RawkHawk::RawkHawk(int x, int y) : NPC(x, y, 200, 30, 1) {
 }
 
 void RawkHawk::move() {
-
 	// 0-5 : 6sec
 	if (cnt < 6) {
 		NPCPatternMovement(RAWKHAWK_NORMAL_SPEED);
 	}
-	// 6-21 : 15sec
-	else if (cnt < 21) {
+	// 6-16 : 10sec
+	else if (cnt < 16) {
 		imageArray[imageidx] = { bmpNameRawkHawk_ready, x, y, RAWKHAWK_SCALE };
 	}
-	// 21-27 : 6sec
-	else if (cnt < 27) {
+	// 16-36 : 20sec
+	else if (cnt < 36) {
 		imageArray[imageidx] = { bmpNameRawkHawk_digging, x, y, RAWKHAWK_SCALE };
 		NPCTrackingMovement(RAWKHAWK_TRACK_SPEED);
 	}
-	// 27-42 : 15sec
-	else if (cnt < 42) {
+	// 36-56 : 20sec
+	else if (cnt < 56) {
 		imageArray[imageidx] = { bmpNameRawkHawk_ready, x, y, RAWKHAWK_SCALE };
 	}
-	else if (cnt == 42) {
+	else if (cnt == 56) {
 		imageArray[imageidx] = { bmpNameRawkHawk, x, y,RAWKHAWK_SCALE };
 		cnt = -1;
 	}
-
 	cnt++;
 }
 
