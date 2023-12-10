@@ -1,4 +1,4 @@
-#include "common.hpp"
+﻿#include "common.hpp"
 #include "itemCommon.hpp"
 
 int stageLevel = 1;
@@ -26,7 +26,7 @@ ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image stageImageArray[40];
 int stageInfo[5][5];
 
-// ���� imageArray�� areaImageArray
+// 占쏙옙占쏙옙 imageArray占쏙옙 areaImageArray
 ImageLayer imageLayer = AREA_IMAGE_LAYER;
 Image imageArray[2000];
 int blockInfo[1200][1200];
@@ -340,7 +340,7 @@ void initProgressImage() {
 	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer, 80, 1420, 1, 1 };
 
 	progressImageArray[progressLayer.imageCount++] = { bmpProgressBottom, 10, 1228, 1 };
-	progressImageArray[progressLayer.imageCount++] = { bmpProgressBackGround, 0, 0, 1 };
+	//progressImageArray[progressLayer.imageCount++] = { bmpProgressBackGround, 0, 0, 1 };
 }
 
 void drawProgress() {
@@ -365,42 +365,42 @@ void drawProgress() {
 	wchar_t numOrichalcum[20];
 	swprintf(numOrichalcum, sizeof(numOrichalcum) / sizeof(numOrichalcum[0]), L"%d", OrichalcumNum);
 
-	wchar_t stageInfo1[100] = L"�������� ��";
-	wchar_t stageInfo2[100] = L"����Ű�� ���� �̵�, 'S'Ű�� ���� ������ �� �ֽ��ϴ�.";
+	wchar_t stageInfo1[100] = L"占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙";
+	wchar_t stageInfo2[100] = L"占쏙옙占쏙옙키占쏙옙 占쏙옙占쏙옙 占싱듸옙, 'S'키占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙 占쌍쏙옙占싹댐옙.";
 
-	wchar_t normalInfo1[100] = L"�븻 �����";
-	wchar_t normalInfo2[100] = L"����Ű�� ���� �̵�, 'SPACEBAR'Ű�� ���� ���� �� �� �ֽ��ϴ�.";
+	wchar_t normalInfo1[100] = L"占쎈말 占쏙옙占쏘리占쏙옙";
+	wchar_t normalInfo2[100] = L"占쏙옙占쏙옙키占쏙옙 占쏙옙占쏙옙 占싱듸옙, 'SPACEBAR'키占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙 占쏙옙 占쌍쏙옙占싹댐옙.";
 
-	wchar_t minigameInfo1[100] = L"�̴ϰ��� �����";
-	wchar_t minigameInfo2[100] = L"���ѽð� ���� �ִ��� ���� ���������� ĳ�� ������ ȹ���ϼ���!";
+	wchar_t minigameInfo1[100] = L"占싱니곤옙占쏙옙 占쏙옙占쏘리占쏙옙";
+	wchar_t minigameInfo2[100] = L"占쏙옙占싼시곤옙 占쏙옙占쏙옙 占쌍댐옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 캐占쏙옙 占쏙옙占쏙옙占쏙옙 획占쏙옙占싹쇽옙占쏙옙!";
 
 	wchar_t starInfo1[100] = L"1 Star (3) = 100G";
 	wchar_t starInfo2[100] = L"1 Star (6) = 200G";
 	wchar_t starInfo3[100] = L"1 Star(10) = 300G";
 
-	wchar_t buttonInfo1[100] = L"��ư �����";
-	wchar_t buttonInfo2[100] = L"��ư�� �۵���Ű�� ���� ����?";
+	wchar_t buttonInfo1[100] = L"占쏙옙튼 占쏙옙占쏘리占쏙옙";
+	wchar_t buttonInfo2[100] = L"占쏙옙튼占쏙옙 占쌜듸옙占쏙옙키占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙?";
 
-	wchar_t flagInfo1[100] = L"��� �����";
-	wchar_t flagInfo2[100] = L"��� ����� ȹ���ϰ� Ż���ϼ���!";
+	wchar_t flagInfo1[100] = L"占쏙옙占?占쏙옙占쏘리占쏙옙";
+	wchar_t flagInfo2[100] = L"占쏙옙占?占쏙옙占쏙옙占?획占쏙옙占싹곤옙 탈占쏙옙占싹쇽옙占쏙옙!";
 
-	wchar_t stage1BossInfo1[100] = L"\"�β��� ������ ����\"";
-	wchar_t stage1BossInfo2[100] = L"���幮 �������� �ƴٸ�Ƽ���� ã�� ���� �İߵ� ������. ������ ����ؼ� �ӹ� ������ ������ ������ ���� �������׼� �������� ����.";
-	wchar_t stage1BossInfo3[100] = L"TIP : �ҽ��ϰ� �β����� �ϴ� ���� ���ݰ� �ٸ��� ���� �ɷ��� �躸�� �ȵ˴ϴ�!";
+	wchar_t stage1BossInfo1[100] = L"\"占싸뀐옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙\"";
+	wchar_t stage1BossInfo2[200] = L"占쏙옙占썲문 占쏙옙占쏙옙占쏙옙占쏙옙 占싣다몌옙티占쏙옙占쏙옙 찾占쏙옙 占쏙옙占쏙옙 占식견듸옙 占쏙옙占쏙옙占쏙옙. 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙漫占?占쌈뱄옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쌓쇽옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙.";
+	wchar_t stage1BossInfo3[100] = L"TIP : 占쌀쏙옙占싹곤옙 占싸뀐옙占쏙옙占쏙옙 占싹댐옙 占쏙옙占쏙옙 占쏙옙占쌥곤옙 占쌕몌옙占쏙옙 占쏙옙占쏙옙 占심뤄옙占쏙옙 占썼보占쏙옙 占싫됩니댐옙!";
 
-	wchar_t stage2BossInfo1[100] = L"\"��������\"";
-	wchar_t stage2BossInfo2[100] = L"�ΰ� ���¸� �޲ٴ� �δ��� ����. �̹� ���� �ΰ��� �Ծ� �ΰ� ���¿� ���������.";
-	wchar_t stage2BossInfo3[100] = L"TIP : �δ����� ���� ���� �� �Ĵ� �����Դϴ�!";
+	wchar_t stage2BossInfo1[100] = L"\"占쏙옙占쏙옙占쏙옙占쏙옙\"";
+	wchar_t stage2BossInfo2[100] = L"占싸곤옙 占쏙옙占승몌옙 占쌨꾸댐옙 占싸댐옙占쏙옙 占쏙옙占쏙옙. 占싱뱄옙 占쏙옙占쏙옙 占싸곤옙占쏙옙 占쌉억옙 占싸곤옙 占쏙옙占승울옙 占쏙옙占쏙옙占쏙옙占쏙옙占?";
+	wchar_t stage2BossInfo3[100] = L"TIP : 占싸댐옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙 占식댐옙 占쏙옙占쏙옙占쌉니댐옙!";
 
-	wchar_t stage3BossInfo1[100] = L"\"���׸� ��\"";
-	wchar_t stage3BossInfo2[100] = L"���� �������� �ƴٸ�Ƽ���� ��Ű�°� 1������ ���ڸ�����. �״� ����� ������ �߽� ���ٿ��� �ƴٸ�Ƽ���� ���ѿԴ�.";
-	wchar_t stage3BossInfo3[100] = L"TIP : �ְ��� �� �ְ��� �����Դϴ�!";
+	wchar_t stage3BossInfo1[100] = L"\"占쏙옙占쌓몌옙 占쏙옙\"";
+	wchar_t stage3BossInfo2[200] = L"占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占싣다몌옙티占쏙옙占쏙옙 占쏙옙키占승곤옙 1占쏙옙占쏙옙占쏙옙 占쏙옙占쌘몌옙占쏙옙占쏙옙. 占쌓댐옙 占쏙옙占쏙옙占?占쏙옙占쏙옙占쏙옙 占쌩쏙옙 占쏙옙占쌕울옙占쏙옙 占싣다몌옙티占쏙옙占쏙옙 占쏙옙占싼왔댐옙.";
+	wchar_t stage3BossInfo3[100] = L"TIP : 占쌍곤옙占쏙옙 占쏙옙載?占쌍곤옙占쏙옙 占쏙옙占쏙옙占쌉니댐옙!";
 
-	wchar_t safetyInfo1[100] = L"��������";
-	wchar_t safetyInfo2[100] = L"�̰��� �����Դϴ�. ���� ���������� ���� �� �������� ������ �� �ֽ��ϴ�.";
+	wchar_t safetyInfo1[100] = L"占쏙옙占쏙옙占쏙옙占쏙옙";
+	wchar_t safetyInfo2[100] = L"占싱곤옙占쏙옙 占쏙옙占쏙옙占쌉니댐옙. 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙 占쌍쏙옙占싹댐옙.";
 
-	wchar_t rewardInfo1[100] = L"���� ����";
-	wchar_t rewardInfo2[100] = L"����Ű �Ǵ� ����Ű�� ���� �̵��ϰ�, 'SPACEBAR'Ű�� ���� ������ �Ϸ��մϴ�.";
+	wchar_t rewardInfo1[100] = L"占쏙옙占쏙옙 占쏙옙占쏙옙";
+	wchar_t rewardInfo2[100] = L"占쏙옙占쏙옙키 占실댐옙 占쏙옙占쏙옙키占쏙옙 占쏙옙占쏙옙 占싱듸옙占싹곤옙, 'SPACEBAR'키占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싹뤄옙占쌌니댐옙.";
 
 	if (isOnSafety) {
 		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, safetyInfo1, 280);
@@ -582,7 +582,7 @@ char bmpSafetyArrow[] = "safety_arrow.bmp";
 char bmpSafetyArrowSelected[] = "safety_arrowSelected.bmp";
 int index_Safety_Object_Start;
 
-// ���� ����� ����
+// 占쏙옙占쏙옙 占쏙옙占쏘리占쏙옙 占쏙옙占쏙옙
 std::vector<int> bossAreaPos;
 std::vector<int> treasureAreaPos;
 std::vector<std::vector<int>> hiddenAreaPosList = { {0,0,3}, {0,1,4}, {0,2,5}, {0,3,6}, {0,4,7},
@@ -826,18 +826,18 @@ void printStatusInLShop(int price1, int price2, int num) {
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1080, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice1);
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1530, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
 
-    wchar_t info1[100] = L"1, 2 ?�자 ?��? ?�러 ?�택, Spaebar?��? ?�러 구매?????�습?�다. ESC?��? ?�해 ?�점???�갈 ???�습?�다.";
-    wchar_t info2[100] = L"?��????�택?�니??";
+    wchar_t info1[100] = L"1, 2 ?占쎌옄 ?占쏙옙? ?占쎈윭 ?占쏀깮, Spaebar?占쏙옙? ?占쎈윭 援щℓ?????占쎌뒿?占쎈떎. ESC?占쏙옙? ?占쏀빐 ?占쎌젏???占쎄컝 ???占쎌뒿?占쎈떎.";
+    wchar_t info2[100] = L"?占쏙옙????占쏀깮?占쎈땲??";
 
     if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 520);
     else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 800, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 520);
 }
 
 void printItemTextInLShop() {
-    wchar_t itemName1[10] = L"HP ?�션";
-    wchar_t itemName2[10] = L"O2 ?�션";
-    wchar_t itemInfo1[100] = L"PC??체력??모두 ?�복?�다.";
-    wchar_t itemInfo2[100] = L"PC???�소게이지�?모두 ?�복?�다.";
+    wchar_t itemName1[10] = L"HP ?占쎌뀡";
+    wchar_t itemName2[10] = L"O2 ?占쎌뀡";
+    wchar_t itemInfo1[100] = L"PC??泥대젰??紐⑤몢 ?占쎈났?占쎈떎.";
+    wchar_t itemInfo2[100] = L"PC???占쎌냼寃뚯씠吏占?紐⑤몢 ?占쎈났?占쎈떎.";
 
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1000, 410, 30, 0, RGB(255, 255, 255), TA_CENTER, itemName1);
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 20 + 900, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo1, 150);
@@ -985,8 +985,8 @@ void printStatusInRShop(int price1, int price2, int price3, int num) {
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 730, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice2);
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 1180, 855, 40, 0, RGB(255, 255, 255), TA_CENTER, numPrice3);
 
-    wchar_t info1[200] = L"1, 2, 3 ?�자 ?��? ?�러 ?�택, Spaebar?��? ?�러 구매?????�습?�다. ESC?��? ?�해 ?�점???�갈 ???�습?�다.";
-    wchar_t info2[100] = L"?��????�택?�니??";
+    wchar_t info1[200] = L"1, 2, 3 ?占쎌옄 ?占쏙옙? ?占쎈윭 ?占쏀깮, Spaebar?占쏙옙? ?占쎈윭 援щℓ?????占쎌뒿?占쎈떎. ESC?占쏙옙? ?占쏀빐 ?占쎌젏???占쎄컝 ???占쎌뒿?占쎈떎.";
+    wchar_t info2[100] = L"?占쏙옙????占쏀깮?占쎈땲??";
 
     if (num == 0) printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info1, 500);
     else if (num == 1)  printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 100, 1200, 40, 0, RGB(0, 0, 0), TA_LEFT, info2, 500);
@@ -1019,21 +1019,21 @@ void printItemTextInRShop()
     printText(targetLayer->_consoleDC, DEFAULT_LAYER_MARGIN_X + 20 + 1000, 730, 30, 0, RGB(255, 255, 255), TA_LEFT, itemInfo3, 150);
 }
 
-// 문자?�을 wchar_t 배열�?변?�하???�수
+// 臾몄옄?占쎌쓣 wchar_t 諛곗뿴占?蹂?占쏀븯???占쎌닔
 void stringToWchar(const std::string& input, wchar_t* output, size_t outputSize) {
-    // 로캘 ?�정
+    // 濡쒖틮 ?占쎌젙
     std::locale loc("");
     const std::codecvt<wchar_t, char, std::mbstate_t>& codecvt_facet = std::use_facet<std::codecvt<wchar_t, char, std::mbstate_t>>(loc);
     std::mbstate_t mbstate = std::mbstate_t();
 
-    // 변??버퍼 ?�당
+    // 蹂??踰꾪띁 ?占쎈떦
     const char* inputCStr = input.c_str();
     wchar_t* outputEnd;
 
-    // 변???�행
+    // 蹂???占쏀뻾
     codecvt_facet.in(mbstate, inputCStr, inputCStr + input.size(), inputCStr, output, output + outputSize, outputEnd);
 
-    // ??종료 문자 추�?
+    // ??醫낅즺 臾몄옄 異뷂옙?
     *outputEnd = L'\0';
 }
 
@@ -1454,12 +1454,12 @@ void getNewMiniGameArea()
 
 void drawUI() { 
 	imageArray[index_Area_UI_Start].isHide = 0;
-	/*
+	
 	imageArray[index_Area_UI_HP_Start + 11].isHide = 0; 
 	pc.setHP(pc.getHP());
 	imageArray[index_Area_UI_O2_Start + 11].isHide = 0;
 	pc.setOxygen(pc.getOxygen());
-	*/
+	
 	for (int i = index_Area_UI_Map_Start; i < index_Area_UI_Map_Start + 29; i++)
 		imageArray[i].isHide = 0;
 
@@ -1522,7 +1522,7 @@ int convertPosToInfoY(int y) {
     return (y - AREA_ORIGIN_Y);
 }
 
-bool collisionCheck(int x, int y, int scale) { //scale ?몄옄 ?�붽???�꽌 ??�쾭??�씠??
+bool collisionCheck(int x, int y, int scale) { //scale ?紐꾩쁽 ?占쎈떽???占쎄퐣 ??占쎌쒔??占쎌뵠??
     int startX = convertPosToInfoX(x);
     int startY = convertPosToInfoY(y);
 
@@ -1771,7 +1771,7 @@ bool printButtonStageStatus() {
  }
 
 void printFlagStageStatus(int curFlagCnt) {
-	wchar_t playerFlagInfo[100] = L"ȹ���� ����� �� : ";
+	wchar_t playerFlagInfo[100] = L"획占쏙옙占쏙옙 占쏙옙占쏙옙占?占쏙옙 : ";
 	wchar_t playerFlagCount[20] = L"";
 	swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", pc.getFlagCnt());
 	printText(targetLayer->_consoleDC, 2560, 1370, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
@@ -1852,7 +1852,7 @@ void getNewBossArea() {
 }
 
 void printStoneStatus(int curStone) {
-    wchar_t playerFlagInfo[100] = L"보유중인 STONE : ";
+    wchar_t playerFlagInfo[100] = L"蹂댁쑀以묒씤 STONE : ";
     wchar_t playerFlagCount[20] = L"";
     swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
     printText(targetLayer->_consoleDC, 500, 200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
