@@ -1,7 +1,8 @@
 #include "PC.hpp"
 #include <string>
-//#include "Item.hpp"
+#include "Item.hpp"
 #include "common.hpp"
+#include "itemCommon.hpp"
 #include <thread>
 
 using namespace std;
@@ -20,46 +21,34 @@ void PC::vibe() {
 	if (curDirection == 0) {
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].x += 16;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].x -= 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 	}
 	else if (curDirection == 2) {
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].x -= 16;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].x += 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 	}
 	else if (curDirection == 3) {
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].y -= 16;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].y += 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 	}
 	else {
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].y += 16;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 		imageLayer.images[0].y -= 8;
 		imageLayer.renderAll(&imageLayer);
-		updateCharacterStatusInArea();
 	}
 }
 
@@ -76,18 +65,30 @@ int PC::getMaxHP() { return MAX_HP; }
 int PC::getMaxOxygen() { return MAX_O2; }
 int PC::getMaxFatigue() { return MAX_FATIGUE; }
 int PC::getATK() { return ATK; }
-void PC::setStone(int stone) { this->stone = stone; }
+void PC::setStone(int stone) { this->stone = stone; updateCharacterStatus();
+}
 void PC::setHP(int hp) {
 	if (hp < HP) hitEffect();
 	else if (hp > HP) getHPEffect();
 
-	int prev_HP = this->HP / 10;
+	int prev_HP = this->HP / (this->MAX_HP / 10);
 	if (hp <= 0) {
 		this->HP = 0;
 		// item
 		if (this->hasLuckCharm) {
 			this->HP = this->MAX_HP;
 			this->hasLuckCharm = false;
+
+			for (auto iter = ownedItems.begin(); iter != ownedItems.end(); ) {
+				if (auto luckCharm = dynamic_cast<LuckyCharm*>(*iter)) {
+					iter = ownedItems.erase(iter);
+					delete luckCharm; 
+				}
+				else {
+					++iter;
+				}
+			}
+			updateCharacterStatus();
 		}
 		else {
 			// die
@@ -96,25 +97,27 @@ void PC::setHP(int hp) {
 	}
 	else if (hp > MAX_HP) this->HP = MAX_HP;
 	else this->HP = hp;
-	int cur_HP = this->HP / 10;
-	imageArray[index_Area_UI_HP_Start + prev_HP].isHide = 1;
-	imageArray[index_Area_UI_HP_Start + cur_HP].isHide = 0;
+	int cur_HP = this->HP / (this->MAX_HP / 10);
+	uiImageArray[index_Area_UI_HP_Start + prev_HP].isHide = 1;
+	uiImageArray[index_Area_UI_HP_Start + cur_HP].isHide = 0;
+	updateCharacterStatus();
 }
 
 void PC::setOxygen(int o2) {
 	if (o2 < O2);
 	else if (o2 > O2) getOxygenEffect();
 
-	int prev_O2 = this->O2 / 10;
+	int prev_O2 = this->O2 / (this->MAX_O2 / 10);
 	if (o2 <= 0) {
 		this->O2 = 0;
 		pc.setHP(pc.getHP() - 1);
 	}
 	else if (o2 > MAX_O2) this->O2 = MAX_O2;
 	else this->O2 = o2;
-	int cur_O2 = this->O2 / 10;
-	imageArray[index_Area_UI_O2_Start + prev_O2].isHide = 1;
-	imageArray[index_Area_UI_O2_Start + cur_O2].isHide = 0;
+	int cur_O2 = this->O2 / (this->MAX_O2 / 10);
+	uiImageArray[index_Area_UI_O2_Start + prev_O2].isHide = 1;
+	uiImageArray[index_Area_UI_O2_Start + cur_O2].isHide = 0;
+	updateCharacterStatus();
 }
 
 void PC::setFatigue(int ft) {
@@ -264,6 +267,8 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 
 void PC::increaseFlagCnt() {
 	flagCnt++;
+	drawProgress();
+	printFlagStageStatus(pc.getFlagCnt());
 
 	//imageArray[imageLayer.imageCount++] = { bmpFlagName, AREA_ORIGIN_X + BLOCKSIZE * 25 + 100 + flagCnt * BLOCKSIZE * 2,BLOCKSIZE * 13,2 };
 }
@@ -299,9 +304,10 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 		}
 		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpNameOrichalcumOre1[stageLevel - 1]) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpNameOrichalcumOre2[stageLevel - 1]) == 0)) {
 			OrichalcumNum++;
-			if (OrichalcumNum >= 5) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar1;
-			if (OrichalcumNum >= 10) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar2;
-			if (OrichalcumNum >= 20) imageArray[index_Area_UI_MiniGame_Start].fileName = bmpNameStar3;
+			drawProgress();
+			if (OrichalcumNum >= 3) progressImageArray[29].fileName = bmpNameStar1;
+			if (OrichalcumNum >= 6) progressImageArray[29].fileName = bmpNameStar2;
+			if (OrichalcumNum >= 10) progressImageArray[29].fileName = bmpNameStar3;
 			imageLayer.images[imageIndex].fileName = bmpNameOrichalcumMineral;
 			applyDigReward(imageIndex, 300);
 		}
