@@ -448,6 +448,9 @@
     <Image Include="Timer_30pct.bmp" />
     <Image Include="Timer_20pct.bmp" />
     <Image Include="Timer_10pct.bmp" />
+    <Image Include="BossHP_2.bmp">
+      <Filter>image</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="image">

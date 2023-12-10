@@ -170,6 +170,7 @@ extern char bmpNameStar1[];
 extern char bmpNameStar2[];
 extern char bmpNameStar3[];
 extern char bmpBossHPName[];
+extern char bmpBossHP_2Name[];
 
 // BLOCK BMP
 extern char bmpStoneBlockName[3][40];

@@ -175,6 +175,7 @@ char bmpNameStar1[] = "UI_Star1.bmp";
 char bmpNameStar2[] = "UI_Star2.bmp";
 char bmpNameStar3[] = "UI_Star3.bmp";
 char bmpBossHPName[] = "BossHP.bmp";
+char bmpBossHP_2Name[] = "BossHP_2.bmp";
 
 // AREA BLOCK BMP
 char bmpStoneBlockName[3][40] = { "block_Stage1_Normal.bmp","block_Stage2_Normal.bmp","block_Stage3_Normal.bmp" };

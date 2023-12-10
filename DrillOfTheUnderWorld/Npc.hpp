@@ -44,6 +44,7 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     // defaultê°???¤ë¥¸ìª?????��?��?    this->curDirection = dir;
     // movecnt
     cnt = 0;
+    maxHP = hp;
 }
 
 bool NPC::NPCDead() { return hp <= 0 ? true : false; }

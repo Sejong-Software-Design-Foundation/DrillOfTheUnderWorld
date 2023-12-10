@@ -42,8 +42,12 @@ EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 50, 10, 1) {
 
 	this->imageidx = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, x, y, EMCEE_SCALE };
+	char* curBossHPName = bmpBossHPName;
 	for (int i = 0;i < maxHP;i++) {
-		imageArray[imageLayer.imageCount++] = { bmpBossHPName, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH*i,AREA_ORIGIN_Y - BLOCKSIZE,1};
+		if (i % 100 == 0) {
+			if (i / 100 == 2) curBossHPName = bmpBossHP_2Name;
+		}
+		imageArray[imageLayer.imageCount++] = { curBossHPName, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH*(i%100),AREA_ORIGIN_Y - BLOCKSIZE,1};
 		imageArray[imageLayer.imageCount - 1].isHide = true;
 	}
 	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };

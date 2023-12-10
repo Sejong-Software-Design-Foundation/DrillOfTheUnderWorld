@@ -34,7 +34,7 @@ public:
     void updateHPBar();
 };
 
-Charizard::Charizard(int x, int y) : NPC(x, y, 100, 0, 1) {
+Charizard::Charizard(int x, int y) : NPC(x, y, 200, 0, 1) {
     movecnt = 0;
 
     // Charizard image save
@@ -42,13 +42,17 @@ Charizard::Charizard(int x, int y) : NPC(x, y, 100, 0, 1) {
     imageArray[imageLayer.imageCount++] = { bmpNameCharizard, x, y, CHARIZARD_SCALE };
 
     // Charizard HP BAR image save
+    char* curBossHPName = bmpBossHPName;
     for (int i = 0; i < maxHP; i++) {
-        imageArray[imageLayer.imageCount++] = { bmpBossHPName, DEFAULT_LAYER_MARGIN_X + AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i,AREA_ORIGIN_Y - BLOCKSIZE,1 };
+        if (i % 100 == 0) {
+            if (i / 100 == 2) curBossHPName = bmpBossHP_2Name;
+        }
+        imageArray[imageLayer.imageCount++] = { curBossHPName, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * (i%100),AREA_ORIGIN_Y - BLOCKSIZE,1 };
         imageArray[imageLayer.imageCount - 1].isHide = true;
     }
 
     // Charizard HP BAR ICON save
-    imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, DEFAULT_LAYER_MARGIN_X + AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
+    imageArray[imageLayer.imageCount++] = { bmpNameCharizard, AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
     imageArray[imageLayer.imageCount - 1].isHide = true;
 }
 
@@ -98,7 +102,7 @@ void Charizard::NPCHit(int atkLev) {
     imageArray[imageidx].fileName = bmpNameHit;
 
     imageLayer.renderAll(&imageLayer);
-    imageArray[imageidx].fileName = bmpNameEmceeTheShyGuy;
+    imageArray[imageidx].fileName = bmpNameCharizard;
     imageLayer.renderAll(&imageLayer);
 }
 
