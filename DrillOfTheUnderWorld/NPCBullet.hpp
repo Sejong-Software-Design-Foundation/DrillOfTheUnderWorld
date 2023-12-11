@@ -59,7 +59,12 @@ void NPCBullet::move() {
 }
 
 void NPCBullet::attack() {
-	pc.setHP(pc.getHP() - attack_damage);
+	int damage = attack_damage;
+
+	if (pc.getHasThronCrown()) {
+		damage *= 2;
+	}
+	pc.setHP(pc.getHP() - damage);
 }
 
 

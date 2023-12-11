@@ -240,17 +240,35 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 	targetLayer->renderAll(targetLayer);
 	Sleep(delay);
 
+	int rewardStone = 0;
+
 	if (strcmp(imageArray[targerImageIndex].fileName, bmpNameBronzeMineral) == 0) {
-		pc.setStone(pc.getStone() + 10);
+		rewardStone = 10;
+		if (hasMoleClaw) {
+			rewardStone *= 2;
+		}
+		pc.setStone(pc.getStone() + rewardStone);
 	}
 	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameSilverMineral) == 0) {
-		pc.setStone(pc.getStone() + 30);
+		rewardStone = 30;
+		if (hasMoleClaw) {
+			rewardStone *= 2;
+		}
+		pc.setStone(pc.getStone() + rewardStone);
 	}
 	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameGoldMineral) == 0) {
-		pc.setStone(pc.getStone() + 50);
+		rewardStone = 50;
+		if (hasMoleClaw) {
+			rewardStone *= 2;
+		}
+		pc.setStone(pc.getStone() + rewardStone);
 	}
 	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameDiamondMineral) == 0) {
-		pc.setStone(pc.getStone() + 100);
+		rewardStone = 100;
+		if (hasMoleClaw) {
+			rewardStone *= 2;
+		}
+		pc.setStone(pc.getStone() + rewardStone);
 	}
 	else if (strcmp(imageArray[targerImageIndex].fileName, bmpHpPotionName) == 0) {
 		pc.setHP(pc.getHP() + (pc.getMaxHP() * 0.3));
@@ -501,18 +519,29 @@ void PC::setMaxFatigue(int maxFt) {
 /*
 std::vector<Item*> PC::getOwnedItemList() {
 	return this->ownedItemList;
-}
+ }
 */
 
 void PC::setUsableEnergyBarCount(int count) {
-	if (count > 0) {
-		this->usableEnergyBarCount = count;
+	this->usableEnergyBarCount = count;
+	if (count == 0) {
+		uiImageArray[index_Potion_Image].fileName = bmpNameNull;
 	}
+	else{
+		uiImageArray[index_Potion_Image].fileName = bmpEnergyBarName;
+	}
+	this->usablePortableOxygenCanCount = 0;
 }
+
 void PC::setUsablePortableOxygenCanCount(int count) {
-	if (count > 0) {
-		this->usablePortableOxygenCanCount = count;
+	this->usablePortableOxygenCanCount = count;
+	if (count == 0) {
+		uiImageArray[index_Potion_Image].fileName = bmpNameNull;
 	}
+	else {
+		uiImageArray[index_Potion_Image].fileName = bmpPortableOxygenCanName;
+	}
+	this->usableEnergyBarCount = 0;
 }
 int PC::getUsableEnergyBarCount() {
 	return this->usableEnergyBarCount;
@@ -586,7 +615,16 @@ bool PC::getHasUndergroundTicket() {
 }
 
 void PC::attack(clock_t t) {
-	if ((t - this->lastAttackTime) < 1000/AtkSpdLev) return;
+	int attackSpeed = AtkSpdLev;
+	
+	if (pc.hasBeggarDoll) { // speed up but use stone 
+		attackSpeed *= 2;
+	}
+
+	if ((t - this->lastAttackTime) < 1000/ attackSpeed) return;
+	if (pc.hasBeggarDoll) { // use stone 
+		pc.setStone(pc.getStone() - 1);
+	}
 	pcBullets.push_back(PCBullet(imageArray[0].x, imageArray[0].y, this->curDirection));
 	lastAttackTime = t;
 }
