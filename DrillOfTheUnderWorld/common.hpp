@@ -117,6 +117,7 @@ extern bool isMiniGameArea;
 extern bool isFlagArea;
 extern bool isButtonArea;
 extern bool isBossArea;
+extern bool isTreasureArea;
 
 extern int index_StageImages_Start;
 extern int index_Area_PC;
@@ -349,4 +350,6 @@ extern int timerIndex;
 
 bool isRetry();
 void resetPcStatus();
+extern char bmpTreasure[];
+extern char bmpTreasureOpen[];
 #endif COMMON_HPP

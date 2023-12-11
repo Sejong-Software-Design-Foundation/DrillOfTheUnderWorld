@@ -319,6 +319,18 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 			increaseFlagCnt();
 			applyDigReward(imageIndex, 300);
 		}
+		if (strcmp(imageLayer.images[imageIndex].fileName, bmpTreasure) == 0) {
+			imageLayer.images[imageIndex].fileName = bmpTreasureOpen;
+
+			while (1) {
+				Item* item = getRandomItem();
+				if (isItemExistItemVector(item, ownedItems) || !item->getIsUniqueHoldableItem()) continue;
+				else {
+					ownedItems.push_back(item);
+					break;
+				}
+			}
+		}
 	}
 	// ??ì¤???ë§¤ì§??ë²??ì²?ë¦¬??ê¸° -> ê´?�ë�??HP
 	if (blockInfo[infoY][infoX] <= 1) { // bronze -> 3

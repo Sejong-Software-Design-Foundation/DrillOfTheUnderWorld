@@ -140,8 +140,8 @@ int main()
 						isBossArea = true;
 						getNewBossArea();
 						Boss->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25 - BLOCKSIZE * BOSS_SCALE / 2, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25 - BLOCKSIZE * BOSS_SCALE);
-						imageArray[0].x = AREA_ORIGIN_X + BLOCKSIZE / 2 * 25;
-						imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
+						imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
+						imageArray[0].y = AREA_ORIGIN_Y + 48 * 20;
 						ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
 						bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
 						mole->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
@@ -149,6 +149,25 @@ int main()
 						{
 							imageArray[Boss->imageidx + i].isHide = false;
 						} // MaxHP
+					}
+					else if (currentAreaColIndex == treasureAreaPos[1] && currentAreaRowIndex == treasureAreaPos[0])
+					{
+						isNormalArea = false;
+						isMiniGameArea = false;
+						isButtonArea = false;
+						isFlagArea = false;
+						isBossArea = false;
+						isTreasureArea = true;
+
+						Mineral* mineral = new Mineral();
+						getNewBossArea();
+						mineral->GenerateTreasure();
+
+						imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
+						imageArray[0].y = AREA_ORIGIN_Y + 48 * 20;
+						ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+						bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
+						mole->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
 					}
 					else if (num == 0)
 					{ // ?�?��?�異??????洹먮�?졾슖?嶺뚯????
@@ -693,7 +712,7 @@ int main()
 						((RawkHawk*)Boss)->AfterDead();
 					else if (stageLevel == 3)
 						((Charizard*)Boss)->AfterDead();
-					ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
+					ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 12);
 					if (ladder->goSafety())
 						return main();
 				}
@@ -778,6 +797,84 @@ int main()
 					Sleep(5);
 				}
 			}
+			else if (isTreasureArea)
+			{
+				ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 4);
+				ladder->move();
+				for (int i = 0; i < 10; i++)
+				{
+					if (_kbhit() != 0)
+					{
+						int key = _getch();
+						int curPosX = imageLayer.images[0].x;
+						int curPosY = imageLayer.images[0].y;
+						COORD afterMovedPos;
+
+						switch (key)
+						{
+						case S:
+							stopBGM();
+							playBGM(bgmStage);
+							isOnStage = true;
+							isOnArea = false;
+							isFlagArea = false;
+							isBossArea = false;
+							isTreasureArea = false;
+							targetLayer->fadeOut(targetLayer, NULL);
+							targetLayer = &stageLayer;
+							targetLayer->images[currentAreaRowIndex * 5 + currentAreaColIndex + STAGE_EXTRA_IMAGE_COUNT].fileName = bmpClearedAreaName;
+							stageInfo[currentAreaRowIndex][currentAreaColIndex] = 0;
+							setMovableStageInfo(currentAreaRowIndex, currentAreaColIndex);
+							targetLayer->fadeIn(targetLayer, NULL);
+							drawProgress();
+							break;
+						case LEFT:
+							pc.setDirLeft();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case RIGHT:
+							pc.setDirRight();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case UP:
+							pc.setDirUp();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case DOWN:
+							pc.setDirDown();
+							afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+							if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y))
+								pc.move();
+							break;
+						case ESC:
+							stopBGM();
+							rewardUI();
+							break;
+						case SPACE:
+						{
+							COORD targetPos = pc.getTargetPos(curPosX, curPosY);
+							thread digThread(&PC::dig, &pc, targetPos.X, targetPos.Y);
+							digThread.detach();
+							//pc.dig(targetPos.X, targetPos.Y);
+						}
+						break;
+						case O:
+							pc.setHP(pc.getHP() - 10);
+							break;
+						case P:
+							pc.setHP(pc.getHP() + 10);
+							break;
+						}
+					}
+					Sleep(5);
+				}
+			}
 			if (pc.getHP() <= 0) {
 				//die
 				printGameOver();
@@ -789,8 +886,7 @@ int main()
 					exit(0);
 				}
 			}
-			// 嶺뚮?�維????????洹먮�??????�쾹????��?????�챷???濡ル�??袁⑤???
-			// 3?�?�?��?????�?�틬 ?롪퍓???�묒????1????�룆??????��???袁⑤???
+
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
 			if (duration > 3.0)

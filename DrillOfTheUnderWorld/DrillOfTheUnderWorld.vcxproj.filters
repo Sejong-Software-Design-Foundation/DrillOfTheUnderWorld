@@ -448,6 +448,12 @@
     <Image Include="gameOver.bmp">
       <Filter>image</Filter>
     </Image>
+    <Image Include="treasureOpen.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="treasure.bmp">
+      <Filter>image</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="image">

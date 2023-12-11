@@ -457,6 +457,8 @@
     <Image Include="Timer_80pct.bmp" />
     <Image Include="Timer_90pct.bmp" />
     <Image Include="Timer_Bar.bmp" />
+    <Image Include="treasure.bmp" />
+    <Image Include="treasureOpen.bmp" />
     <Image Include="UI_character_status.bmp" />
     <Image Include="UI_dynamicEnforce.bmp" />
     <Image Include="UI_dynamicEnforceSelected.bmp" />

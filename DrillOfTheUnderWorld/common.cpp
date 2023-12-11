@@ -85,6 +85,7 @@ bool isMiniGameArea = false;
 bool isButtonArea = false;
 bool isFlagArea = false;
 bool isBossArea = false;
+bool isTreasureArea = false;
 
 int index_StageImages_Start;
 int index_Area_PC;
@@ -292,6 +293,9 @@ Image progressImageArray[100];
 char bmpProgressBackGround[] = "progressBackGround.bmp";
 char bmpProgressMiddle[] = "progressMiddle.bmp";
 char bmpProgressBottom[] = "progressBottom.bmp";
+
+char bmpTreasure[] = "treasure.bmp";
+char bmpTreasureOpen[] = "treasureOpen.bmp";
 
 int timerIndex = 11;
 
