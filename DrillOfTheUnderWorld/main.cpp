@@ -382,7 +382,14 @@ int main()
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
-							pc.setHP(pc.getHP() + 10);
+							if (pc.getUsableEnergyBarCount() > 0) {
+								pc.setUsableEnergyBarCount(0);
+								pc.setHP(pc.getMaxHP());
+							}
+							else if (pc.getUsablePortableOxygenCanCount() > 0) {
+								pc.setUsablePortableOxygenCanCount(0);
+								pc.setOxygen(pc.getMaxOxygen());
+							}
 							break;
 						}
 					}
@@ -580,8 +587,14 @@ int main()
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
-							pc.setHP(pc.getHP() + 10);
-							break;
+							if (pc.getUsableEnergyBarCount() > 0) {
+								pc.setUsableEnergyBarCount(0);
+								pc.setHP(pc.getMaxHP());
+							}
+							else if (pc.getUsablePortableOxygenCanCount() > 0) {
+								pc.setUsablePortableOxygenCanCount(0);
+								pc.setOxygen(pc.getMaxOxygen());
+							}
 						}
 					}
 					Sleep(5);
@@ -672,8 +685,14 @@ int main()
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
-							pc.setHP(pc.getHP() + 10);
-							break;
+							if (pc.getUsableEnergyBarCount() > 0) {
+								pc.setUsableEnergyBarCount(0);
+								pc.setHP(pc.getMaxHP());
+							}
+							else if (pc.getUsablePortableOxygenCanCount() > 0) {
+								pc.setUsablePortableOxygenCanCount(0);
+								pc.setOxygen(pc.getMaxOxygen());
+							}
 						}
 					}
 					Sleep(5);
@@ -702,7 +721,17 @@ int main()
 				{
 					if (Boss->NPCDead() == false && itr->checkBulletHit(Boss->x, Boss->y))
 					{
-						Boss->NPCHit(pc.getATK());
+						int pcDamage = pc.getAtkLev(); // change pc.getATK()
+						if (pc.getHasThronCrown()) {
+							pcDamage *= 2;
+						}
+
+						Boss->NPCHit(pcDamage);
+
+						if (pc.getHasBatFang()) {
+							pc.setHP(pc.getHP() + 5);
+						}
+
 						itr = pc.getBulletList().erase(itr);
 					}
 					else if (!(itr->move()))
@@ -771,8 +800,14 @@ int main()
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
-							pc.setHP(pc.getHP() + 10);
-							break;
+							if (pc.getUsableEnergyBarCount() > 0) {
+								pc.setUsableEnergyBarCount(0);
+								pc.setHP(pc.getMaxHP());
+							}
+							else if (pc.getUsablePortableOxygenCanCount() > 0) {
+								pc.setUsablePortableOxygenCanCount(0);
+								pc.setOxygen(pc.getMaxOxygen());
+							}
 						}
 					}
 					Sleep(5);
@@ -793,7 +828,8 @@ int main()
 			// 3?�?�?��?????�?�틬 ?롪퍓???�묒????1????�룆??????��???袁⑤???
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-			if (duration > 3.0)
+			
+			if (duration > pc.getHasTwoHearts() ? 5.0 : 3.0)
 			{
 				pc.setOxygen(pc.getOxygen() - 1);
 				if (isMiniGameArea) {

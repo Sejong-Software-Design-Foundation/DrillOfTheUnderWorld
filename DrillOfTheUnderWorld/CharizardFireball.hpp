@@ -119,7 +119,12 @@ void CharizardFireball::move() {
 }
 
 void CharizardFireball::attack() {
-	pc.setHP(pc.getHP() - attack_damage);
+	int damage = attack_damage;
+
+	if (pc.getHasThronCrown()) {
+		damage *= 2;
+	}
+	pc.setHP(pc.getHP() - damage);
 }
 
 void CharizardFireball::initFireground() {

@@ -98,6 +98,7 @@ int index_Area_UI_mapTile_Start;
 int index_Area_UI_MiniGame_Start;
 int index_RewardImages_Start;
 int index_Timer_Start;
+int index_Potion_Image;
 
 // my areaImageLayer used in main.c
 ImageLayer areaLayer = AREA_IMAGE_LAYER;
@@ -770,6 +771,7 @@ void visitLShop() {
 
 	printStatusInLShop(item1_price, item2_price, 0);
 
+
 	int index = -1;
 	int flags = 1;
 	int lastInputKey = 0;
@@ -1212,11 +1214,11 @@ void initStageImage() {
 void initItemImages() {
 	std::vector<Item*> itemList = ownedItems;
 
-	uiLayer.imageCount = 26; // stageLayer default image count
+	uiLayer.imageCount = 27; // stageLayer default image count
 	for (int i = 0; i < 9; i++) {
 		uiImageArray[uiLayer.imageCount++] = { bmpNameNull, UI_ITEM_START_POS_X + UI_ITEM_MARGIN * (i % 3), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * (i / 3), 1, 1 };
 	}
-	uiLayer.imageCount = 26;
+	uiLayer.imageCount = 27;
 	for (int i = 0; i < itemList.size(); i++) {
 		uiImageArray[uiLayer.imageCount++] = { imageArray[itemList[i]->getImageIndex()].fileName, UI_ITEM_START_POS_X + UI_ITEM_MARGIN * (i % 3), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * (i / 3), 1 };
 	}
@@ -1927,6 +1929,9 @@ void initUIImage() {
 	uiLayer.images = uiImageArray;
 	uiLayer.imageCount = 0;
 
+	index_Potion_Image = uiLayer.imageCount;
+
+	uiImageArray[uiLayer.imageCount++] = { bmpNameNull, 50, 60, 1 };
 	uiImageArray[uiLayer.imageCount++] = { bmpNameUIItemBox, 10, 10, 1 };
 
 	index_Area_UI_HP_Start = uiLayer.imageCount;

@@ -129,6 +129,7 @@ extern int index_Area_UI_blockInfo_Start;
 extern int index_Area_UI_mapTile_Start;
 extern int index_Area_UI_MiniGame_Start;
 extern int index_RewardImages_Start;
+extern int index_Potion_Image;
 
 extern char bmpNameNull[];
 
