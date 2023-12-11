@@ -1212,6 +1212,15 @@ void initStageImage() {
 }
 
 void initItemImages() {
+
+	if (pc.getUsableEnergyBarCount() > 0) {
+		uiImageArray[index_Potion_Image] = { bmpEnergyBarName, 50 , 60, 1 };
+	}
+	else if (pc.getUsablePortableOxygenCanCount() > 0) {
+		uiImageArray[index_Potion_Image] = { bmpPortableOxygenCanName, 50 , 60, 1 };
+	}
+
+
 	std::vector<Item*> itemList = ownedItems;
 
 	uiLayer.imageCount = 27; // stageLayer default image count
