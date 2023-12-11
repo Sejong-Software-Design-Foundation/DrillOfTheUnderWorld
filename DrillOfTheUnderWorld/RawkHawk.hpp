@@ -2,7 +2,7 @@
 #define __RAWK_HAWK_
 
 #define RAWKHAWK_NORMAL_SPEED 8
-#define RAWKHAWK_TRACK_SPEED 24
+#define RAWKHAWK_TRACK_SPEED 48
 
 #include "NPC.hpp"
 
@@ -27,6 +27,7 @@ public:
 	void AfterDead();
 	void updateHPBar();
 	bool PCNear();
+	void NPCStraightMovement(int speed);
 };
 
 RawkHawk::RawkHawk(int x, int y) : NPC(x, y, 200, 15, 1) {
@@ -61,7 +62,9 @@ void RawkHawk::move() {
 	// 26-46 : 20sec
 	else if (cnt < 46) {
 		imageArray[imageidx] = { bmpNameRawkHawk_digging, x, y, RAWKHAWK_SCALE };
-		NPCTrackingMovement(RAWKHAWK_TRACK_SPEED);
+		int random = rand() % 10;
+		if (random < 8)NPCTrackingMovement(RAWKHAWK_TRACK_SPEED);
+		else NPCStraightMovement(RAWKHAWK_TRACK_SPEED);
 	}
 	// 46-66 : 20sec
 	else if (cnt < 66) {
@@ -165,6 +168,16 @@ bool RawkHawk::PCNear() {
 		}
 	}
 	return false;*/
+}
+
+void RawkHawk::NPCStraightMovement(int speed) {
+	if (collisionCheck(imageLayer.images[imageidx].x + dir[curDirection][0] * speed, imageLayer.images[imageidx].y + dir[curDirection][1] * speed, imageLayer.images[imageidx].scale)) 
+		curDirection = rand() % 4;
+	imageLayer.images[imageidx].x += dir[curDirection][0] * speed;
+	imageLayer.images[imageidx].y += dir[curDirection][1] * speed;
+
+	x = imageLayer.images[imageidx].x;
+	y = imageLayer.images[imageidx].y;
 }
 
 #endif
