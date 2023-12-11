@@ -454,6 +454,15 @@
     <Image Include="quake.bmp">
       <Filter>image</Filter>
     </Image>
+    <Image Include="Charizard_Evolve1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Charizard_Evolve2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Lava_blue.bmp">
+      <Filter>image</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="image">

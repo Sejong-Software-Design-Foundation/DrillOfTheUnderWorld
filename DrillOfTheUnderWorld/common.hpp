@@ -160,6 +160,8 @@ extern char bmpNameRawkHawk_digging[];
 
 extern char bmpNameCharizard[];
 extern char bmpNameFireground[];
+extern char bmpNameCharizardEvolve1[];
+extern char bmpNameCharizardEvolve2[];
 extern char bmpNameQuake[];
 
 // LADDER 
@@ -216,6 +218,7 @@ extern char bmpBoomName[];
 
 // FLAG, BEDROCK BMP
 extern char bmpBedrockName[];
+extern char bmpBlueBedrockName[];
 extern char bmpFlagName[];
 
 // item Image

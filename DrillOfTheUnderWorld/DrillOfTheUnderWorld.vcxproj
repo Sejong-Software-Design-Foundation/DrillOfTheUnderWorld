@@ -352,6 +352,8 @@
     <Image Include="button2Pressed.bmp" />
     <Image Include="button3.bmp" />
     <Image Include="button3Pressed.bmp" />
+    <Image Include="Charizard_Evolve1.bmp" />
+    <Image Include="Charizard_Evolve2.bmp" />
     <Image Include="EmceeTheShyGuyHit.bmp" />
     <Image Include="explode1.bmp" />
     <Image Include="explode2.bmp" />
@@ -392,6 +394,7 @@
     <Image Include="lava.bmp" />
     <Image Include="Lava2.bmp" />
     <Image Include="lava_block.bmp" />
+    <Image Include="Lava_blue.bmp" />
     <Image Include="lShop_Balloon.bmp" />
     <Image Include="lShop_miner.bmp" />
     <Image Include="lShop_minerSelected.bmp" />

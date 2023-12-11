@@ -220,6 +220,7 @@ char bmpBoomName[] = "boom.bmp";
 
 // FLAG, BEDROCK BMP
 char bmpBedrockName[] = "lava.bmp";
+char bmpBlueBedrockName[] = "lava_blue.bmp";
 char bmpFlagName[] = "flag.bmp";
 
 
@@ -238,6 +239,8 @@ char bmpNameRawkHawk_digging[] = "RawkHawk_digging.bmp";
 
 char bmpNameCharizard[] = "Charizard.bmp";
 char bmpNameFireground[] = "Fireground.bmp";
+char bmpNameCharizardEvolve1[] = "Charizard_Evolve1.bmp";
+char bmpNameCharizardEvolve2[] = "Charizard_Evolve2.bmp";
 char bmpNameQuake[] = "quake.bmp";
 
 // LADDER
