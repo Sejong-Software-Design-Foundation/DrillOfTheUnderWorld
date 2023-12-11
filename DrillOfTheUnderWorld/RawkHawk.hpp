@@ -119,19 +119,18 @@ void RawkHawk::updateHPBar() {
 	for (int i = maxHP; i >= hp; i--) {
 		if (hp < i) {
 			if (i / 100 == 1) {
-				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpBossHPName) != 0) //100~199ì´ë©´ ë¹¨ê°„ìƒ‰ìœ¼ë¡œ ëŒ€ì¹˜
+				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpBossHPName) != 0) //100~199ÀÌ¸é »¡°£»öÀ¸·Î ´ëÄ¡
 				imageArray[imageidx + i % 100 + 1].fileName = bmpBossHPName;
 			}
 			else {
 				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpNameNull) != 0)
 				imageArray[imageidx + i % 100 + 1].fileName = bmpNameNull;
 			}
-			//0~99ì´ë©´ nullBMP
+			//0~99ÀÌ¸é nullBMP
 		}
 		//if (hp < i && strcmp(imageArray[imageidx + i].fileName, bmpNameNull) != 0) imageArray[imageidx + i].fileName = bmpNameNull;
 	}
 }
-
 bool RawkHawk::PCNear() {
 	int PC_X = convertPosToInfoX(imageLayer.images[0].x);
 	int PC_Y = convertPosToInfoY(imageLayer.images[0].y);

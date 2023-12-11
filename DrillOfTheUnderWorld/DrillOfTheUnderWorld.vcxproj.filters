@@ -138,6 +138,7 @@
     <Image Include="..\..\Stage2.bmp" />
     <Image Include="..\..\Stage3.bmp" />
     <Image Include="arrow.bmp" />
+    <Image Include="backgroundTest.bmp" />
     <Image Include="bedrock.bmp" />
     <Image Include="bg.bmp" />
     <Image Include="block_MineralBronze.bmp" />
@@ -167,8 +168,53 @@
     <Image Include="block_Stage1_OrichalcumOre2.bmp" />
     <Image Include="block_Stage1_SilverOre1.bmp" />
     <Image Include="block_Stage1_SilverOre2.bmp" />
+    <Image Include="block_Stage2_Broken.bmp" />
+    <Image Include="block_Stage2_Broken_BronzeOre1.bmp" />
+    <Image Include="block_Stage2_Broken_BronzeOre2.bmp" />
+    <Image Include="block_Stage2_Broken_DiamondOre1.bmp" />
+    <Image Include="block_Stage2_Broken_DiamondOre2.bmp" />
+    <Image Include="block_Stage2_Broken_GoldOre1.bmp" />
+    <Image Include="block_Stage2_Broken_GoldOre2.bmp" />
+    <Image Include="block_Stage2_Broken_OrichalcumOre1.bmp" />
+    <Image Include="block_Stage2_Broken_OrichalcumOre2.bmp" />
+    <Image Include="block_Stage2_Broken_SilverOre1.bmp" />
+    <Image Include="block_Stage2_Broken_SilverOre2.bmp" />
+    <Image Include="block_Stage2_BronzeOre1.bmp" />
+    <Image Include="block_Stage2_BronzeOre2.bmp" />
+    <Image Include="block_Stage2_DiamondOre1.bmp" />
+    <Image Include="block_Stage2_DiamondOre2.bmp" />
+    <Image Include="block_Stage2_GoldOre1.bmp" />
+    <Image Include="block_Stage2_GoldOre2.bmp" />
+    <Image Include="block_Stage2_Normal.bmp" />
+    <Image Include="block_Stage2_OrichalcumOre1.bmp" />
+    <Image Include="block_Stage2_OrichalcumOre2.bmp" />
+    <Image Include="block_Stage2_SilverOre1.bmp" />
+    <Image Include="block_Stage2_SilverOre2.bmp" />
+    <Image Include="block_Stage3_Broken.bmp" />
+    <Image Include="block_Stage3_Broken_BronzeOre1.bmp" />
+    <Image Include="block_Stage3_Broken_BronzeOre2.bmp" />
+    <Image Include="block_Stage3_Broken_DiamondOre1.bmp" />
+    <Image Include="block_Stage3_Broken_DiamondOre2.bmp" />
+    <Image Include="block_Stage3_Broken_GoldOre1.bmp" />
+    <Image Include="block_Stage3_Broken_GoldOre2.bmp" />
+    <Image Include="block_Stage3_Broken_OrichalcumOre1.bmp" />
+    <Image Include="block_Stage3_Broken_OrichalcumOre2.bmp" />
+    <Image Include="block_Stage3_Broken_SilverOre1.bmp" />
+    <Image Include="block_Stage3_Broken_SilverOre2.bmp" />
+    <Image Include="block_Stage3_BronzeOre1.bmp" />
+    <Image Include="block_Stage3_BronzeOre2.bmp" />
+    <Image Include="block_Stage3_DiamondOre1.bmp" />
+    <Image Include="block_Stage3_DiamondOre2.bmp" />
+    <Image Include="block_Stage3_GoldOre1.bmp" />
+    <Image Include="block_Stage3_GoldOre2.bmp" />
+    <Image Include="block_Stage3_Normal.bmp" />
+    <Image Include="block_Stage3_OrichalcumOre1.bmp" />
+    <Image Include="block_Stage3_OrichalcumOre2.bmp" />
+    <Image Include="block_Stage3_SilverOre1.bmp" />
+    <Image Include="block_Stage3_SilverOre2.bmp" />
     <Image Include="boom.bmp" />
     <Image Include="BossHP.bmp" />
+    <Image Include="BossHP_2.bmp" />
     <Image Include="brick_dark2.png" />
     <Image Include="BronzeMineral.bmp" />
     <Image Include="BronzeOre.bmp" />
@@ -178,6 +224,8 @@
     <Image Include="button2Pressed.bmp" />
     <Image Include="button3.bmp" />
     <Image Include="button3Pressed.bmp" />
+    <Image Include="Charizard_Evolve1.bmp" />
+    <Image Include="Charizard_Evolve2.bmp" />
     <Image Include="EmceeTheShyGuyHit.bmp" />
     <Image Include="explode1.bmp" />
     <Image Include="explode2.bmp" />
@@ -186,6 +234,7 @@
     <Image Include="explode5.bmp" />
     <Image Include="explodes.bmp" />
     <Image Include="flag.bmp" />
+    <Image Include="gameOver.bmp" />
     <Image Include="hiddenStage.bmp" />
     <Image Include="hpPotion.bmp" />
     <Image Include="item1.bmp" />
@@ -218,6 +267,7 @@
     <Image Include="lava.bmp" />
     <Image Include="Lava2.bmp" />
     <Image Include="lava_block.bmp" />
+    <Image Include="Lava_blue.bmp" />
     <Image Include="lShop_Balloon.bmp" />
     <Image Include="lShop_miner.bmp" />
     <Image Include="lShop_minerSelected.bmp" />
@@ -247,6 +297,10 @@
     <Image Include="PC_up_getHP.bmp" />
     <Image Include="PC_up_getOxygen.bmp" />
     <Image Include="PC_up_hit.bmp" />
+    <Image Include="progressBackGround.bmp" />
+    <Image Include="progressBottom.bmp" />
+    <Image Include="progressMiddle.bmp" />
+    <Image Include="quake.bmp" />
     <Image Include="questionMark.bmp" />
     <Image Include="rShop_Balloon.bmp" />
     <Image Include="rShop_miner.bmp" />
@@ -254,220 +308,46 @@
     <Image Include="rShop_spearkBalloon.bmp" />
     <Image Include="safety_arrow.bmp" />
     <Image Include="safety_arrowSelected.bmp" />
+    <Image Include="safety_bg.bmp" />
     <Image Include="Shop_ItemBox.bmp" />
     <Image Include="Shop_ItemBox_disable.bmp" />
     <Image Include="Shop_ItemBox_selected.bmp" />
     <Image Include="Shop_StoneBox.bmp" />
+    <Image Include="st0.bmp" />
+    <Image Include="st1.bmp" />
+    <Image Include="st2.bmp" />
+    <Image Include="st3.bmp" />
     <Image Include="stoneBlock.bmp" />
     <Image Include="empty.bmp" />
     <Image Include="emptyTile.bmp" />
     <Image Include="PlayerCharacter.bmp" />
     <Image Include="testImage1.bmp" />
     <Image Include="testImage2.bmp" />
+    <Image Include="Timer.bmp" />
+    <Image Include="Timer_0pct.bmp" />
+    <Image Include="Timer_100pct.bmp" />
+    <Image Include="Timer_10pct.bmp" />
+    <Image Include="Timer_20pct.bmp" />
+    <Image Include="Timer_30pct.bmp" />
+    <Image Include="Timer_40pct.bmp" />
+    <Image Include="Timer_50pct.bmp" />
+    <Image Include="Timer_60pct.bmp" />
+    <Image Include="Timer_70pct.bmp" />
+    <Image Include="Timer_80pct.bmp" />
+    <Image Include="Timer_90pct.bmp" />
+    <Image Include="Timer_Bar.bmp" />
     <Image Include="UI_character_status.bmp" />
     <Image Include="UI_dynamicEnforce.bmp" />
     <Image Include="UI_dynamicEnforceSelected.bmp" />
+    <Image Include="UI_maxHP.bmp" />
+    <Image Include="UI_maxO2.bmp" />
     <Image Include="UI_normalEnforce.bmp" />
     <Image Include="UI_normalEnforceSelected.bmp" />
     <Image Include="UI_Star0.bmp" />
     <Image Include="UI_Star1.bmp" />
     <Image Include="UI_Star2.bmp" />
     <Image Include="UI_Star3.bmp" />
-    <Image Include="block_Stage2_SilverOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_SilverOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_BronzeOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_BronzeOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_DiamondOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_DiamondOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_GoldOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_GoldOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_OrichalcumOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_OrichalcumOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_SilverOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Broken_SilverOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_BronzeOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_BronzeOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_DiamondOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_DiamondOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_GoldOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_GoldOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_Normal.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_OrichalcumOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_OrichalcumOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_SilverOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage3_SilverOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_BronzeOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_BronzeOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_DiamondOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_DiamondOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_GoldOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_GoldOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_OrichalcumOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_OrichalcumOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_SilverOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Broken_SilverOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_BronzeOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_BronzeOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_DiamondOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_DiamondOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_GoldOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_GoldOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_Normal.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_OrichalcumOre1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="block_Stage2_OrichalcumOre2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="backgroundTest.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="progressBottom.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="progressMiddle.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="Timer.bmp" />
-    <Image Include="Timer_0pct.bmp" />
-    <Image Include="Timer_Bar.bmp" />
-    <Image Include="Timer_100pct.bmp" />
-    <Image Include="Timer_90pct.bmp" />
-    <Image Include="Timer_80pct.bmp" />
-    <Image Include="Timer_70pct.bmp" />
-    <Image Include="Timer_60pct.bmp" />
-    <Image Include="Timer_50pct.bmp" />
-    <Image Include="Timer_40pct.bmp" />
-    <Image Include="Timer_30pct.bmp" />
-    <Image Include="Timer_20pct.bmp" />
-    <Image Include="Timer_10pct.bmp" />
-
-    <Image Include="UI_maxHP.bmp" />
-    <Image Include="UI_maxO2.bmp" />
-    <Image Include="safety_bg.bmp" />
-    <Image Include="progressBackGround.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="st3.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="st0.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="st1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="st2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="gameOver.bmp">
-
-    <Image Include="BossHP_2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="quake.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="Charizard_Evolve1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="Charizard_Evolve2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="Lava_blue.bmp">
-
-      <Filter>image</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="image">
-      <UniqueIdentifier>{40f75410-b8dd-48d3-90df-c5197fba8339}</UniqueIdentifier>
-    </Filter>
+    <Image Include="redBackground.bmp" />
+    <Image Include="Charizard_Evolve2_Hit.bmp" />
   </ItemGroup>
 </Project>

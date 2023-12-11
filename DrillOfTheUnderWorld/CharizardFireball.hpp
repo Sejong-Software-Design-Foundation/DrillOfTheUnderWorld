@@ -59,30 +59,21 @@ CharizardFireball::CharizardFireball(int x, int y) : NPC(x, y, 0, 20, 1) {
     imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
 }
 
-// check if PC is on Fireground of each Fireball
 bool CharizardFireball::PCNear() {
     int PC_X = imageLayer.images[0].x;
     int PC_Y = imageLayer.images[0].y;
 
-    int startX = x - BLOCKSIZE;
-    int startY = y - BLOCKSIZE;
+    int startX;
+    int startY;
 
-    int curY, curX;
+    for (int i = 0; i < fireground_indexes.size(); i++) {
+        startX = imageArray[fireground_indexes[i]].x;
+        startY = imageArray[fireground_indexes[i]].y;
 
-    for (int i = 0; i < 3; i++) {
-        for (int k = 0; k < 3; k++) {
-            // if false dont check
-            if (!fireground[i][k]) continue;
-
-            curY = startY + BLOCKSIZE * i;
-            curX = startX + BLOCKSIZE * k;
-
-            if (PC_X >= curX && PC_X <= curX + BLOCKSIZE && PC_Y >= curY && PC_Y <= curY + BLOCKSIZE) {
-                return true;
-            }
+        if (PC_X >= startX - BLOCKSIZE && PC_X <= startX + BLOCKSIZE && PC_Y >= startY - BLOCKSIZE && PC_Y <= startY + BLOCKSIZE) {
+            return true;
         }
     }
-
     return false;
 }
 

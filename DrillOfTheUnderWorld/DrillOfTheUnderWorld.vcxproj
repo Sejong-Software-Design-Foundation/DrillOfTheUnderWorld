@@ -352,6 +352,7 @@
     <Image Include="button3Pressed.bmp" />
     <Image Include="Charizard_Evolve1.bmp" />
     <Image Include="Charizard_Evolve2.bmp" />
+    <Image Include="Charizard_Evolve2_Hit.bmp" />
     <Image Include="EmceeTheShyGuyHit.bmp" />
     <Image Include="explode1.bmp" />
     <Image Include="explode2.bmp" />
@@ -428,6 +429,7 @@
     <Image Include="progressMiddle.bmp" />
     <Image Include="quake.bmp" />
     <Image Include="questionMark.bmp" />
+    <Image Include="redBackground.bmp" />
     <Image Include="rShop_Balloon.bmp" />
     <Image Include="rShop_miner.bmp" />
     <Image Include="rShop_minerSelected.bmp" />

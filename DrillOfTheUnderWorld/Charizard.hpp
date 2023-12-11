@@ -20,6 +20,7 @@ class Charizard : public NPC {
 public:
 	int movecnt;
 	int phase;
+	int iconIndex;
 
 	list<CharizardFireball> fireballs;
 
@@ -53,8 +54,9 @@ Charizard::Charizard(int x, int y) : NPC(x, y, 200, 0, 1) {
 	}
 
 	// Charizard HP BAR ICON save
+	iconIndex = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameCharizard, AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
-	imageArray[imageLayer.imageCount - 1].isHide = true;
+	imageArray[iconIndex].isHide = true;
 }
 
 void Charizard::checkFireballs() {
@@ -102,12 +104,16 @@ void Charizard::NPCHit(int atkLev) {
 	NPC::NPCHit(atkLev);
 	updateHPBar();
 
-	if (phase == 2) return;
 	char bmpNameHit[] = "CharizardHit.bmp";
-	imageArray[imageidx].fileName = bmpNameHit;
+	char bmpNameHitPhase2[] = "Charizard_Evolve2_Hit.bmp";
+	if (phase == 1) imageArray[imageidx].fileName = bmpNameHit;
+	else if (phase == 2) imageArray[imageidx].fileName = bmpNameHitPhase2;
+	else imageArray[imageidx].fileName = bmpNameHit;
 
 	imageLayer.renderAll(&imageLayer);
-	imageArray[imageidx].fileName = bmpNameCharizard;
+	if (phase == 1) imageArray[imageidx].fileName = bmpNameCharizard;
+	else if (phase == 2) imageArray[imageidx].fileName = bmpNameCharizardEvolve2;
+	else imageArray[imageidx].fileName = bmpNameCharizard;
 	imageLayer.renderAll(&imageLayer);
 	if (this->hp <= 100 && phase == 1) setPhase2();
 }
@@ -121,7 +127,7 @@ void Charizard::AfterDead() {
 		it++;
 	}
 	fireballs.clear();
-	char bmpNameHit[] = "CharizardHit.bmp";
+	char bmpNameHit[] = "Charizard_Evolve2_Hit.bmp";
 	imageArray[imageidx].fileName = bmpNameHit;
 	imageLayer.renderAll(&imageLayer);
 	Sleep(1000);
@@ -183,7 +189,7 @@ void Charizard::setPhase2() {
 	phase = 2;
 	imageArray[imageidx].fileName = bmpNameCharizardEvolve2;
 	imageArray[imageidx].scale = 1;
-	char bmpStart1[] = "st1.bmp";
+	char bmpStart1[] = "redBackground.bmp";
 	imageArray[imageLayer.imageCount++] = { bmpStart1,0,0,1 };
 	for (int i = 0;i < 4;i++) {
 		imageArray[imageidx].fileName = bmpNameCharizard;
@@ -204,6 +210,8 @@ void Charizard::setPhase2() {
 	//getEvolvedCharizardArea();
 
 	strcpy(bmpBedrockName, bmpBlueBedrockName);
+	imageArray[iconIndex].fileName = bmpNameCharizardEvolve2;
+	imageArray[iconIndex].scale = 0.25 ;
 	imageLayer.renderAll(&imageLayer);
 }
 

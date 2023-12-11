@@ -76,12 +76,12 @@ void EmceeTheShyGuy::move() {
 
 	//printf("%d", movecnt);
 	// if moved 8 times shoot once and reset mvcnt
-	if (movecnt % 5 == 0) {
+	if (movecnt % 10 == 0) {
     if (rand()%2 == 0) bullets.push_back(NPCBullet(x, y+BLOCKSIZE*EMCEE_SCALE/2));
 		else bullets.push_back(NPCBullet(x + BLOCKSIZE*EMCEE_SCALE - 16, y + BLOCKSIZE * EMCEE_SCALE / 2));
 		//bullets.push_back(NPCBullet(x, y));
 	}
-	else if (movecnt == 19) {
+	else if (movecnt == 39) {
 		ultimate();
 		movecnt = 0;
 	}
