@@ -76,7 +76,12 @@ void RawkHawk::move() {
 }
 
 void RawkHawk::attack() {
-	pc.setHP(pc.getHP() - attack_damage);
+    int damage = attack_damage;
+
+    if (pc.getHasThronCrown()) {
+        damage *= 2;
+    }
+    pc.setHP(pc.getHP() - damage);
 }
 
 void RawkHawk::NPCHit(int atkLev) {
@@ -114,14 +119,14 @@ void RawkHawk::updateHPBar() {
 	for (int i = maxHP; i >= hp; i--) {
 		if (hp < i) {
 			if (i / 100 == 1) {
-				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpBossHPName) != 0) //100~199ÀÌ¸é »¡°£»öÀ¸·Î ´ëÄ¡
+				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpBossHPName) != 0) //100~199ì´ë©´ ë¹¨ê°„ìƒ‰ìœ¼ë¡œ ëŒ€ì¹˜
 				imageArray[imageidx + i % 100 + 1].fileName = bmpBossHPName;
 			}
 			else {
 				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpNameNull) != 0)
 				imageArray[imageidx + i % 100 + 1].fileName = bmpNameNull;
 			}
-			//0~99ÀÌ¸é nullBMP
+			//0~99ì´ë©´ nullBMP
 		}
 		//if (hp < i && strcmp(imageArray[imageidx + i].fileName, bmpNameNull) != 0) imageArray[imageidx + i].fileName = bmpNameNull;
 	}
