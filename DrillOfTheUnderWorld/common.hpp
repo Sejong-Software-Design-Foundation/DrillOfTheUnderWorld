@@ -150,7 +150,6 @@ extern char bmpCharacterStatusName[];
 extern char bmpNameBat[];
 extern char bmpNameMole[];
 extern char bmpNameMoleDigging[];
-// NULL BMP
 
 // BOSS NPC
 extern char bmpNameEmceeTheShyGuy[];
@@ -162,6 +161,8 @@ extern char bmpNameRawkHawk_digging[];
 
 extern char bmpNameCharizard[];
 extern char bmpNameFireground[];
+extern char bmpNameFireground_Blue[];
+extern char bmpNameFireball_Blue[];
 extern char bmpNameCharizardEvolve1[];
 extern char bmpNameCharizardEvolve2[];
 extern char bmpNameQuake[];
@@ -356,4 +357,6 @@ extern int timerIndex;
 
 bool isRetry();
 void resetPcStatus();
+
+
 #endif COMMON_HPP

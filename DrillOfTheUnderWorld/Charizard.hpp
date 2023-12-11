@@ -81,11 +81,11 @@ void Charizard::move() {
 	attack();
 
 	// if moved 10 times shoot once and reset mvcnt
-	if (movecnt % 10 == 0) {
+	if (movecnt % 20 == 0) {
 		fireballs.push_back(CharizardFireball(x, y));
 	}
-	else if (movecnt == 41) {
-		ultimate();
+	else if (movecnt == 101) {
+		if (phase == 2) ultimate();
 		movecnt = 0;
 	}
 	else {
@@ -162,8 +162,8 @@ void Charizard::ultimate() {
 	int curPosX = imageLayer.images[0].x;
 	int curPosY = imageLayer.images[0].y;
 
-	double angle = 50 * 3.14 / 180;
-	double magnitude = 50;
+	double angle = 45 * 3.14 / 180;
+	double magnitude = 30;
 	double new_angle = atan2(curPosY - y, curPosX - x) - angle;
 
 	for (int i = 0; i < 2; i++) {
@@ -171,7 +171,7 @@ void Charizard::ultimate() {
 		fireballs.back().dx = magnitude * cos(new_angle);
 		fireballs.back().dy = magnitude * sin(new_angle);
 
-		fireballs.back().movingtime = 20;
+		fireballs.back().movingtime = 30;
 
 		for (int a = 0; a < 3; a++) {
 			for (int b = 0; b < 3; b++) {
@@ -185,13 +185,15 @@ void Charizard::ultimate() {
 		new_angle += angle * 2;
 	}
 }
+
 void Charizard::setPhase2() {
+
 	phase = 2;
 	imageArray[imageidx].fileName = bmpNameCharizardEvolve2;
 	imageArray[imageidx].scale = 1;
 	char bmpStart1[] = "redBackground.bmp";
 	imageArray[imageLayer.imageCount++] = { bmpStart1,0,0,1 };
-	for (int i = 0;i < 4;i++) {
+	for (int i = 0; i < 4; i++) {
 		imageArray[imageidx].fileName = bmpNameCharizard;
 		imageArray[imageidx].scale = CHARIZARD_SCALE;
 		imageArray[imageLayer.imageCount - 1].isHide = 1;
@@ -199,11 +201,11 @@ void Charizard::setPhase2() {
 		Sleep(350);
 		imageArray[imageidx].fileName = bmpNameCharizardEvolve2;
 		imageArray[imageidx].scale = 1;
-		imageArray[imageLayer.imageCount-1].isHide = 0;
+		imageArray[imageLayer.imageCount - 1].isHide = 0;
 		imageLayer.renderAll(&imageLayer);
 		Sleep(700);
 	}
-	imageArray[imageLayer.imageCount-1].isHide = 0;
+	imageArray[imageLayer.imageCount - 1].isHide = 0;
 	imageLayer.imageCount--;
 	imageArray[imageidx].fileName = bmpNameCharizardEvolve2;
 	imageArray[imageidx].scale = 1;
@@ -211,8 +213,18 @@ void Charizard::setPhase2() {
 
 	strcpy(bmpBedrockName, bmpBlueBedrockName);
 	imageArray[iconIndex].fileName = bmpNameCharizardEvolve2;
-	imageArray[iconIndex].scale = 0.25 ;
+	imageArray[iconIndex].scale = 0.25;
 	imageLayer.renderAll(&imageLayer);
+
+	// ready for PHASE2 AREA
+	list<CharizardFireball>::iterator it;
+	for (it = fireballs.begin(); it != fireballs.end(); it++) {
+		(*it).eraseFireground();
+	}
+	fireballs.clear();
+
+	strcpy(bmpNameFireball, bmpNameFireball_Blue);
+	strcpy(bmpNameFireground, bmpNameFireground_Blue);
 }
 
 #endif
