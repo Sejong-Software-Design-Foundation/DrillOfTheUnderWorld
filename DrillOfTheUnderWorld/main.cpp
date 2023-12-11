@@ -829,7 +829,7 @@ int main()
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
 			
-			if (duration > pc.getHasTwoHearts() ? 5.0 : 3.0)
+			if (duration > (pc.getHasTwoHearts() ? 5.0 : 3.0))
 			{
 				pc.setOxygen(pc.getOxygen() - 1);
 				if (isMiniGameArea) {
