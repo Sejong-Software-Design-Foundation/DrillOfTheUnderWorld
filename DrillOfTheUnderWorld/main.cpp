@@ -283,8 +283,8 @@ int main()
 				if (key)
 				{
 					targetLayer->renderAll(targetLayer);
-					if (key != S)
-						updateCharacterStatus();
+					//if (key != S)
+						//updateCharacterStatus();
 				}
 			}
 		}
@@ -593,6 +593,18 @@ int main()
 				bat->move();
 				ladder->move();
 				if (stageLevel > 1) mole->move();
+				if (isGenerateMobByQuestionBlock)
+				{
+					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
+					isGenerateMobByQuestionBlock = false;
+				}
+				if (!generatedBatList.empty())
+				{
+					for (Bat* mob : generatedBatList)
+					{
+						mob->move();
+					}
+				}
 				// Emcee->move();
 				for (int i = 0; i < 10; i++)
 				{

@@ -11,11 +11,11 @@ extern "C" {
 #define IMAGE_LAYER_H
 
 	static const ImageLayer DEFAULT_IMAGE_LAYER = { 400, 0, 1120, 990, NULL, 0, RGB(0,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
-	static const ImageLayer UI_IMAGE_LAYER = { 0, 0, 400, 990, NULL, 0, RGB(255,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
+	static const ImageLayer UI_IMAGE_LAYER = { 0, 0, 400, 990, NULL, 0, RGB(0,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
 	//static const ImageLayer STAGE_IMAGE_LAYER = { 0, 0, 400, 800, NULL, 0, RGB(255,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL};
 
 	// my imageLayer
-	static const ImageLayer AREA_IMAGE_LAYER = { 600, 0, 920, 990, NULL, 0, RGB(0,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
+	static const ImageLayer AREA_IMAGE_LAYER = { 520, -120, 1000, 990, NULL, 0, RGB(0,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
 	//static const ImageLayer UI_IMAGE_LAYER = { 0, 0, 400, 990, NULL, 0, RGB(0,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
 	static const ImageLayer PROGRESS_IMAGE_LAYER = { 1520, 0, 400, 990, NULL, 0, RGB(0,0,0), NULL, NULL,_initialize, _renderAll, _renderCertain, _renderAndFadeIn, _renderAndFadeOut, NULL };
 	

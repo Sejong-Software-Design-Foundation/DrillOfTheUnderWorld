@@ -22,9 +22,9 @@ extern "C" {
 #define NUM3 51
 #define O 111
 #define P 112
-#define UI_HP_ORIGIN_X 300
-#define UI_HP_ORIGIN_Y 60
-#define UI_O2_ORIGIN_Y 120
+#define UI_HP_ORIGIN_X 330
+#define UI_HP_ORIGIN_Y 80
+#define UI_O2_ORIGIN_Y 140
 #define LEFT 75
 #define RIGHT 77
 #define UP 72
@@ -44,8 +44,9 @@ extern "C" {
 #define STAGE_ORIGIN_Y 240
 #define AREA_BLOCK_SIZE 144
 #define STAGE_EXTRA_IMAGE_COUNT 3
-#define UI_ITEM_START_POS_X 250
-#define UI_ITEM_START_POS_Y 900
+#define UI_ITEM_START_POS_X 80
+#define UI_ITEM_START_POS_Y 1000
+#define UI_ITEM_MARGIN 160
 #define UI_ITEM_SIZE 170
 #define BOSS_SCALE 4
 #define EMCEE_SCALE 4

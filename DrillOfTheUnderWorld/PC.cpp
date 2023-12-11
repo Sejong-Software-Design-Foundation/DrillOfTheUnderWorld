@@ -98,7 +98,7 @@ void PC::setHP(int hp) {
 	else if (hp > MAX_HP) this->HP = MAX_HP;
 	else this->HP = hp;
 	int cur_HP = this->HP / (this->MAX_HP / 10);
-	uiImageArray[index_Area_UI_HP_Start + prev_HP].isHide = 1;
+;	uiImageArray[index_Area_UI_HP_Start + prev_HP].isHide = 1;
 	uiImageArray[index_Area_UI_HP_Start + cur_HP].isHide = 0;
 	updateCharacterStatus();
 }

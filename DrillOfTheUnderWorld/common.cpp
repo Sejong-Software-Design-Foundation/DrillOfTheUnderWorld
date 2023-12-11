@@ -340,7 +340,7 @@ void initProgressImage() {
 	progressImageArray[progressLayer.imageCount++] = { bmpNameTimer, 80, 1420, 1, 1 };
 
 	progressImageArray[progressLayer.imageCount++] = { bmpProgressBottom, 10, 1228, 1 };
-	//progressImageArray[progressLayer.imageCount++] = { bmpProgressBackGround, 0, 0, 1 };
+	progressImageArray[progressLayer.imageCount++] = { bmpProgressBackGround, 0, 0, 1 };
 }
 
 void drawProgress() {
@@ -1185,19 +1185,21 @@ void initStageImage() {
     stageImageArray[treasureAreaPos[2]].fileName = bmpHiddenAreaName;
 }
 
-void initItemImages() { 
+void initItemImages() {
 	std::vector<Item*> itemList = ownedItems;
 
 	uiLayer.imageCount = 26; // stageLayer default image count
-	for (int i = 0; i < 6; i++) {
-		uiImageArray[uiLayer.imageCount++] = { bmpNameNull, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1, 1 };
+	for (int i = 0; i < 9; i++) {
+		uiImageArray[uiLayer.imageCount++] = { bmpNameNull, UI_ITEM_START_POS_X + UI_ITEM_MARGIN * (i % 3), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * (i / 3), 1, 1 };
 	}
 	uiLayer.imageCount = 26;
 	for (int i = 0; i < itemList.size(); i++) {
-		uiImageArray[uiLayer.imageCount++] = { imageArray[itemList[i]->getImageIndex()].fileName, UI_ITEM_START_POS_X + UI_ITEM_SIZE * ((i + 1) % 2 == 0), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * ((i) / 2), 1};
+		uiImageArray[uiLayer.imageCount++] = { imageArray[itemList[i]->getImageIndex()].fileName, UI_ITEM_START_POS_X + UI_ITEM_MARGIN * (i % 3), UI_ITEM_START_POS_Y + UI_ITEM_SIZE * (i / 3), 1 };
 	}
-	//safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpProgressMiddle, 10 , 1584 - 720, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpProgressBackGround, 0, 0, 1 };
 }
+
 
 void fillBlockImages() {
     for (int y = AREA_ORIGIN_Y; y < AREA_ORIGIN_Y + BLOCKSIZE * 25; y += BLOCKSIZE) {
@@ -1210,37 +1212,6 @@ void fillBlockImages() {
 
 void initAreaUI()
 {
-	/*
-	index_Area_UI_Start = imageLayer.imageCount;
-	imageArray[imageLayer.imageCount++] = { bmpNameUIItemBox, 30, 30, 1, 1 };
-	index_Area_UI_HP_Start = imageLayer.imageCount;
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_0pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_10pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_20pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_30pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_40pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_50pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_60pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_70pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_80pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_90pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameHP_100pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameMaxHP, UI_HP_ORIGIN_X - 120, UI_HP_ORIGIN_Y, 1, 1 };
-
-	index_Area_UI_O2_Start = imageLayer.imageCount;
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_0pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_10pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_20pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_30pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_40pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_50pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_60pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_70pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_80pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_90pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	imageArray[imageLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1, 1 };
-	*/
 	index_Area_UI_blockInfo_Start = imageLayer.imageCount;
 	index_Area_UI_Map_Start = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameMapPC, 0, 0, 1, 1 };
@@ -1284,6 +1255,8 @@ void initRewardImage() {
 void updateCharacterStatus() {
 	initItemImages(); // ownesItemlist updates
 	uiLayer.renderAll(&uiLayer); // images render
+	wchar_t hp[4] = L"HP:";
+	wchar_t o2[4] = L"O2:";
 	wchar_t playerStone[20];
 	wchar_t playerHp[20];
 	wchar_t playerOz[20];
@@ -1303,8 +1276,10 @@ void updateCharacterStatus() {
 	if (pc.getSpdLev() == 11) swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.MAX");
 	else swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
 
-	int X = 160, Y = 240;
-	X += 170;
+	printText(targetLayer->_consoleDC, 250, 85, 40, 0, RGB(255, 255, 255), TA_LEFT, hp);
+	printText(targetLayer->_consoleDC, 250, 145, 40, 0, RGB(255, 255, 255), TA_LEFT, o2);
+
+	int X = 280, Y = 300;
 
 	printText(targetLayer->_consoleDC, X + 120, Y + 90, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
 	printText(targetLayer->_consoleDC, X, Y + 190, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
@@ -1749,7 +1724,7 @@ bool printButtonStageStatus() {
 			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Correct Answer!");
 			printText(targetLayer->_consoleDC, 2650, 1320, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
 			printText(targetLayer->_consoleDC, 2600, 1420, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
-			Sleep(300);
+			return isButtonReset;
 		}
 		else {
 			imageArray[0].y = imageArray[0].y + 96;
@@ -1757,7 +1732,7 @@ bool printButtonStageStatus() {
 			buttonPressedOrderList.clear();
 			swprintf(pressed_button_status, sizeof(pressed_button_status) / sizeof(pressed_button_status[0]), L"Not Correct Answer!");
 			printText(targetLayer->_consoleDC, 2650, 1320, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_info);
-			printText(targetLayer->_consoleDC, 2600, 1420, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
+			printText(targetLayer->_consoleDC, 2570, 1420, 40, 0, RGB(255, 255, 255), TA_CENTER, pressed_button_status);
 			Sleep(300);
 		}
 		
@@ -1891,38 +1866,6 @@ void getMoleSpace() {
     }
 }
 
-/*void updateCharacterStatusInArea() {
-    wchar_t playerStone[20];
-    wchar_t playerHp[20];
-    wchar_t playerOz[20];
-    wchar_t playerFatigue[20];
-    wchar_t playerAttackPower[20];
-    wchar_t playerAttackSpeed[20];
-    wchar_t playerMoveSpeed[20];
-
-    swprintf(playerStone, sizeof(playerStone) / sizeof(playerStone[0]), L"%d", pc.getStone());
-    swprintf(playerHp, sizeof(playerHp) / sizeof(playerHp[0]), L"%d / %d", pc.getHP(), pc.getMaxHP());
-    swprintf(playerOz, sizeof(playerOz) / sizeof(playerOz[0]), L"%d / %d", pc.getOxygen(), pc.getMaxOxygen());
-    swprintf(playerFatigue, sizeof(playerFatigue) / sizeof(playerFatigue[0]), L"%d / %d", pc.getFatigue(), pc.getMaxFatigue());
-    if (pc.getAtkLev() == 11) swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.MAX");
-    else swprintf(playerAttackPower, sizeof(playerAttackPower) / sizeof(playerAttackPower[0]), L"Lv.%d", pc.getAtkLev());
-    if (pc.getAtkSpdLev() == 11) swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.MAX");
-    else swprintf(playerAttackSpeed, sizeof(playerAttackSpeed) / sizeof(playerAttackSpeed[0]), L"Lv.%d", pc.getAtkSpdLev());
-    if (pc.getSpdLev() == 11) swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.MAX");
-    else swprintf(playerMoveSpeed, sizeof(playerMoveSpeed) / sizeof(playerMoveSpeed[0]), L"Lv.%d", pc.getSpdLev());
-
-    int X = AREA_ORIGIN_X + 27 * BLOCKSIZE, Y = AREA_ORIGIN_Y + BLOCKSIZE * 2;
-    X += 170;
-
-    printText(targetLayer->_consoleDC, X + 160, Y + 90, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
-    printText(targetLayer->_consoleDC, X, Y + 190, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
-    printText(targetLayer->_consoleDC, X, Y + 245, 40, 0, RGB(255, 255, 255), TA_LEFT, playerOz);
-    printText(targetLayer->_consoleDC, X, Y + 300, 40, 0, RGB(255, 255, 255), TA_LEFT, playerFatigue);
-    printText(targetLayer->_consoleDC, X, Y + 355, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackPower);
-    printText(targetLayer->_consoleDC, X, Y + 410, 40, 0, RGB(255, 255, 255), TA_LEFT, playerAttackSpeed);
-    printText(targetLayer->_consoleDC, X, Y + 465, 40, 0, RGB(255, 255, 255), TA_LEFT, playerMoveSpeed);
-}*/
-
 std::vector<int> getRandomHiddenAreaPos() {
     int randomIndex = rand() % hiddenAreaPosList.size();
     return hiddenAreaPosList[randomIndex];
@@ -1933,13 +1876,9 @@ void setHiddenAreaPos() {
     srand((unsigned)time(NULL));
 
 	bossAreaPos = getRandomHiddenAreaPos();
-	//progressImageArray[1].x = bossAreaPos[0];
-	//progressImageArray[1].y = bossAreaPos[1];
 
 	progressImageArray[1].x = 196 + (BLOCKSIZE + 2) * bossAreaPos[1];
 	progressImageArray[1].y = 125 + (BLOCKSIZE + 2) * bossAreaPos[0];
-	//bossAreaPos[1];
-	//currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0];
 
     while (true) {
         treasureAreaPos = getRandomHiddenAreaPos();
@@ -1964,7 +1903,10 @@ void initUIImage() {
 	uiLayer.images = uiImageArray;
 	uiLayer.imageCount = 0;
 
+	uiImageArray[uiLayer.imageCount++] = { bmpNameUIItemBox, 10, 10, 1 };
+
 	index_Area_UI_HP_Start = uiLayer.imageCount;
+
 	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_0pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
 	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_10pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
 	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_20pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
@@ -1976,7 +1918,7 @@ void initUIImage() {
 	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_80pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
 	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_90pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
 	uiImageArray[uiLayer.imageCount++] = { bmpNameHP_100pct, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 1 };
-	uiImageArray[uiLayer.imageCount++] = { bmpNameMaxHP, UI_HP_ORIGIN_X - 120, UI_HP_ORIGIN_Y, 1, 0 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameMaxHP, UI_HP_ORIGIN_X, UI_HP_ORIGIN_Y, 1, 0 };
 
 	index_Area_UI_O2_Start = uiLayer.imageCount;
 	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_0pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
@@ -1990,7 +1932,7 @@ void initUIImage() {
 	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_80pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
 	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_90pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
 	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
-	uiImageArray[uiLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X - 120, UI_O2_ORIGIN_Y, 1, 0 };
+	uiImageArray[uiLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 0 };
 
-	uiImageArray[uiLayer.imageCount++] = { bmpCharacterStatusName, 170 , STAGE_ORIGIN_Y, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpCharacterStatusName, 80 , 300, 1 };
 }
