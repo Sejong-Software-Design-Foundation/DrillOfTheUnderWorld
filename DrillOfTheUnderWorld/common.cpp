@@ -1,7 +1,7 @@
 ﻿#include "common.hpp"
 #include "itemCommon.hpp"
 
-int stageLevel = 1;
+int stageLevel = 3;
 
 char bgmGameStart[] = "gameStart.wav";
 char bgmName[] = "start_bgm.wav";
@@ -85,6 +85,7 @@ bool isMiniGameArea = false;
 bool isButtonArea = false;
 bool isFlagArea = false;
 bool isBossArea = false;
+bool isMoving = false;
 
 int index_StageImages_Start;
 int index_Area_PC;
@@ -175,6 +176,7 @@ char bmpNameStar1[] = "UI_Star1.bmp";
 char bmpNameStar2[] = "UI_Star2.bmp";
 char bmpNameStar3[] = "UI_Star3.bmp";
 char bmpBossHPName[] = "BossHP.bmp";
+char bmpBossHP_2Name[] = "BossHP_2.bmp";
 
 // AREA BLOCK BMP
 char bmpStoneBlockName[3][40] = { "block_Stage1_Normal.bmp","block_Stage2_Normal.bmp","block_Stage3_Normal.bmp" };
@@ -219,6 +221,7 @@ char bmpBoomName[] = "boom.bmp";
 
 // FLAG, BEDROCK BMP
 char bmpBedrockName[] = "lava.bmp";
+char bmpBlueBedrockName[] = "lava_blue.bmp";
 char bmpFlagName[] = "flag.bmp";
 
 
@@ -237,6 +240,9 @@ char bmpNameRawkHawk_digging[] = "RawkHawk_digging.bmp";
 
 char bmpNameCharizard[] = "Charizard.bmp";
 char bmpNameFireground[] = "Fireground.bmp";
+char bmpNameCharizardEvolve1[] = "Charizard_Evolve1.bmp";
+char bmpNameCharizardEvolve2[] = "Charizard_Evolve2.bmp";
+char bmpNameQuake[] = "quake.bmp";
 
 // LADDER
 char bmpNameLadder[] = "Ladder.bmp";
@@ -1544,6 +1550,18 @@ bool collisionCheck(int x, int y, int scale) { //scale ?紐꾩쁽 ?占쎈떽???�
     }
     return false;
 }
+bool collisionCheck(int x, int y, int width, int height) { //scale ?紐꾩쁽 ?占쎈떽???占쎄퐣 ??占쎌쒔??占쎌뵠??
+	int startX = convertPosToInfoX(x);
+	int startY = convertPosToInfoY(y);
+
+	for (int curY = startY; curY < startY + BLOCKSIZE * height; curY++) {
+		for (int curX = startX; curX < startX + BLOCKSIZE * width; curX++) {
+			if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+			if (blockInfo[curY][curX]) return true;
+		}
+	}
+	return false;
+}
 
 bool collisionCheck(int x, int y) {
     int startX = convertPosToInfoX(x);
@@ -1551,7 +1569,7 @@ bool collisionCheck(int x, int y) {
 
     for (int curY = startY; curY < startY + BLOCKSIZE; curY++) {
         for (int curX = startX; curX < startX + BLOCKSIZE; curX++) {
-            if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+            if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) return true;
             if (blockInfo[curY][curX]) return true;
         }
     }
@@ -1872,7 +1890,7 @@ void printStoneStatus(int curStone) {
 
 void printWarning(int curHP) {
     wchar_t warningText[100] = L"WARNING!";
-    for (int i = 0; i < curHP; i++) {
+    for (int i = 0; i < 100; i++) {
         if (i % 10 == 1 && curHP - i >= 9)
             printText(targetLayer->_consoleDC, AREA_ORIGIN_X + 840 + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE * 3 / 4, 20, 0, RGB(255, 255, 255), TA_LEFT, warningText);
     }

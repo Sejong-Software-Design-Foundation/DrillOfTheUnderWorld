@@ -1,7 +1,7 @@
 #ifndef __EMCEE_THE_SHY_GUY_
 #define __EMCEE_THE_SHY_GUY_
 
-#define EMCEE_THESHYGUY_SPEED 48
+#define EMCEE_THESHYGUY_SPEED 16
 #define ULTIMATE_BULLET_NUM 10
 
 #include "NPC.hpp"
@@ -42,8 +42,12 @@ EmceeTheShyGuy::EmceeTheShyGuy(int x, int y) : NPC(x, y, 50, 10, 1) {
 
 	this->imageidx = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, x, y, EMCEE_SCALE };
+	char* curBossHPName = bmpBossHPName;
 	for (int i = 0;i < maxHP;i++) {
-		imageArray[imageLayer.imageCount++] = { bmpBossHPName,AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH*i,AREA_ORIGIN_Y - BLOCKSIZE,1};
+		if (i % 100 == 0) {
+			if (i / 100 == 2) curBossHPName = bmpBossHP_2Name;
+		}
+		imageArray[imageLayer.imageCount++] = { curBossHPName, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH*(i%100),AREA_ORIGIN_Y - BLOCKSIZE,1};
 		imageArray[imageLayer.imageCount - 1].isHide = true;
 	}
 	imageArray[imageLayer.imageCount++] = { bmpNameEmceeTheShyGuy, AREA_ORIGIN_X, AREA_ORIGIN_Y - BLOCKSIZE,1 };
@@ -136,6 +140,7 @@ void EmceeTheShyGuy::AfterDead() {
 		imageArray[imageidx].fileName = bmpExplodeName[i%5];
 		imageArray[imageidx].scale = EMCEE_SCALE;
 		imageLayer.renderAll(&imageLayer);
+		Sleep(20);
 	}
 	for (int i = imageidx; i <= imageidx + maxHP + 1;i++) {
 		imageArray[i].isHide = true;

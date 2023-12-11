@@ -34,7 +34,7 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 48
+#define SPEED 24
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 336
@@ -49,10 +49,10 @@ extern "C" {
 #define UI_ITEM_MARGIN 160
 #define UI_ITEM_SIZE 170
 #define BOSS_SCALE 4
-#define EMCEE_SCALE 4
-#define RAWKHAWK_SCALE 3
-#define CHARIZARD_SCALE 3
-#define BOSS_HP_BAR_WIDTH 16
+#define EMCEE_SCALE 3
+#define RAWKHAWK_SCALE 4
+#define CHARIZARD_SCALE 5
+#define BOSS_HP_BAR_WIDTH 10
 
 #define REWARD_BRONZE = 10
 #define REWARD_SILVER = 30
@@ -117,6 +117,7 @@ extern bool isMiniGameArea;
 extern bool isFlagArea;
 extern bool isButtonArea;
 extern bool isBossArea;
+extern bool isMoving;
 
 extern int index_StageImages_Start;
 extern int index_Area_PC;
@@ -161,6 +162,9 @@ extern char bmpNameRawkHawk_digging[];
 
 extern char bmpNameCharizard[];
 extern char bmpNameFireground[];
+extern char bmpNameCharizardEvolve1[];
+extern char bmpNameCharizardEvolve2[];
+extern char bmpNameQuake[];
 
 // LADDER 
 extern char bmpNameLadder[];
@@ -171,6 +175,7 @@ extern char bmpNameStar1[];
 extern char bmpNameStar2[];
 extern char bmpNameStar3[];
 extern char bmpBossHPName[];
+extern char bmpBossHP_2Name[];
 
 // BLOCK BMP
 extern char bmpStoneBlockName[3][40];
@@ -215,6 +220,7 @@ extern char bmpBoomName[];
 
 // FLAG, BEDROCK BMP
 extern char bmpBedrockName[];
+extern char bmpBlueBedrockName[];
 extern char bmpFlagName[];
 
 // item Image
@@ -245,7 +251,7 @@ extern char bmpCaveSnakeName[];
 
 extern char bmpBackgroundTestName[];
 
-// ?�든 ?�어리어 관�?
+// ?�든 ?�어리어 관�?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
 extern std::vector<int> bossAreaPos;
 extern std::vector<int> treasureAreaPos;

@@ -340,6 +340,7 @@
     <Image Include="block_Stage3_SilverOre2.bmp" />
     <Image Include="boom.bmp" />
     <Image Include="BossHP.bmp" />
+    <Image Include="BossHP_2.bmp" />
     <Image Include="brick_dark2.png" />
     <Image Include="BronzeMineral.bmp" />
     <Image Include="BronzeOre.bmp" />
@@ -349,6 +350,8 @@
     <Image Include="button2Pressed.bmp" />
     <Image Include="button3.bmp" />
     <Image Include="button3Pressed.bmp" />
+    <Image Include="Charizard_Evolve1.bmp" />
+    <Image Include="Charizard_Evolve2.bmp" />
     <Image Include="EmceeTheShyGuyHit.bmp" />
     <Image Include="explode1.bmp" />
     <Image Include="explode2.bmp" />
@@ -390,6 +393,7 @@
     <Image Include="lava.bmp" />
     <Image Include="Lava2.bmp" />
     <Image Include="lava_block.bmp" />
+    <Image Include="Lava_blue.bmp" />
     <Image Include="lShop_Balloon.bmp" />
     <Image Include="lShop_miner.bmp" />
     <Image Include="lShop_minerSelected.bmp" />
@@ -422,6 +426,7 @@
     <Image Include="progressBackGround.bmp" />
     <Image Include="progressBottom.bmp" />
     <Image Include="progressMiddle.bmp" />
+    <Image Include="quake.bmp" />
     <Image Include="questionMark.bmp" />
     <Image Include="rShop_Balloon.bmp" />
     <Image Include="rShop_miner.bmp" />

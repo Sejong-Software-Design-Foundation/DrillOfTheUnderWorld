@@ -427,6 +427,7 @@
     <Image Include="Timer_30pct.bmp" />
     <Image Include="Timer_20pct.bmp" />
     <Image Include="Timer_10pct.bmp" />
+
     <Image Include="UI_maxHP.bmp" />
     <Image Include="UI_maxO2.bmp" />
     <Image Include="safety_bg.bmp" />
@@ -446,6 +447,21 @@
       <Filter>image</Filter>
     </Image>
     <Image Include="gameOver.bmp">
+
+    <Image Include="BossHP_2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="quake.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Charizard_Evolve1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Charizard_Evolve2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Lava_blue.bmp">
+
       <Filter>image</Filter>
     </Image>
   </ItemGroup>
