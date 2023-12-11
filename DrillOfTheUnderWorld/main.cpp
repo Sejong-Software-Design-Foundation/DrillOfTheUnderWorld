@@ -12,8 +12,8 @@
 
 int main()
 {
-   initialize();
-   uiLayer.initialize(&uiLayer);
+	initialize();
+	uiLayer.initialize(&uiLayer);
 
 	gameStartLayer.initialize(&gameStartLayer);
 	gameOverLayer.initialize(&gameOverLayer);
@@ -25,20 +25,20 @@ int main()
 	lShopLayer.initialize(&lShopLayer);
 	progressLayer.initialize(&progressLayer);
 
-       // initialize my areaLayer
-    areaLayer.initialize(&areaLayer);
+	// initialize my areaLayer
+	areaLayer.initialize(&areaLayer);
 
-   imageArray[0] = {bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1};
-   imageLayer.images = imageArray;
-   imageLayer.imageCount = 1;
+	imageArray[0] = { bmpNamePC, AREA_ORIGIN_X + 576, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
+	imageLayer.images = imageArray;
+	imageLayer.imageCount = 1;
 
-   initUIImage();
+	initUIImage();
 	initProgressImage();
-   initStageImage();
-   fillBlockImages();
-   initSafetyImage();
-   initRShopImage();
-   initLShopImage();
+	initStageImage();
+	fillBlockImages();
+	initSafetyImage();
+	initRShopImage();
+	initLShopImage();
 
 	Button* button1 = new Button(1);
 	Button* button2 = new Button(2);
@@ -54,13 +54,13 @@ int main()
 	//initAreaUI();
 	initRewardImage();
 
-	// ??ï¿½ê³£ë«—ï¿½??è¹‚Îºë• ???ï¿½Â€????ï¿½ì¶¨ ??ï¿?????ï¿½ë£‡è£•ë…»??ï¦«ëš¯???ï¿½ï¿½?ï¿?
+	// ???™èµ­?½è«î¤£è•­???©î¿ç²¾ï¿½ ????™è“??????™è¶£???????????™è¶Ÿï¿½é‹†?¥ï†…??éµ€?¨îªº????™è¸????
 	/*pc.addItem(1);
 	pc.addItem(2);
 	pc.addItem(3);*/
 	initItems();
 
-	// ?????æ´¹ë¨®ï¿?????????????ï¿??????????ï¿½ê³¥êµ¥ç”±??ê³Œë– ???æ¿¡ãƒª??
+	// ??????£å?è»Šåš™?????????????????????????™èµ­?çª±äº?œ??çª¸ï?ï¿????ˆï½???
 	clock_t start_time = clock();
 	clock_t end_time;
 	double duration;
@@ -106,7 +106,7 @@ int main()
 	{
 		//drawProgress();
 		if (isOnStage)
-		{ // PC??ï¿½ëŸ¾? ????ï¿½Â€??? ï¦«ëš®??ï¿½ï¿½?ï¿½êµ¢??ë¸Œï¿½????æ¿¡ãƒ«ï¿??ë¡ªí”???
+		{ // PC???™è¶Ÿî·? ?????™è“???? éµ€?¨îª¹???™è¸???™èµ­çª??è³³ï˜„??????ˆï½?»åš™??è«?¡¨ï¿???
 			for (int i = 0;i < generatedBatList.size();i++) {
 				imageArray[generatedBatList[i]->imageidx].fileName = bmpNameNull;
 			}
@@ -116,7 +116,7 @@ int main()
 			imageArray[button2->imageidx].isHide = 1;
 			imageArray[button3->imageidx].isHide = 1;
 
-			//updateCharacterStatus(); // PC ???ï¿½ê°?ï¿½ë„ï¿??ï¿½ìœª??????ï¿½ëª¥??è¢â‘¤ï¿?
+			//updateCharacterStatus(); // PC ????™èµ­ï¿??™è¶Ÿï¿½åš™???™è¶£î¯???????™è¶Ÿ????¡î¼¸?ªåš™?
 			while (_kbhit() != 0)
 			{
 				int key = _getch();
@@ -131,7 +131,7 @@ int main()
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					int num = rand() % 4;
 					//num = 1;
-					if (currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
+					if (true || currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
 					{
 						isNormalArea = false;
 						isMiniGameArea = false;
@@ -151,7 +151,7 @@ int main()
 						} // MaxHP
 					}
 					else if (num == 0)
-					{ // ?ï¿?ï¿½ï¿½?ï¿½ç•°??????æ´¹ë¨®ï¿?ì¡¾ìŠ–?ï¦«ëš¯????
+					{ // ????™è¸???™è³œ????????£å?è»Šåš™?é­½æ¨ºï¿?éµ€?¨îªº????
 						isNormalArea = true;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -171,7 +171,7 @@ int main()
 						mineral->getCluster();
 					}
 					else if (num == 1)
-					{ // ï¿?ï¿½ï¿½ê¼¶ï§¢?è½…â‘¥ï¿?????????æ´¹ë¨®ï¿?ì¡¾ìŠ–?ï¦«ëš¯????
+					{ // ???™è¸???å¡šå??§ï†¬?«åš™??????????£å?è»Šåš™?é­½æ¨ºï¿?éµ€?¨îªº????
 						isNormalArea = false;
 						isMiniGameArea = true;
 						isButtonArea = false;
@@ -186,7 +186,7 @@ int main()
 							progressImageArray[i].isHide = 0;
 					}
 					else if (num == 2)
-					{ // ?ï¿?ï¿????????æ´¹ë¨®ï¿?ì¡¾ìŠ–?ï¦«ëš¯????
+					{ // ?????????????£å?è»Šåš™?é­½æ¨ºï¿?éµ€?¨îªº????
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = true;
@@ -197,7 +197,7 @@ int main()
 						imageArray[button3->imageidx].isHide = 0;
 
 						isButtonRoomClear = false;
-						int randomNumber = rand() % 6; // 0 ?????6 ???????ï¿?ï¿?
+						int randomNumber = rand() % 6; // 0 ?????6 ???????????
 						buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
 						getNewArea();
 
@@ -219,7 +219,7 @@ int main()
 						mineral->getCluster();
 					}
 					else if (num == 3)
-					{ // ?????ï¿½ìœœ??????æ´¹ë¨®ï¿?ì¡¾ìŠ–?ï¦«ëš¯????
+					{ // ??????™è¶£ï¿???????£å?è»Šåš™?é­½æ¨ºï¿?éµ€?¨îªº????
 						isNormalArea = false;
 						isMiniGameArea = false;
 						isButtonArea = false;
@@ -251,7 +251,7 @@ int main()
 					targetLayer->fadeIn(targetLayer, NULL);
 					targetLayer->renderAll(targetLayer);
 					drawProgress();
-					if(isFlagArea) printFlagStageStatus(pc.getFlagCnt());
+					if (isFlagArea) printFlagStageStatus(pc.getFlagCnt());
 					if (isBossArea) playBGM(bgmBoss);
 					else playBGM(bgmArea);
 				}
@@ -283,20 +283,20 @@ int main()
 				if (key)
 				{
 					targetLayer->renderAll(targetLayer);
-					if (key != S)
-						updateCharacterStatus();
+					//if (key != S)
+						//updateCharacterStatus();
 				}
 			}
 		}
 		else if (isOnArea)
-		{ // PC??ï¿½ëŸ¾? ?????æ´¹ë¨®ï¿???????ï¿½ì¸ ?ë¡ªí”???
+		{ // PC???™è¶Ÿî·? ??????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
 		   //targetLayer->renderAll(targetLayer);
 			thread renderThread(&renderTargetLayer);
 			renderThread.join();
 			//drawUI();
 			if (isNormalArea)
-			{ // PC??ï¿½ëŸ¾? ?ï¿? ?????æ´¹ë¨®ï¿???????ï¿½ì¸ ?ë¡ªí”???
-			   // QuestionBlock ?ê¾©ë£†è¸°â–¼ï¿???è«›ëŒ?????ï¿½Â€???è¢â‘¤???
+			{ // PC???™è¶Ÿî·? ??? ??????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
+			   // QuestionBlock ?ç¯¨æ‹˜ï¿½é ¦??¡“??????®“ï¿??????™è“?????¡î¼¸????
 				if (isGenerateMobByQuestionBlock)
 				{
 					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
@@ -309,13 +309,13 @@ int main()
 						mob->move();
 					}
 				}
-				// NPC????ï¦«ëš¯??????ï¿½ë¶‹?????ï¿????
+				// NPC????éµ€?¨îªº???????™è¶Ÿï¿??????????
 				// mole->move();
 				bat->move();
 				ladder->move();
 				if (stageLevel > 1) mole->move();
 				// Emcee->move();
-				//  ????ï¿½í… ??????ï¿½ì¡‘ ???ï¿½ë¨®ï¿?
+				//  ?????™è¸«ï¿???????™è¶£ï¿?????™è¶Ÿè»Šåš™?
 				for (int i = 0; i < 10; i++)
 				{
 					if (_kbhit() != 0)
@@ -382,7 +382,14 @@ int main()
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
-							pc.setHP(pc.getHP() + 10);
+							if (pc.getUsableEnergyBarCount() > 0) {
+								pc.setUsableEnergyBarCount(0);
+								pc.setHP(pc.getMaxHP());
+							}
+							else if (pc.getUsablePortableOxygenCanCount() > 0) {
+								pc.setUsablePortableOxygenCanCount(0);
+								pc.setOxygen(pc.getMaxOxygen());
+							}
 							break;
 						}
 					}
@@ -390,9 +397,9 @@ int main()
 				}
 			}
 			else if (isMiniGameArea)
-			{                              // PC??ï¿½ëŸ¾? ï¿?ï¿½ï¿½ê¼¶ï§¢?è½…â‘¥ï¿?????????æ´¹ë¨®ï¿???????ï¿½ì¸ ?ë¡ªí”???
-				//printMyOriInMiniGameArea(); // ï¿?ï¿½ï¿½ê¼¶ï§¢?è½…â‘¥ï¿?????????æ´¹ë¨®ï¿??????information??????ï¿½ë«?????ï¿½íƒ®ï¿???? ??ï¿½ì€«ì¸Š???æ¿¡ãƒ«ï¿???ï¿??
-				// ????ï¿½í… ??????ï¿½ì¡‘ ???ï¿½ë¨®ï¿?
+			{                              // PC???™è¶Ÿî·? ???™è¸???å¡šå??§ï†¬?«åš™??????????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
+				//printMyOriInMiniGameArea(); // ???™è¸???å¡šå??§ï†¬?«åš™??????????£å?è»Šåš™??????information???????™è¶Ÿ???????™è¸«?¾åš™???? ???™è¶£???¿½????ˆï½?»åš™??????
+				// ?????™è¸«ï¿???????™è¶£ï¿?????™è¶Ÿè»Šåš™?
 				for (int i = 0; i < 10; i++)
 				{
 					if (_kbhit() != 0)
@@ -467,7 +474,7 @@ int main()
 				}
 			}
 			else if (isButtonArea)
-			{ // PC??ï¿½ëŸ¾? ?ï¿?ï¿????????æ´¹ë¨®ï¿???????ï¿½ì¸ ?ë¡ªí”???
+			{ // PC???™è¶Ÿî·? ?????????????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
 
 				if (button1->getIsPressed())
 				{
@@ -580,19 +587,37 @@ int main()
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
-							pc.setHP(pc.getHP() + 10);
-							break;
+							if (pc.getUsableEnergyBarCount() > 0) {
+								pc.setUsableEnergyBarCount(0);
+								pc.setHP(pc.getMaxHP());
+							}
+							else if (pc.getUsablePortableOxygenCanCount() > 0) {
+								pc.setUsablePortableOxygenCanCount(0);
+								pc.setOxygen(pc.getMaxOxygen());
+							}
 						}
 					}
 					Sleep(5);
 				}
 			}
 			else if (isFlagArea)
-			{ // PC??ï¿½ëŸ¾? ?????ï¿½ìœœ??????æ´¹ë¨®ï¿???????ï¿½ì¸ ?ë¡ªí”???
+			{ // PC???™è¶Ÿî·? ??????™è¶£ï¿???????£å?è»Šåš™????????™è¶£ï¿??è«?¡¨ï¿???
 				// mole->move();
 				bat->move();
 				ladder->move();
 				if (stageLevel > 1) mole->move();
+				if (isGenerateMobByQuestionBlock)
+				{
+					generatedBatList.push_back(new Bat(questionBlockPosX, questionBlockPosY));
+					isGenerateMobByQuestionBlock = false;
+				}
+				if (!generatedBatList.empty())
+				{
+					for (Bat* mob : generatedBatList)
+					{
+						mob->move();
+					}
+				}
 				// Emcee->move();
 				for (int i = 0; i < 10; i++)
 				{
@@ -660,8 +685,14 @@ int main()
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
-							pc.setHP(pc.getHP() + 10);
-							break;
+							if (pc.getUsableEnergyBarCount() > 0) {
+								pc.setUsableEnergyBarCount(0);
+								pc.setHP(pc.getMaxHP());
+							}
+							else if (pc.getUsablePortableOxygenCanCount() > 0) {
+								pc.setUsablePortableOxygenCanCount(0);
+								pc.setOxygen(pc.getMaxOxygen());
+							}
 						}
 					}
 					Sleep(5);
@@ -669,44 +700,54 @@ int main()
 			}
 			else if (isBossArea)
 			{
-				if (Boss->NPCDead() == false)
+				for (int i = 0; i < 5; i++)
 				{
-					Boss->move();
-				}
-				else
-				{
-					if (stageLevel == 1)
-						((EmceeTheShyGuy*)Boss)->AfterDead();
-					else if (stageLevel == 2)
-						((RawkHawk*)Boss)->AfterDead();
-					else if (stageLevel == 3)
-						((Charizard*)Boss)->AfterDead();
-					ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
-					if (ladder->goSafety())
-						return main();
-				}
-				// vector<PCBullet>::iterator itr;
-				for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end();)
-				{
-					if (Boss->NPCDead() == false && itr->checkBulletHit(Boss->x, Boss->y))
+					//printWarning(Boss->hp);
+					if (Boss->NPCDead() == false)
 					{
-						Boss->NPCHit(pc.getATK());
-						itr = pc.getBulletList().erase(itr);
+						Boss->move();
 					}
-					else if (!(itr->move()))
-						itr = pc.getBulletList().erase(itr);
 					else
-						itr++;
-				}
-				printWarning(Boss->hp);
-				for (int i = 0; i < 10; i++)
-				{
+					{
+						if (stageLevel == 1)
+							((EmceeTheShyGuy*)Boss)->AfterDead();
+						else if (stageLevel == 2)
+							((RawkHawk*)Boss)->AfterDead();
+						else if (stageLevel == 3)
+							((Charizard*)Boss)->AfterDead();
+						ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 25 / 2, AREA_ORIGIN_Y + BLOCKSIZE * 25 / 2);
+						if (ladder->goSafety())
+							return main();
+					}
+					// vector<PCBullet>::iterator itr;
+					for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end();)
+					{
+						if (Boss->NPCDead() == false && itr->checkBulletHit(Boss->x, Boss->y))
+						{
+							int pcDamage = pc.getATK();
+							if (pc.getHasThronCrown()) {
+								pcDamage *= 2;
+							}
+
+							Boss->NPCHit(pcDamage);
+
+							if (pc.getHasBatFang()) {
+								pc.setHP(pc.getHP() + 5);
+							}
+
+							itr = pc.getBulletList().erase(itr);
+						}
+						else if (!(itr->move()))
+							itr = pc.getBulletList().erase(itr);
+						else
+							itr++;
+					}
+					int curPosX = imageLayer.images[0].x;
+					int curPosY = imageLayer.images[0].y;
+					COORD afterMovedPos;
 					if (_kbhit() != 0)
 					{
 						int key = _getch();
-						int curPosX = imageLayer.images[0].x;
-						int curPosY = imageLayer.images[0].y;
-						COORD afterMovedPos;
 
 						switch (key)
 						{
@@ -759,18 +800,46 @@ int main()
 							pc.setHP(pc.getHP() - 10);
 							break;
 						case P:
-							pc.setHP(pc.getHP() + 10);
-							break;
+							if (pc.getUsableEnergyBarCount() > 0) {
+								pc.setUsableEnergyBarCount(0);
+								pc.setHP(pc.getMaxHP());
+							}
+							else if (pc.getUsablePortableOxygenCanCount() > 0) {
+								pc.setUsablePortableOxygenCanCount(0);
+								pc.setOxygen(pc.getMaxOxygen());
+							}
 						}
 					}
-					Sleep(5);
+					isMoving = false;
+					if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(VK_RIGHT) < 0 || GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(VK_DOWN) < 0 && !isMoving) {
+						isMoving = true;
+					}
+					else isMoving = false;
+					if (isMoving) {
+						afterMovedPos = pc.getPosAfterMove(curPosX, curPosY);
+						if (!collisionCheck(afterMovedPos.X, afterMovedPos.Y)) pc.move();
+					}
+					if (i % 2) targetLayer->renderAll(targetLayer);
+					Sleep(20);
 				}
 			}
-			// ï¦«ëš®?ï¿½ç¶­????????æ´¹ë¨®ï¿??????ï¿½ì¾¹????ï¿½ï¿½?????ï¿½ì±·???æ¿¡ãƒ«ï¿??è¢â‘¤???
-			// 3?ï¿?ï¿?ï¿½ï¿½?????ï¿½Â€?ï¿½í‹¬ ?ë¡ªí“???ï¿½ë¬’????1????ï¿½ë£†??????ï¿½ï¿½???è¢â‘¤???
+			if (pc.getHP() <= 0) {
+				//die
+				printGameOver();
+				if (isRetry()) {
+					resetPcStatus();
+					return main();
+				}
+				else {
+					exit(0);
+				}
+			}
+			// éµ€?¨îª¹??™è³œ??????????£å?è»Šåš™???????™è¶£??????™è¸???????™è¶£?????ˆï½?»åš™???¡î¼¸????
+			// 3??????™è¸???????™è“???™è¸«???è«?¡¨ï¿????™è¶Ÿï¿????1?????™è¶Ÿï¿???????™è¸?????¡î¼¸????
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-			if (duration > 3.0)
+
+			if (duration > (pc.getHasTwoHearts() ? 5.0 : 3.0))
 			{
 				pc.setOxygen(pc.getOxygen() - 1);
 				if (isMiniGameArea) {

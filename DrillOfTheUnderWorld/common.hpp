@@ -22,9 +22,9 @@ extern "C" {
 #define NUM3 51
 #define O 111
 #define P 112
-#define UI_HP_ORIGIN_X 300
-#define UI_HP_ORIGIN_Y 60
-#define UI_O2_ORIGIN_Y 120
+#define UI_HP_ORIGIN_X 330
+#define UI_HP_ORIGIN_Y 80
+#define UI_O2_ORIGIN_Y 140
 #define LEFT 75
 #define RIGHT 77
 #define UP 72
@@ -34,24 +34,25 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 48
+#define SPEED 24
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 336
 #define AREA_WIDTH 25
 #define AREA_HEIGHT 25
-#define STAGE_ORIGIN_X 480
-#define STAGE_ORIGIN_Y 240
+#define STAGE_ORIGIN_X 540
+#define STAGE_ORIGIN_Y 300
 #define AREA_BLOCK_SIZE 144
 #define STAGE_EXTRA_IMAGE_COUNT 3
-#define UI_ITEM_START_POS_X 250
-#define UI_ITEM_START_POS_Y 900
+#define UI_ITEM_START_POS_X 80
+#define UI_ITEM_START_POS_Y 1000
+#define UI_ITEM_MARGIN 160
 #define UI_ITEM_SIZE 170
 #define BOSS_SCALE 4
-#define EMCEE_SCALE 4
-#define RAWKHAWK_SCALE 3
-#define CHARIZARD_SCALE 3
-#define BOSS_HP_BAR_WIDTH 16
+#define EMCEE_SCALE 3
+#define RAWKHAWK_SCALE 4
+#define CHARIZARD_SCALE 5
+#define BOSS_HP_BAR_WIDTH 10
 
 #define REWARD_BRONZE = 10
 #define REWARD_SILVER = 30
@@ -116,6 +117,7 @@ extern bool isMiniGameArea;
 extern bool isFlagArea;
 extern bool isButtonArea;
 extern bool isBossArea;
+extern bool isMoving;
 
 extern int index_StageImages_Start;
 extern int index_Area_PC;
@@ -128,6 +130,7 @@ extern int index_Area_UI_blockInfo_Start;
 extern int index_Area_UI_mapTile_Start;
 extern int index_Area_UI_MiniGame_Start;
 extern int index_RewardImages_Start;
+extern int index_Potion_Image;
 
 extern char bmpNameNull[];
 
@@ -159,6 +162,9 @@ extern char bmpNameRawkHawk_digging[];
 
 extern char bmpNameCharizard[];
 extern char bmpNameFireground[];
+extern char bmpNameCharizardEvolve1[];
+extern char bmpNameCharizardEvolve2[];
+extern char bmpNameQuake[];
 
 // LADDER 
 extern char bmpNameLadder[];
@@ -169,6 +175,7 @@ extern char bmpNameStar1[];
 extern char bmpNameStar2[];
 extern char bmpNameStar3[];
 extern char bmpBossHPName[];
+extern char bmpBossHP_2Name[];
 
 // BLOCK BMP
 extern char bmpStoneBlockName[3][40];
@@ -213,6 +220,7 @@ extern char bmpBoomName[];
 
 // FLAG, BEDROCK BMP
 extern char bmpBedrockName[];
+extern char bmpBlueBedrockName[];
 extern char bmpFlagName[];
 
 // item Image
@@ -243,7 +251,7 @@ extern char bmpCaveSnakeName[];
 
 extern char bmpBackgroundTestName[];
 
-// ?�든 ?�어리어 관�?
+// ?�든 ?�어리어 관�?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
 extern std::vector<int> bossAreaPos;
 extern std::vector<int> treasureAreaPos;
@@ -345,4 +353,7 @@ void initProgressImage();
 void drawProgress();
 extern int index_Timer_Start;
 extern int timerIndex;
+
+bool isRetry();
+void resetPcStatus();
 #endif COMMON_HPP

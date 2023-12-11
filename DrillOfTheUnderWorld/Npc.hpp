@@ -25,7 +25,7 @@ public:
     void NPCSetPosition(int posx, int posy);
 
     bool NPCDead();
-    bool PCNear();
+    virtual bool PCNear();
 
     void NPCPatternMovement(int speed);
     void NPCTrackingMovement(int speed);
@@ -44,6 +44,7 @@ NPC::NPC(int x, int y, int hp, int ad, int dir) {
     // defaultê°???¤ë¥¸ìª?????��?��?    this->curDirection = dir;
     // movecnt
     cnt = 0;
+    maxHP = hp;
 }
 
 bool NPC::NPCDead() { return hp <= 0 ? true : false; }
@@ -71,7 +72,6 @@ bool NPC::PCNear() {
         }
     }
     return false;
-
 }
 
 void NPC::NPCSetPosition(int posx, int posy) {
@@ -123,7 +123,7 @@ void NPC::NPCTrackingMovement(int speed) {
     double dx = speed * cos(angle);
     double dy = speed * sin(angle);
 
-    if (collisionCheck(x + dx, y + dy)) { return; }
+    if (collisionCheck(x + dx, y + dy, RAWKHAWK_SCALE)) { return; }
 
     // Mole ì¢Œí?�œë�???�ë�?´íŠ¸
     imageLayer.images[imageidx].x += dx;
