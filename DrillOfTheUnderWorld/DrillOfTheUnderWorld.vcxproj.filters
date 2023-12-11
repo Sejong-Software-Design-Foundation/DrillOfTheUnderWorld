@@ -254,7 +254,6 @@
     <Image Include="rShop_spearkBalloon.bmp" />
     <Image Include="safety_arrow.bmp" />
     <Image Include="safety_arrowSelected.bmp" />
-    <Image Include="safety_bg.bmp" />
     <Image Include="Shop_ItemBox.bmp" />
     <Image Include="Shop_ItemBox_disable.bmp" />
     <Image Include="Shop_ItemBox_selected.bmp" />
@@ -406,25 +405,7 @@
     <Image Include="block_Stage2_OrichalcumOre2.bmp">
       <Filter>image</Filter>
     </Image>
-    <Image Include="st0.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="st1.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="st2.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="st3.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="st4.bmp">
-      <Filter>image</Filter>
-    </Image>
     <Image Include="backgroundTest.bmp">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="progressBackGround.bmp">
       <Filter>image</Filter>
     </Image>
     <Image Include="progressBottom.bmp">
@@ -448,6 +429,25 @@
     <Image Include="Timer_10pct.bmp" />
     <Image Include="UI_maxHP.bmp" />
     <Image Include="UI_maxO2.bmp" />
+    <Image Include="safety_bg.bmp" />
+    <Image Include="progressBackGround.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="st3.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="st0.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="st1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="st2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="gameOver.bmp">
+      <Filter>image</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="image">

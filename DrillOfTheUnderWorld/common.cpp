@@ -282,7 +282,7 @@ char bmpStart0[] = "st0.bmp";
 char bmpStart1[] = "st1.bmp";
 char bmpStart2[] = "st2.bmp";
 char bmpStart3[] = "st3.bmp";
-char bmpStart4[] = "st4.bmp";
+char bmpGameOver[] = "gameOver.bmp";
 
 char bmpBackgroundTestName[] = "backgroundTest.bmp";
 
@@ -468,30 +468,65 @@ Image gameStartArray[10];
 ImageLayer gameOverLayer = DEFAULT_IMAGE_LAYER;
 Image gameOverArray[10];
 
+bool isRetry() {
+	int flags = 1;
+	bool result = false;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+
+			switch (key) {
+			case ESC:
+				flags = 0;
+				result = false;
+				break;
+
+			case 114:
+			case 82: // R
+				flags = 0;
+				isOnArea = false;
+				isOnStage = true;
+				result = true;
+				break;
+			}
+		}
+	}
+	return result;
+}
+
 void printGameStart() {
+	int flags = 1;
+	while (flags) {
+		while (_kbhit() != 0) {
+			int key = _getch();
+
+			if (key) {
+				flags = 0;
+			}
+		}
+	}
     gameStartLayer.images = gameStartArray;
     gameStartLayer.imageCount = 0;
 
     gameStartArray[gameStartLayer.imageCount++] = { bmpStart0, 0, 0, 1 };
-    gameStartArray[gameStartLayer.imageCount++] = { bmpStart4, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart1, 0, 0, 1 };
+	gameStartArray[gameStartLayer.imageCount++] = { bmpStart2, 0, 0, 1 };
     gameStartArray[gameStartLayer.imageCount++] = { bmpStart3, 0, 0, 1 };
-    gameStartArray[gameStartLayer.imageCount++] = { bmpStart2, 0, 0, 1 };
-    gameStartArray[gameStartLayer.imageCount++] = { bmpStart1, 0, 0, 1 };
 
     targetLayer = &gameStartLayer;
     targetLayer->fadeIn(targetLayer, NULL);
     playBGM(bgmGameStart);
 
 
-    int flags = 1;
+    flags = 1;
     while (flags) {
         while (_kbhit() != 0) {
             int key = _getch();
+
             if (key) {
                 flags = 0;
                 targetLayer->fadeOut(targetLayer, NULL);
                 gameStartArray[0].fileName = bmpNameNull;
-                gameStartArray[1].fileName = bmpNameNull;
             }
         }
     }
@@ -503,7 +538,7 @@ void printGameStart() {
     targetLayer->fadeIn(targetLayer, NULL);
 
     flags = 1;
-    int i = 2;
+    int i = 1;
     while (i < gameStartLayer.imageCount && flags != 0) {
         while (_kbhit() != 0) {
             int key = _getch();
@@ -530,54 +565,46 @@ void printGameStart() {
     stopBGM();
 }
 
+void resetPcStatus() {
+	stageLevel = 1;
+	pc.setHP(100);
+	pc.setMaxHP(100);
+	pc.setOxygen(100);
+	pc.setMaxOxygen(100);
+	pc.setFatigue(10);
+	pc.setMaxFatigue(10);
+	pc.setAtkLev(1);
+	pc.setAtkSpdLev(1);
+	pc.setSpdLev(1);
+	pc.setStone(0);
+	pc.setHasTwoHearts(false);
+	pc.setHasBatFang(false);
+	pc.setHashasBeggarDoll(false);
+	pc.setHasLuckCharm(false);
+	pc.setHasLuckStone(false);
+	pc.setHasMetalDetector(false);
+	pc.setHasMoleClaw(false);
+	pc.setHasThronCrown(false);
+	pc.setHasUndergroundTicket(false);
+
+	ownedItems.clear();
+}
+
 void printGameOver() {
     Sleep(1000);
 
     gameOverLayer.images = gameOverArray;
     gameOverLayer.imageCount = 0;
 
-    gameOverArray[0] = { bmpStart1, 0, 0, 1 };
+    gameOverArray[0] = { bmpGameOver, 0, 0, 1 };
 
     targetLayer = &gameOverLayer;
     targetLayer->fadeIn(targetLayer, NULL);
     targetLayer->renderAll(targetLayer);
 
-
-    int flags = 1;
-    while (flags) {
-        while (_kbhit() != 0) {
-            int key = _getch();
-            if (key) {
-                flags = 0;
-                targetLayer->fadeOut(targetLayer, NULL);
-            }
-        }
-    }
-
-
-    isOnStage = true;
-    isOnArea = false;
-
-    stageLevel = 1;
-    pc.setHP(100);
-    pc.setMaxHP(100);
-    pc.setOxygen(100);
-    pc.setMaxOxygen(100);
-    pc.setFatigue(10);
-    pc.setMaxFatigue(10);
-    pc.setAtkLev(1);
-    pc.setAtkSpdLev(1);
-    pc.setSpdLev(1);
-    pc.setStone(0);
-
-
-    targetLayer = &stageLayer;
-    targetLayer->fadeIn(targetLayer, NULL);
-    targetLayer->renderAll(targetLayer);
 }
 
-//char bmpSafetyBG[] = "safety_bg.bmp";
-char bmpSafetyBG[] = "bg.bmp";
+char bmpSafetyBG[] = "safety_bg.bmp";
 char bmpSafetyArrow[] = "safety_arrow.bmp";
 char bmpSafetyArrowSelected[] = "safety_arrowSelected.bmp";
 int index_Safety_Object_Start;
@@ -597,15 +624,12 @@ void initSafetyImage() {
     safetyLayer.imageCount = 0;
 
     safetyImageArray[safetyLayer.imageCount++] = { bmpNamePC, 1000, 1450, 2 };
-    safetyImageArray[safetyLayer.imageCount++] = { bmpNameUIItemBox, 180, 850, 1 };
-    safetyImageArray[safetyLayer.imageCount++] = { bmpCharacterStatusName, 60 , STAGE_ORIGIN_Y, 1 };
 
     index_Safety_Object_Start = safetyLayer.imageCount;
-    safetyImageArray[safetyLayer.imageCount++] = { bmpLShopMiner, 650, 1240, 0.5 };
-    safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyArrow, 1000, 1130, 0.5 };
-    safetyImageArray[safetyLayer.imageCount++] = { bmpRShopMiner, 1200, 1210, 0.5 };
-
-	//safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 }; 
+    safetyImageArray[safetyLayer.imageCount++] = { bmpLShopMiner, 650, 1220, 0.5 };
+    safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyArrow, 1000, 1150, 0.5 };
+    safetyImageArray[safetyLayer.imageCount++] = { bmpRShopMiner, 1130, 1210, 0.5 };
+	safetyImageArray[safetyLayer.imageCount++] = { bmpSafetyBG, 0, 0, 1 };
 }
 
 void visitSafety() {
@@ -1243,14 +1267,14 @@ void initRewardImage() {
     index_RewardImages_Start = rewardLayer.imageCount;
     imagesReward[rewardLayer.imageCount++] = { bmpNameNormalRewardSelected, 400, 300, 1, 0 };
     imagesReward[rewardLayer.imageCount++] = { bmpNameNormalReward, 400, 300, 1, 1 };
-    imagesReward[rewardLayer.imageCount++] = { bmpNameDynamicRewardSelected, 1100, 300, 1, 0 };
-    imagesReward[rewardLayer.imageCount++] = { bmpNameDynamicReward, 1100, 300, 1, 1 };
+    imagesReward[rewardLayer.imageCount++] = { bmpNameDynamicRewardSelected, 1000, 300, 1, 0 };
+    imagesReward[rewardLayer.imageCount++] = { bmpNameDynamicReward, 1000, 300, 1, 1 };
     imagesReward[rewardLayer.imageCount++] = { bmpNameNormalAtkSelected, 0, 500, 1, 1 };
     imagesReward[rewardLayer.imageCount++] = { bmpNameNormalAtk, 0, 500, 1, 1 };
-    imagesReward[rewardLayer.imageCount++] = { bmpNameNormalAtkSpdSelected, 660, 150, 1, 1 };
-    imagesReward[rewardLayer.imageCount++] = { bmpNameNormalAtkSpd, 660, 150, 1, 1 };
-    imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpdSelected, 1320, 500, 1, 1 };
-    imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1320, 500, 1, 1 };
+    imagesReward[rewardLayer.imageCount++] = { bmpNameNormalAtkSpdSelected, 600, 150, 1, 1 };
+    imagesReward[rewardLayer.imageCount++] = { bmpNameNormalAtkSpd, 600, 150, 1, 1 };
+    imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpdSelected, 1200, 500, 1, 1 };
+    imagesReward[rewardLayer.imageCount++] = { bmpNameNormalSpd, 1200, 500, 1, 1 };
 }
 void updateCharacterStatus() {
 	initItemImages(); // ownesItemlist updates
@@ -1279,7 +1303,7 @@ void updateCharacterStatus() {
 	printText(targetLayer->_consoleDC, 250, 85, 40, 0, RGB(255, 255, 255), TA_LEFT, hp);
 	printText(targetLayer->_consoleDC, 250, 145, 40, 0, RGB(255, 255, 255), TA_LEFT, o2);
 
-	int X = 280, Y = 300;
+	int X = 280, Y = 270;
 
 	printText(targetLayer->_consoleDC, X + 120, Y + 90, 40, 0, RGB(255, 255, 255), TA_CENTER, playerStone);
 	printText(targetLayer->_consoleDC, X, Y + 190, 40, 0, RGB(255, 255, 255), TA_LEFT, playerHp);
@@ -1839,7 +1863,7 @@ void printWarning(int curHP) {
     wchar_t warningText[100] = L"WARNING!";
     for (int i = 0; i < curHP; i++) {
         if (i % 10 == 1 && curHP - i >= 9)
-            printText(targetLayer->_consoleDC, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE * 3 / 4, 20, 0, RGB(255, 255, 255), TA_LEFT, warningText);
+            printText(targetLayer->_consoleDC, AREA_ORIGIN_X + 840 + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE * 3 / 4, 20, 0, RGB(255, 255, 255), TA_LEFT, warningText);
     }
 }
 
@@ -1934,5 +1958,5 @@ void initUIImage() {
 	uiImageArray[uiLayer.imageCount++] = { bmpNameO2_100pct, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 1 };
 	uiImageArray[uiLayer.imageCount++] = { bmpNameMaxO2, UI_HP_ORIGIN_X, UI_O2_ORIGIN_Y, 1, 0 };
 
-	uiImageArray[uiLayer.imageCount++] = { bmpCharacterStatusName, 80 , 300, 1 };
+	uiImageArray[uiLayer.imageCount++] = { bmpCharacterStatusName, 80 , 270, 1 };
 }

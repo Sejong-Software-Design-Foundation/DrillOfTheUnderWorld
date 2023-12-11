@@ -40,8 +40,8 @@ extern "C" {
 #define AREA_ORIGIN_Y 336
 #define AREA_WIDTH 25
 #define AREA_HEIGHT 25
-#define STAGE_ORIGIN_X 480
-#define STAGE_ORIGIN_Y 240
+#define STAGE_ORIGIN_X 540
+#define STAGE_ORIGIN_Y 300
 #define AREA_BLOCK_SIZE 144
 #define STAGE_EXTRA_IMAGE_COUNT 3
 #define UI_ITEM_START_POS_X 80
@@ -346,4 +346,7 @@ void initProgressImage();
 void drawProgress();
 extern int index_Timer_Start;
 extern int timerIndex;
+
+bool isRetry();
+void resetPcStatus();
 #endif COMMON_HPP

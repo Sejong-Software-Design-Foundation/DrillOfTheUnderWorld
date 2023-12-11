@@ -92,7 +92,7 @@ void PC::setHP(int hp) {
 		}
 		else {
 			// die
-			printGameOver();
+			//printGameOver();
 		}
 	}
 	else if (hp > MAX_HP) this->HP = MAX_HP;
