@@ -43,9 +43,10 @@ private:
 	int usableEnergyBarCount = 0, usablePortableOxygenCanCount = 0;
 
 	int MAX_HP = 100, MAX_O2 = 100, MAX_FATIGUE = 10;
-	int AtkLev = 1, AtkSpdLev = 1, SpdLev = 1;
+	int AtkLev = 1, AtkSpdLev = 1, SpdLev = 3;
 	int flagCnt = 0;
 	int lastAttackTime;
+	clock_t lastHitTime = 0;
 	int HP = 100, O2 = 100, FATIGUE = 10, ATK = 10, curDirection = 0;
 	int stone = 10000;
 	int dx[4] = { 1,0,-1,0 };

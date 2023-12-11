@@ -1,8 +1,8 @@
 #ifndef __RAWK_HAWK_
 #define __RAWK_HAWK_
 
-#define RAWKHAWK_NORMAL_SPEED 16
-#define RAWKHAWK_TRACK_SPEED 48
+#define RAWKHAWK_NORMAL_SPEED 8
+#define RAWKHAWK_TRACK_SPEED 24
 
 #include "NPC.hpp"
 
@@ -26,9 +26,10 @@ public:
 	void NPCHit(int atkLev);
 	void AfterDead();
 	void updateHPBar();
+	bool PCNear();
 };
 
-RawkHawk::RawkHawk(int x, int y) : NPC(x, y, 200, 30, 1) {
+RawkHawk::RawkHawk(int x, int y) : NPC(x, y, 200, 15, 1) {
 	movecnt = 0;
 
 	// RawkHawk image save
@@ -53,23 +54,24 @@ void RawkHawk::move() {
 	if (cnt < 6) {
 		NPCPatternMovement(RAWKHAWK_NORMAL_SPEED);
 	}
-	// 6-16 : 10sec
-	else if (cnt < 16) {
+	// 6-26 : 20sec
+	else if (cnt < 26) {
 		imageArray[imageidx] = { bmpNameRawkHawk_ready, x, y, RAWKHAWK_SCALE };
 	}
-	// 16-36 : 20sec
-	else if (cnt < 36) {
+	// 26-46 : 20sec
+	else if (cnt < 46) {
 		imageArray[imageidx] = { bmpNameRawkHawk_digging, x, y, RAWKHAWK_SCALE };
 		NPCTrackingMovement(RAWKHAWK_TRACK_SPEED);
 	}
-	// 36-56 : 20sec
-	else if (cnt < 56) {
+	// 46-66 : 20sec
+	else if (cnt < 66) {
 		imageArray[imageidx] = { bmpNameRawkHawk_ready, x, y, RAWKHAWK_SCALE };
 	}
-	else if (cnt == 56) {
+	else if (cnt == 66) {
 		imageArray[imageidx] = { bmpNameRawkHawk, x, y,RAWKHAWK_SCALE };
 		cnt = -1;
 	}
+	if (PCNear()) attack();
 	cnt++;
 }
 
@@ -113,16 +115,52 @@ void RawkHawk::updateHPBar() {
 		if (hp < i) {
 			if (i / 100 == 1) {
 				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpBossHPName) != 0) //100~199이면 빨간색으로 대치
-				imageArray[imageidx + i % 100].fileName = bmpBossHPName;
+				imageArray[imageidx + i % 100 + 1].fileName = bmpBossHPName;
 			}
 			else {
 				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpNameNull) != 0)
-				imageArray[imageidx + i % 100].fileName = bmpNameNull;
+				imageArray[imageidx + i % 100 + 1].fileName = bmpNameNull;
 			}
 			//0~99이면 nullBMP
 		}
 		//if (hp < i && strcmp(imageArray[imageidx + i].fileName, bmpNameNull) != 0) imageArray[imageidx + i].fileName = bmpNameNull;
 	}
+}
+
+bool RawkHawk::PCNear() {
+	int PC_X = convertPosToInfoX(imageLayer.images[0].x);
+	int PC_Y = convertPosToInfoY(imageLayer.images[0].y);
+
+	int NPC_Y = y;
+	int NPC_X = x;
+
+	// printf("(%d %d) (%d %d)", PC_X, PC_Y, NPC_X, NPC_Y);
+
+	int startX = convertPosToInfoX(imageArray[imageidx].x);
+	int startY = convertPosToInfoY(imageArray[imageidx].y);
+	
+	int yScale = RAWKHAWK_SCALE;
+	if (strcmp(imageArray[imageidx].fileName, bmpNameRawkHawk_digging) == 0) {
+		startY += BLOCKSIZE * RAWKHAWK_SCALE / 2;
+		yScale /= 2;
+	}
+	int xScale = RAWKHAWK_SCALE;
+	
+	if (startX - BLOCKSIZE <= PC_X && PC_X <= startX + BLOCKSIZE*xScale &&
+		startY - BLOCKSIZE <= PC_Y && PC_Y <= startY + BLOCKSIZE * yScale) return true;
+	else return false;
+
+	/*for (int curY = startY; curY < startY + BLOCKSIZE * yScale; curY++) {
+		for (int curX = startX; curX < startX + BLOCKSIZE * xScale; curX++) {
+			for (int dy = 0; dy < BLOCKSIZE; dy++) {
+				for (int dx = 0; dx < BLOCKSIZE; dx++) {
+					if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+					if (curX == PC_X + dx && curY == PC_Y + dy) return true;
+				}
+			}
+		}
+	}
+	return false;*/
 }
 
 #endif

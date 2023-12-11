@@ -1,7 +1,7 @@
 ﻿#include "common.hpp"
 #include "itemCommon.hpp"
 
-int stageLevel = 2;
+int stageLevel = 3;
 
 char bgmGameStart[] = "gameStart.wav";
 char bgmName[] = "start_bgm.wav";
@@ -1537,6 +1537,18 @@ bool collisionCheck(int x, int y, int scale) { //scale ?紐꾩쁽 ?占쎈떽???�
     }
     return false;
 }
+bool collisionCheck(int x, int y, int width, int height) { //scale ?紐꾩쁽 ?占쎈떽???占쎄퐣 ??占쎌쒔??占쎌뵠??
+	int startX = convertPosToInfoX(x);
+	int startY = convertPosToInfoY(y);
+
+	for (int curY = startY; curY < startY + BLOCKSIZE * height; curY++) {
+		for (int curX = startX; curX < startX + BLOCKSIZE * width; curX++) {
+			if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+			if (blockInfo[curY][curX]) return true;
+		}
+	}
+	return false;
+}
 
 bool collisionCheck(int x, int y) {
     int startX = convertPosToInfoX(x);
@@ -1544,7 +1556,7 @@ bool collisionCheck(int x, int y) {
 
     for (int curY = startY; curY < startY + BLOCKSIZE; curY++) {
         for (int curX = startX; curX < startX + BLOCKSIZE; curX++) {
-            if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) continue;
+            if (curY < 0 || curY >= 1200 || curX < 0 || curX >= 1200) return true;
             if (blockInfo[curY][curX]) return true;
         }
     }

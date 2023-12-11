@@ -51,7 +51,7 @@ extern "C" {
 #define EMCEE_SCALE 3
 #define RAWKHAWK_SCALE 4
 #define CHARIZARD_SCALE 5
-#define BOSS_HP_BAR_WIDTH 16
+#define BOSS_HP_BAR_WIDTH 10
 
 #define REWARD_BRONZE = 10
 #define REWARD_SILVER = 30

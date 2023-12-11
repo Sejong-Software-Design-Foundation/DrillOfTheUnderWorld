@@ -671,7 +671,7 @@ int main()
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					printWarning(Boss->hp);
+					//printWarning(Boss->hp);
 					if (Boss->NPCDead() == false)
 					{
 						Boss->move();

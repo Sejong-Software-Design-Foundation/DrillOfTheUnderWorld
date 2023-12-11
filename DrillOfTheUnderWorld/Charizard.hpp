@@ -1,7 +1,7 @@
 #ifndef __CHARIZARD_
 #define __CHARIZARD_
 
-#define CHARIZARD_SPEED 30
+#define CHARIZARD_SPEED 12
 
 #include "NPC.hpp"
 #include "CharizardFireball.hpp"
@@ -32,6 +32,7 @@ public:
     void NPCHit(int atkLev);
     void AfterDead();
     void updateHPBar();
+    void ultimate();
 };
 
 Charizard::Charizard(int x, int y) : NPC(x, y, 200, 0, 1) {
@@ -43,11 +44,9 @@ Charizard::Charizard(int x, int y) : NPC(x, y, 200, 0, 1) {
 
     // Charizard HP BAR image save
     char* curBossHPName = bmpBossHPName;
-    for (int i = 0; i < maxHP; i++) {
-        if (i % 100 == 0) {
-            if (i / 100 == 2) curBossHPName = bmpBossHP_2Name;
-        }
-        imageArray[imageLayer.imageCount++] = { curBossHPName, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * (i%100),AREA_ORIGIN_Y - BLOCKSIZE,1 };
+    if (maxHP > 100) curBossHPName = bmpBossHP_2Name;
+    for (int i = 0; i < 100; i++) {
+        imageArray[imageLayer.imageCount++] = { curBossHPName, AREA_ORIGIN_X + BLOCKSIZE + BOSS_HP_BAR_WIDTH * i, AREA_ORIGIN_Y - BLOCKSIZE, 1 };
         imageArray[imageLayer.imageCount - 1].isHide = true;
     }
 
@@ -78,8 +77,11 @@ void Charizard::move() {
     attack();
 
     // if moved 10 times shoot once and reset mvcnt
-    if (movecnt == 10) {
+    if (movecnt % 10 == 0) {
         fireballs.push_back(CharizardFireball(x, y));
+    }
+    else if (movecnt == 41) {
+        ultimate();
         movecnt = 0;
     }
     else {
@@ -130,8 +132,47 @@ void Charizard::AfterDead() {
 }
 
 void Charizard::updateHPBar() {
-    for (int i = 1; i <= maxHP; i++) {
-        if (hp < i && strcmp(imageArray[imageidx + i].fileName, bmpNameNull) != 0) imageArray[imageidx + i].fileName = bmpNameNull;
+	for (int i = maxHP; i >= hp; i--) {
+		if (hp < i) {
+			if (i / 100 == 1) {
+				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpBossHPName) != 0) //100~199이면 빨간색으로 대치
+				imageArray[imageidx + i % 100].fileName = bmpBossHPName;
+			}
+			else {
+				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpNameNull) != 0)
+				imageArray[imageidx + i % 100].fileName = bmpNameNull;
+			}
+			//0~99이면 nullBMP
+		}
+		//if (hp < i && strcmp(imageArray[imageidx + i].fileName, bmpNameNull) != 0) imageArray[imageidx + i].fileName = bmpNameNull;
+	}
+}
+
+void Charizard::ultimate() {
+    int curPosX = imageLayer.images[0].x;
+    int curPosY = imageLayer.images[0].y;
+
+    double angle = 50 * 3.14 / 180;
+    double magnitude = 50;
+    double new_angle = atan2(curPosY - y, curPosX - x) - angle;
+
+    for (int i = 0; i < 2; i++) {
+        fireballs.push_back(CharizardFireball(x, y));
+        fireballs.back().dx = magnitude * cos(new_angle);
+        fireballs.back().dy = magnitude * sin(new_angle);
+
+        fireballs.back().movingtime = 20;
+
+        for (int a = 0; a < 3; a++) {
+            for (int b = 0; b < 3; b++) {
+                fireballs.back().fireground[a][b] = 0;
+            }
+        }
+        fireballs.back().fireground[1][1] = 1;
+
+        imageLayer.images[fireballs.back().imageidx].fileName = bmpNameFireground;
+
+        new_angle += angle * 2;
     }
 }
 

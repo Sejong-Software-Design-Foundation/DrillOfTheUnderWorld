@@ -25,7 +25,7 @@ public:
     void NPCSetPosition(int posx, int posy);
 
     bool NPCDead();
-    bool PCNear();
+    virtual bool PCNear();
 
     void NPCPatternMovement(int speed);
     void NPCTrackingMovement(int speed);
@@ -72,7 +72,6 @@ bool NPC::PCNear() {
         }
     }
     return false;
-
 }
 
 void NPC::NPCSetPosition(int posx, int posy) {
