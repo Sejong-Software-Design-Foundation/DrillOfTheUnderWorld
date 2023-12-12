@@ -321,7 +321,7 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 		}
 		if (strcmp(imageLayer.images[imageIndex].fileName, bmpTreasure) == 0) {
 			imageLayer.images[imageIndex].fileName = bmpTreasureOpen;
-
+			playSound(bgmAchive);
 			while (1) {
 				Item* item = getRandomItem();
 				if (isItemExistItemVector(item, ownedItems) || !item->getIsUniqueHoldableItem()) continue;

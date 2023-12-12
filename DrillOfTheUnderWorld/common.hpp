@@ -352,4 +352,5 @@ bool isRetry();
 void resetPcStatus();
 extern char bmpTreasure[];
 extern char bmpTreasureOpen[];
+extern char bgmAchive[];
 #endif COMMON_HPP
