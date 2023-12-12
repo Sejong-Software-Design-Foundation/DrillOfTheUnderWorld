@@ -353,4 +353,7 @@ void resetPcStatus();
 extern char bmpTreasure[];
 extern char bmpTreasureOpen[];
 extern char bgmAchive[];
+char bgmS1BossStart[];
+char bgmS2BossStart[];
+char bgmS3BossStart[];
 #endif COMMON_HPP

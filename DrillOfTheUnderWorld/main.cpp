@@ -271,7 +271,12 @@ int main()
 					targetLayer->renderAll(targetLayer);
 					drawProgress();
 					if(isFlagArea) printFlagStageStatus(pc.getFlagCnt());
-					if (isBossArea) playBGM(bgmBoss);
+					if (isBossArea) {
+						if (stageLevel == 1) playSound(bgmS1BossStart);
+						else if (stageLevel == 2) playSound(bgmS2BossStart);
+						else if (stageLevel == 3) playSound(bgmS3BossStart);
+						playBGM(bgmBoss);
+					}
 					else playBGM(bgmArea);
 				}
 				break;
@@ -712,6 +717,7 @@ int main()
 						((RawkHawk*)Boss)->AfterDead();
 					else if (stageLevel == 3)
 						((Charizard*)Boss)->AfterDead();
+					stopBGM();
 					ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 12);
 					if (ladder->goSafety())
 						return main();
