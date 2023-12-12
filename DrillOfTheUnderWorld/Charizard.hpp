@@ -11,7 +11,7 @@ using namespace std;
 
 /// <summary>
 /// === Charizard INFO ===
-/// HP : 100
+/// HP : 200
 /// AD : 0 (ATTACK BY FIREBALLS)
 /// MOVEMENT : NPCPATTERNMOVEMENT
 /// </summary>
@@ -163,7 +163,7 @@ void Charizard::ultimate() {
 	int curPosY = imageLayer.images[0].y;
 
 	double angle = 45 * 3.14 / 180;
-	double magnitude = 30;
+	double magnitude = 50;
 	double new_angle = atan2(curPosY - y, curPosX - x) - angle;
 
 	for (int i = 0; i < 2; i++) {
@@ -171,7 +171,7 @@ void Charizard::ultimate() {
 		fireballs.back().dx = magnitude * cos(new_angle);
 		fireballs.back().dy = magnitude * sin(new_angle);
 
-		fireballs.back().movingtime = 30;
+		fireballs.back().movingtime = 20;
 
 		for (int a = 0; a < 3; a++) {
 			for (int b = 0; b < 3; b++) {
@@ -187,24 +187,27 @@ void Charizard::ultimate() {
 }
 
 void Charizard::setPhase2() {
+	stopBGM();
+	playBGM(bgmCharizardEvolve);
 
 	phase = 2;
 	imageArray[imageidx].fileName = bmpNameCharizardEvolve2;
 	imageArray[imageidx].scale = 1;
 	char bmpStart1[] = "redBackground.bmp";
 	imageArray[imageLayer.imageCount++] = { bmpStart1,0,0,1 };
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) {
 		imageArray[imageidx].fileName = bmpNameCharizard;
 		imageArray[imageidx].scale = CHARIZARD_SCALE;
 		imageArray[imageLayer.imageCount - 1].isHide = 1;
 		imageLayer.renderAll(&imageLayer);
-		Sleep(350);
+		Sleep(300);
 		imageArray[imageidx].fileName = bmpNameCharizardEvolve2;
 		imageArray[imageidx].scale = 1;
 		imageArray[imageLayer.imageCount - 1].isHide = 0;
 		imageLayer.renderAll(&imageLayer);
-		Sleep(700);
+		Sleep(650);
 	}
+
 	imageArray[imageLayer.imageCount - 1].isHide = 0;
 	imageLayer.imageCount--;
 	imageArray[imageidx].fileName = bmpNameCharizardEvolve2;
@@ -225,6 +228,8 @@ void Charizard::setPhase2() {
 
 	strcpy(bmpNameFireball, bmpNameFireball_Blue);
 	strcpy(bmpNameFireground, bmpNameFireground_Blue);
+
+	movecnt = 100;
 }
 
 #endif

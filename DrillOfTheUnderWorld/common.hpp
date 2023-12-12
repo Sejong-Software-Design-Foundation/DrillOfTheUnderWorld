@@ -74,6 +74,10 @@ extern char bgmExplosion[];
 extern char bgmClear[];
 extern char bgmBuy[];
 
+extern char bgmRawkHawk[];
+extern char bgmCharizard[];
+extern char bgmCharizardEvolve[];
+
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 extern HWND WINDOW_HANDLE;
@@ -346,7 +350,6 @@ extern ImageLayer gameOverLayer;
 void printGameStart();
 void printGameOver();
 
-// define my areaImageLayer
 extern ImageLayer areaLayer;
 extern ImageLayer progressLayer;
 extern Image progressImageArray[100];

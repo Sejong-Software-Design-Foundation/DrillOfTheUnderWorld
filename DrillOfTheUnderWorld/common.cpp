@@ -1,7 +1,7 @@
 ﻿#include "common.hpp"
 #include "itemCommon.hpp"
 
-int stageLevel = 3;
+int stageLevel = 2;
 
 char bgmGameStart[] = "gameStart.wav";
 char bgmName[] = "start_bgm.wav";
@@ -12,6 +12,10 @@ char bgmArea[] = "areaBGM.wav";
 char bgmBoss[] = "bossBGM.wav";
 char bgmStage[] = "stageBGM.wav";
 char bgmSafety[] = "safetyBGM.wav";
+
+char bgmRawkHawk[] = "RawkHawkBGM.wav";
+char bgmCharizard[] = "CharizardBGM.wav";
+char bgmCharizardEvolve[] = "CharizardEvolveBGM.wav";
 
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;

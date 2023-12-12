@@ -212,7 +212,10 @@
     <ClInclude Include="UndergroundTicket.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="CharizardBGM.wav" />
+    <Media Include="CharizardEvolveBGM.wav" />
     <Media Include="null_sound.wav" />
+    <Media Include="RawkHawkBGM.wav" />
     <Media Include="start_bgm.wav" />
   </ItemGroup>
   <ItemGroup>
@@ -356,6 +359,7 @@
     <Image Include="explode4.bmp" />
     <Image Include="explode5.bmp" />
     <Image Include="explodes.bmp" />
+    <Image Include="Fireball.bmp" />
     <Image Include="Fireball_Blue.bmp" />
     <Image Include="Fireground_Blue.bmp" />
     <Image Include="flag.bmp" />
