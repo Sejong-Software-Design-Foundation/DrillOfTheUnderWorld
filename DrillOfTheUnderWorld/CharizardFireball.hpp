@@ -43,7 +43,7 @@ public:
 CharizardFireball::CharizardFireball(int x, int y) : NPC(x, y, 0, 20, 1) {
 
     // fireball moves 5-10 sec
-    movingtime = 5 + rand() % 5;
+    movingtime = 10 + rand() % 5;
     initFireground();
 
     // initialize direction of the fireball
@@ -52,8 +52,8 @@ CharizardFireball::CharizardFireball(int x, int y) : NPC(x, y, 0, 20, 1) {
 
     double angle = atan2(curPosY - y, curPosX - x);
 
-    dx = 50 * cos(angle);
-    dy = 50 * sin(angle);
+    dx = 55 * cos(angle);
+    dy = 55 * sin(angle);
 
     this->imageidx = imageLayer.imageCount;
     imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
@@ -116,12 +116,12 @@ void CharizardFireball::move() {
 }
 
 void CharizardFireball::attack() {
-	int damage = attack_damage;
+    int damage = attack_damage;
 
-	if (pc.getHasThronCrown()) {
-		damage *= 2;
-	}
-	pc.setHP(pc.getHP() - damage);
+    if (pc.getHasThronCrown()) {
+        damage *= 2;
+    }
+    pc.setHP(pc.getHP() - damage);
 
 }
 

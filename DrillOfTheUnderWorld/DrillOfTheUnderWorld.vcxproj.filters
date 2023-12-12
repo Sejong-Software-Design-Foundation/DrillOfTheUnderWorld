@@ -42,7 +42,6 @@
     <ClInclude Include="BatFang.hpp" />
     <ClInclude Include="BeggarDoll.hpp" />
     <ClInclude Include="BloodBag.hpp" />
-    <ClInclude Include="Boss.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="CaveSnake.hpp" />
     <ClInclude Include="Charizard.hpp" />
@@ -84,17 +83,14 @@
     <ClInclude Include="ThronCrown.hpp" />
     <ClInclude Include="TwoHearts.hpp" />
     <ClInclude Include="UndergroundTicket.hpp" />
+    <ClInclude Include="CharizardFireball.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="null_sound.wav" />
     <Media Include="start_bgm.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Boos.bmp" />
-    <Image Include="..\..\..\Boss.bmp" />
     <Image Include="..\..\..\Mineral.bmp" />
-    <Image Include="..\..\..\NPC.bmp" />
-    <Image Include="..\..\..\Shop.bmp" />
     <Image Include="..\..\..\ui\UI_HP_0pct.bmp" />
     <Image Include="..\..\..\ui\UI_HP_100pct.bmp" />
     <Image Include="..\..\..\ui\UI_HP_10pct.bmp" />
@@ -129,7 +125,6 @@
     <Image Include="..\..\..\ui\UI_rewardAtkSpdSelected.bmp" />
     <Image Include="..\..\..\ui\UI_rewardSpd.bmp" />
     <Image Include="..\..\..\ui\UI_rewardSpdSelected.bmp" />
-    <Image Include="..\..\..\Zombie.bmp" />
     <Image Include="..\..\characterStatus.bmp" />
     <Image Include="..\..\clearedArea.bmp" />
     <Image Include="..\..\hiddenArea.bmp" />
@@ -349,5 +344,8 @@
     <Image Include="UI_Star3.bmp" />
     <Image Include="redBackground.bmp" />
     <Image Include="Charizard_Evolve2_Hit.bmp" />
+    <Image Include="Fireball_Blue.bmp" />
+    <Image Include="Fireground_Blue.bmp" />
+    <Image Include="EmceeTheShyGuy.bmp" />
   </ItemGroup>
 </Project>
