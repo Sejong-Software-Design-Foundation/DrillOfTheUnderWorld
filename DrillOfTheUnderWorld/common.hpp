@@ -122,6 +122,7 @@ extern bool isFlagArea;
 extern bool isButtonArea;
 extern bool isBossArea;
 extern bool isMoving;
+extern bool isTreasureArea;
 
 extern int index_StageImages_Start;
 extern int index_Area_PC;
@@ -256,7 +257,7 @@ extern char bmpCaveSnakeName[];
 
 extern char bmpBackgroundTestName[];
 
-// ?�든 ?�어리어 관�?
+// ?�든 ?�어리어 관�?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
 extern std::vector<int> bossAreaPos;
 extern std::vector<int> treasureAreaPos;
@@ -361,5 +362,12 @@ extern int timerIndex;
 bool isRetry();
 void resetPcStatus();
 
+extern char bmpTreasure[];
+extern char bmpTreasureOpen[];
+extern char bgmAchive[];
+
+char bgmS1BossStart[];
+char bgmS2BossStart[];
+char bgmS3BossStart[];
 
 #endif COMMON_HPP
