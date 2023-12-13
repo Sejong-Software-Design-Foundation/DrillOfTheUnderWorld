@@ -1,17 +1,27 @@
 ﻿#include "common.hpp"
 #include "itemCommon.hpp"
 
-int stageLevel = 3;
+int stageLevel = 1;
 
 char bgmGameStart[] = "gameStart.wav";
 char bgmName[] = "start_bgm.wav";
 char bgmExplosion[] = "explosion.wav";
-char bgmClear[] = "clear.wav";
+char bgmClear[] = "achive.wav";
 char bgmBuy[] = "buy.wav";
 char bgmArea[] = "areaBGM.wav";
 char bgmBoss[] = "bossBGM.wav";
 char bgmStage[] = "stageBGM.wav";
 char bgmSafety[] = "safetyBGM.wav";
+char bgmS1BossStart[] = "stage1BossStart.wav";
+char bgmS2BossStart[] = "stage2BossStart.wav";
+char bgmS3BossStart[] = "stage3BossStart.wav";
+char bgmPage2[] = "page2.wav";
+char bgmButton[] = "button.wav";
+char bgmAchive[] = "clear.wav";
+
+char bgmRawkHawk[] = "RawkHawkBGM.wav";
+char bgmCharizard[] = "CharizardBGM.wav";
+char bgmCharizardEvolve[] = "CharizardEvolveBGM.wav";
 
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
@@ -86,6 +96,7 @@ bool isButtonArea = false;
 bool isFlagArea = false;
 bool isBossArea = false;
 bool isMoving = false;
+bool isTreasureArea = false;
 
 int index_StageImages_Start;
 int index_Area_PC;
@@ -302,6 +313,9 @@ Image progressImageArray[100];
 char bmpProgressBackGround[] = "progressBackGround.bmp";
 char bmpProgressMiddle[] = "progressMiddle.bmp";
 char bmpProgressBottom[] = "progressBottom.bmp";
+
+char bmpTreasure[] = "treasure.bmp";
+char bmpTreasureOpen[] = "treasureOpen.bmp";
 
 int timerIndex = 11;
 
@@ -620,7 +634,7 @@ char bmpSafetyArrowSelected[] = "safety_arrowSelected.bmp";
 int index_Safety_Object_Start;
 
 // 占쏙옙占쏙옙 占쏙옙占쏘리占쏙옙 占쏙옙占쏙옙
-std::vector<int> bossAreaPos;
+std::vector<int> bossAreaPos;	
 std::vector<int> treasureAreaPos;
 std::vector<std::vector<int>> hiddenAreaPosList = { {0,0,3}, {0,1,4}, {0,2,5}, {0,3,6}, {0,4,7},
 {1,0,8}, {1,4,12},

@@ -74,6 +74,10 @@ extern char bgmExplosion[];
 extern char bgmClear[];
 extern char bgmBuy[];
 
+extern char bgmRawkHawk[];
+extern char bgmCharizard[];
+extern char bgmCharizardEvolve[];
+
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
 extern HWND WINDOW_HANDLE;
@@ -118,6 +122,7 @@ extern bool isFlagArea;
 extern bool isButtonArea;
 extern bool isBossArea;
 extern bool isMoving;
+extern bool isTreasureArea;
 
 extern int index_StageImages_Start;
 extern int index_Area_PC;
@@ -253,7 +258,7 @@ extern char bmpCaveSnakeName[];
 
 extern char bmpBackgroundTestName[];
 
-// ?�든 ?�어리어 관�?
+// ?�든 ?�어리어 관�?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
 extern std::vector<int> bossAreaPos;
 extern std::vector<int> treasureAreaPos;
@@ -347,7 +352,6 @@ extern ImageLayer gameOverLayer;
 void printGameStart();
 void printGameOver();
 
-// define my areaImageLayer
 extern ImageLayer areaLayer;
 extern ImageLayer progressLayer;
 extern Image progressImageArray[100];
@@ -359,5 +363,12 @@ extern int timerIndex;
 bool isRetry();
 void resetPcStatus();
 
+extern char bmpTreasure[];
+extern char bmpTreasureOpen[];
+extern char bgmAchive[];
+
+char bgmS1BossStart[];
+char bgmS2BossStart[];
+char bgmS3BossStart[];
 
 #endif COMMON_HPP

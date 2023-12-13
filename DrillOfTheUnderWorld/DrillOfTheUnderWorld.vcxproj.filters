@@ -88,6 +88,9 @@
   <ItemGroup>
     <Media Include="null_sound.wav" />
     <Media Include="start_bgm.wav" />
+    <Media Include="CharizardBGM.wav" />
+    <Media Include="CharizardEvolveBGM.wav" />
+    <Media Include="RawkHawkBGM.wav" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Mineral.bmp" />
@@ -350,5 +353,6 @@
     <Image Include="RawkHawk_digging2.bmp" />
     <Image Include="Rawkhawk_ready2.bmp" />
     <Image Include="rawkhawk_dig_copy.bmp" />
+    <Image Include="Fireball.bmp" />
   </ItemGroup>
 </Project>

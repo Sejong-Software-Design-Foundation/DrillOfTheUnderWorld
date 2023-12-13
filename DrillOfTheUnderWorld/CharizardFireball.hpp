@@ -12,7 +12,7 @@ using namespace std;
 /// <summary>
 /// === CharizardFireball INFO ===
 /// HP : 0
-/// AD : 20
+/// AD : 30
 /// MOVEMENT : CONSTANT DIRECTION
 /// </summary>
 
@@ -40,11 +40,11 @@ public:
 	void eraseFireground();
 };
 
-CharizardFireball::CharizardFireball(int x, int y) : NPC(x, y, 0, 20, 1) {
+CharizardFireball::CharizardFireball(int x, int y) : NPC(x, y, 0, 30, 1) {
 
-	// fireball moves 5-10 sec
-	movingtime = 10 + rand() % 5;
-	initFireground();
+  // fireball moves 8 - 12 sec
+  movingtime = 8 + rand() % 5;
+  initFireground();
 
 	// initialize direction of the fireball
 	int curPosX = imageLayer.images[0].x;
