@@ -122,9 +122,8 @@ void Charizard::AfterDead() {
 	if (strcmp(imageArray[imageidx].fileName, bmpNameNull) == 0) return;
 
 	list<CharizardFireball>::iterator it;
-	for (it = fireballs.begin(); it != fireballs.end(); ) {
-		imageArray[it->imageidx].fileName = bmpNameNull;
-		it++;
+	for (it = fireballs.begin(); it != fireballs.end(); it++) {
+		(*it).eraseFireground();
 	}
 	fireballs.clear();
 	char bmpNameHit[] = "Charizard_Evolve2_Hit.bmp";
@@ -138,6 +137,8 @@ void Charizard::AfterDead() {
 		Sleep(20);
 	}
 	imageArray[imageidx].fileName = bmpNameNull;
+	imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
+	imageArray[0].y = AREA_ORIGIN_Y + 48 * 20;
 	imageLayer.renderAll(&imageLayer);
 }
 

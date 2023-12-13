@@ -261,6 +261,13 @@
     <Image Include="..\..\Stage1.bmp" />
     <Image Include="..\..\Stage2.bmp" />
     <Image Include="..\..\Stage3.bmp" />
+    <Image Include="adamantium1.bmp" />
+    <Image Include="adamantium2.bmp" />
+    <Image Include="adamantium3.bmp" />
+    <Image Include="adamantium4.bmp" />
+    <Image Include="adamantium5.bmp" />
+    <Image Include="adamantium6.bmp" />
+    <Image Include="adamantium7.bmp" />
     <Image Include="arrow.bmp" />
     <Image Include="backgroundTest.bmp" />
     <Image Include="bedrock.bmp" />
