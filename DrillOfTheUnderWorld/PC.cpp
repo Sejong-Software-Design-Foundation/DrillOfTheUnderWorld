@@ -219,6 +219,7 @@ void PC::setAtkLev(int lev) {
 	if (lev < 1) this->AtkLev = 1;
 	else if (lev > 11) this->AtkLev = 11;
 	else this->AtkLev = lev;
+	setATK(this->AtkLev);
 }
 void PC::setAtkSpdLev(int lev) {
 	if (lev < 1) this->AtkSpdLev = 1;
@@ -294,7 +295,11 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 		pc.setOxygen(pc.getOxygen() + (pc.getMaxOxygen() * 0.3));
 	}
 	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameOrichalcumMineral) == 0) {
-		pc.setStone(pc.getStone() + 1000);
+		rewardStone = 10;
+		if (hasMoleClaw) {
+			rewardStone *= 2;
+		}
+		pc.setStone(pc.getStone() + rewardStone);
 	}
 
 	imageArray[targerImageIndex].fileName = bmpNameNull;
