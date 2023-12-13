@@ -179,7 +179,6 @@ void Charizard::ultimate() {
 			}
 		}
 		fireballs.back().fireground[1][1] = 1;
-
 		imageLayer.images[fireballs.back().imageidx].fileName = bmpNameFireground;
 
 		new_angle += angle * 2;

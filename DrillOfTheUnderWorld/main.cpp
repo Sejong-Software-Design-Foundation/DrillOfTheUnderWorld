@@ -131,7 +131,7 @@ int main()
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					int num = rand() % 4;
 					//num = 1;
-					if (currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
+					if (true || currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
 					{
 						isNormalArea = false;
 						isMiniGameArea = false;

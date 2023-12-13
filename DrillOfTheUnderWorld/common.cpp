@@ -1,7 +1,7 @@
 ﻿#include "common.hpp"
 #include "itemCommon.hpp"
 
-int stageLevel = 1;
+int stageLevel = 3;
 
 char bgmGameStart[] = "gameStart.wav";
 char bgmName[] = "start_bgm.wav";
@@ -236,6 +236,7 @@ char bmpNameFireball[] = "Fireball.bmp";
 
 char bmpNameRawkHawk[] = "RawkHawk.bmp";
 char bmpNameRawkHawk_ready[] = "RawkHawk_ready.bmp";
+char bmpNameRawkHawk_ready2[] = "RawkHawk_ready2.bmp";
 char bmpNameRawkHawk_digging[] = "RawkHawk_digging.bmp";
 
 char bmpNameCharizard[] = "Charizard.bmp";

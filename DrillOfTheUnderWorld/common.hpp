@@ -157,6 +157,7 @@ extern char bmpNameFireball[];
 
 extern char bmpNameRawkHawk[];
 extern char bmpNameRawkHawk_ready[];
+extern char bmpNameRawkHawk_ready2[];
 extern char bmpNameRawkHawk_digging[];
 
 extern char bmpNameCharizard[];

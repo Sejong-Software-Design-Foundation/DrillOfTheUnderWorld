@@ -30,7 +30,7 @@ public:
 	void NPCStraightMovement(int speed);
 };
 
-RawkHawk::RawkHawk(int x, int y) : NPC(x, y, 200, 15, 1) {
+RawkHawk::RawkHawk(int x, int y) : NPC(x, y, 100, 15, 1) {
 	movecnt = 0;
 
 	// RawkHawk image save
@@ -57,7 +57,7 @@ void RawkHawk::move() {
 	}
 	// 6-26 : 20sec
 	else if (cnt < 26) {
-		imageArray[imageidx] = { bmpNameRawkHawk_ready, x, y, RAWKHAWK_SCALE };
+		imageArray[imageidx] = { bmpNameRawkHawk_ready2, x, y, RAWKHAWK_SCALE };
 	}
 	// 26-46 : 20sec
 	else if (cnt < 46) {
@@ -70,7 +70,7 @@ void RawkHawk::move() {
 	else if (cnt < 66) {
 		imageArray[imageidx] = { bmpNameRawkHawk_ready, x, y, RAWKHAWK_SCALE };
 	}
-	else if (cnt == 66) {
+	else if (cnt == 86) {
 		imageArray[imageidx] = { bmpNameRawkHawk, x, y,RAWKHAWK_SCALE };
 		cnt = -1;
 	}
