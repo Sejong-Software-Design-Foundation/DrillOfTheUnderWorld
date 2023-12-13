@@ -132,7 +132,7 @@ int main()
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					int num = rand() % 4;
 					//num = 1;
-					if (true || currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
+					if (currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
 					{
 						isNormalArea = false;
 						isMiniGameArea = false;
@@ -756,9 +756,17 @@ int main()
 							playSound(bgmExplosion);
 							flags = 0;
 						}
-						ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 12);
-						if (ladder->goSafety())
-							return main();
+						if (stageLevel == 3) {
+							if (ladder->goEnding()) {
+								printEndingCredit();
+							}
+
+						}
+						else {
+							ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 12);
+							if (ladder->goSafety())
+								return main();
+						}
 					}
 
 					// vector<PCBullet>::iterator itr;

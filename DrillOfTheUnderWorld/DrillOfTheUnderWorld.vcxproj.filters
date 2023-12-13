@@ -354,5 +354,15 @@
     <Image Include="Rawkhawk_ready2.bmp" />
     <Image Include="rawkhawk_dig_copy.bmp" />
     <Image Include="Fireball.bmp" />
+    <Image Include="epilogue.bmp" />
+    <Image Include="treasure.bmp" />
+    <Image Include="treasureOpen.bmp" />
+    <Image Include="adamantium1.bmp" />
+    <Image Include="adamantium2.bmp" />
+    <Image Include="adamantium3.bmp" />
+    <Image Include="adamantium4.bmp" />
+    <Image Include="adamantium5.bmp" />
+    <Image Include="adamantium6.bmp" />
+    <Image Include="adamantium7.bmp" />
   </ItemGroup>
 </Project>

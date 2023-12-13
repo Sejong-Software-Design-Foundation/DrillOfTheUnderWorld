@@ -43,7 +43,7 @@ private:
 	int usableEnergyBarCount = 0, usablePortableOxygenCanCount = 0;
 
 	int MAX_HP = 100, MAX_O2 = 100, MAX_FATIGUE = 10;
-	int AtkLev = 1, AtkSpdLev = 1, SpdLev = 1;
+	int AtkLev = 11, AtkSpdLev = 11, SpdLev = 11;
 	int flagCnt = 0;
 	int lastAttackTime;
 	clock_t lastHitTime = 0;
