@@ -38,7 +38,7 @@ public:
 	void setPhase2();
 };
 
-Charizard::Charizard(int x, int y) : NPC(x, y, 20, 0, 1) {
+Charizard::Charizard(int x, int y) : NPC(x, y, 200, 0, 1) {
 	movecnt = 0;
 	phase = 1;
 	// Charizard image save
