@@ -40,7 +40,7 @@ bool Ladder::goEnding() {
     NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 10, AREA_ORIGIN_Y + BLOCKSIZE * 10);
 
     imageArray[imageidx].fileName = bmpAdamantiumName[adamantiumIndex % 7];
-    imageLayer.renderAll(&imageLayer);
+    //imageLayer.renderAll(&imageLayer);
     adamantiumIndex++;
     if (pcNearAdamantium()) {
         return true;

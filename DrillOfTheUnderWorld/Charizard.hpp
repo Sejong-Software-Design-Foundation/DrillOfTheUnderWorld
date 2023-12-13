@@ -143,19 +143,16 @@ void Charizard::AfterDead() {
 }
 
 void Charizard::updateHPBar() {
-	for (int i = maxHP; i >= hp; i--) {
-		if (hp < i) {
-			if (i / 100 == 1) {
-				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpBossHPName) != 0) //100~199이면 빨간색으로 대치
-				imageArray[imageidx + i % 100 + 1].fileName = bmpBossHPName;
-			}
-			else {
-				//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpNameNull) != 0)
-				imageArray[imageidx + i % 100 + 1].fileName = bmpNameNull;
-			}
-			//0~99이면 nullBMP
+	for (int i = maxHP; i > hp; i--) {
+		if ((i - 1) / 100 == 1) {
+			//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpBossHPName) != 0) //100~199이면 빨간색으로 대치
+			imageArray[imageidx + (i - 1) % 100 + 1].fileName = bmpBossHPName;
 		}
-		//if (hp < i && strcmp(imageArray[imageidx + i].fileName, bmpNameNull) != 0) imageArray[imageidx + i].fileName = bmpNameNull;
+		else {
+			//if(strcmp(imageArray[imageidx + i % 100].fileName, bmpNameNull) != 0)
+			imageArray[imageidx + (i - 1) % 100 + 1].fileName = bmpNameNull;
+		}
+		//0~99이면 nullBMP
 	}
 }
 
