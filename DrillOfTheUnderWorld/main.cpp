@@ -756,9 +756,17 @@ int main()
 							playSound(bgmExplosion);
 							flags = 0;
 						}
-						ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 12);
-						if (ladder->goSafety())
-							return main();
+						if (stageLevel == 3) {
+							if (ladder->goEnding()) {
+								printEndingCredit();
+							}
+
+						}
+						else {
+							ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 12);
+							if (ladder->goSafety())
+								return main();
+						}
 					}
 
 					// vector<PCBullet>::iterator itr;
