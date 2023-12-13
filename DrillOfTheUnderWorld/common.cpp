@@ -713,6 +713,16 @@ void visitSafety() {
                     visitRShop();
                 }
                 break;
+            case P:
+                if (pc.getUsableEnergyBarCount() > 0) {
+                    pc.setUsableEnergyBarCount(0);
+                    pc.setHP(pc.getMaxHP());
+                }
+                else if (pc.getUsablePortableOxygenCanCount() > 0) {
+                    pc.setUsablePortableOxygenCanCount(0);
+                    pc.setOxygen(pc.getMaxOxygen());
+                }
+                break;
             }
 
             if (index != -1) index %= 3;

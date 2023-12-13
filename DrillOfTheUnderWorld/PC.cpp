@@ -294,7 +294,11 @@ void PC::applyDigReward(int targerImageIndex, int delay) {
 		pc.setOxygen(pc.getOxygen() + (pc.getMaxOxygen() * 0.3));
 	}
 	else if (strcmp(imageArray[targerImageIndex].fileName, bmpNameOrichalcumMineral) == 0) {
-		pc.setStone(pc.getStone() + 1000);
+		rewardStone = 10;
+		if (hasMoleClaw) {
+			rewardStone *= 2;
+		}
+		pc.setStone(pc.getStone() + rewardStone);
 	}
 
 	imageArray[targerImageIndex].fileName = bmpNameNull;
