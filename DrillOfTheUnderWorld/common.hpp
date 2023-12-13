@@ -370,4 +370,6 @@ char bgmS1BossStart[];
 char bgmS2BossStart[];
 char bgmS3BossStart[];
 
+extern ImageLayer endLayer;
+void printEndingCredit();
 #endif COMMON_HPP

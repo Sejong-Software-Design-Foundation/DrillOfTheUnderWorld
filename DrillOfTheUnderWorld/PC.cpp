@@ -362,6 +362,8 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 				if (isItemExistItemVector(item, ownedItems) || !item->getIsUniqueHoldableItem()) continue;
 				else {
 					ownedItems.push_back(item);
+					item->use();
+					updateCharacterStatus();
 					break;
 				}
 			}
