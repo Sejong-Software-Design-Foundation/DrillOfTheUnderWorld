@@ -53,7 +53,7 @@ int main()
 
 	//initAreaUI();
 	initRewardImage();
-
+	int flags = 1;
 	// ???筏?質�謅�???拆�蝎橘蕭 ????�??????閎???????????�嚙賡�?伐�??曀?制的????�????
 	/*pc.addItem(1);
 	pc.addItem(2);
@@ -131,7 +131,7 @@ int main()
 					currentAreaColIndex = convertPosToInfoXInStage(curPosX);
 					int num = rand() % 4;
 					//num = 1;
-					if (true || currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
+					if (currentAreaColIndex == bossAreaPos[1] && currentAreaRowIndex == bossAreaPos[0])
 					{
 						isNormalArea = false;
 						isMiniGameArea = false;
@@ -274,16 +274,16 @@ int main()
 					if (isFlagArea) printFlagStageStatus(pc.getFlagCnt());
 					if (isBossArea) {
 						if (stageLevel == 1) {
-              playSound(bgmS1BossStart);
-              playBGM(bgmBoss);
-            }
+							playSound(bgmS1BossStart);
+							playBGM(bgmBoss);
+						}
 						else if (stageLevel == 2) {
-              playSound(bgmS2BossStart);
+							playSound(bgmS2BossStart);
 							playBGM(bgmRawkHawk);
 							Sleep(4000);
 						}
 						else if (stageLevel == 3) {
-              playSound(bgmS3BossStart);
+							playSound(bgmS3BossStart);
 							playBGM(bgmCharizard);
 							Sleep(3000);
 						}
@@ -735,27 +735,31 @@ int main()
 			}
 			else if (isBossArea)
 			{
-          for (int i = 0; i < 5; i++)
-          {
-				    //printWarning(Boss->hp);
-				    if (Boss->NPCDead() == false)
-				    {
-					    Boss->move();
-				    }
-				    else
-				    {
-					    if (stageLevel == 1)
-						    ((EmceeTheShyGuy*)Boss)->AfterDead();
-					    else if (stageLevel == 2)
-						    ((RawkHawk*)Boss)->AfterDead();
-					    else if (stageLevel == 3)
-						    ((Charizard*)Boss)->AfterDead();
-					    stopBGM();
-					    ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 12);
-					    if (ladder->goSafety())
-						    return main();
-				  }
-            
+				for (int i = 0; i < 5; i++)
+				{
+					//printWarning(Boss->hp);
+					if (Boss->NPCDead() == false)
+					{
+						Boss->move();
+					}
+					else
+					{
+						if (stageLevel == 1)
+							((EmceeTheShyGuy*)Boss)->AfterDead();
+						else if (stageLevel == 2)
+							((RawkHawk*)Boss)->AfterDead();
+						else if (stageLevel == 3)
+							((Charizard*)Boss)->AfterDead();
+						stopBGM();
+						if (flags == 1) {
+							playSound(bgmExplosion);
+							flags = 0;
+						}
+						ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 12);
+						if (ladder->goSafety())
+							return main();
+					}
+
 					// vector<PCBullet>::iterator itr;
 					for (auto itr = pc.getBulletList().begin(); itr != pc.getBulletList().end();)
 					{
@@ -949,7 +953,7 @@ int main()
 					exit(0);
 				}
 			}
-      
+
 			end_time = clock();
 			duration = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
 

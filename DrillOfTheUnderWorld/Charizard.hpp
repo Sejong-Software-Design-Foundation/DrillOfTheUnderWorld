@@ -194,7 +194,7 @@ void Charizard::setPhase2() {
 	imageArray[imageidx].fileName = bmpNameCharizardEvolve2;
 	imageArray[imageidx].scale = 1;
 	char bmpStart1[] = "redBackground.bmp";
-	imageArray[imageLayer.imageCount++] = { bmpStart1,0,0,1 };
+	imageArray[imageLayer.imageCount++] = { bmpStart1, 0, 0, 1 };
 	for (int i = 0; i < 3; i++) {
 		imageArray[imageidx].fileName = bmpNameCharizard;
 		imageArray[imageidx].scale = CHARIZARD_SCALE;
