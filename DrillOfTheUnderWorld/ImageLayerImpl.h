@@ -53,7 +53,7 @@ extern "C" {
 
 	//DC에 이미지를 넣어줌
 	inline void putBitmapToBackDC(HDC backDC, Image image, UINT transparentColor) {
-		const HDC bitmapDC = CreateCompatibleDC(backDC);
+		const HDC bitmapDC = CreateCompatibleDC(backDC); 
 		const HBITMAP bitmap = (HBITMAP)LoadImage(NULL, ConvertToLPCWSTR(image.fileName), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 		SelectObject(bitmapDC, bitmap);
 
