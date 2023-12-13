@@ -81,7 +81,7 @@ void Charizard::move() {
 	attack();
 
 	// if moved 10 times shoot once and reset mvcnt
-	if (movecnt % 20 == 0) {
+	if (movecnt % 15 == 0) {
 		fireballs.push_back(CharizardFireball(x, y));
 	}
 	else if (movecnt == 101) {
@@ -89,7 +89,7 @@ void Charizard::move() {
 		movecnt = 0;
 	}
 	else {
-		NPCBossMovement(CHARIZARD_SPEED);
+		if (movecnt % 4 == 0)NPCBossMovement(CHARIZARD_SPEED);
 	}
 }
 
@@ -179,7 +179,6 @@ void Charizard::ultimate() {
 			}
 		}
 		fireballs.back().fireground[1][1] = 1;
-
 		imageLayer.images[fireballs.back().imageidx].fileName = bmpNameFireground;
 
 		new_angle += angle * 2;

@@ -247,6 +247,7 @@ char bmpNameFireball[] = "Fireball.bmp";
 
 char bmpNameRawkHawk[] = "RawkHawk.bmp";
 char bmpNameRawkHawk_ready[] = "RawkHawk_ready.bmp";
+char bmpNameRawkHawk_ready2[] = "RawkHawk_ready2.bmp";
 char bmpNameRawkHawk_digging[] = "RawkHawk_digging.bmp";
 
 char bmpNameCharizard[] = "Charizard.bmp";
@@ -1815,7 +1816,7 @@ bool printButtonStageStatus() {
 }
 
 void printFlagStageStatus(int curFlagCnt) {
-    wchar_t playerFlagInfo[100] = L"획占쏙옙占쏙옙 占쏙옙占쏙옙占?占쏙옙 : ";
+    wchar_t playerFlagInfo[100] = L"현재 수집한 깃발 : ";
     wchar_t playerFlagCount[20] = L"";
     swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", pc.getFlagCnt());
     printText(targetLayer->_consoleDC, 2560, 1370, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
@@ -1896,7 +1897,7 @@ void getNewBossArea() {
 }
 
 void printStoneStatus(int curStone) {
-    wchar_t playerFlagInfo[100] = L"蹂댁쑀以묒씤 STONE : ";
+    wchar_t playerFlagInfo[100] = L"보유중인 STONE : ";
     wchar_t playerFlagCount[20] = L"";
     swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
     printText(targetLayer->_consoleDC, 500, 200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);

@@ -140,8 +140,8 @@ int main()
 						isBossArea = true;
 						getNewBossArea();
 						Boss->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE / 2 * 25 - BLOCKSIZE * BOSS_SCALE / 2, AREA_ORIGIN_Y + BLOCKSIZE / 2 * 25 - BLOCKSIZE * BOSS_SCALE);
-						imageArray[0].x = AREA_ORIGIN_X + 48 * 12;
-						imageArray[0].y = AREA_ORIGIN_Y + 48 * 20;
+						imageArray[0].x = AREA_ORIGIN_X + BLOCKSIZE * 13;
+						imageArray[0].y = AREA_ORIGIN_Y + BLOCKSIZE * 23;
 						ladder->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
 						bat->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
 						mole->NPCSetPosition(-BLOCKSIZE, -BLOCKSIZE);
