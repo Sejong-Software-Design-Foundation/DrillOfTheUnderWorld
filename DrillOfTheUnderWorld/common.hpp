@@ -258,7 +258,7 @@ extern char bmpCaveSnakeName[];
 
 extern char bmpBackgroundTestName[];
 
-// ?�든 ?�어리어 관�?
+// ?�든 ?�어리어 관�?
 extern std::vector<std::vector<int>> hiddenAreaPosList;
 extern std::vector<int> bossAreaPos;
 extern std::vector<int> treasureAreaPos;
