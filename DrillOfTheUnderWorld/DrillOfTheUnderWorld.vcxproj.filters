@@ -347,5 +347,8 @@
     <Image Include="Fireball_Blue.bmp" />
     <Image Include="Fireground_Blue.bmp" />
     <Image Include="EmceeTheShyGuy.bmp" />
+    <Image Include="RawkHawk_digging2.bmp" />
+    <Image Include="Rawkhawk_ready2.bmp" />
+    <Image Include="rawkhawk_dig_copy.bmp" />
   </ItemGroup>
 </Project>

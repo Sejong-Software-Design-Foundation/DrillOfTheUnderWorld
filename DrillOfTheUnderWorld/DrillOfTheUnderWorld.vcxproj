@@ -427,6 +427,9 @@
     <Image Include="progressMiddle.bmp" />
     <Image Include="quake.bmp" />
     <Image Include="questionMark.bmp" />
+    <Image Include="RawkHawk_digging2.bmp" />
+    <Image Include="rawkhawk_dig_copy.bmp" />
+    <Image Include="Rawkhawk_ready2.bmp" />
     <Image Include="redBackground.bmp" />
     <Image Include="rShop_Balloon.bmp" />
     <Image Include="rShop_miner.bmp" />

@@ -63,8 +63,8 @@ void RawkHawk::move() {
 	else if (cnt < 46) {
 		imageArray[imageidx] = { bmpNameRawkHawk_digging, x, y, RAWKHAWK_SCALE };
 		int random = rand() % 10;
-		if (random < 8)NPCTrackingMovement(RAWKHAWK_TRACK_SPEED);
-		else NPCStraightMovement(RAWKHAWK_TRACK_SPEED);
+		if (cnt%4 < 3)NPCTrackingMovement(RAWKHAWK_TRACK_SPEED);
+		//else NPCStraightMovement(RAWKHAWK_TRACK_SPEED);
 	}
 	// 46-66 : 20sec
 	else if (cnt < 66) {

@@ -1,7 +1,7 @@
 #ifndef __CHARIZARD_FIREBALL_
 #define __CHARIZARD_FIREBALL_
 
-#define FIREGROUND_SEC 60
+#define FIREGROUND_SEC 120
 
 #include "NPC.hpp"
 #include <vector>
@@ -128,7 +128,7 @@ void CharizardFireball::attack() {
 void CharizardFireball::initFireground() {
     for (int i = 0; i < 3; i++) {
         for (int k = 0; k < 3; k++) {
-            fireground[i][k] = rand() % 2;
+            fireground[i][k] = rand() % 4;
         }
     }
     // center is always true
