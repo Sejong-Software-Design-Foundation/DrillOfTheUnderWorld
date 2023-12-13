@@ -7,6 +7,7 @@ AncientVirus::AncientVirus() : Item() {
     this->rank = 'F';
     this->price = F_RANK_PRICE;
     imageArray[imageLayer.imageCount++] = { bmpAncientVirusName, -1, -1, 1, 1 };
+    this->isUniqueHoldableItem = true;
 }
 
 void AncientVirus::use() {

@@ -1,7 +1,7 @@
 ﻿#include "common.hpp"
 #include "itemCommon.hpp"
 
-int stageLevel = 1;
+int stageLevel = 3;
 
 char bgmGameStart[] = "gameStart.wav";
 char bgmName[] = "start_bgm.wav";
@@ -452,6 +452,8 @@ void drawProgress() {
 
 	wchar_t rewardInfo1[100] = L"보상 선택";
 	wchar_t rewardInfo2[100] = L"방향키 또는 숫자키를 통해 이동하고, 'SPACEBAR'키를 통해 선택을 완료합니다.";
+	wchar_t treasureInfo1[100] = L"보물 에어리어";
+	wchar_t treasureInfo2[100] = L"???";
 
 	if (isOnSafety) {
 		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, safetyInfo1, 280);
@@ -507,6 +509,10 @@ void drawProgress() {
 			printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stage3BossInfo2, 280);
 			printText(targetLayer->_consoleDC, 2520, 1040, 30, 0, RGB(255, 0, 0), TA_LEFT, stage3BossInfo3, 280);
 		}
+	}
+	else if (isTreasureArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, treasureInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, treasureInfo2, 280);
 	}
 
 	if (isOnStage) targetLayer = &stageLayer;
@@ -1158,6 +1164,15 @@ bool isItemExistItemVector(Item* targetItem, std::vector<Item*> itemList) {
 	return it != itemList.end();
 }
 
+Item* getRandomTreasureItem() {
+	srand((unsigned)time(NULL));
+	Item* targetItem = nullptr;
+
+	int randomIndex = rand() % treasureItems.size();
+	targetItem = treasureItems[randomIndex];
+	return targetItem;
+}
+
 Item* getRandomItem() {
 	srand((unsigned)time(NULL));
 	char rank;
@@ -1210,7 +1225,6 @@ Item* getRandomItem() {
 
 	return targetItem;
 }
-
 
 
 LPCWSTR ConvertToLPCWSTR(const char* ansiStr) {

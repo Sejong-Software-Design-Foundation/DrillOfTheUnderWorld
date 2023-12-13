@@ -39,6 +39,7 @@ extern std::vector<Item*> cRankItems;
 extern std::vector<Item*> eRankItems; // -소모형
 extern std::vector<Item*> nRankItems; // -부스트류
 extern std::vector<Item*> fRankItems; // -디벞
+extern std::vector<Item*> treasureItems;
 
 void initItems();
 void initSRankItems();
@@ -48,5 +49,6 @@ void initCRankItems();
 void initERankItems();
 void initNRankItems();
 void initFRankItems();
+void initFTreasureItems();
 
 #endif ITEM_COMMON_HPP

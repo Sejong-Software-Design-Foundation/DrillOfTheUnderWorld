@@ -100,7 +100,7 @@ int main()
 	drawProgress();
 	//targetLayer = &stageLayer;
 	playBGM(bgmStage);
-	pc.setFatigue(pc.getFatigue());
+	pc.setFatigue(pc.getMaxFatigue());
 	pc.setHP(pc.getHP());
 	pc.setOxygen(pc.getOxygen());
 	while (1)
