@@ -90,189 +90,7 @@
     <Media Include="start_bgm.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Boos.bmp" />
-    <Image Include="..\..\..\Boss.bmp" />
-    <Image Include="..\..\..\Mineral.bmp" />
-    <Image Include="..\..\..\NPC.bmp" />
-    <Image Include="..\..\..\Shop.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_0pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_100pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_10pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_20pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_30pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_40pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_50pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_60pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_70pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_80pct.bmp" />
-    <Image Include="..\..\..\ui\UI_HP_90pct.bmp" />
-    <Image Include="..\..\..\ui\UI_itemBox.bmp" />
-    <Image Include="..\..\..\ui\UI_mapBox.bmp" />
-    <Image Include="..\..\..\ui\UI_mapPC.bmp" />
-    <Image Include="..\..\..\ui\UI_mapTile.bmp" />
-    <Image Include="..\..\..\ui\UI_mapTileCleared.bmp" />
-    <Image Include="..\..\..\ui\UI_mapX.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_0pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_100pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_10pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_20pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_30pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_40pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_50pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_60pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_70pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_80pct.bmp" />
-    <Image Include="..\..\..\ui\UI_O2_90pct.bmp" />
-    <Image Include="..\..\..\ui\UI_rewardAtk.bmp" />
-    <Image Include="..\..\..\ui\UI_rewardAtkSelected.bmp" />
-    <Image Include="..\..\..\ui\UI_rewardAtkSpd.bmp" />
-    <Image Include="..\..\..\ui\UI_rewardAtkSpdSelected.bmp" />
-    <Image Include="..\..\..\ui\UI_rewardSpd.bmp" />
-    <Image Include="..\..\..\ui\UI_rewardSpdSelected.bmp" />
-    <Image Include="..\..\..\Zombie.bmp" />
-    <Image Include="..\..\characterStatus.bmp" />
-    <Image Include="..\..\clearedArea.bmp" />
-    <Image Include="..\..\hiddenArea.bmp" />
-    <Image Include="..\..\movableArea.bmp" />
-    <Image Include="..\..\Stage1.bmp" />
-    <Image Include="..\..\Stage2.bmp" />
-    <Image Include="..\..\Stage3.bmp" />
-    <Image Include="arrow.bmp" />
-    <Image Include="bedrock.bmp" />
-    <Image Include="bg.bmp" />
-    <Image Include="block_MineralBronze.bmp" />
-    <Image Include="block_MineralDiamond.bmp" />
-    <Image Include="block_MineralGold.bmp" />
-    <Image Include="block_MineralOrichalcum.bmp" />
-    <Image Include="block_MineralSilver.bmp" />
-    <Image Include="block_Stage1_Broken.bmp" />
-    <Image Include="block_Stage1_Broken_BronzeOre1.bmp" />
-    <Image Include="block_Stage1_Broken_BronzeOre2.bmp" />
-    <Image Include="block_Stage1_Broken_DiamondOre1.bmp" />
-    <Image Include="block_Stage1_Broken_DiamondOre2.bmp" />
-    <Image Include="block_Stage1_Broken_GoldOre1.bmp" />
-    <Image Include="block_Stage1_Broken_GoldOre2.bmp" />
-    <Image Include="block_Stage1_Broken_OrichalcumOre1.bmp" />
-    <Image Include="block_Stage1_Broken_OrichalcumOre2.bmp" />
-    <Image Include="block_Stage1_Broken_SilverOre1.bmp" />
-    <Image Include="block_Stage1_Broken_SilverOre2.bmp" />
-    <Image Include="block_Stage1_BronzeOre1.bmp" />
-    <Image Include="block_Stage1_BronzeOre2.bmp" />
-    <Image Include="block_Stage1_DiamondOre1.bmp" />
-    <Image Include="block_Stage1_DiamondOre2.bmp" />
-    <Image Include="block_Stage1_GoldOre1.bmp" />
-    <Image Include="block_Stage1_GoldOre2.bmp" />
-    <Image Include="block_Stage1_Normal.bmp" />
-    <Image Include="block_Stage1_OrichalcumOre1.bmp" />
-    <Image Include="block_Stage1_OrichalcumOre2.bmp" />
-    <Image Include="block_Stage1_SilverOre1.bmp" />
-    <Image Include="block_Stage1_SilverOre2.bmp" />
-    <Image Include="boom.bmp" />
-    <Image Include="BossHP.bmp" />
     <Image Include="brick_dark2.png" />
-    <Image Include="BronzeMineral.bmp" />
-    <Image Include="BronzeOre.bmp" />
-    <Image Include="button1.bmp" />
-    <Image Include="button1Pressed.bmp" />
-    <Image Include="button2.bmp" />
-    <Image Include="button2Pressed.bmp" />
-    <Image Include="button3.bmp" />
-    <Image Include="button3Pressed.bmp" />
-    <Image Include="EmceeTheShyGuyHit.bmp" />
-    <Image Include="explode1.bmp" />
-    <Image Include="explode2.bmp" />
-    <Image Include="explode3.bmp" />
-    <Image Include="explode4.bmp" />
-    <Image Include="explode5.bmp" />
-    <Image Include="explodes.bmp" />
-    <Image Include="flag.bmp" />
-    <Image Include="hiddenStage.bmp" />
-    <Image Include="hpPotion.bmp" />
-    <Image Include="item1.bmp" />
-    <Image Include="item2.bmp" />
-    <Image Include="item3.bmp" />
-    <Image Include="item_AncientVirus.bmp" />
-    <Image Include="item_AttackBoost.bmp" />
-    <Image Include="item_AttackSpeedBoost.bmp" />
-    <Image Include="item_BatFang.bmp" />
-    <Image Include="item_BeggarDoll.bmp" />
-    <Image Include="item_BloodBag.bmp" />
-    <Image Include="item_CaveSnake.bmp" />
-    <Image Include="item_CursedTotem.bmp" />
-    <Image Include="item_Dice.bmp" />
-    <Image Include="item_Disasemmbler.bmp" />
-    <Image Include="item_EnergyBar.bmp" />
-    <Image Include="item_FreshBrewedCoffee.bmp" />
-    <Image Include="item_LuckStone.bmp" />
-    <Image Include="item_LuckyCharm.bmp" />
-    <Image Include="item_MetalDetector.bmp" />
-    <Image Include="item_MoleClaw.bmp" />
-    <Image Include="item_MovementSpeedBoost.bmp" />
-    <Image Include="item_Orichalcum.bmp" />
-    <Image Include="item_PortableOxygenCan.bmp" />
-    <Image Include="item_PrisonerShackles.bmp" />
-    <Image Include="item_SupplyOxygenTank.bmp" />
-    <Image Include="item_ThornCrown.bmp" />
-    <Image Include="item_TwoHearts.bmp" />
-    <Image Include="item_UndergroundTicket.bmp" />
-    <Image Include="lava.bmp" />
-    <Image Include="Lava2.bmp" />
-    <Image Include="lava_block.bmp" />
-    <Image Include="lShop_Balloon.bmp" />
-    <Image Include="lShop_miner.bmp" />
-    <Image Include="lShop_minerSelected.bmp" />
-    <Image Include="MoleDigging.bmp" />
-    <Image Include="movableHiddenArea.bmp" />
-    <Image Include="nomalStage.bmp" />
-    <Image Include="clearedStage.bmp" />
-    <Image Include="brokenStoneBlock.bmp" />
-    <Image Include="ozPotion.bmp" />
-    <Image Include="PCBullet_down.bmp" />
-    <Image Include="PCBullet_left.bmp" />
-    <Image Include="PCBullet_right.bmp" />
-    <Image Include="PCBullet_up.bmp" />
-    <Image Include="PC_down.bmp" />
-    <Image Include="PC_down_getHP.bmp" />
-    <Image Include="PC_down_getOxygen.bmp" />
-    <Image Include="PC_down_hit.bmp" />
-    <Image Include="PC_left.bmp" />
-    <Image Include="PC_left_getHP.bmp" />
-    <Image Include="PC_left_getOxygen.bmp" />
-    <Image Include="PC_left_hit.bmp" />
-    <Image Include="PC_right.bmp" />
-    <Image Include="PC_right_getHP.bmp" />
-    <Image Include="PC_right_getOxygen.bmp" />
-    <Image Include="PC_right_hit.bmp" />
-    <Image Include="PC_up.bmp" />
-    <Image Include="PC_up_getHP.bmp" />
-    <Image Include="PC_up_getOxygen.bmp" />
-    <Image Include="PC_up_hit.bmp" />
-    <Image Include="questionMark.bmp" />
-    <Image Include="rShop_Balloon.bmp" />
-    <Image Include="rShop_miner.bmp" />
-    <Image Include="rShop_minerSelected.bmp" />
-    <Image Include="rShop_spearkBalloon.bmp" />
-    <Image Include="safety_arrow.bmp" />
-    <Image Include="safety_arrowSelected.bmp" />
-    <Image Include="Shop_ItemBox.bmp" />
-    <Image Include="Shop_ItemBox_disable.bmp" />
-    <Image Include="Shop_ItemBox_selected.bmp" />
-    <Image Include="Shop_StoneBox.bmp" />
-    <Image Include="stoneBlock.bmp" />
-    <Image Include="empty.bmp" />
-    <Image Include="emptyTile.bmp" />
-    <Image Include="PlayerCharacter.bmp" />
-    <Image Include="testImage1.bmp" />
-    <Image Include="testImage2.bmp" />
-    <Image Include="UI_character_status.bmp" />
-    <Image Include="UI_dynamicEnforce.bmp" />
-    <Image Include="UI_dynamicEnforceSelected.bmp" />
-    <Image Include="UI_normalEnforce.bmp" />
-    <Image Include="UI_normalEnforceSelected.bmp" />
-    <Image Include="UI_Star0.bmp" />
-    <Image Include="UI_Star1.bmp" />
-    <Image Include="UI_Star2.bmp" />
-    <Image Include="UI_Star3.bmp" />
     <Image Include="block_Stage2_SilverOre1.bmp">
       <Filter>image</Filter>
     </Image>
@@ -414,22 +232,6 @@
     <Image Include="progressMiddle.bmp">
       <Filter>image</Filter>
     </Image>
-    <Image Include="Timer.bmp" />
-    <Image Include="Timer_0pct.bmp" />
-    <Image Include="Timer_Bar.bmp" />
-    <Image Include="Timer_100pct.bmp" />
-    <Image Include="Timer_90pct.bmp" />
-    <Image Include="Timer_80pct.bmp" />
-    <Image Include="Timer_70pct.bmp" />
-    <Image Include="Timer_60pct.bmp" />
-    <Image Include="Timer_50pct.bmp" />
-    <Image Include="Timer_40pct.bmp" />
-    <Image Include="Timer_30pct.bmp" />
-    <Image Include="Timer_20pct.bmp" />
-    <Image Include="Timer_10pct.bmp" />
-    <Image Include="UI_maxHP.bmp" />
-    <Image Include="UI_maxO2.bmp" />
-    <Image Include="safety_bg.bmp" />
     <Image Include="progressBackGround.bmp">
       <Filter>image</Filter>
     </Image>
@@ -452,6 +254,600 @@
       <Filter>image</Filter>
     </Image>
     <Image Include="treasure.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="arrow.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="bedrock.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="bg.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_MineralBronze.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_MineralDiamond.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_MineralGold.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_MineralOrichalcum.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_MineralSilver.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_BronzeOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_BronzeOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_DiamondOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_DiamondOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_GoldOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_GoldOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_OrichalcumOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_OrichalcumOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_SilverOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Broken_SilverOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_BronzeOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_BronzeOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_DiamondOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_DiamondOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_GoldOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_GoldOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_Normal.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_OrichalcumOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_OrichalcumOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_SilverOre1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="block_Stage1_SilverOre2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="boom.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\Boos.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\Boss.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="BossHP.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="brokenStoneBlock.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="BronzeMineral.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="BronzeOre.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="button1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="button1Pressed.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="button2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="button2Pressed.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="button3.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="button3Pressed.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\characterStatus.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\clearedArea.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="clearedStage.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="EmceeTheShyGuyHit.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="empty.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="emptyTile.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="explode1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="explode2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="explode3.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="explode4.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="explode5.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="explodes.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="flag.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\hiddenArea.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="hiddenStage.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="hpPotion.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_AncientVirus.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_AttackBoost.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_AttackSpeedBoost.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_BatFang.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_BeggarDoll.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_BloodBag.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_CaveSnake.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_CursedTotem.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_Dice.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_Disasemmbler.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_EnergyBar.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_FreshBrewedCoffee.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_LuckStone.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_LuckyCharm.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_MetalDetector.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_MoleClaw.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_MovementSpeedBoost.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_Orichalcum.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_PortableOxygenCan.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_PrisonerShackles.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_SupplyOxygenTank.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_ThornCrown.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_TwoHearts.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item_UndergroundTicket.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="item3.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="lava.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="lava_block.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Lava2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="lShop_Balloon.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="lShop_miner.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="lShop_minerSelected.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\Mineral.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="MoleDigging.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\movableArea.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="movableHiddenArea.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="nomalStage.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\NPC.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="ozPotion.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_down.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_down_getHP.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_down_getOxygen.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_down_hit.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_left.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_left_getHP.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_left_getOxygen.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_left_hit.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_right.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_right_getHP.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_right_getOxygen.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_right_hit.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_up.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_up_getHP.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_up_getOxygen.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PC_up_hit.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PCBullet_down.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PCBullet_left.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PCBullet_right.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PCBullet_up.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="PlayerCharacter.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="questionMark.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="rShop_Balloon.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="rShop_miner.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="rShop_minerSelected.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="rShop_spearkBalloon.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="safety_arrow.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="safety_arrowSelected.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="safety_bg.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\Shop.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Shop_ItemBox.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Shop_ItemBox_disable.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Shop_ItemBox_selected.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Shop_StoneBox.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\Stage1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\Stage2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\Stage3.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="stoneBlock.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="testImage1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="testImage2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_0pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_10pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_20pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_30pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_40pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_50pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_60pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_70pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_80pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_90pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_100pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="Timer_Bar.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_character_status.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_dynamicEnforce.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_dynamicEnforceSelected.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_0pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_10pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_20pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_30pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_40pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_50pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_60pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_70pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_80pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_90pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_HP_100pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_itemBox.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_mapBox.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_mapPC.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_mapTile.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_mapTileCleared.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_mapX.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_maxHP.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_maxO2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_normalEnforce.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_normalEnforceSelected.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_0pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_10pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_20pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_30pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_40pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_50pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_60pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_70pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_80pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_90pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_O2_100pct.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_rewardAtk.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_rewardAtkSelected.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_rewardAtkSpd.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_rewardAtkSpdSelected.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_rewardSpd.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\ui\UI_rewardSpdSelected.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_Star0.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_Star1.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_Star2.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="UI_Star3.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="..\..\..\Zombie.bmp">
       <Filter>image</Filter>
     </Image>
   </ItemGroup>

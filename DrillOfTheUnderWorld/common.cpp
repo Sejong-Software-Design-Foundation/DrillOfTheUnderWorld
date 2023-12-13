@@ -620,7 +620,7 @@ char bmpSafetyArrowSelected[] = "safety_arrowSelected.bmp";
 int index_Safety_Object_Start;
 
 // 占쏙옙占쏙옙 占쏙옙占쏘리占쏙옙 占쏙옙占쏙옙
-std::vector<int> bossAreaPos;
+std::vector<int> bossAreaPos;	
 std::vector<int> treasureAreaPos;
 std::vector<std::vector<int>> hiddenAreaPosList = { {0,0,3}, {0,1,4}, {0,2,5}, {0,3,6}, {0,4,7},
 {1,0,8}, {1,4,12},
