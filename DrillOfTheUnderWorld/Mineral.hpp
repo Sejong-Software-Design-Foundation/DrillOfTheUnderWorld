@@ -4,7 +4,7 @@
 class Mineral {
 private:
 	// value is the hit counts
-	enum MineralHP { BRONZE = 3, SILVER = 6, GOLD = 9, DIAMOND = 12, ORICHALCUM = 3, QUESTION_MARK = 3 };
+	enum MineralHP { BRONZE = 3, SILVER = 6, GOLD = 9, DIAMOND = 12, ORICHALCUM = 3, QUESTION_MARK = 3, TREASURE = 1 };
 
 public:
 	Mineral();
@@ -16,6 +16,7 @@ public:
 	void GenerateDiamond();
 	void GenerateOrichalcum();
 	void GenerateQuestionMark();
+	void GenerateTreasure();
 	void GenerateBronze(int x, int y);
 	void GenerateSilver(int x, int y);
 	void GenerateGold(int x, int y);
@@ -244,6 +245,23 @@ void Mineral::GenerateQuestionMark() {
 	}
 }
 
+void Mineral::GenerateTreasure() {
+	if (!isTreasureArea) return;
+
+	int x = AREA_ORIGIN_X + BLOCKSIZE * 12;
+	int y = AREA_ORIGIN_Y + BLOCKSIZE * 12;
+	int infoX = convertPosToInfoX(x);
+	int infoY = convertPosToInfoY(y);
+
+	int imageIndex = (infoY / BLOCKSIZE) * 25 + (infoX / BLOCKSIZE) + 1;
+
+	for (int curY = infoY; curY < infoY + BLOCKSIZE; curY++) {
+		for (int curX = infoX; curX < infoX + BLOCKSIZE; curX++) {
+			blockInfo[curY][curX] = TREASURE;
+		}
+	}
+	imageLayer.images[imageIndex].fileName = bmpTreasure;
+}
 
 Mineral::Mineral() {
 	GenerateBronze();

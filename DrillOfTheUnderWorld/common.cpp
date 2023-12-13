@@ -1,17 +1,27 @@
 ﻿#include "common.hpp"
 #include "itemCommon.hpp"
 
-int stageLevel = 3;
+int stageLevel = 1;
 
 char bgmGameStart[] = "gameStart.wav";
 char bgmName[] = "start_bgm.wav";
 char bgmExplosion[] = "explosion.wav";
-char bgmClear[] = "clear.wav";
+char bgmClear[] = "achive.wav";
 char bgmBuy[] = "buy.wav";
 char bgmArea[] = "areaBGM.wav";
 char bgmBoss[] = "bossBGM.wav";
 char bgmStage[] = "stageBGM.wav";
 char bgmSafety[] = "safetyBGM.wav";
+char bgmS1BossStart[] = "stage1BossStart.wav";
+char bgmS2BossStart[] = "stage2BossStart.wav";
+char bgmS3BossStart[] = "stage3BossStart.wav";
+char bgmPage2[] = "page2.wav";
+char bgmButton[] = "button.wav";
+char bgmAchive[] = "clear.wav";
+
+char bgmRawkHawk[] = "RawkHawkBGM.wav";
+char bgmCharizard[] = "CharizardBGM.wav";
+char bgmCharizardEvolve[] = "CharizardEvolveBGM.wav";
 
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
@@ -86,6 +96,7 @@ bool isButtonArea = false;
 bool isFlagArea = false;
 bool isBossArea = false;
 bool isMoving = false;
+bool isTreasureArea = false;
 
 int index_StageImages_Start;
 int index_Area_PC;
@@ -236,6 +247,7 @@ char bmpNameFireball[] = "Fireball.bmp";
 
 char bmpNameRawkHawk[] = "RawkHawk.bmp";
 char bmpNameRawkHawk_ready[] = "RawkHawk_ready.bmp";
+char bmpNameRawkHawk_ready2[] = "RawkHawk_ready2.bmp";
 char bmpNameRawkHawk_digging[] = "RawkHawk_digging.bmp";
 
 char bmpNameCharizard[] = "Charizard.bmp";
@@ -301,6 +313,9 @@ Image progressImageArray[100];
 char bmpProgressBackGround[] = "progressBackGround.bmp";
 char bmpProgressMiddle[] = "progressMiddle.bmp";
 char bmpProgressBottom[] = "progressBottom.bmp";
+
+char bmpTreasure[] = "treasure.bmp";
+char bmpTreasureOpen[] = "treasureOpen.bmp";
 
 int timerIndex = 11;
 
@@ -619,7 +634,7 @@ char bmpSafetyArrowSelected[] = "safety_arrowSelected.bmp";
 int index_Safety_Object_Start;
 
 // 占쏙옙占쏙옙 占쏙옙占쏘리占쏙옙 占쏙옙占쏙옙
-std::vector<int> bossAreaPos;
+std::vector<int> bossAreaPos;	
 std::vector<int> treasureAreaPos;
 std::vector<std::vector<int>> hiddenAreaPosList = { {0,0,3}, {0,1,4}, {0,2,5}, {0,3,6}, {0,4,7},
 {1,0,8}, {1,4,12},
@@ -1801,7 +1816,7 @@ bool printButtonStageStatus() {
 }
 
 void printFlagStageStatus(int curFlagCnt) {
-    wchar_t playerFlagInfo[100] = L"획占쏙옙占쏙옙 占쏙옙占쏙옙占?占쏙옙 : ";
+    wchar_t playerFlagInfo[100] = L"현재 수집한 깃발 : ";
     wchar_t playerFlagCount[20] = L"";
     swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", pc.getFlagCnt());
     printText(targetLayer->_consoleDC, 2560, 1370, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
@@ -1882,7 +1897,7 @@ void getNewBossArea() {
 }
 
 void printStoneStatus(int curStone) {
-    wchar_t playerFlagInfo[100] = L"蹂댁쑀以묒씤 STONE : ";
+    wchar_t playerFlagInfo[100] = L"보유중인 STONE : ";
     wchar_t playerFlagCount[20] = L"";
     swprintf(playerFlagCount, sizeof(playerFlagCount) / sizeof(playerFlagCount[0]), L"%d", curStone);
     printText(targetLayer->_consoleDC, 500, 200, 40, 0, RGB(255, 255, 255), TA_CENTER, playerFlagInfo);
