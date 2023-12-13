@@ -322,6 +322,7 @@ int PC::getFlagCnt() {
 
 
 void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int imageIndex) {
+	srand((unsigned)time(NULL));
 	if (blockInfo[infoY][infoX] <= 0) {
 		if ((strcmp(imageLayer.images[imageIndex].fileName, bmpStoneBlockName[stageLevel-1]) == 0) || (strcmp(imageLayer.images[imageIndex].fileName, bmpBrokenStoneBlockName[stageLevel-1]) == 0)) {
 			imageLayer.images[imageIndex].fileName = bmpNameNull;
@@ -363,8 +364,8 @@ void PC::updateDigResultReward(int digY, int digX, int infoY, int infoX, int ima
 			imageLayer.images[imageIndex].fileName = bmpTreasureOpen;
 			playSound(bgmAchive);
 			while (1) {
-				Item* item = getRandomItem();
-				if (isItemExistItemVector(item, ownedItems) || !item->getIsUniqueHoldableItem()) continue;
+				Item* item = getRandomTreasureItem();
+				if (isItemExistItemVector(item, ownedItems)) continue;
 				else {
 					ownedItems.push_back(item);
 					item->use();

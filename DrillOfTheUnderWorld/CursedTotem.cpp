@@ -7,6 +7,7 @@ CursedTotem::CursedTotem() : Item() {
     this->rank = 'F';
     this->price = F_RANK_PRICE;
     imageArray[imageLayer.imageCount++] = { bmpCursedTotemName, -1, -1, 1, 1 };
+    this->isUniqueHoldableItem = true;
 }
 
 void CursedTotem::use() {

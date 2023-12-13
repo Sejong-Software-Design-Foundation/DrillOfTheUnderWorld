@@ -373,4 +373,5 @@ char bgmS3BossStart[];
 
 extern ImageLayer endLayer;
 void printEndingCredit();
+Item* getRandomTreasureItem();
 #endif COMMON_HPP

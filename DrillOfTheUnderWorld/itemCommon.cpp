@@ -12,6 +12,7 @@ std::vector<Item*> cRankItems;
 std::vector<Item*> eRankItems; // -소모형
 std::vector<Item*> nRankItems; // -부스트류
 std::vector<Item*> fRankItems; // -디벞
+std::vector<Item*> treasureItems;
 
 
 void initItems() {
@@ -22,6 +23,7 @@ void initItems() {
 	initERankItems();
 	initNRankItems();
 	initFRankItems();
+	initFTreasureItems();
 }
 
 void initSRankItems(){
@@ -62,4 +64,21 @@ void initFRankItems() {
 	fRankItems.push_back(new CursedTotem());
 	fRankItems.push_back(new AncientVirus());
 	fRankItems.push_back(new CaveSnake());
+}
+
+void initFTreasureItems() {
+	treasureItems.push_back(new PrisonerShackles());
+	treasureItems.push_back(new CursedTotem());
+	treasureItems.push_back(new AncientVirus());
+	treasureItems.push_back(new CaveSnake());
+
+	treasureItems.push_back(new MetalDetector());
+	treasureItems.push_back(new ThornCrown());
+	treasureItems.push_back(new BeggarDoll());
+
+	treasureItems.push_back(new TwoHearts());
+	treasureItems.push_back(new LuckyCharm());
+
+	treasureItems.push_back(new BatFang());
+	treasureItems.push_back(new MoleClaw());
 }
