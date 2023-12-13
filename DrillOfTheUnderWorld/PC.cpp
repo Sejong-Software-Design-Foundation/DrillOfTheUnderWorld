@@ -219,16 +219,19 @@ void PC::setAtkLev(int lev) {
 	if (lev < 1) this->AtkLev = 1;
 	else if (lev > 11) this->AtkLev = 11;
 	else this->AtkLev = lev;
+	setATK(this->AtkLev);
 }
 void PC::setAtkSpdLev(int lev) {
 	if (lev < 1) this->AtkSpdLev = 1;
 	else if (lev > 11) this->AtkSpdLev = 11;
 	else this->AtkSpdLev = lev;
+	setAtkSpdLev(this->AtkSpdLev);
 }
 void PC::setSpdLev(int lev) {
 	if (lev < 1) this->SpdLev = 1;
 	else if (lev > 11) this->SpdLev = 11;
 	else this->SpdLev = lev;
+	setSpdLev(this->SpdLev);
 }
 
 void PC::addItem(int itemIndex) {
