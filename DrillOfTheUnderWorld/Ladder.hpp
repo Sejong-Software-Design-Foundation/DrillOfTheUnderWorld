@@ -34,6 +34,7 @@ void Ladder::attack() {
 bool Ladder::goSafety() {
     if (PCNear())
     {
+        if (stageLevel == 3) printEndingCredit();
         stageLevel++;
         visitSafety();
         if (stageLevel >= 4) {

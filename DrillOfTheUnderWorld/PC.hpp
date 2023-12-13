@@ -47,6 +47,7 @@ private:
 	int flagCnt = 0;
 	int lastAttackTime;
 	clock_t lastHitTime = 0;
+
 	int HP = 100, O2 = 100, FATIGUE = 10, ATK = 1, curDirection = 0;
 	int stone = 10000;
 	int dx[4] = { 1,0,-1,0 };

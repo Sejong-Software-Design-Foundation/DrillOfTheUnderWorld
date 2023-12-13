@@ -353,6 +353,7 @@
     <Image Include="Charizard_Evolve2_Hit.bmp" />
     <Image Include="EmceeTheShyGuy.bmp" />
     <Image Include="EmceeTheShyGuyHit.bmp" />
+    <Image Include="epilogue.bmp" />
     <Image Include="explode1.bmp" />
     <Image Include="explode2.bmp" />
     <Image Include="explode3.bmp" />

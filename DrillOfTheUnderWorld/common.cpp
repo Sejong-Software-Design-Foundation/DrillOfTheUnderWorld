@@ -1,7 +1,7 @@
 ﻿#include "common.hpp"
 #include "itemCommon.hpp"
 
-int stageLevel = 1;
+int stageLevel = 3;
 
 char bgmGameStart[] = "gameStart.wav";
 char bgmName[] = "start_bgm.wav";
@@ -22,6 +22,7 @@ char bgmAchive[] = "clear.wav";
 char bgmRawkHawk[] = "RawkHawkBGM.wav";
 char bgmCharizard[] = "CharizardBGM.wav";
 char bgmCharizardEvolve[] = "CharizardEvolveBGM.wav";
+char bgmEnd[] = "end.wav";
 
 PC& pc = PC::getPC();
 HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
@@ -35,6 +36,32 @@ ImageLayer* targetLayer = NULL;
 ImageLayer stageLayer = DEFAULT_IMAGE_LAYER;
 Image stageImageArray[40];
 int stageInfo[5][5];
+
+ImageLayer endLayer = DEFAULT_IMAGE_LAYER;
+Image endImageArray[10];
+char bmpEnd[] = "epilogue.bmp";
+
+
+void printEndingCredit()  {
+    endLayer.images = endImageArray;
+    endLayer.imageCount = 0;
+
+    endImageArray[endLayer.imageCount++] = { bmpBackgroundTestName, 0, 0, 1 };
+
+    targetLayer->fadeOut(targetLayer, NULL);
+
+    targetLayer = &endLayer;
+    targetLayer->fadeIn(targetLayer, NULL);
+    playBGM(bgmEnd);
+
+    while (endImageArray[0].y  >= -5500) {
+        endImageArray[0].y -= 5;
+        targetLayer->renderAll(targetLayer);
+    }
+    while (1) {
+
+    }
+}
 
 // 占쏙옙占쏙옙 imageArray占쏙옙 areaImageArray
 ImageLayer imageLayer = AREA_IMAGE_LAYER;
@@ -305,7 +332,7 @@ char bmpStart2[] = "st2.bmp";
 char bmpStart3[] = "st3.bmp";
 char bmpGameOver[] = "gameOver.bmp";
 
-char bmpBackgroundTestName[] = "backgroundTest.bmp";
+char bmpBackgroundTestName[] = "epilogue.bmp";
 
 ImageLayer progressLayer = PROGRESS_IMAGE_LAYER;
 Image progressImageArray[100];
