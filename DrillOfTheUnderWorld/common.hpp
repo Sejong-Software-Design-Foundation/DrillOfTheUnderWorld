@@ -34,7 +34,7 @@ extern "C" {
 #define M 77
 #define ESC 27
 #define SPACE 32
-#define SPEED 48
+#define SPEED 24
 #define BLOCKSIZE 48
 #define AREA_ORIGIN_X 96
 #define AREA_ORIGIN_Y 336
@@ -49,10 +49,10 @@ extern "C" {
 #define UI_ITEM_MARGIN 160
 #define UI_ITEM_SIZE 170
 #define BOSS_SCALE 4
-#define EMCEE_SCALE 4
-#define RAWKHAWK_SCALE 3
-#define CHARIZARD_SCALE 3
-#define BOSS_HP_BAR_WIDTH 16
+#define EMCEE_SCALE 3
+#define RAWKHAWK_SCALE 4
+#define CHARIZARD_SCALE 5
+#define BOSS_HP_BAR_WIDTH 10
 
 #define REWARD_BRONZE = 10
 #define REWARD_SILVER = 30
@@ -73,6 +73,10 @@ extern char bgmSafety[];
 extern char bgmExplosion[];
 extern char bgmClear[];
 extern char bgmBuy[];
+
+extern char bgmRawkHawk[];
+extern char bgmCharizard[];
+extern char bgmCharizardEvolve[];
 
 extern PC& pc;
 extern HANDLE CONSOLE_INPUT, CONSOLE_OUTPUT;
@@ -117,6 +121,7 @@ extern bool isMiniGameArea;
 extern bool isFlagArea;
 extern bool isButtonArea;
 extern bool isBossArea;
+extern bool isMoving;
 extern bool isTreasureArea;
 
 extern int index_StageImages_Start;
@@ -130,6 +135,7 @@ extern int index_Area_UI_blockInfo_Start;
 extern int index_Area_UI_mapTile_Start;
 extern int index_Area_UI_MiniGame_Start;
 extern int index_RewardImages_Start;
+extern int index_Potion_Image;
 
 extern char bmpNameNull[];
 
@@ -149,7 +155,6 @@ extern char bmpCharacterStatusName[];
 extern char bmpNameBat[];
 extern char bmpNameMole[];
 extern char bmpNameMoleDigging[];
-// NULL BMP
 
 // BOSS NPC
 extern char bmpNameEmceeTheShyGuy[];
@@ -161,6 +166,11 @@ extern char bmpNameRawkHawk_digging[];
 
 extern char bmpNameCharizard[];
 extern char bmpNameFireground[];
+extern char bmpNameFireground_Blue[];
+extern char bmpNameFireball_Blue[];
+extern char bmpNameCharizardEvolve1[];
+extern char bmpNameCharizardEvolve2[];
+extern char bmpNameQuake[];
 
 // LADDER 
 extern char bmpNameLadder[];
@@ -171,6 +181,7 @@ extern char bmpNameStar1[];
 extern char bmpNameStar2[];
 extern char bmpNameStar3[];
 extern char bmpBossHPName[];
+extern char bmpBossHP_2Name[];
 
 // BLOCK BMP
 extern char bmpStoneBlockName[3][40];
@@ -215,6 +226,7 @@ extern char bmpBoomName[];
 
 // FLAG, BEDROCK BMP
 extern char bmpBedrockName[];
+extern char bmpBlueBedrockName[];
 extern char bmpFlagName[];
 
 // item Image
@@ -339,7 +351,6 @@ extern ImageLayer gameOverLayer;
 void printGameStart();
 void printGameOver();
 
-// define my areaImageLayer
 extern ImageLayer areaLayer;
 extern ImageLayer progressLayer;
 extern Image progressImageArray[100];
@@ -350,10 +361,13 @@ extern int timerIndex;
 
 bool isRetry();
 void resetPcStatus();
+
 extern char bmpTreasure[];
 extern char bmpTreasureOpen[];
 extern char bgmAchive[];
+
 char bgmS1BossStart[];
 char bgmS2BossStart[];
 char bgmS3BossStart[];
+
 #endif COMMON_HPP

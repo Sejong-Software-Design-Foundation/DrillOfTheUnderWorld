@@ -3,6 +3,7 @@
 
 #include "common.hpp"
 #include <vector>
+#define BULLET_SPEED 24
 /// <summary>
 /// === NPCBULLET INFO ===
 /// HP : 0
@@ -31,8 +32,8 @@ NPCBullet::NPCBullet(int x, int y) : NPC(x, y, 0, 10, 1) {
 
 	double angle = atan2(curPosY - y, curPosX - x);
 
-	dx = 2 * SPEED * cos(angle);
-	dy = 2 * SPEED * sin(angle);
+	dx = BULLET_SPEED * cos(angle);
+	dy = BULLET_SPEED * sin(angle);
 
 	this->imageidx = imageLayer.imageCount;
 	imageArray[imageLayer.imageCount++] = { bmpNameFireball, x, y, 1 };
@@ -59,7 +60,12 @@ void NPCBullet::move() {
 }
 
 void NPCBullet::attack() {
-	pc.setHP(pc.getHP() - attack_damage);
+	int damage = attack_damage;
+
+	if (pc.getHasThronCrown()) {
+		damage *= 2;
+	}
+	pc.setHP(pc.getHP() - damage);
 }
 
 
