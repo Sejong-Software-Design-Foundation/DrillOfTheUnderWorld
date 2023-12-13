@@ -757,7 +757,7 @@ int main()
 							flags = 0;
 						}
 						if (stageLevel == 3) {
-							if (ladder->goEnding()) {
+							if (i==0 && ladder->goEnding()) {
 								printEndingCredit();
 							}
 
