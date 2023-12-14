@@ -51,8 +51,9 @@ bool Ladder::goEnding() {
 bool Ladder::goSafety() {
     if (PCNear())
     {
-        stageLevel++;
+        //stageLevel++;
         visitSafety();
+        stageLevel++;
         if (stageLevel >= 4) {
             //TODO
             return true;

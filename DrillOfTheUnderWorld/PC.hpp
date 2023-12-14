@@ -49,7 +49,7 @@ private:
 	clock_t lastHitTime = 0;
 
 	int HP = 100, O2 = 100, FATIGUE = 10, ATK = 1, curDirection = 0;
-	int stone = 10000;
+	int stone = 0;
 	int dx[4] = { 1,0,-1,0 };
 	int dy[4] = { 0,1,0,-1 };
 	std::vector<int> itemList;

@@ -215,8 +215,15 @@ int main()
 						imageArray[button1->imageidx].isHide = 0;
 						imageArray[button2->imageidx].isHide = 0;
 						imageArray[button3->imageidx].isHide = 0;
-
+						button1->setIsPressed(false);
+						imageArray[button1->imageidx].fileName = bmpButton1Name;
+						button2->setIsPressed(false);
+						imageArray[button2->imageidx].fileName = bmpButton2Name;
+						button3->setIsPressed(false);
+						imageArray[button3->imageidx].fileName = bmpButton3Name;
+						buttonPressedOrderList.clear();
 						isButtonRoomClear = false;
+
 						int randomNumber = rand() % 6; // 0 ?????6 ???????????
 						buttonPressedOrderAnswerList = buttonOrderCaseList[randomNumber];
 						getNewArea();
@@ -524,6 +531,7 @@ int main()
 				{
 					imageArray[button3->imageidx].fileName = bmpButton3PressedName;
 				}
+
 				if (printButtonStageStatus())
 				{
 					button1->setIsPressed(false);
@@ -763,6 +771,7 @@ int main()
 
 						}
 						else {
+							imageArray[ladder->imageidx].isHide = 0;
 							ladder->NPCSetPosition(AREA_ORIGIN_X + BLOCKSIZE * 12, AREA_ORIGIN_Y + BLOCKSIZE * 12);
 							if (ladder->goSafety())
 								return main();
