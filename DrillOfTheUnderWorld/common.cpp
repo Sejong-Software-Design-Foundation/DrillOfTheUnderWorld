@@ -447,6 +447,9 @@ void drawProgress() {
 	wchar_t stage3BossInfo2[200] = L"대대로 내려오는 아다만티움을 지키는는 마그마 용 가문. 그는 일평생 지구의 중심 내핵에서 아다만티움을 지켜왔다.";
 	wchar_t stage3BossInfo3[100] = L"TIP : 최고의 방어가 최고의 공격입니다!";
 
+	wchar_t treasureInfo1[100] = L"보물 에어리어";
+	wchar_t treasureInfo2[100] = L"???";
+
 	wchar_t safetyInfo1[100] = L"안전구역";
 	wchar_t safetyInfo2[100] = L"이곳은 쉼터입니다. 다음 스테이지로 가기 전 아이템을 구매할 수 있습니다.";
 
@@ -507,6 +510,10 @@ void drawProgress() {
 			printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, stage3BossInfo2, 280);
 			printText(targetLayer->_consoleDC, 2520, 1040, 30, 0, RGB(255, 0, 0), TA_LEFT, stage3BossInfo3, 280);
 		}
+	}
+	else if (isTreasureArea) {
+		printText(targetLayer->_consoleDC, 2520, 570, 40, 0, RGB(255, 255, 255), TA_LEFT, treasureInfo1, 280);
+		printText(targetLayer->_consoleDC, 2520, 640, 30, 0, RGB(255, 255, 255), TA_LEFT, treasureInfo2, 280);
 	}
 
 	if (isOnStage) targetLayer = &stageLayer;
